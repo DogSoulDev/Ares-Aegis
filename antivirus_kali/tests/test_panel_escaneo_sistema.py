@@ -37,6 +37,18 @@ def test_panel_escaneo_sistema_instanciable(app, mock_controlador):
     assert panel.windowTitle().startswith("Ares Aegis")
     assert panel.resultados is not None
 
+def test_panel_escaneo_controles(app, mock_controlador):
+    panel = PanelEscaneoSistema(mock_controlador)
+    assert hasattr(panel, 'pausar_analisis')
+    assert hasattr(panel, 'reanudar_analisis')
+    assert hasattr(panel, 'cancelar_analisis')
+    panel.pausar_analisis()
+    assert panel._analisis_pausado
+    panel.reanudar_analisis()
+    assert not panel._analisis_pausado
+    panel.cancelar_analisis()
+    assert panel._analisis_cancelado
+
 def test_panel_escaneo_sistema_resumen(app, mock_controlador):
     panel = PanelEscaneoSistema(mock_controlador)
     panel.mostrar_resumen()

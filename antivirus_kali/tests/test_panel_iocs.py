@@ -20,18 +20,18 @@ def test_panel_iocs_agregar_y_verificar_manual(app):
     panel = PanelIOCs(DummyControlador())
     # Agregar IOC manualmente
     panel.entrada.setText("manual-ioc")
-    panel.agregar_ioc()
+    panel.agregar_ioc_sin_thread()
     assert "manual-ioc" in panel.iocs_manuales
     # Verificar IOC manual
     panel.entrada.setText("manual-ioc")
-    panel.verificar()
+    panel.verificar_sin_thread()
     items = [panel.resultados.item(i).text() for i in range(panel.resultados.count())]
     assert any("manualmente marcado" in item for item in items)
 
 def test_panel_iocs_verificar_api(app):
     panel = PanelIOCs(DummyControlador())
     panel.entrada.setText("malicioso.com")
-    panel.verificar()
+    panel.verificar_sin_thread()
     items = [panel.resultados.item(i).text() for i in range(panel.resultados.count())]
     assert any("malicioso" in item for item in items)
 from antivirus_kali.interfaz.panel_iocs import PanelIOCs

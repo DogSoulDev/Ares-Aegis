@@ -1,0 +1,367 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.3, pytest-8.4.1, pluggy-1.6.0 -- /home/dogsoul/Ares-Aegis/antivirus_kali/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/dogsoul/Ares-Aegis
+collecting ... collected 65 items
+
+antivirus_kali/tests/test_auditor_configuracion.py::test_revisar_ssh_root PASSED [  1%]
+antivirus_kali/tests/test_auditor_configuracion.py::test_revisar_ssh_seguro PASSED [  3%]
+antivirus_kali/tests/test_auditor_configuracion.py::test_revisar_ssh_error PASSED [  4%]
+antivirus_kali/tests/test_controlador_escaneo_sistema.py::test_exportar_informe PASSED [  6%]
+antivirus_kali/tests/test_controlador_modo_seguro.py::test_activar_modo_seguro PASSED [  7%]
+antivirus_kali/tests/test_controlador_modo_seguro.py::test_desactivar_modo_seguro PASSED [  9%]
+antivirus_kali/tests/test_controlador_modo_seguro.py::test_auditar_configuracion PASSED [ 10%]
+antivirus_kali/tests/test_controlador_privilegios.py::test_controlador_privilegios_detecta_sospechosos PASSED [ 12%]
+antivirus_kali/tests/test_controlador_privilegios.py::test_controlador_privilegios_sin_sospechosos PASSED [ 13%]
+antivirus_kali/tests/test_dependencias.py::test_dependencia_scapy PASSED [ 15%]
+antivirus_kali/tests/test_dependencias.py::test_dependencia_ufw PASSED   [ 16%]
+antivirus_kali/tests/test_gestor_firmas.py::test_gestor_firmas_importable PASSED [ 18%]
+antivirus_kali/tests/test_gestor_firmas.py::test_gestor_iocs_actualizar_y_es_malicioso PASSED [ 20%]
+antivirus_kali/tests/test_gestor_iocs.py::test_gestor_iocs_basico PASSED [ 21%]
+antivirus_kali/tests/test_modo_seguro.py::test_ufw_binario_disponible PASSED [ 23%]
+antivirus_kali/tests/test_modo_seguro.py::test_controlador_modo_seguro_instanciable PASSED [ 24%]
+antivirus_kali/tests/test_modo_seguro.py::test_ufw_no_disponible PASSED  [ 26%]
+antivirus_kali/tests/test_modo_seguro.py::test_ufw_disponible PASSED     [ 27%]
+antivirus_kali/tests/test_monitor_privilegios.py::test_procesos_root_sospechosos_vacio PASSED [ 29%]
+antivirus_kali/tests/test_monitor_privilegios.py::test_procesos_root_sospechosos_detecta PASSED [ 30%]
+antivirus_kali/tests/test_nucleo_analizador_red.py::test_es_root PASSED  [ 32%]
+antivirus_kali/tests/test_nucleo_analizador_red.py::test_escanear_dispositivos PASSED [ 33%]
+antivirus_kali/tests/test_nucleo_analizador_red.py::test_fingerprint_dispositivo PASSED [ 35%]
+antivirus_kali/tests/test_nucleo_analizador_red.py::test_detectar_honeypots PASSED [ 36%]
+antivirus_kali/tests/test_nucleo_escaneo_sistema.py::test_escanear_rootkits PASSED [ 38%]
+antivirus_kali/tests/test_nucleo_escaneo_sistema.py::test_escanear_procesos PASSED [ 40%]
+antivirus_kali/tests/test_nucleo_escaneo_sistema.py::test_escanear_puertos PASSED [ 41%]
+antivirus_kali/tests/test_nucleo_escaneo_sistema.py::test_escanear_servicios PASSED [ 43%]
+antivirus_kali/tests/test_nucleo_escaneo_sistema.py::test_escanear_integridad PASSED [ 44%]
+antivirus_kali/tests/test_nucleo_escaneo_sistema.py::test_obtener_programas PASSED [ 46%]
+antivirus_kali/tests/test_panel_configuracion.py::test_panel_configuracion_instanciable FAILED [ 47%]
+antivirus_kali/tests/test_panel_configuracion.py::test_panel_configuracion_cambios FAILED [ 49%]
+antivirus_kali/tests/test_panel_consola.py::test_panel_consola_instanciable PASSED [ 50%]
+antivirus_kali/tests/test_panel_consola.py::test_panel_consola_log_and_filter PASSED [ 52%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_instanciable PASSED [ 53%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_controles FAILED [ 55%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_resumen PASSED [ 56%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_rootkits PASSED [ 58%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_procesos PASSED [ 60%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_puertos PASSED [ 61%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_servicios PASSED [ 63%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_integridad PASSED [ 64%]
+antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_sistema_programas PASSED [ 66%]
+antivirus_kali/tests/test_panel_historial.py::test_panel_historial_instanciable FAILED [ 67%]
+antivirus_kali/tests/test_panel_historial.py::test_panel_historial_exportar_seleccion_exists PASSED [ 69%]
+antivirus_kali/tests/test_panel_historial.py::test_panel_historial_ver_detalles_exists PASSED [ 70%]
+antivirus_kali/tests/test_panel_integridad.py::test_panel_integridad_valida_predeterminado FAILED [ 72%]
+antivirus_kali/tests/test_panel_integridad.py::test_panel_integridad_instanciable FAILED [ 73%]
+antivirus_kali/tests/test_panel_iocs.py::test_panel_iocs_agregar_y_verificar_manual FAILED [ 75%]
+antivirus_kali/tests/test_panel_iocs.py::test_panel_iocs_verificar_api FAILED [ 76%]
+antivirus_kali/tests/test_panel_iocs.py::test_panel_iocs_instanciable PASSED [ 78%]
+antivirus_kali/tests/test_panel_modo_seguro.py::test_panel_modo_seguro_instanciable PASSED [ 80%]
+antivirus_kali/tests/test_panel_monitor_red.py::test_panel_monitor_red_importable PASSED [ 81%]
+antivirus_kali/tests/test_panel_monitor_sistema.py::test_panel_monitor_sistema_importable PASSED [ 83%]
+antivirus_kali/tests/test_panel_opciones_escaneo.py::test_panel_opciones_escaneo_importable PASSED [ 84%]
+antivirus_kali/tests/test_panel_privilegios.py::test_panel_privilegios_resalta_procesos FAILED [ 86%]
+antivirus_kali/tests/test_panel_privilegios.py::test_panel_privilegios_instanciable PASSED [ 87%]
+antivirus_kali/tests/test_panel_red.py::test_panel_red_instanciable PASSED [ 89%]
+antivirus_kali/tests/test_paneles_independientes.py::test_paneles_independientes PASSED [ 90%]
+antivirus_kali/tests/test_pdf_generator.py::test_generar_informe_pdf PASSED [ 92%]
+antivirus_kali/tests/test_privilegios_seguridad.py::test_no_password_terminal PASSED [ 93%]
+antivirus_kali/tests/test_utils.py::test_helpers_module PASSED           [ 95%]
+antivirus_kali/tests/test_utils.py::test_logger_module PASSED            [ 96%]
+antivirus_kali/tests/test_utils_logger.py::test_logger_importable PASSED [ 98%]
+antivirus_kali/tests/test_validador_integridad.py::test_validador_integridad_fake PASSED [100%]
+
+=================================== FAILURES ===================================
+____________________ test_panel_configuracion_instanciable _____________________
+
+    def test_panel_configuracion_instanciable():
+        panel = PanelConfiguracion()
+        assert panel is not None
+>       assert hasattr(panel, 'guardar_configuracion')
+E       AssertionError: assert False
+E        +  where False = hasattr(<antivirus_kali.interfaz.panel_configuracion.PanelConfiguracion(0xbf9de60) at 0x7f52b1ba30c0>, 'guardar_configuracion')
+
+antivirus_kali/tests/test_panel_configuracion.py:10: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+Unknown property text-shadow
+Unknown property text-shadow
+_______________________ test_panel_configuracion_cambios _______________________
+
+    def test_panel_configuracion_cambios():
+        panel = PanelConfiguracion()
+        panel.combo_idioma.setCurrentIndex(0)
+>       panel.check_notificaciones.setChecked(True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PanelConfiguracion' object has no attribute 'check_notificaciones'
+
+antivirus_kali/tests/test_panel_configuracion.py:16: AttributeError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+Unknown property text-shadow
+Unknown property text-shadow
+_________________________ test_panel_escaneo_controles _________________________
+
+app = <PySide6.QtWidgets.QApplication(0xc0c7a40) at 0x7f52c956d000>
+mock_controlador = <MagicMock id='139993155089952'>
+
+    def test_panel_escaneo_controles(app, mock_controlador):
+        panel = PanelEscaneoSistema(mock_controlador)
+        assert hasattr(panel, 'pausar_analisis')
+        assert hasattr(panel, 'reanudar_analisis')
+        assert hasattr(panel, 'cancelar_analisis')
+        panel.pausar_analisis()
+        assert panel._analisis_pausado
+>       panel.reanudar_analisis()
+
+antivirus_kali/tests/test_panel_escaneo_sistema.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+antivirus_kali/interfaz/panel_escaneo_sistema.py:250: in reanudar_analisis
+    self._analisis_siguiente_etapa()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <antivirus_kali.interfaz.panel_escaneo_sistema.PanelEscaneoSistema(0xc6e9450) at 0x7f52b1c1ee40>
+
+    def _analisis_siguiente_etapa(self):
+        if self._analisis_cancelado:
+            self.progress_bar.setVisible(False)
+            self.advertencia_label.setText("Análisis cancelado por el usuario.")
+            if self.panel_consola:
+                self.panel_consola.log("Análisis cancelado por el usuario.", "warning")
+            self.boton_pausar.setEnabled(False)
+            self.boton_reanudar.setEnabled(False)
+            self.boton_cancelar.setEnabled(False)
+            return
+        if self._analisis_pausado:
+            self.advertencia_label.setText("Análisis en pausa. Pulsa 'Reanudar' para continuar.")
+            self.boton_reanudar.setEnabled(True)
+            self.boton_pausar.setEnabled(False)
+            return
+        self.boton_reanudar.setEnabled(False)
+        self.boton_pausar.setEnabled(True)
+>       if self._analisis_actual >= self._analisis_total:
+           ^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PanelEscaneoSistema' object has no attribute '_analisis_actual'. Did you mean: '_analisis_cancelado'?
+
+antivirus_kali/interfaz/panel_escaneo_sistema.py:160: AttributeError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+Unknown property text-shadow
+Unknown property text-shadow
+______________________ test_panel_historial_instanciable _______________________
+
+    def test_panel_historial_instanciable():
+        panel = PanelHistorial()
+        assert panel is not None
+>       assert hasattr(panel, 'tabla')
+E       AssertionError: assert False
+E        +  where False = hasattr(<antivirus_kali.interfaz.panel_historial.PanelHistorial(0xc0cf4f0) at 0x7f52b1a5c500>, 'tabla')
+
+antivirus_kali/tests/test_panel_historial.py:10: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+Unknown property text-shadow
+Unknown property text-shadow
+_________________ test_panel_integridad_valida_predeterminado __________________
+
+app = <PySide6.QtWidgets.QApplication(0xc0c7a40) at 0x7f52c956d000>
+
+    def test_panel_integridad_valida_predeterminado(app):
+        mock_controlador = MagicMock()
+        mock_controlador.validar.return_value = (
+            {"/bin/ls": "Íntegro. Coincide con el hash oficial de Kali.", "/bin/bash": "No encontrado. Reinstale el paquete."}, []
+        )
+>       panel = PanelIntegridad(mock_controlador)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+antivirus_kali/tests/test_panel_integridad.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <antivirus_kali.interfaz.panel_integridad.PanelIntegridad(0xc838d40) at 0x7f52b23b5700>
+controlador = <MagicMock id='139993155646000'>, panel_consola = None
+
+    def __init__(self, controlador, panel_consola=None):
+        """
+        Inicializa el panel de validación de integridad de herramientas.
+        controlador: instancia de ControladorIntegridad
+        panel_consola: PanelConsola para logs globales
+        """
+        super().__init__()
+        self.controlador = controlador
+        self.panel_consola = panel_consola
+        self.setWindowTitle("Ares Aegis - Integridad de Herramientas")
+        self.setStyleSheet('''
+            QWidget { background: #fff; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif; color: #23272f; border-radius: 12px; }
+            QLabel { font-size: 15px; }
+            QListWidget { background: #f7f8fa; color: #23272f; font-size: 15px; border-radius: 8px; padding: 8px; border: 1px solid #e0e0e0; selection-background-color: #e3f2fd; selection-color: #23272f; }
+            QListWidget::item { padding: 10px 12px; border-radius: 7px; margin-bottom: 2px; }
+            QListWidget::item:selected { background: #c3e6ff; color: #23272f; font-weight: 700; border-left: 5px solid #2563eb; }
+            QListWidget::item:hover { background: #e0e7ef; }
+            QPushButton { background: #e0e7ef; color: #23272f; border-radius: 8px; font-size: 15px; padding: 7px 18px; font-weight: 600; border: 1px solid #cfd8dc; }
+            QPushButton:hover { background: #dbeafe; color: #1e293b; }
+            QPushButton:focus { outline: 2px solid #2563eb; }
+            QPushButton#exportar { background: #3c8dbc; color: #fff; border-radius: 8px; font-size: 15px; padding: 7px 18px; font-weight: 600; border: 1px solid #2563eb; }
+            QPushButton#exportar:hover { background: #2563eb; color: #fff; }
+        ''')
+        layout = QVBoxLayout()
+        self.advertencia_label = QLabel("")
+        self.advertencia_label.setStyleSheet("color: #b00; font-weight: 600; font-size: 14px; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif;")
+        self.advertencia_label.setWordWrap(True)
+        self.resultados = QListWidget()
+        self.boton_validar = QPushButton("Validar Integridad con Hashes Oficiales")
+        self.boton_validar.setStyleSheet("padding: 12px 28px; font-size: 16px; border-radius: 8px; background: #3c8dbc; color: #fff; font-weight: 600; border: none; margin-top: 10px; margin-bottom: 8px;")
+        self.boton_validar.clicked.connect(self.validar_threaded)
+        # Detectar modo limitado
+        import os
+        self.modo_limitado = os.environ.get('ARES_AEGIS_LIMITADO') == '1'
+        if self.modo_limitado:
+            self.boton_validar.setEnabled(False)
+            self.advertencia_label.setText("⚠️ Modo limitado: Ejecuta como root para validar integridad de herramientas.")
+        self.label_info = QLabel(
+            "Ares Aegis: Este panel compara los binarios críticos con los hashes oficiales de Kali Linux.\n"
+            "- Íntegro: Coincide con el hash oficial.\n"
+            "- Modificado: El binario ha cambiado, posible riesgo.\n"
+            "- Sin referencia: No hay hash oficial, verifique manualmente.\n"
+            "Recomendación: Si detecta binarios modificados, reinstale el paquete o investigue el origen.")
+        self.label_info.setStyleSheet("font-size: 16px; font-weight: 800; color: #2563eb; margin-bottom: 8px; letter-spacing:0.5px; text-shadow: 0 1px 0 #fff;")
+        self.label_info.setAccessibleName("Título integridad")
+        self.advertencia_label.setAccessibleName("Advertencia integridad")
+        self.resultados.setAccessibleName("Resultados integridad")
+        self.boton_validar.setObjectName("exportar")
+        self.boton_validar.setToolTip("Validar integridad de herramientas con hashes oficiales.")
+>       self.boton_exportar_md.setObjectName("exportar")
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PanelIntegridad' object has no attribute 'boton_exportar_md'
+
+antivirus_kali/interfaz/panel_integridad.py:80: AttributeError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+______________________ test_panel_integridad_instanciable ______________________
+
+    def test_panel_integridad_instanciable():
+        app = QApplication.instance() or QApplication(sys.argv)
+        mock_controlador = MagicMock()
+        mock_controlador.validar.return_value = ({}, [])
+>       panel = PanelIntegridad(mock_controlador)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+antivirus_kali/tests/test_panel_integridad.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <antivirus_kali.interfaz.panel_integridad.PanelIntegridad(0xc6b60d0) at 0x7f52b1a6ba40>
+controlador = <MagicMock id='139993155089616'>, panel_consola = None
+
+    def __init__(self, controlador, panel_consola=None):
+        """
+        Inicializa el panel de validación de integridad de herramientas.
+        controlador: instancia de ControladorIntegridad
+        panel_consola: PanelConsola para logs globales
+        """
+        super().__init__()
+        self.controlador = controlador
+        self.panel_consola = panel_consola
+        self.setWindowTitle("Ares Aegis - Integridad de Herramientas")
+        self.setStyleSheet('''
+            QWidget { background: #fff; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif; color: #23272f; border-radius: 12px; }
+            QLabel { font-size: 15px; }
+            QListWidget { background: #f7f8fa; color: #23272f; font-size: 15px; border-radius: 8px; padding: 8px; border: 1px solid #e0e0e0; selection-background-color: #e3f2fd; selection-color: #23272f; }
+            QListWidget::item { padding: 10px 12px; border-radius: 7px; margin-bottom: 2px; }
+            QListWidget::item:selected { background: #c3e6ff; color: #23272f; font-weight: 700; border-left: 5px solid #2563eb; }
+            QListWidget::item:hover { background: #e0e7ef; }
+            QPushButton { background: #e0e7ef; color: #23272f; border-radius: 8px; font-size: 15px; padding: 7px 18px; font-weight: 600; border: 1px solid #cfd8dc; }
+            QPushButton:hover { background: #dbeafe; color: #1e293b; }
+            QPushButton:focus { outline: 2px solid #2563eb; }
+            QPushButton#exportar { background: #3c8dbc; color: #fff; border-radius: 8px; font-size: 15px; padding: 7px 18px; font-weight: 600; border: 1px solid #2563eb; }
+            QPushButton#exportar:hover { background: #2563eb; color: #fff; }
+        ''')
+        layout = QVBoxLayout()
+        self.advertencia_label = QLabel("")
+        self.advertencia_label.setStyleSheet("color: #b00; font-weight: 600; font-size: 14px; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif;")
+        self.advertencia_label.setWordWrap(True)
+        self.resultados = QListWidget()
+        self.boton_validar = QPushButton("Validar Integridad con Hashes Oficiales")
+        self.boton_validar.setStyleSheet("padding: 12px 28px; font-size: 16px; border-radius: 8px; background: #3c8dbc; color: #fff; font-weight: 600; border: none; margin-top: 10px; margin-bottom: 8px;")
+        self.boton_validar.clicked.connect(self.validar_threaded)
+        # Detectar modo limitado
+        import os
+        self.modo_limitado = os.environ.get('ARES_AEGIS_LIMITADO') == '1'
+        if self.modo_limitado:
+            self.boton_validar.setEnabled(False)
+            self.advertencia_label.setText("⚠️ Modo limitado: Ejecuta como root para validar integridad de herramientas.")
+        self.label_info = QLabel(
+            "Ares Aegis: Este panel compara los binarios críticos con los hashes oficiales de Kali Linux.\n"
+            "- Íntegro: Coincide con el hash oficial.\n"
+            "- Modificado: El binario ha cambiado, posible riesgo.\n"
+            "- Sin referencia: No hay hash oficial, verifique manualmente.\n"
+            "Recomendación: Si detecta binarios modificados, reinstale el paquete o investigue el origen.")
+        self.label_info.setStyleSheet("font-size: 16px; font-weight: 800; color: #2563eb; margin-bottom: 8px; letter-spacing:0.5px; text-shadow: 0 1px 0 #fff;")
+        self.label_info.setAccessibleName("Título integridad")
+        self.advertencia_label.setAccessibleName("Advertencia integridad")
+        self.resultados.setAccessibleName("Resultados integridad")
+        self.boton_validar.setObjectName("exportar")
+        self.boton_validar.setToolTip("Validar integridad de herramientas con hashes oficiales.")
+>       self.boton_exportar_md.setObjectName("exportar")
+        ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PanelIntegridad' object has no attribute 'boton_exportar_md'
+
+antivirus_kali/interfaz/panel_integridad.py:80: AttributeError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+__________________ test_panel_iocs_agregar_y_verificar_manual __________________
+
+app = <PySide6.QtWidgets.QApplication(0xc0c7a40) at 0x7f52c956d000>
+
+    def test_panel_iocs_agregar_y_verificar_manual(app):
+        panel = PanelIOCs(DummyControlador())
+        # Agregar IOC manualmente
+        panel.entrada.setText("manual-ioc")
+>       panel.agregar_ioc()
+        ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'PanelIOCs' object has no attribute 'agregar_ioc'
+
+antivirus_kali/tests/test_panel_iocs.py:23: AttributeError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+Unknown property text-shadow
+Unknown property text-shadow
+________________________ test_panel_iocs_verificar_api _________________________
+
+app = <PySide6.QtWidgets.QApplication(0xc0c7a40) at 0x7f52c956d000>
+
+    def test_panel_iocs_verificar_api(app):
+        panel = PanelIOCs(DummyControlador())
+        panel.entrada.setText("malicioso.com")
+>       panel.verificar()
+        ^^^^^^^^^^^^^^^
+E       AttributeError: 'PanelIOCs' object has no attribute 'verificar'
+
+antivirus_kali/tests/test_panel_iocs.py:34: AttributeError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+Unknown property text-shadow
+Unknown property text-shadow
+___________________ test_panel_privilegios_resalta_procesos ____________________
+
+app = <PySide6.QtWidgets.QApplication(0xc0c7a40) at 0x7f52c956d000>
+
+    def test_panel_privilegios_resalta_procesos(app):
+        panel = PanelPrivilegios(DummyControlador())
+>       panel.monitorear()
+        ^^^^^^^^^^^^^^^^
+E       AttributeError: 'PanelPrivilegios' object has no attribute 'monitorear'
+
+antivirus_kali/tests/test_panel_privilegios.py:22: AttributeError
+----------------------------- Captured stderr call -----------------------------
+Unknown property text-shadow
+Unknown property text-shadow
+Unknown property text-shadow
+=========================== short test summary info ============================
+FAILED antivirus_kali/tests/test_panel_configuracion.py::test_panel_configuracion_instanciable
+FAILED antivirus_kali/tests/test_panel_configuracion.py::test_panel_configuracion_cambios
+FAILED antivirus_kali/tests/test_panel_escaneo_sistema.py::test_panel_escaneo_controles
+FAILED antivirus_kali/tests/test_panel_historial.py::test_panel_historial_instanciable
+FAILED antivirus_kali/tests/test_panel_integridad.py::test_panel_integridad_valida_predeterminado
+FAILED antivirus_kali/tests/test_panel_integridad.py::test_panel_integridad_instanciable
+FAILED antivirus_kali/tests/test_panel_iocs.py::test_panel_iocs_agregar_y_verificar_manual
+FAILED antivirus_kali/tests/test_panel_iocs.py::test_panel_iocs_verificar_api
+FAILED antivirus_kali/tests/test_panel_privilegios.py::test_panel_privilegios_resalta_procesos
+========================= 9 failed, 56 passed in 5.38s =========================

@@ -36,56 +36,58 @@ class VentanaPrincipal(QMainWindow):
         self.setStyleSheet("background: #f7f8fa; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif; color: #23272f;")
         self.setMinimumSize(1000, 700)
 
-        # Paneles
+        # Paneles: una sola instancia de consola para todo
         self.panel_consola = PanelConsola()
-        self.panel_escaneo = PanelEscaneoSistema(controladores['escaneo_sistema'])
-        self.panel_integridad = PanelIntegridad(controladores['integridad'])
-        self.panel_red = PanelRed(controladores['red'])
-        self.panel_privilegios = PanelPrivilegios(controladores['privilegios'])
-        self.panel_iocs = PanelIOCs(controladores['iocs'])
-        self.panel_modo_seguro = PanelModoSeguro(controladores['modo_seguro'])
+        self.panel_escaneo = PanelEscaneoSistema(controladores['escaneo_sistema'], panel_consola=self.panel_consola)
+        self.panel_integridad = PanelIntegridad(controladores['integridad'], panel_consola=self.panel_consola)
+        self.panel_red = PanelRed(controladores['red'], panel_consola=self.panel_consola)
+        self.panel_privilegios = PanelPrivilegios(controladores['privilegios'], panel_consola=self.panel_consola)
+        self.panel_iocs = PanelIOCs(controladores['iocs'], panel_consola=self.panel_consola)
+        self.panel_modo_seguro = PanelModoSeguro(controladores['modo_seguro'], panel_consola=self.panel_consola)
+        from antivirus_kali.interfaz.panel_historial import PanelHistorial
+        self.panel_historial = PanelHistorial()
+        from antivirus_kali.interfaz.panel_configuracion import PanelConfiguracion
+        self.panel_configuracion = PanelConfiguracion()
 
         self.categorias = [
             ("Análisis de Sistema", "system-search"),
+            ("Historial de Análisis", "view-history"),
+            ("Configuración", "settings-configure"),
             ("Red", "network-wired"),
             ("Integridad", "security-high"),
             ("Amenazas", "dialog-warning"),
             ("Modo Seguro", "security-medium"),
             ("Privilegios", "user-shield"),
             ("Exportar PDF", "document-save"),
+            ("Ayuda / Soporte", "help-browser"),
         ]
 
         self.subopciones = {
-            "Análisis de Sistema": [
-                ("Resumen General", self.panel_escaneo.mostrar_resumen, "Resumen ejecutivo y estado global del sistema."),
-                ("Escaneo Completo", self.panel_escaneo.mostrar_resumen, "Analiza el sistema operativo y programas instalados en busca de amenazas."),
-                ("Rootkits", self.panel_escaneo.analizar_rootkits, "Escaneo profundo de rootkits en el sistema."),
-                ("Procesos Sospechosos", self.panel_escaneo.analizar_procesos, "Detección de procesos sospechosos en ejecución."),
-                ("Puertos Abiertos", self.panel_escaneo.analizar_puertos, "Listado de puertos abiertos en el sistema."),
-                ("Servicios Activos", self.panel_escaneo.analizar_servicios, "Listado de servicios activos en el sistema."),
-                ("Programas Instalados", self.panel_escaneo.listar_programas, "Muestra todos los programas instalados en el sistema."),
-            ],
+            "Análisis de Sistema": [],
+            "Historial de Análisis": [],
+            "Configuración": [],
             "Red": [
-                ("Análisis de Red y Honeypots", self.panel_red.analizar, "Analiza la red local y detecta dispositivos o honeypots sospechosos."),
+                ("Análisis de Red y Honeypots", self.panel_red.analizar_threaded, "Analiza la red local y detecta dispositivos o honeypots sospechosos."),
             ],
             "Integridad": [
-                ("Validar Integridad con Hashes Oficiales", self.panel_integridad.validar, "Verifica la integridad de los binarios críticos del sistema."),
+                ("Validar Integridad con Hashes Oficiales", self.panel_integridad.validar_threaded, "Verifica la integridad de los binarios críticos del sistema."),
             ],
             "Amenazas": [
-                ("Verificar IOC/Reputación", self.panel_iocs.verificar, "Comprueba archivos, IPs o dominios contra fuentes públicas de amenazas."),
-                ("Agregar IOC manualmente", self.panel_iocs.agregar_ioc, "Permite añadir IOCs manualmente para reforzar la protección."),
+                ("Verificar IOC/Reputación", self.panel_iocs.verificar_threaded, "Comprueba archivos, IPs o dominios contra fuentes públicas de amenazas."),
+                ("Agregar IOC manualmente", self.panel_iocs.agregar_ioc_threaded, "Permite añadir IOCs manualmente para reforzar la protección."),
             ],
             "Modo Seguro": [
-                ("Activar Modo Seguro", self.panel_modo_seguro.activar, "Activa protecciones rápidas y firewall para pentesting seguro."),
-                ("Desactivar Modo Seguro", self.panel_modo_seguro.desactivar, "Desactiva el firewall temporalmente."),
-                ("Auditar Configuración Crítica", self.panel_modo_seguro.auditar, "Revisa configuraciones críticas como SSH."),
+                ("Activar Modo Seguro", self.panel_modo_seguro.activar_threaded, "Activa protecciones rápidas y firewall para pentesting seguro."),
+                ("Desactivar Modo Seguro", self.panel_modo_seguro.desactivar_threaded, "Desactiva el firewall temporalmente."),
+                ("Auditar Configuración Crítica", self.panel_modo_seguro.auditar_threaded, "Revisa configuraciones críticas como SSH."),
             ],
             "Privilegios": [
-                ("Comprobar Privilegios y Procesos", self.panel_privilegios.monitorear, "Monitorea procesos con privilegios elevados y posibles riesgos."),
+                ("Comprobar Privilegios y Procesos", self.panel_privilegios.monitorear_threaded, "Monitorea procesos con privilegios elevados y posibles riesgos."),
             ],
             "Exportar PDF": [
                 ("Exportar PDF personalizado", self.exportar_pdf_personalizado, "Exporta la información seleccionada por el usuario en un PDF profesional."),
             ],
+            "Ayuda / Soporte": [],
         }
 
 
@@ -197,59 +199,16 @@ class VentanaPrincipal(QMainWindow):
             titulo.setAlignment(Qt.AlignmentFlag.AlignHCenter)
             titulo.setToolTip(f"Panel de {cat}. Opciones y acciones de {cat.lower()}.")
             panel_layout.addWidget(titulo)
-            # Tarjetas de acciones (botones) en grid
-            if self.subopciones.get(cat, []):
-                from PySide6.QtWidgets import QGridLayout
-                grid_widget = QWidget()
-                grid_widget.setStyleSheet("background: #f7f8fa;")
-                grid_layout = QGridLayout(grid_widget)
-                grid_layout.setContentsMargins(0, 0, 0, 0)
-                grid_layout.setSpacing(18)
-                for idx, (nombre, accion, desc) in enumerate(self.subopciones[cat]):
-                    btn = QPushButton(nombre)
-                    btn.setFixedHeight(54)
-                    btn.setMinimumWidth(200)
-                    btn.setMaximumWidth(400)
-                    btn.setStyleSheet('''
-                        QPushButton {
-                            background: #f7f8fa;
-                            color: #23272f;
-                            border-radius: 14px;
-                            border: 2px solid #e0e0e0;
-                            font-size: 17px;
-                            font-weight: 700;
-                            padding: 10px 28px;
-                            margin-bottom: 2px;
-                            letter-spacing: 0.2px;
-                        }
-                        QPushButton:hover {
-                            background: #eaf3fa;
-                            color: #1a1a1a;
-                            border: 2px solid #3c8dbc;
-                        }
-                        QPushButton:pressed {
-                            background: #dbeafe;
-                            color: #1a1a1a;
-                            border: 2px solid #3c8dbc;
-                        }
-                        QPushButton:focus {
-                            border: 2.5px solid #3c8dbc;
-                        }
-                    ''')
-                    btn.setToolTip(desc)
-                    btn.setAccessibleName(nombre)
-                    btn.setAccessibleDescription(desc)
-                    btn.setCursor(Qt.CursorShape.PointingHandCursor)
-                    btn.clicked.connect(accion)
-                    row = idx // 2
-                    col = idx % 2
-                    grid_layout.addWidget(btn, row, col, alignment=Qt.AlignmentFlag.AlignLeft)
-                grid_layout.setRowStretch((len(self.subopciones[cat]) + 1) // 2, 1)
-                panel_layout.addWidget(grid_widget, alignment=Qt.AlignmentFlag.AlignLeft)
             # Panel específico (resultados, widgets, etc.)
             if cat == "Análisis de Sistema":
                 self.panel_escaneo.setStyleSheet("background: #f7f8fa;")
                 panel_layout.addWidget(self.panel_escaneo)
+            elif cat == "Historial de Análisis":
+                self.panel_historial.setStyleSheet("background: #f7f8fa;")
+                panel_layout.addWidget(self.panel_historial)
+            elif cat == "Configuración":
+                self.panel_configuracion.setStyleSheet("background: #f7f8fa;")
+                panel_layout.addWidget(self.panel_configuracion)
             elif cat == "Red":
                 self.panel_red.setStyleSheet("background: #f7f8fa;")
                 panel_layout.addWidget(self.panel_red)
@@ -265,6 +224,25 @@ class VentanaPrincipal(QMainWindow):
             elif cat == "Privilegios":
                 self.panel_privilegios.setStyleSheet("background: #f7f8fa;")
                 panel_layout.addWidget(self.panel_privilegios)
+            elif cat == "Ayuda / Soporte":
+                # Panel de ayuda moderno
+                ayuda = QWidget()
+                ayuda_layout = QVBoxLayout(ayuda)
+                ayuda_layout.setContentsMargins(24, 12, 24, 12)
+                ayuda_layout.setSpacing(18)
+                l1 = QLabel("<b>Ayuda y Soporte de Ares Aegis</b>")
+                l1.setStyleSheet("font-size: 22px; color: #23272f; font-weight: 800;")
+                ayuda_layout.addWidget(l1)
+                l2 = QLabel("<ul style='font-size:15px;'><li>Consulta la <a href='https://github.com/DogSoulDev/Ares-Aegis/wiki'>documentación oficial</a> para guías y preguntas frecuentes.</li><li>Reporta problemas o sugiere mejoras en <a href='https://github.com/DogSoulDev/Ares-Aegis/issues'>GitHub Issues</a>.</li><li>Contacta al equipo: <a href='mailto:soporte@aresaegis.com'>soporte@aresaegis.com</a></li></ul>")
+                l2.setOpenExternalLinks(True)
+                l2.setStyleSheet("font-size: 15px; color: #23272f;")
+                ayuda_layout.addWidget(l2)
+                l3 = QLabel("<b>Recursos útiles:</b><br>- <a href='https://www.kali.org/docs/'>Documentación Kali Linux</a><br>- <a href='https://www.clamav.net/documents/'>ClamAV Docs</a><br>- <a href='https://bleachbit.org/documentation'>BleachBit Docs</a>")
+                l3.setOpenExternalLinks(True)
+                l3.setStyleSheet("font-size: 14px; color: #23272f;")
+                ayuda_layout.addWidget(l3)
+                ayuda_layout.addStretch(1)
+                panel_layout.addWidget(ayuda)
             self.central_stack.addWidget(panel)
             self.paneles_categoria[cat] = panel
 
@@ -279,15 +257,14 @@ class VentanaPrincipal(QMainWindow):
         main_layout.addWidget(self.sidebar)
         main_layout.addWidget(self.central_stack, stretch=1)
 
-        # Terminal de información siempre visible abajo (solo una vez)
-        self.terminal_info = PanelConsola()
+        # Terminal de información siempre visible abajo (solo una vez, misma instancia que panel_consola)
         terminal_bg = QWidget()
         terminal_layout = QVBoxLayout(terminal_bg)
         terminal_layout.setContentsMargins(24, 8, 24, 16)
         terminal_layout.setSpacing(0)
         terminal_bg.setStyleSheet("background: #23272f; border-radius: 12px; border: none; margin-bottom: 0px;")
-        self.terminal_info.setStyleSheet("background: #23272f; color: #bdbdbd; font-family: 'Fira Mono', monospace; font-size: 15px; border: none;")
-        terminal_layout.addWidget(self.terminal_info)
+        self.panel_consola.setStyleSheet("background: #23272f; color: #bdbdbd; font-family: 'Fira Mono', monospace; font-size: 15px; border: none;")
+        terminal_layout.addWidget(self.panel_consola)
 
         # Layout vertical final: contenido + terminal
         layout_vertical = QVBoxLayout()
@@ -332,4 +309,4 @@ class VentanaPrincipal(QMainWindow):
             return
         cat = self.categorias[idx][0]
         self.central_stack.setCurrentWidget(self.paneles_categoria[cat])
-        self.terminal_info.log(f"[INFO] Cambiaste a la categoría: {cat}")
+        # No loguear cambios de categoría en la consola, solo logs relevantes de análisis y errores

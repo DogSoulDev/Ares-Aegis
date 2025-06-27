@@ -19,7 +19,7 @@ def app():
 
 def test_panel_privilegios_resalta_procesos(app):
     panel = PanelPrivilegios(DummyControlador())
-    panel.monitorear()
+    panel.monitorear_sin_thread()
     # Debe haber al menos un proceso resaltado
     items = [panel.resultados.item(i).text() for i in range(panel.resultados.count())]
     assert any('evilproc' in item for item in items)
