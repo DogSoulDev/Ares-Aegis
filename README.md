@@ -1,3 +1,37 @@
+---
+
+## 📁 Estructura del Proyecto
+
+```text
+Ares-Aegis/
+│
+├── antivirus_kali/                # Código principal del antivirus
+│   ├── controladores/             # Lógica de control (MVC)
+│   ├── interfaz/                  # Interfaz gráfica (paneles, ventanas, estilos)
+│   ├── nucleo/                    # Núcleo de análisis, escaneo, integridad, red, IOCs
+│   ├── reports/                   # Generador profesional de informes PDF
+│   ├── recursos/                  # Recursos gráficos (iconos, imágenes)
+│   ├── tests/                     # Tests unitarios de todos los módulos y paneles
+│   ├── utils/                     # Utilidades y helpers reutilizables
+│   ├── requirements.txt           # Dependencias principales
+│   ├── principal.py               # Entry point de la aplicación
+│   └── ...                        # Otros módulos y configuraciones
+│
+├── README.md                      # Documentación principal y guía de uso
+├── CREDITOS.md                    # Créditos de autoría y edición
+└── ...                            # Archivos de configuración y licencia
+```
+
+**Descripción de carpetas clave:**
+- `controladores/`: Controladores para cada panel y función (escaneo, integridad, red, IOCs, modo seguro, etc).
+- `interfaz/`: Paneles visuales, ventana principal, estilos y visores.
+- `nucleo/`: Lógica de análisis, escaneo, integridad, red, gestión de IOCs, modo seguro, etc.
+- `reports/`: Generador de informes PDF visuales y profesionales.
+- `recursos/`: Iconos, imágenes y recursos gráficos.
+- `tests/`: Tests unitarios exhaustivos para todos los componentes principales.
+- `utils/`: Helpers y utilidades comunes (logger, helpers, etc).
+
+---
 # Ares Aegis - Antivirus para Kali Linux
 
 Ares Aegis es un antivirus moderno, minimalista y robusto para sistemas Linux (Kali), diseñado para ser profesional, escalable y fácil de mantener. El proyecto sigue los más altos estándares de calidad de software, priorizando la claridad, la modularidad y la seguridad. Toda decisión de arquitectura, librerías y estilo de código está documentada para que cualquier desarrollador pueda entender y contribuir fácilmente.
