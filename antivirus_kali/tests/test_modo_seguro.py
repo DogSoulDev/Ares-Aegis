@@ -1,3 +1,14 @@
+import pytest
+import shutil
+from antivirus_kali.controladores.controlador_modo_seguro import ControladorModoSeguro
+
+def test_ufw_binario_disponible():
+    assert shutil.which('ufw'), 'ufw no está instalado ni como binario'
+
+def test_controlador_modo_seguro_instanciable():
+    ctrl = ControladorModoSeguro()
+    assert hasattr(ctrl, 'activar_modo_seguro')
+    assert hasattr(ctrl, 'desactivar_modo_seguro')
 from antivirus_kali.nucleo.modo_seguro import ModoSeguro
 import pytest
 

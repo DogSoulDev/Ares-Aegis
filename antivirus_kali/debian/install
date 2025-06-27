@@ -1,0 +1,13 @@
+FROM python:3.11-slim
+
+COPY antivirus_kali/principal.py /usr/share/ares-aegis/
+COPY antivirus_kali/ares-aegis-wrapper.sh /usr/share/ares-aegis/
+COPY antivirus_kali/recursos/ /usr/share/ares-aegis/recursos/
+COPY antivirus_kali/requirements.txt /usr/share/ares-aegis/
+COPY antivirus_kali/ares-aegis.desktop /usr/share/applications/
+COPY antivirus_kali/controladores/ /usr/share/ares-aegis/controladores/
+COPY antivirus_kali/informes/ /usr/share/ares-aegis/informes/
+COPY antivirus_kali/interfaz/ /usr/share/ares-aegis/interfaz/
+COPY antivirus_kali/nucleo/ /usr/share/ares-aegis/nucleo/
+COPY antivirus_kali/tests/ /usr/share/ares-aegis/tests/
+COPY antivirus_kali/utils/ /usr/share/ares-aegis/utils/

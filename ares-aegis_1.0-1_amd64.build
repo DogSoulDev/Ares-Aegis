@@ -1,0 +1,25 @@
+ dpkg-buildpackage -us -uc -ui
+dpkg-buildpackage: info: source package ares-aegis
+dpkg-buildpackage: info: source version 1.0-1
+dpkg-buildpackage: info: source distribution unstable
+dpkg-buildpackage: info: source changed by DogSoulDev <dogsouldev@protonmail.com>
+ dpkg-source --before-build .
+dpkg-buildpackage: info: host architecture amd64
+ debian/rules clean
+dh clean
+   dh_clean
+rm: cannot remove './tests/__pycache__/test_panel_modo_seguro.cpython-313-pytest-8.4.1.pyc': Permission denied
+rm: cannot remove './tests/__pycache__/test_panel_escaneo_sistema.cpython-313-pytest-8.4.1.pyc': Permission denied
+rm: cannot remove './tests/__pycache__/test_panel_iocs.cpython-313-pytest-8.4.1.pyc': Permission denied
+rm: cannot remove './tests/__pycache__/test_controlador_escaneo_sistema.cpython-313-pytest-8.4.1.pyc': Permission denied
+rm: cannot remove './tests/__pycache__/test_panel_integridad.cpython-313-pytest-8.4.1.pyc': Permission denied
+dh_clean: error: find .  \( \( \
+		\( -path .\*/.git -o -path .\*/.svn -o -path .\*/.bzr -o -path .\*/.hg -o -path .\*/CVS -o -path .\*/.pc -o -path .\*/_darcs \) -prune -o -type f -a \
+	        \( -name '#*#' -o -name '.*~' -o -name '*~' -o -name DEADJOE \
+		 -o -name '*.orig' -o -name '*.rej' -o -name '*.bak' \
+		 -o -name '.*.orig' -o -name .*.rej -o -name '.SUMS' \
+		 -o -name TAGS -o \( -path '*/.deps/*' -a -name '*.P' \) \
+		\) -exec rm -f {} + \) -o \
+		\( -type d -a \( -name autom4te.cache -o -name __pycache__ \) -prune -exec rm -rf {} + \) \) returned exit code 1
+make: *** [debian/rules:3: clean] Error 25
+dpkg-buildpackage: error: debian/rules clean subprocess returned exit status 2

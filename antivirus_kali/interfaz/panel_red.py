@@ -22,6 +22,12 @@ class PanelRed(QWidget):
         self.boton_analizar = QPushButton("Analizar Red y Honeypots")
         self.boton_analizar.setStyleSheet("padding: 12px 28px; font-size: 16px; border-radius: 8px; background: #3c8dbc; color: #fff; font-weight: 600; border: none; margin-top: 10px; margin-bottom: 8px;")
         self.boton_analizar.clicked.connect(self.analizar)
+        # Detectar modo limitado
+        import os
+        self.modo_limitado = os.environ.get('ARES_AEGIS_LIMITADO') == '1'
+        if self.modo_limitado:
+            self.boton_analizar.setEnabled(False)
+            self.advertencia_label.setText("⚠️ Modo limitado: Ejecuta como root para análisis de red completo.")
         self.label_info = QLabel(
             "Ares Aegis: Este panel analiza la red local y detecta posibles honeypots o dispositivos anómalos.\n"
             "- Si ejecutas como root, el análisis es más profundo.\n"

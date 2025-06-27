@@ -60,3 +60,23 @@ class ControladorEscaneoSistema:
         usuario: nombre del usuario
         """
         return self.escaneo.exportar_informe(resumen, ruta, usuario=usuario)
+
+    def exportar_informe_markdown(self, resumen, recomendaciones=None, ruta=None):
+        """
+        Exporta el informe en formato Markdown profesional.
+        resumen: dict de resultados
+        recomendaciones: lista de strings
+        ruta: destino del archivo .md
+        """
+        from antivirus_kali.utils.resumen import exportar_markdown
+        return exportar_markdown(resumen, recomendaciones, ruta)
+
+    def exportar_informe_txt(self, resumen, recomendaciones=None, ruta=None):
+        """
+        Exporta el informe en formato texto plano profesional.
+        resumen: dict de resultados
+        recomendaciones: lista de strings
+        ruta: destino del archivo .txt
+        """
+        from antivirus_kali.utils.resumen import exportar_txt
+        return exportar_txt(resumen, recomendaciones, ruta)

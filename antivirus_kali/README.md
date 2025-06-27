@@ -53,6 +53,17 @@ Antivirus modular, visual y automatizado para Kali Linux.
    ```bash
    python3 antivirus_kali/principal.py
    ```
+   
+   Si quieres acceder a todas las funciones avanzadas (requiere privilegios de administrador/root):
+   
+   - Desde la interfaz, pulsa "Loguearte como root" y sigue el diálogo seguro de autenticación (pkexec).
+   - O ejecuta directamente desde terminal:
+     ```bash
+     pkexec ./antivirus_kali/ares-aegis-wrapper.sh
+     ```
+   - Si usas un paquete .deb, el lanzador gráfico usará este flujo automáticamente.
+   
+   El wrapper bash garantiza privacidad total: solo ejecuta localmente, no almacena ni transmite contraseñas ni datos.
 
 
 
@@ -110,13 +121,14 @@ Ares-Aegis/
 
 ## FAQ
 
+
 **¿Funciona en cualquier distribución Linux?**
 
 Ares Aegis está optimizado para Kali Linux, pero puede funcionar en otras distribuciones basadas en Debian. Se recomienda probar y reportar cualquier incompatibilidad.
 
 **¿Se envía información fuera del equipo?**
 
-No. Todo el análisis y los informes se generan localmente. No se envía ningún dato a servidores externos.
+No. Todo el análisis y los informes se generan localmente. No se envía ningún dato a servidores externos. El flujo de privilegios con pkexec y el wrapper bash es seguro y estándar en Linux: tu contraseña nunca sale de tu equipo.
 
 **¿Cómo puedo traducir la interfaz?**
 
@@ -132,7 +144,8 @@ Puedes abrir un issue en GitHub o escanear el QR de feedback que aparece en los 
 
 ## Créditos
 
-Desarrollado por DogSoulDev y colaboradores.
+
+Desarrollado íntegramente por DogSoulDev. Refactorizado, modernizado y editado con ayuda de GPT-4.1 (OpenAI Copilot). No existen colaboradores ni terceros: todo el código, lógica, interfaz y documentación han sido realizados exclusivamente por el autor y editados por IA bajo su supervisión.
 
 ¿Ideas, sugerencias o problemas? Escanea el QR de feedback en tu informe o abre un issue en GitHub.
 

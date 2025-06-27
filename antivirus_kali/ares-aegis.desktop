@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Ares Aegis
+Comment=Antivirus modular y visual para Kali Linux
+Exec=pkexec --disable-internal-agent /usr/share/ares-aegis/ares-aegis-wrapper.sh
+Icon=/usr/share/ares-aegis/recursos/iconos/aresIcon.png
+Terminal=false
+Categories=Utility;Security;
+StartupNotify=true

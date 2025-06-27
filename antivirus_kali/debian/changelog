@@ -1,0 +1,7 @@
+ares-aegis (1.0-1) unstable; urgency=medium
+
+  * Primera versión estable y automatizada de Ares Aegis para Kali Linux.
+  * Flujo de privilegios seguro con pkexec y wrapper bash.
+  * Interfaz profesional, informes PDF, y protección avanzada.
+
+ -- DogSoulDev <dogsouldev@protonmail.com>  Fri, 27 Jun 2025 12:00:00 +0000

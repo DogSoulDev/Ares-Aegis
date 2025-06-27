@@ -40,6 +40,13 @@ class PanelModoSeguro(QWidget):
         layout.addWidget(self.boton_activar)
         layout.addWidget(self.boton_desactivar)
         layout.addWidget(self.boton_auditar)
+        # Detectar modo limitado
+        import os
+        self.modo_limitado = os.environ.get('ARES_AEGIS_LIMITADO') == '1'
+        if self.modo_limitado:
+            for btn in [self.boton_activar, self.boton_desactivar, self.boton_auditar]:
+                btn.setEnabled(False)
+            self.advertencia_label.setText("⚠️ Modo limitado: Ejecuta como root para activar el modo seguro y auditar la configuración.")
         self.setLayout(layout)
 
     def activar(self):

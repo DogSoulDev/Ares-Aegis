@@ -1,0 +1,14 @@
+
+Source: ares-aegis
+Section: utils
+Priority: optional
+Maintainer: DogSoulDev <dogsouldev@protonmail.com>
+Build-Depends: debhelper-compat (= 13), dh-python, python3-all
+Standards-Version: 4.5.0
+Homepage: https://github.com/DogSoulDev/Ares-Aegis
+
+Package: ares-aegis
+Architecture: all
+Depends: python3, python3-pyside6, python3-psutil, python3-requests, python3-pyinotify, python3-scapy, python3-pyqtgraph, python3-reportlab, python3-yara, python3-qrcode, policykit-1
+Description: Antivirus modular y visual para Kali Linux
+ Ares Aegis es un antivirus profesional, visual y automatizado para Kali Linux. Incluye escaneo avanzado, informes PDF, y protección integral. Interfaz moderna y segura.
