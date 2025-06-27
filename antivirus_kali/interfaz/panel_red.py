@@ -9,6 +9,10 @@ from PySide6.QtCore import Qt
 
 class PanelRed(QWidget):
     def __init__(self, controlador):
+        """
+        Inicializa el panel de análisis de red y honeypots.
+        controlador: instancia de ControladorRed
+        """
         super().__init__()
         self.controlador = controlador
         self.setWindowTitle("Ares Aegis - Análisis de Red y Honeypots")
@@ -31,14 +35,25 @@ class PanelRed(QWidget):
         layout.addWidget(self.advertencia_label)
         layout.addWidget(self.boton_analizar)
         self.setLayout(layout)
+        self.ultimo_resultado = None  # Guarda el último análisis para exportación o consulta
 
     def analizar(self):
+        """
+        Ejecuta el análisis de red y honeypots, mostrando resultados y advertencias.
+        Guarda el último resultado para exportación o consulta posterior.
+        """
         from PySide6.QtWidgets import QApplication
         self.resultados.clear()
+        self.advertencia_label.setText("")
         self.resultados.addItem("⏳ Analizando red... Por favor, espera.")
         QApplication.processEvents()
         self.boton_analizar.setEnabled(False)
         try:
+            # Validación previa de dependencias
+            try:
+                import scapy
+            except ImportError:
+                self.advertencia_label.setText("⚠️ Scapy no está instalado. El análisis será básico. Instala 'scapy' para mejores resultados.")
             sospechosos, advertencias, explicaciones = self.controlador.analizar_red()
             self.resultados.clear()
             # Feedback visual minimalista y didáctico
@@ -66,5 +81,14 @@ class PanelRed(QWidget):
                     self.resultados.addItem(f"IP: {disp.get('ip','')} | MAC: {disp.get('mac','')}")
                 for exp in explicaciones:
                     self.resultados.addItem(f"⚠️ {exp}")
+            # Guardar último resultado para exportación o consulta
+            self.ultimo_resultado = {
+                'sospechosos': sospechosos,
+                'advertencias': advertencias,
+                'explicaciones': explicaciones
+            }
+        except Exception as e:
+            self.advertencia_label.setText(f"Error al analizar la red: {e}")
+            self.resultados.addItem("No se pudo analizar la red.")
         finally:
             self.boton_analizar.setEnabled(True)

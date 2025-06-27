@@ -9,6 +9,10 @@ from PySide6.QtCore import Qt
 
 class PanelIOCs(QWidget):
     def __init__(self, controlador):
+        """
+        Inicializa el panel de gestión y verificación de IOCs.
+        controlador: instancia de ControladorIOCs
+        """
         super().__init__()
         self.controlador = controlador
         self.setWindowTitle("Ares Aegis - Detección de IOCs y Reputación")
@@ -37,9 +41,14 @@ class PanelIOCs(QWidget):
         layout.addWidget(self.boton_agregar)
         self.setLayout(layout)
         self.iocs_manuales = set()
+        self.ultimo_resultado = None  # Guarda el último resultado para exportación o consulta
 
 
     def verificar(self):
+        """
+        Verifica si un valor es un IOC conocido o sospechoso, mostrando advertencias y resultados.
+        Guarda el último resultado para exportación o consulta posterior.
+        """
         from PySide6.QtWidgets import QApplication
         valor = self.entrada.text().strip()
         self.resultados.clear()
@@ -47,6 +56,11 @@ class PanelIOCs(QWidget):
         self.boton_verificar.setEnabled(False)
         self.boton_agregar.setEnabled(False)
         try:
+            # Validación previa de dependencias
+            try:
+                import requests
+            except ImportError:
+                self.advertencia_label.setText("⚠️ El módulo 'requests' no está instalado. El análisis puede ser incompleto.")
             self.resultados.addItem("⏳ Verificando IOC/Reputación... Por favor, espera.")
             QApplication.processEvents()
             advertencias = []
@@ -60,6 +74,11 @@ class PanelIOCs(QWidget):
                 advertencias.append("Este IOC fue marcado manualmente como malicioso. Confirma su procedencia.")
                 self.advertencia_label.setStyleSheet("color: #b00; font-weight: bold; font-size: 13px; background: #fffbe6; border: 1px solid #e0b000; padding: 4px; border-radius: 6px;")
                 self.advertencia_label.setText("\n".join(advertencias))
+                self.ultimo_resultado = {
+                    'valor': valor,
+                    'resultado': f"{valor}: IOC manualmente marcado como malicioso.",
+                    'advertencias': advertencias
+                }
                 return
             resultado, advertencias_api = self.controlador.verificar_ioc(valor)
             self.resultados.clear()
@@ -73,11 +92,23 @@ class PanelIOCs(QWidget):
                 self.advertencia_label.setText("\n".join(advertencias))
             else:
                 self.advertencia_label.setText("")
+            # Guardar último resultado para exportación o consulta
+            self.ultimo_resultado = {
+                'valor': valor,
+                'resultado': resultado,
+                'advertencias': advertencias
+            }
+        except Exception as e:
+            self.advertencia_label.setText(f"Error al verificar IOC: {e}")
+            self.resultados.addItem("No se pudo verificar el IOC.")
         finally:
             self.boton_verificar.setEnabled(True)
             self.boton_agregar.setEnabled(True)
 
     def agregar_ioc(self):
+        """
+        Añade un valor como IOC manualmente, mostrando feedback visual y guardando el resultado.
+        """
         from PySide6.QtWidgets import QApplication
         valor = self.entrada.text().strip()
         self.resultados.clear()
@@ -90,6 +121,14 @@ class PanelIOCs(QWidget):
                 self.iocs_manuales.add(valor)
                 self.resultados.clear()
                 self.resultados.addItem(f"IOC añadido manualmente: {valor}")
+                self.ultimo_resultado = {
+                    'valor': valor,
+                    'resultado': f"IOC añadido manualmente: {valor}",
+                    'advertencias': []
+                }
+        except Exception as e:
+            self.advertencia_label.setText(f"Error al agregar IOC: {e}")
+            self.resultados.addItem("No se pudo agregar el IOC.")
         finally:
             self.boton_verificar.setEnabled(True)
             self.boton_agregar.setEnabled(True)

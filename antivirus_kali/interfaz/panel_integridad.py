@@ -8,6 +8,10 @@ from PySide6.QtCore import Qt
 
 class PanelIntegridad(QWidget):
     def __init__(self, controlador):
+        """
+        Inicializa el panel de validación de integridad de herramientas.
+        controlador: instancia de ControladorIntegridad
+        """
         super().__init__()
         self.controlador = controlador
         self.setWindowTitle("Ares Aegis - Integridad de Herramientas")
@@ -32,14 +36,24 @@ class PanelIntegridad(QWidget):
         layout.addWidget(self.resultados)
         layout.addWidget(self.boton_validar)
         self.setLayout(layout)
+        self.ultimo_resultado = None  # Guarda el último resultado para exportación o consulta
 
     def validar(self):
+        """
+        Ejecuta la validación de integridad, mostrando resultados y advertencias.
+        Guarda el último resultado para exportación o consulta posterior.
+        """
         self.resultados.clear()
         self.advertencia_label.setText("")
         self.resultados.addItem("⏳ Validando integridad... Por favor, espera.")
         QApplication.processEvents()
         self.boton_validar.setEnabled(False)
         try:
+            # Validación previa de dependencias
+            try:
+                import requests
+            except ImportError:
+                self.advertencia_label.setText("⚠️ El módulo 'requests' no está instalado. No se podrán descargar hashes oficiales.")
             resultados, advertencias = self.controlador.validar()
             self.resultados.clear()
             for herramienta, estado in resultados.items():
@@ -56,5 +70,13 @@ class PanelIntegridad(QWidget):
                 self.advertencia_label.setText("\n".join(advertencias))
             else:
                 self.advertencia_label.setText("")
+            # Guardar último resultado para exportación o consulta
+            self.ultimo_resultado = {
+                'resultados': resultados,
+                'advertencias': advertencias
+            }
+        except Exception as e:
+            self.advertencia_label.setText(f"Error al validar integridad: {e}")
+            self.resultados.addItem("No se pudo validar la integridad.")
         finally:
             self.boton_validar.setEnabled(True)

@@ -9,8 +9,8 @@ def test_panel_modo_seguro_instanciable():
             return ""
         def desactivar_modo_seguro(self):
             return ""
-        def auditar(self):
-            return ""
+        def auditar_configuracion(self):
+            return ("Auditoría OK", "")
     panel = PanelModoSeguro(DummyControlador())
     assert panel.windowTitle().startswith("Ares Aegis")
     assert panel.resultados is not None

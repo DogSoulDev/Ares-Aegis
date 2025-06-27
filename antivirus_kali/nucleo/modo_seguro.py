@@ -15,18 +15,25 @@ class ModoSeguro:
         return shutil.which('ufw') is not None
 
     def activar(self):
+        self.activo = False  # Siempre inicializa a False antes de intentar activar
         if self.ufw_disponible():
-            os.system('ufw enable && ufw default deny outgoing')
-            self.activo = True
-            self.advertencia = None
+            ret = os.system('ufw enable && ufw default deny outgoing')
+            if ret == 0:
+                self.activo = True
+                self.advertencia = None
+            else:
+                self.activo = False
+                self.advertencia = 'Error: Fallo al activar UFW. Comprueba permisos o instalación.'
         else:
-            self.advertencia = 'Advertencia: UFW no está instalado. No se puede activar el modo seguro.'
             self.activo = False
+            self.advertencia = 'Advertencia: UFW no está instalado. No se puede activar el modo seguro.'
 
     def desactivar(self):
+        self.activo = False  # Siempre inicializa a False antes de intentar desactivar
         if self.ufw_disponible():
             os.system('ufw disable')
             self.activo = False
             self.advertencia = None
         else:
+            self.activo = False
             self.advertencia = 'Advertencia: UFW no está instalado. No se puede desactivar el modo seguro.'
