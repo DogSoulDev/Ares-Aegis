@@ -4,12 +4,12 @@ Estilo minimalista japonés, navegación entre paneles innovadores.
 """
 from PySide6.QtWidgets import QMainWindow, QWidget, QTabWidget, QVBoxLayout, QLabel
 from PySide6.QtCore import Qt
-from interfaz.panel_integridad import PanelIntegridad
-from interfaz.panel_red import PanelRed
-from interfaz.panel_privilegios import PanelPrivilegios
-from interfaz.panel_iocs import PanelIOCs
-from interfaz.panel_modo_seguro import PanelModoSeguro
-from interfaz.panel_escaneo_sistema import PanelEscaneoSistema
+from antivirus_kali.interfaz.panel_integridad import PanelIntegridad
+from antivirus_kali.interfaz.panel_red import PanelRed
+from antivirus_kali.interfaz.panel_privilegios import PanelPrivilegios
+from antivirus_kali.interfaz.panel_iocs import PanelIOCs
+from antivirus_kali.interfaz.panel_modo_seguro import PanelModoSeguro
+from antivirus_kali.interfaz.panel_escaneo_sistema import PanelEscaneoSistema
 
 
 class VentanaPrincipal(QMainWindow):

@@ -5,13 +5,13 @@ Inicializa controladores y lanza la interfaz principal.
 
 import sys
 from PySide6.QtWidgets import QApplication
-from interfaz.ventana_principal import VentanaPrincipal
-from controladores.controlador_integridad import ControladorIntegridad
-from controladores.controlador_red import ControladorRed
-from controladores.controlador_privilegios import ControladorPrivilegios
-from controladores.controlador_iocs import ControladorIOCs
-from controladores.controlador_modo_seguro import ControladorModoSeguro
-from controladores.controlador_escaneo_sistema import ControladorEscaneoSistema
+from antivirus_kali.interfaz.ventana_principal import VentanaPrincipal
+from antivirus_kali.controladores.controlador_integridad import ControladorIntegridad
+from antivirus_kali.controladores.controlador_red import ControladorRed
+from antivirus_kali.controladores.controlador_privilegios import ControladorPrivilegios
+from antivirus_kali.controladores.controlador_iocs import ControladorIOCs
+from antivirus_kali.controladores.controlador_modo_seguro import ControladorModoSeguro
+from antivirus_kali.controladores.controlador_escaneo_sistema import ControladorEscaneoSistema
 
 
 if __name__ == "__main__":
