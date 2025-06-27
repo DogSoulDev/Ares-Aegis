@@ -24,6 +24,7 @@ import qrcode
 from reportlab.graphics.shapes import Line
 
 ICON_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "recursos", "iconos", "aresIcon.png")
+MAIN_IMAGE_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "recursos", "Ares.jpeg")
 
 
 # Utilidad para iconos de estado en tablas
@@ -93,6 +94,17 @@ def generar_informe_pdf(resumen, ruta_pdf="/tmp/informe_ares_aegis.pdf", usuario
         # Portada visual única
         portada_bg = colors.HexColor('#f6f6f6')
         elementos.append(Spacer(1, 30))
+        # Imagen principal (Ares.jpeg) centrada y profesional
+        if os.path.exists(MAIN_IMAGE_PATH):
+            from reportlab.platypus import Image as RLImage
+            img = RLImage(MAIN_IMAGE_PATH)
+            max_width = A4[0] * 0.6
+            img.drawWidth = max_width
+            img.drawHeight = img.imageHeight * (max_width / img.imageWidth)
+            img.hAlign = 'CENTER'
+            elementos.append(img)
+            elementos.append(Spacer(1, 10))
+        # Icono circular (branding)
         if os.path.exists(icono_path):
             elementos.append(CircularImage(icono_path, size=110))
         elementos.append(Spacer(1, 18))
