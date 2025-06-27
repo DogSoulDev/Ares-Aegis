@@ -1,17 +1,19 @@
+
 """
 Módulo para el escaneo del sistema operativo, carpetas y programas instalados.
 Permite comparar con la base de datos de referencia de Kali Linux.
+Refactorizado para usar pathlib y mayor robustez.
 """
-import os
+from pathlib import Path
 import subprocess
 import hashlib
 
-
-import socket
-import json
-
 class EscaneoSistema:
     def __init__(self, rutas_directorios=None):
+        """
+        Inicializa el escaneo del sistema.
+        rutas_directorios: lista de rutas a analizar (por defecto, binarios principales de Linux)
+        """
         self.rutas_directorios = rutas_directorios or ["/bin", "/usr/bin", "/sbin", "/usr/sbin"]
 
     def obtener_programas_instalados(self):
@@ -61,9 +63,13 @@ class EscaneoSistema:
         return diferencias
 
     def calcular_hash_archivo(self, ruta, algoritmo='sha256'):
+        """
+        Calcula el hash de un archivo usando pathlib para mayor robustez.
+        """
         try:
             hash_func = hashlib.new(algoritmo)
-            with open(ruta, 'rb') as f:
+            ruta_path = Path(ruta)
+            with ruta_path.open('rb') as f:
                 for bloque in iter(lambda: f.read(4096), b''):
                     hash_func.update(bloque)
             return hash_func.hexdigest()
@@ -71,6 +77,7 @@ class EscaneoSistema:
             return None
 
     def obtener_resumen(self, base_hashes):
+        # Solo ejecuta análisis bajo demanda, nunca automáticamente
         resumen = {}
         resumen['rootkits'] = self.escanear_rootkits()
         resumen['procesos'] = self.escanear_procesos_sospechosos()
@@ -82,7 +89,7 @@ class EscaneoSistema:
 
     def exportar_informe(self, resumen, ruta="/tmp/informe_ares_aegis.pdf", usuario="Desconocido"):
         try:
-            from antivirus_kali.reports.pdf_generator import generar_informe_pdf
+            from antivirus_kali.informes.generador_pdf import generar_informe_pdf
             ruta_pdf = ruta if ruta.endswith('.pdf') else ruta + '.pdf'
             result = generar_informe_pdf(resumen, ruta_pdf, usuario=usuario)
             return result

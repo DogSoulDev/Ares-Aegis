@@ -6,3 +6,4 @@ scapy
 PySide6
 pyqtgraph
 reportlab
+qrcode[pil]

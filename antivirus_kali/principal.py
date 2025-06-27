@@ -15,11 +15,6 @@ from antivirus_kali.controladores.controlador_escaneo_sistema import Controlador
 
 
 if __name__ == "__main__":
-    print("""
-    =============================================
-      🛡️  Ares Aegis - Antivirus modular para Kali Linux
-    =============================================
-    """)
     app = QApplication(sys.argv)
     # Configuración de ejemplo para pruebas
     rutas_herramientas = ["/usr/bin/nmap", "/usr/bin/wireshark"]

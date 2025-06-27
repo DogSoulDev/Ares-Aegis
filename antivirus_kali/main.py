@@ -1,7 +1,8 @@
+
 """
 Punto de entrada principal de la aplicación Ares Aegis.
-Controlador principal que inicializa la GUI y conecta los módulos.
-Trabajo universitario - DogSoulDev
+Lanza la aplicación importando y ejecutando principal.py
 """
 
-# Aquí se inicializará la aplicación y la GUI principal
+import sys
+from antivirus_kali import principal

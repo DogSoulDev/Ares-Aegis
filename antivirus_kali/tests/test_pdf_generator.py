@@ -1,6 +1,6 @@
 import os
 import pytest
-from antivirus_kali.reports import pdf_generator
+from antivirus_kali.informes import generador_pdf as pdf_generator
 
 def test_generar_informe_pdf(tmp_path):
     resumen = {
