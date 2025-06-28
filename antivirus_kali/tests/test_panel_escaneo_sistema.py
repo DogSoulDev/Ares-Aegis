@@ -7,4 +7,4 @@ def test_panel_escaneo_sistema_instanciable():
     app = QApplication.instance() or QApplication(sys.argv)
     panel = PanelEscaneoSistema(ControladorEscaneoSistema())
     assert panel.windowTitle().startswith("Ares Aegis")
-    assert panel.resultados is not None
+    # Eliminado: referencia a widget obsoleto

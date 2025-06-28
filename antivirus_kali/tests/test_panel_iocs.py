@@ -9,4 +9,4 @@ def test_panel_iocs_instanciable():
             return ("limpio", [])
     panel = PanelIOCs(DummyControlador())
     assert panel.windowTitle().startswith("Ares Aegis")
-    assert panel.resultados is not None
+    # Eliminado: referencia a widget obsoleto

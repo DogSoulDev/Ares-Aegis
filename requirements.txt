@@ -1,0 +1,57 @@
+# Ares Aegis - Sistema de Seguridad Avanzado con Mini-SIEM
+# Requisitos del Sistema Actualizados
+
+# === FRAMEWORK DE INTERFAZ GRÁFICA ===
+PySide6>=6.5.0
+
+# === PROCESAMIENTO ASÍNCRONO ===
+aiofiles>=23.1.0
+
+# === NOTIFICACIONES DEL SISTEMA ===
+plyer>=2.1.0
+
+# === MONITOREO Y ANÁLISIS DEL SISTEMA ===
+psutil>=5.9.0
+
+# === ANÁLISIS DE ARCHIVOS Y SEGURIDAD ===
+python-magic>=0.4.27
+requests>=2.31.0
+urllib3>=2.0.4
+
+# === UTILIDADES Y LOGGING ===
+colorama>=0.4.6
+python-dateutil>=2.8.2
+
+# === ANÁLISIS DE MALWARE (YARA) ===
+yara-python>=4.3.1
+
+# === NETWORKING Y MONITOREO ===
+scapy>=2.5.0
+pyinotify>=0.9.6; sys_platform=="linux"
+
+# === GENERACIÓN DE REPORTES ===
+reportlab>=4.0.0
+qrcode[pil]>=7.4.0
+
+# === ANÁLISIS GRÁFICO Y VISUALIZACIÓN ===
+pyqtgraph>=0.13.0
+
+# === DESARROLLO Y TESTING (OPCIONALES) ===
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+
+# === ANÁLISIS ESTÁTICO DE CÓDIGO (OPCIONALES) ===
+black>=23.7.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# === HERRAMIENTAS DE SEGURIDAD ADICIONALES ===
+# clamd>=1.0.2        # Requiere ClamAV instalado: apt install clamav clamav-daemon
+# python-nmap>=0.7.1  # Para análisis de red avanzado
+
+# === NOTAS DE INSTALACIÓN ===
+# 1. ClamAV: sudo apt install clamav clamav-daemon
+# 2. Permisos de logs: sudo usermod -a -G adm,systemd-journal $USER
+# 3. YARA puede requerir compilación: apt install libyara-dev
+# 4. Para análisis de red completo: apt install nmap

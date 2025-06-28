@@ -4,6 +4,13 @@ Inicializa controladores y lanza la interfaz principal.
 """
 
 import sys
+import os
+from pathlib import Path
+# --- AÑADIR RAÍZ DEL PROYECTO AL sys.path PARA IMPORTS UNIVERSALES ---
+_root = Path(__file__).resolve().parent.parent
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
 from PySide6.QtWidgets import QApplication
 from antivirus_kali.interfaz.ventana_principal import VentanaPrincipal
 from antivirus_kali.controladores.controlador_integridad import ControladorIntegridad
@@ -14,7 +21,7 @@ from antivirus_kali.controladores.controlador_modo_seguro import ControladorModo
 from antivirus_kali.controladores.controlador_escaneo_sistema import ControladorEscaneoSistema
 
 
-if __name__ == "__main__":
+def main():
     app = QApplication(sys.argv)
     # Configuración de ejemplo para pruebas
     rutas_herramientas = ["/usr/bin/nmap", "/usr/bin/wireshark"]
@@ -30,3 +37,6 @@ if __name__ == "__main__":
     ventana = VentanaPrincipal(controladores)
     ventana.show()
     sys.exit(app.exec())
+
+if __name__ == "__main__":
+    main()

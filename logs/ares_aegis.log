@@ -1,0 +1,5 @@
+2025-06-28 19:30:22,015 | AresAegis | INFO | logger.py:104 | info() | Test de logging
+2025-06-28 19:30:23,033 | AresAegis | INFO | logger.py:104 | info() | Base de datos inicializada correctamente
+2025-06-28 19:30:23,033 | AresAegis | INFO | logger.py:104 | info() | Motor ClamAV inicializado
+2025-06-28 19:30:23,033 | AresAegis | INFO | logger.py:104 | info() | Motor Rootkits inicializado
+2025-06-28 19:30:23,033 | AresAegis | INFO | logger.py:104 | info() | Motor Hashes inicializado

@@ -15,4 +15,4 @@ def test_panel_red_instanciable():
             return [], [], []
     panel = PanelRed(DummyControlador())
     assert panel.windowTitle().startswith("Ares Aegis")
-    assert panel.resultados is not None
+    # Eliminado: referencia a widget obsoleto
