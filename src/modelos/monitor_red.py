@@ -113,7 +113,7 @@ class MonitorRed:
         self._inicializar_configuracion()
         
         if self.siem:
-            self.siem.registrar_evento('INFO', 'monitor_red', 'Monitor de red inicializado')
+            self.siem.log_evento('INFO', 'monitor_red', 'Monitor de red inicializado')
     
     def _inicializar_configuracion(self):
         """Inicializa la configuración del monitor."""
@@ -167,7 +167,7 @@ class MonitorRed:
         
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'monitor_red', f'Error obteniendo conexiones TCP: {e}')
+                self.siem.log_evento('ERROR', 'monitor_red', f'Error obteniendo conexiones TCP: {e}')
         
         return conexiones
     
@@ -194,7 +194,7 @@ class MonitorRed:
         
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'monitor_red', f'Error obteniendo conexiones UDP: {e}')
+                self.siem.log_evento('ERROR', 'monitor_red', f'Error obteniendo conexiones UDP: {e}')
         
         return conexiones
     
@@ -252,7 +252,7 @@ class MonitorRed:
                 conexiones_sospechosas.append(conexion)
                 
                 if self.siem:
-                    self.siem.registrar_evento('HIGH', 'monitor_red', 
+                    self.siem.log_evento('HIGH', 'monitor_red', 
                                              f'Conexión sospechosa detectada: {conexion.direccion_local}:{conexion.puerto_local} -> '
                                              f'{conexion.direccion_remota}:{conexion.puerto_remoto} ({conexion.proceso})')
         
@@ -269,7 +269,7 @@ class MonitorRed:
                 puertos_sospechosos_encontrados.append(conexion)
                 
                 if self.siem:
-                    self.siem.registrar_evento('MEDIUM', 'monitor_red', 
+                    self.siem.log_evento('MEDIUM', 'monitor_red', 
                                              f'Puerto sospechoso en escucha: {conexion.puerto_local} ({conexion.proceso})')
         
         return puertos_sospechosos_encontrados

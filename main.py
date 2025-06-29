@@ -1,81 +1,32 @@
 #!/usr/bin/env python3
 """
-Ares Aegis: Antivirus Avanzado para Kali Linux
-Punto de entrada principal de la aplicación
+Ares Aegis - Antivirus Avanzado para Kali Linux
+Punto de entrada principal del sistema
 
 Autor: DogSoulDev
 Versión: 2.0.0
-Licencia: GPL v3
 """
 
 import sys
 import os
 import logging
-from pathlib import Path
 
-# Agregar el directorio src al path para importar módulos
+# Añadir src al path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from vista.interfaz_principal_gui import InterfazPrincipalGUI
-import tkinter as tk
-
-
-def configurar_registro():
-    """Configura el sistema de registro."""
-    directorio_log = Path("/var/log/ares_aegis")
-    try:
-        directorio_log.mkdir(parents=True, exist_ok=True)
-        archivo_log = directorio_log / "ares_aegis.log"
-    except PermissionError:
-        # Fallback para desarrollo sin privilegios root
-        archivo_log = Path.home() / ".ares_aegis" / "ares_aegis.log"
-        archivo_log.parent.mkdir(exist_ok=True)
-    
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(archivo_log),
-            logging.StreamHandler(sys.stdout)
-        ]
-    )
-    
-    registrador = logging.getLogger(__name__)
-    registrador.info("=== Iniciando Ares Aegis ===")
-    return registrador
-
-
-def verificar_privilegios_root():
-    """Verifica si se ejecuta con privilegios root."""
-    if os.geteuid() != 0:
-        print("ERROR: Ares Aegis requiere privilegios root.")
-        print("Ejecute: sudo python3 main.py")
-        return False
-    return True
-
 def main():
-    """Función principal."""
-    if not verificar_privilegios_root():
-        sys.exit(1)
-    
-    registrador = configurar_registro()
-    
+    """Función principal que delega al main de src."""
     try:
-        # Crear ventana principal
-        ventana_raiz = tk.Tk()
-        
-        # Inicializar aplicación
-        aplicacion = InterfazPrincipalGUI(ventana_raiz)
-        
-        # Ejecutar bucle principal
-        ventana_raiz.mainloop()
-        
+        # Importar y ejecutar el main desde src
+        import main as src_main
+        return src_main.main()
+    except ImportError as e:
+        print(f"❌ Error importando módulos: {e}")
+        print("   Verifique que la estructura del proyecto esté correcta")
+        return 1
     except Exception as e:
-        registrador.error(f"Error crítico: {e}")
-        sys.exit(1)
-    
-    registrador.info("=== Finalizando Ares Aegis ===")
-
+        print(f"❌ Error ejecutando Ares Aegis: {e}")
+        return 1
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

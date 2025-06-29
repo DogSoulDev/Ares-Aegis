@@ -181,7 +181,7 @@ class AnalizadorLogs:
                         
         except (IOError, OSError) as e:
             if self.siem:
-                self.siem.registrar_evento(
+                self.siem.log_evento(
                     'ERROR',
                     'analizador_logs',
                     f'Error al leer archivo {ruta_archivo}: {e}'
@@ -326,7 +326,7 @@ class AnalizadorLogs:
                 archivos_procesados += 1
                 
                 if self.siem:
-                    self.siem.registrar_evento(
+                    self.siem.log_evento(
                         'INFO',
                         'analizador_logs',
                         f'Procesado {ruta_log}: {len(eventos_archivo)} eventos'
@@ -334,7 +334,7 @@ class AnalizadorLogs:
                     
             except Exception as e:
                 if self.siem:
-                    self.siem.registrar_evento(
+                    self.siem.log_evento(
                         'ERROR',
                         'analizador_logs',
                         f'Error procesando {ruta_log}: {e}'
@@ -383,20 +383,20 @@ class AnalizadorLogs:
         # Registrar en SIEM
         if self.siem:
             if eventos_sospechosos:
-                self.siem.registrar_evento(
+                self.siem.log_evento(
                     'WARNING',
                     'analizador_logs',
                     f'Análisis completado: {len(eventos_sospechosos)} eventos sospechosos detectados'
                 )
             
             if ataques_brute_force:
-                self.siem.registrar_evento(
+                self.siem.log_evento(
                     'CRITICAL',
                     'analizador_logs',
                     f'Detectados {len(ataques_brute_force)} ataques de fuerza bruta'
                 )
             
-            self.siem.registrar_evento(
+            self.siem.log_evento(
                 'INFO',
                 'analizador_logs',
                 f'Análisis de logs completado: {len(todos_los_eventos)} eventos procesados'
@@ -419,7 +419,7 @@ class AnalizadorLogs:
                             eventos_encontrados.append(evento)
             except Exception as e:
                 if self.siem:
-                    self.siem.registrar_evento(
+                    self.siem.log_evento(
                         'ERROR',
                         'analizador_logs',
                         f'Error buscando patrón en {ruta_log}: {e}'
@@ -592,7 +592,7 @@ class AnalizadorLogs:
                 f.write(contenido)
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento(
+                self.siem.log_evento(
                     'ERROR',
                     'analizador_logs',
                     f'Error al exportar reporte: {e}'

@@ -142,7 +142,7 @@ class MonitorIntegridad:
         self._cargar_base_datos()
         
         if self.siem:
-            self.siem.registrar_evento('INFO', 'fim', 
+            self.siem.log_evento('INFO', 'fim', 
                                      f'Monitor de integridad inicializado: {len(self.archivos_monitoreados)} archivos')
     
     def _cargar_configuracion(self):
@@ -157,11 +157,11 @@ class MonitorIntegridad:
                     self.intervalos_verificacion = config.get('intervalo_verificacion', 300)
                 
                 if self.siem:
-                    self.siem.registrar_evento('INFO', 'fim', 
+                    self.siem.log_evento('INFO', 'fim', 
                                              f'Configuración cargada: {len(self.rutas_monitoreadas)} rutas')
             except Exception as e:
                 if self.siem:
-                    self.siem.registrar_evento('ERROR', 'fim', f'Error cargando configuración: {e}')
+                    self.siem.log_evento('ERROR', 'fim', f'Error cargando configuración: {e}')
                 self._crear_configuracion_por_defecto()
         else:
             self._crear_configuracion_por_defecto()
@@ -199,10 +199,10 @@ class MonitorIntegridad:
                 json.dump(config, archivo, indent=2, ensure_ascii=False)
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'fim', 'Configuración guardada')
+                self.siem.log_evento('INFO', 'fim', 'Configuración guardada')
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'fim', f'Error guardando configuración: {e}')
+                self.siem.log_evento('ERROR', 'fim', f'Error guardando configuración: {e}')
     
     def _cargar_base_datos(self):
         """Carga la base de datos de archivos monitoreados."""
@@ -217,11 +217,11 @@ class MonitorIntegridad:
                     }
                 
                 if self.siem:
-                    self.siem.registrar_evento('INFO', 'fim', 
+                    self.siem.log_evento('INFO', 'fim', 
                                              f'Base de datos cargada: {len(self.archivos_monitoreados)} archivos')
             except Exception as e:
                 if self.siem:
-                    self.siem.registrar_evento('ERROR', 'fim', f'Error cargando base de datos: {e}')
+                    self.siem.log_evento('ERROR', 'fim', f'Error cargando base de datos: {e}')
                 self.archivos_monitoreados = {}
     
     def _guardar_base_datos(self):
@@ -236,11 +236,11 @@ class MonitorIntegridad:
                 json.dump(datos, archivo, indent=2, ensure_ascii=False)
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'fim', 
+                self.siem.log_evento('INFO', 'fim', 
                                          f'Base de datos guardada: {len(self.archivos_monitoreados)} archivos')
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'fim', f'Error guardando base de datos: {e}')
+                self.siem.log_evento('ERROR', 'fim', f'Error guardando base de datos: {e}')
     
     def agregar_ruta_monitoreo(self, ruta: str):
         """Agrega una ruta al monitoreo."""
@@ -249,7 +249,7 @@ class MonitorIntegridad:
         self._guardar_configuracion()
         
         if self.siem:
-            self.siem.registrar_evento('INFO', 'fim', f'Ruta agregada al monitoreo: {ruta_normalizada}')
+            self.siem.log_evento('INFO', 'fim', f'Ruta agregada al monitoreo: {ruta_normalizada}')
     
     def remover_ruta_monitoreo(self, ruta: str):
         """Remueve una ruta del monitoreo."""
@@ -269,7 +269,7 @@ class MonitorIntegridad:
         self._guardar_base_datos()
         
         if self.siem:
-            self.siem.registrar_evento('INFO', 'fim', 
+            self.siem.log_evento('INFO', 'fim', 
                                      f'Ruta removida del monitoreo: {ruta_normalizada} ({len(archivos_a_remover)} archivos)')
     
     def inicializar_base_datos(self) -> int:
@@ -282,7 +282,7 @@ class MonitorIntegridad:
         self._guardar_base_datos()
         
         if self.siem:
-            self.siem.registrar_evento('INFO', 'fim', 
+            self.siem.log_evento('INFO', 'fim', 
                                      f'Base de datos inicializada: {archivos_agregados} archivos agregados')
         
         return archivos_agregados
@@ -306,7 +306,7 @@ class MonitorIntegridad:
                             archivos_agregados += 1
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'fim', f'Error escaneando ruta {ruta}: {e}')
+                self.siem.log_evento('ERROR', 'fim', f'Error escaneando ruta {ruta}: {e}')
         
         return archivos_agregados
     
@@ -367,12 +367,12 @@ class MonitorIntegridad:
                     cambios_detectados.append(cambio_detectado)
                     
                     if self.siem:
-                        self.siem.registrar_evento('HIGH', 'fim', 
+                        self.siem.log_evento('HIGH', 'fim', 
                                                  f'Cambio detectado en {ruta}: {", ".join(cambios)}')
             
             except Exception as e:
                 if self.siem:
-                    self.siem.registrar_evento('ERROR', 'fim', 
+                    self.siem.log_evento('ERROR', 'fim', 
                                              f'Error verificando {ruta}: {e}')
         
         if cambios_detectados:
@@ -389,7 +389,7 @@ class MonitorIntegridad:
                 archivos_nuevos.extend(self._buscar_nuevos_en_ruta(ruta))
             except Exception as e:
                 if self.siem:
-                    self.siem.registrar_evento('ERROR', 'fim', 
+                    self.siem.log_evento('ERROR', 'fim', 
                                              f'Error buscando archivos nuevos en {ruta}: {e}')
         
         return archivos_nuevos
@@ -428,7 +428,7 @@ class MonitorIntegridad:
         for ruta in archivos_a_remover:
             del self.archivos_monitoreados[ruta]
             if self.siem:
-                self.siem.registrar_evento('MEDIUM', 'fim', f'Archivo eliminado detectado: {ruta}')
+                self.siem.log_evento('MEDIUM', 'fim', f'Archivo eliminado detectado: {ruta}')
         
         if archivos_eliminados:
             self._guardar_base_datos()

@@ -77,7 +77,7 @@ class GestorCuarentena:
         self._cargar_registro()
         
         if self.siem:
-            self.siem.registrar_evento('INFO', 'cuarentena', 
+            self.siem.log_evento('INFO', 'cuarentena', 
                                      f'Gestor de cuarentena inicializado: {self.directorio_cuarentena}')
     
     def _cargar_registro(self):
@@ -91,11 +91,11 @@ class GestorCuarentena:
                     ]
                 
                 if self.siem:
-                    self.siem.registrar_evento('INFO', 'cuarentena', 
+                    self.siem.log_evento('INFO', 'cuarentena', 
                                              f'Registro cargado: {len(self.archivos_cuarentena)} archivos')
             except Exception as e:
                 if self.siem:
-                    self.siem.registrar_evento('ERROR', 'cuarentena', 
+                    self.siem.log_evento('ERROR', 'cuarentena', 
                                              f'Error cargando registro: {e}')
                 self.archivos_cuarentena = []
     
@@ -107,11 +107,11 @@ class GestorCuarentena:
                 json.dump(datos, archivo, indent=2, ensure_ascii=False)
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'cuarentena', 
+                self.siem.log_evento('INFO', 'cuarentena', 
                                          f'Registro guardado: {len(self.archivos_cuarentena)} archivos')
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'cuarentena', 
+                self.siem.log_evento('ERROR', 'cuarentena', 
                                          f'Error guardando registro: {e}')
     
     def poner_en_cuarentena(self, ruta_archivo: str, razon: str = "") -> bool:
@@ -129,7 +129,7 @@ class GestorCuarentena:
         
         if not archivo_original.exists():
             if self.siem:
-                self.siem.registrar_evento('WARNING', 'cuarentena', 
+                self.siem.log_evento('WARNING', 'cuarentena', 
                                          f'Archivo no encontrado para cuarentena: {ruta_archivo}')
             return False
         
@@ -158,14 +158,14 @@ class GestorCuarentena:
             self._guardar_registro()
             
             if self.siem:
-                self.siem.registrar_evento('HIGH', 'cuarentena', 
+                self.siem.log_evento('HIGH', 'cuarentena', 
                                          f'Archivo puesto en cuarentena: {ruta_archivo} -> {ruta_cuarentena}')
             
             return True
             
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'cuarentena', 
+                self.siem.log_evento('ERROR', 'cuarentena', 
                                          f'Error poniendo archivo en cuarentena {ruta_archivo}: {e}')
             return False
     
@@ -183,7 +183,7 @@ class GestorCuarentena:
         
         if not archivo_cuarentena:
             if self.siem:
-                self.siem.registrar_evento('WARNING', 'cuarentena', 
+                self.siem.log_evento('WARNING', 'cuarentena', 
                                          f'Archivo con ID {id_cuarentena} no encontrado en cuarentena')
             return False
         
@@ -193,7 +193,7 @@ class GestorCuarentena:
             
             if not archivo_en_cuarentena.exists():
                 if self.siem:
-                    self.siem.registrar_evento('ERROR', 'cuarentena', 
+                    self.siem.log_evento('ERROR', 'cuarentena', 
                                              f'Archivo en cuarentena no existe: {archivo_cuarentena.ruta_cuarentena}')
                 return False
             
@@ -208,14 +208,14 @@ class GestorCuarentena:
             self._guardar_registro()
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'cuarentena', 
+                self.siem.log_evento('INFO', 'cuarentena', 
                                          f'Archivo restaurado: {archivo_cuarentena.ruta_cuarentena} -> {ruta_original}')
             
             return True
             
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'cuarentena', 
+                self.siem.log_evento('ERROR', 'cuarentena', 
                                          f'Error restaurando archivo {id_cuarentena}: {e}')
             return False
     
@@ -233,7 +233,7 @@ class GestorCuarentena:
         
         if not archivo_cuarentena:
             if self.siem:
-                self.siem.registrar_evento('WARNING', 'cuarentena', 
+                self.siem.log_evento('WARNING', 'cuarentena', 
                                          f'Archivo con ID {id_cuarentena} no encontrado para eliminación')
             return False
         
@@ -248,14 +248,14 @@ class GestorCuarentena:
             self._guardar_registro()
             
             if self.siem:
-                self.siem.registrar_evento('HIGH', 'cuarentena', 
+                self.siem.log_evento('HIGH', 'cuarentena', 
                                          f'Archivo eliminado definitivamente: {archivo_cuarentena.ruta_original}')
             
             return True
             
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'cuarentena', 
+                self.siem.log_evento('ERROR', 'cuarentena', 
                                          f'Error eliminando archivo {id_cuarentena}: {e}')
             return False
     
@@ -346,7 +346,7 @@ class GestorCuarentena:
                 archivos_eliminados += 1
         
         if self.siem and archivos_eliminados > 0:
-            self.siem.registrar_evento('INFO', 'cuarentena', 
+            self.siem.log_evento('INFO', 'cuarentena', 
                                      f'Limpieza automática: {archivos_eliminados} archivos eliminados')
         
         return archivos_eliminados

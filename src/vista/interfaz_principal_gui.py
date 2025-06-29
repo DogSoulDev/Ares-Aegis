@@ -22,14 +22,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from modelos.siem import SIEM, TipoEvento
 from modelos.escaneador import Escaneador
 from modelos.fim import FIM
-from modelos.gestor_cuarentena import GestorCuarentena
+from modelos.cuarentena import GestorCuarentena
 from modelos.integracion_externa import IntegracionExterna
 
 # Importar los nuevos módulos de monitoreo
 try:
-    from modelos.monitor_procesos import MonitorProcesos
     from modelos.monitor_red import MonitorRed
-    from modelos.analizador_logs import AnalizadorLogs
     MODULOS_MONITOREO_DISPONIBLES = True
 except ImportError:
     MODULOS_MONITOREO_DISPONIBLES = False
@@ -60,14 +58,16 @@ COLORES = {
 class InterfazPrincipalGUI:
     """Interfaz gráfica principal de Ares Aegis."""
     
-    def __init__(self, ventana_maestra: tk.Tk):
+    def __init__(self, ventana_maestra: tk.Tk, controlador=None):
         """
         Inicializa la interfaz principal.
         
         Args:
             ventana_maestra: Ventana principal de tkinter
+            controlador: Controlador principal (opcional)
         """
         self.ventana_maestra = ventana_maestra
+        self.controlador = controlador
         self.logger = logging.getLogger(__name__)
         
         # Configurar ventana principal
@@ -131,17 +131,15 @@ class InterfazPrincipalGUI:
             # Inicializar SIEM como dependencia central
             self.siem = SIEM()
             
-            # Inicializar módulos pasando el SIEM
+            # Inicializar módulos pasando el SIEM y configuraciones correctas
             self.escaneador = Escaneador(self.siem)
             self.fim = FIM(self.siem)
-            self.gestor_cuarentena = GestorCuarentena(self.siem)
+            self.gestor_cuarentena = GestorCuarentena(None, self.siem)  # directorio por defecto
             self.integracion_externa = IntegracionExterna(self.siem)
             
             # Inicializar módulos de monitoreo si están disponibles
             if MODULOS_MONITOREO_DISPONIBLES:
-                self.monitor_procesos = MonitorProcesos(self.siem)
                 self.monitor_red = MonitorRed(self.siem)
-                self.analizador_logs = AnalizadorLogs(self.siem)
             
             self.logger.info("Backend inicializado correctamente")
             self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, "Interfaz GUI inicializada")
@@ -677,9 +675,11 @@ class InterfazPrincipalGUI:
         
         try:
             self._actualizar_area_resultados("📁 Iniciando escaneo interno del directorio...\\n")
-            resultados = self.escaneador.escanear_directorio(ruta)
+            resultados_lista = self.escaneador.escanear_directorio(ruta)
             
-            markdown_resultado = self.escaneador.generar_reporte_markdown(resultados)
+            # Convertir lista de resultados a reporte
+            resultados = self.escaneador.generar_reporte_directorio(resultados_lista)
+            markdown_resultado = self.escaneador.generar_reporte_markdown_directorio(resultados)
             self._actualizar_area_resultados(markdown_resultado)
             
             if resultados['amenazas_encontradas'] > 0:
@@ -877,46 +877,8 @@ class InterfazPrincipalGUI:
     
     def _iniciar_monitoreo_procesos(self):
         """Inicia el monitoreo de procesos del sistema."""
-        if not MODULOS_MONITOREO_DISPONIBLES:
-            self._mostrar_error("Módulos no disponibles", "Los módulos de monitoreo no están disponibles")
-            return
-        
-        try:
-            self._actualizar_area_resultados("🔍 Iniciando monitoreo de procesos...")
-            resultado = self.monitor_procesos.escanear_sistema()
-            
-            stats = resultado['estadisticas']
-            resumen = f"""=== MONITOREO DE PROCESOS ===
-Total de procesos: {stats['total_procesos']}
-Procesos sospechosos: {stats['procesos_sospechosos']}
-Procesos nuevos: {stats['procesos_nuevos']}
-Uso promedio CPU: {stats['uso_cpu_promedio']:.2f}%
-Memoria total: {stats['memoria_total_mb']:.2f} MB
-Tiempo de escaneo: {stats['tiempo_escaneo']:.2f} segundos
-
-"""
-            
-            self._actualizar_area_resultados(resumen)
-            
-            # Mostrar procesos sospechosos
-            if resultado['procesos_sospechosos']:
-                self._actualizar_area_resultados("🚨 PROCESOS SOSPECHOSOS DETECTADOS:")
-                for proceso in resultado['procesos_sospechosos']:
-                    info = f"- {proceso['nombre']} (PID: {proceso['pid']}) - {', '.join(proceso['razones_sospecha'])}"
-                    self._actualizar_area_resultados(info)
-                self._actualizar_area_resultados("")
-            
-            # Exportar reporte
-            try:
-                archivo_reporte = self.monitor_procesos.exportar_reporte_markdown(resultado)
-                self._actualizar_area_resultados(f"📄 Reporte exportado a: {archivo_reporte}")
-            except Exception as e:
-                self._actualizar_area_resultados(f"Error al exportar reporte: {e}")
-            
-            self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, 'Monitoreo de procesos completado')
-            
-        except Exception as e:
-            self._mostrar_error("Error de Monitoreo", f"Error en monitoreo de procesos: {e}")
+        self._actualizar_area_resultados("⚠️ Función de monitoreo de procesos en desarrollo")
+        self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, 'Función de monitoreo de procesos solicitada')
     
     def _detener_monitoreo_procesos(self):
         """Detiene el monitoreo de procesos (placeholder)."""
@@ -931,45 +893,50 @@ Tiempo de escaneo: {stats['tiempo_escaneo']:.2f} segundos
         
         try:
             self._actualizar_area_resultados("🌐 Iniciando monitoreo de red...")
-            resultado = self.monitor_red.escanear_sistema_red()
             
-            stats = resultado['estadisticas']
+            # Obtener conexiones activas
+            conexiones = self.monitor_red.obtener_conexiones_activas()
+            conexiones_sospechosas = self.monitor_red.detectar_conexiones_sospechosas()
+            puertos_sospechosos = self.monitor_red.detectar_puertos_en_escucha_sospechosos()
+            estadisticas = self.monitor_red.obtener_estadisticas_red()
+            
             resumen = f"""=== MONITOREO DE RED ===
-Total de conexiones: {stats['total_conexiones']}
-Conexiones sospechosas: {stats['conexiones_sospechosas']}
-Puertos abiertos: {stats['total_puertos_abiertos']}
-Puertos sospechosos: {stats['puertos_sospechosos']}
-Dispositivos en red: {stats['dispositivos_en_red']}
-Tiempo de escaneo: {stats['tiempo_escaneo']:.2f} segundos
+Total de conexiones: {estadisticas['total_conexiones']}
+Conexiones TCP: {estadisticas['conexiones_tcp']}
+Conexiones UDP: {estadisticas['conexiones_udp']}
+Conexiones establecidas: {estadisticas['conexiones_establecidas']}
+Puertos en escucha: {estadisticas['puertos_en_escucha']}
+Conexiones sospechosas: {len(conexiones_sospechosas)}
+Puertos sospechosos: {len(puertos_sospechosos)}
 
 """
             
             self._actualizar_area_resultados(resumen)
             
             # Mostrar conexiones sospechosas
-            if resultado['conexiones_sospechosas']:
+            if conexiones_sospechosas:
                 self._actualizar_area_resultados("🚨 CONEXIONES SOSPECHOSAS:")
-                for conexion in resultado['conexiones_sospechosas']:
-                    local = f"{conexion['direccion_local']}:{conexion['puerto_local']}"
-                    remoto = f"{conexion['direccion_remota']}:{conexion['puerto_remoto']}" if conexion['direccion_remota'] else 'N/A'
-                    info = f"- {conexion['protocolo']} {local} -> {remoto} ({', '.join(conexion['razones_sospecha'])})"
+                for conexion in conexiones_sospechosas:
+                    local = f"{conexion.direccion_local}:{conexion.puerto_local}"
+                    remoto = f"{conexion.direccion_remota}:{conexion.puerto_remoto}" if conexion.direccion_remota else 'N/A'
+                    info = f"- {conexion.protocolo} {local} -> {remoto} (Proceso: {conexion.proceso})"
                     self._actualizar_area_resultados(info)
                 self._actualizar_area_resultados("")
             
             # Mostrar puertos sospechosos
-            if resultado['puertos_sospechosos']:
+            if puertos_sospechosos:
                 self._actualizar_area_resultados("🚨 PUERTOS SOSPECHOSOS:")
-                for puerto in resultado['puertos_sospechosos']:
-                    info = f"- Puerto {puerto['puerto']}/{puerto['protocolo']} ({puerto['servicio']}) - {', '.join(puerto['razones_sospecha'])}"
+                for puerto in puertos_sospechosos:
+                    info = f"- Puerto {puerto.puerto_local}/{puerto.protocolo} (Proceso: {puerto.proceso})"
                     self._actualizar_area_resultados(info)
                 self._actualizar_area_resultados("")
             
-            # Exportar reporte
+            # Generar reporte
             try:
-                archivo_reporte = self.monitor_red.exportar_reporte_markdown(resultado)
-                self._actualizar_area_resultados(f"📄 Reporte exportado a: {archivo_reporte}")
+                reporte = self.monitor_red.generar_reporte_markdown(conexiones_sospechosas)
+                self._actualizar_area_resultados("📄 Reporte generado en el área de resultados")
             except Exception as e:
-                self._actualizar_area_resultados(f"Error al exportar reporte: {e}")
+                self._actualizar_area_resultados(f"Error al generar reporte: {e}")
             
             self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, 'Monitoreo de red completado')
             
@@ -983,69 +950,5 @@ Tiempo de escaneo: {stats['tiempo_escaneo']:.2f} segundos
     
     def _analizar_logs_sistema(self):
         """Analiza los logs del sistema."""
-        if not MODULOS_MONITOREO_DISPONIBLES:
-            self._mostrar_error("Módulos no disponibles", "Los módulos de monitoreo no están disponibles")
-            return
-        
-        try:
-            # Preguntar período de análisis
-            horas = simpledialog.askinteger(
-                "Análisis de Logs",
-                "¿Cuántas horas hacia atrás analizar?",
-                initialvalue=24,
-                minvalue=1,
-                maxvalue=168  # Una semana máximo
-            )
-            
-            if not horas:
-                return
-            
-            self._actualizar_area_resultados(f"Analizando logs de las últimas {horas} horas...")
-            
-            # Realizar análisis
-            resultado = self.analizador_logs.analizar_periodo(horas_atras=horas)
-            
-            # Mostrar resultados
-            stats = resultado['estadisticas']
-            resumen = f"""=== ANÁLISIS DE LOGS DEL SISTEMA ===
-Período analizado: {horas} horas
-Total de eventos: {stats['total_eventos']:,}
-Eventos sospechosos: {stats['eventos_sospechosos']}
-Ataques detectados: {stats['ataques_brute_force']}
-Archivos procesados: {stats['archivos_procesados']}
-Tiempo de procesamiento: {stats['tiempo_procesamiento']:.2f} segundos
-
-"""
-            
-            self._actualizar_area_resultados(resumen)
-            
-            # Mostrar ataques detectados
-            if resultado['ataques_detectados']:
-                self._actualizar_area_resultados("🚨 ATAQUES DETECTADOS:")
-                for ataque in resultado['ataques_detectados']:
-                    info = f"- Fuerza bruta desde {ataque['ip_origen']}: {ataque['intentos_totales']} intentos en {ataque['duracion_segundos']:.0f} segundos"
-                    self._actualizar_area_resultados(info)
-                self._actualizar_area_resultados("")
-            
-            # Mostrar eventos sospechosos (primeros 10)
-            if resultado['eventos_sospechosos']:
-                self._actualizar_area_resultados("⚠️ EVENTOS SOSPECHOSOS (primeros 10):")
-                for i, evento in enumerate(resultado['eventos_sospechosos'][:10]):
-                    info = f"{i+1}. {evento['timestamp']}: {evento['mensaje'][:80]}..."
-                    self._actualizar_area_resultados(info)
-                
-                if len(resultado['eventos_sospechosos']) > 10:
-                    self._actualizar_area_resultados(f"... y {len(resultado['eventos_sospechosos']) - 10} eventos más.")
-                self._actualizar_area_resultados("")
-            
-            # Exportar reporte
-            try:
-                archivo_reporte = self.analizador_logs.exportar_reporte_markdown(resultado)
-                self._actualizar_area_resultados(f"📄 Reporte exportado a: {archivo_reporte}")
-            except Exception as e:
-                self._actualizar_area_resultados(f"Error al exportar reporte: {e}")
-            
-            self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, f'Análisis de logs completado ({horas} horas)')
-            
-        except Exception as e:
-            self._mostrar_error("Error de Análisis", f"Error en análisis de logs: {e}")
+        self._actualizar_area_resultados("⚠️ Función de análisis de logs en desarrollo")
+        self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, 'Función de análisis de logs solicitada')

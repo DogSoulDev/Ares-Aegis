@@ -34,6 +34,41 @@ class ResultadoEscaneo:
         except:
             return ""
     
+    def es_limpio(self) -> bool:
+        """Verifica si el archivo está limpio."""
+        return not self.es_amenaza
+    
+    @property
+    def limpio(self) -> bool:
+        """Propiedad de compatibilidad."""
+        return not self.es_amenaza
+    
+    @property
+    def amenazas(self) -> List[str]:
+        """Propiedad de compatibilidad para amenazas."""
+        if self.es_amenaza and self.tipo_amenaza:
+            return [self.tipo_amenaza]
+        return []
+    
+    def to_markdown(self) -> str:
+        """Convierte el resultado a formato Markdown."""
+        md = f"# Resultado del Escaneo - {self.ruta}\n\n"
+        md += f"**Fecha:** {self.fecha_escaneo.strftime('%Y-%m-%d %H:%M:%S')}\n"
+        md += f"**Estado:** {'✅ LIMPIO' if not self.es_amenaza else '⚠️ INFECTADO'}\n\n"
+        
+        if self.es_amenaza:
+            md += "## Amenazas Detectadas\n\n"
+            md += f"- **Tipo:** {self.tipo_amenaza}\n"
+            if self.detalles:
+                md += f"- **Detalles:** {self.detalles}\n"
+            md += "\n"
+        
+        if self.hash_sha256:
+            md += "## Hash del Archivo\n\n"
+            md += f"- **SHA256:** `{self.hash_sha256}`\n\n"
+        
+        return md
+    
     def a_dict(self) -> Dict[str, Any]:
         return {
             'ruta': self.ruta,
@@ -68,12 +103,12 @@ class Escaneador:
                         self._procesar_firma(linea)
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'escaneador', 
+                self.siem.log_evento('INFO', 'escaneador', 
                                          f'Firmas cargadas: {len(self.firmas_texto)} texto, '
                                          f'{len(self.firmas_hash)} hash, {len(self.firmas_regex)} regex')
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'escaneador', 
+                self.siem.log_evento('ERROR', 'escaneador', 
                                          f'Error cargando firmas: {e}')
     
     def _crear_archivo_firmas_por_defecto(self, archivo_firmas: Path):
@@ -115,7 +150,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                 self.firmas_regex.append(patron)
             except re.error:
                 if self.siem:
-                    self.siem.registrar_evento('WARNING', 'escaneador', 
+                    self.siem.log_evento('WARNING', 'escaneador', 
                                              f'Regex inválida: {linea}')
         else:
             self.firmas_texto.append(linea.lower())
@@ -128,7 +163,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                                        "ARCHIVO_NO_ENCONTRADO", 
                                        "El archivo no existe")
             if self.siem:
-                self.siem.registrar_evento('WARNING', 'escaneador', 
+                self.siem.log_evento('WARNING', 'escaneador', 
                                          f'Archivo no encontrado: {ruta_archivo}')
             return resultado
         
@@ -155,7 +190,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
         resultado = ResultadoEscaneo(ruta_archivo, False, "", "Archivo limpio")
         
         if self.siem:
-            self.siem.registrar_evento('INFO', 'escaneador', 
+            self.siem.log_evento('INFO', 'escaneador', 
                                      f'Archivo escaneado limpio: {ruta_archivo}')
         
         return resultado
@@ -174,7 +209,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                                                "HASH_MALICIOSO", 
                                                f"Hash coincide con base de datos: {hash_malicioso}")
                     if self.siem:
-                        self.siem.registrar_evento('CRITICAL', 'escaneador', 
+                        self.siem.log_evento('CRITICAL', 'escaneador', 
                                                  f'Hash malicioso detectado: {ruta_archivo}')
                     return resultado
             
@@ -203,7 +238,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                                                "FIRMA_TEXTO", 
                                                f"Firma detectada: {firma}")
                     if self.siem:
-                        self.siem.registrar_evento('HIGH', 'escaneador', 
+                        self.siem.log_evento('HIGH', 'escaneador', 
                                                  f'Firma de texto detectada en {ruta_archivo}: {firma}')
                     return resultado
             
@@ -214,7 +249,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                                                "FIRMA_REGEX", 
                                                f"Patrón regex detectado: {patron_regex.pattern}")
                     if self.siem:
-                        self.siem.registrar_evento('HIGH', 'escaneador', 
+                        self.siem.log_evento('HIGH', 'escaneador', 
                                                  f'Patrón regex detectado en {ruta_archivo}: {patron_regex.pattern}')
                     return resultado
             
@@ -263,7 +298,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                                            "HEURISTICO_SOSPECHOSO", 
                                            f"Puntuación: {puntuacion_sospecha}, Razones: {', '.join(razones)}")
                 if self.siem:
-                    self.siem.registrar_evento('MEDIUM', 'escaneador', 
+                    self.siem.log_evento('MEDIUM', 'escaneador', 
                                              f'Archivo heurísticamente sospechoso: {ruta_archivo}')
                 return resultado
             
@@ -282,7 +317,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                                        "DIRECTORIO_NO_ENCONTRADO", 
                                        "El directorio no existe")
             if self.siem:
-                self.siem.registrar_evento('WARNING', 'escaneador', 
+                self.siem.log_evento('WARNING', 'escaneador', 
                                          f'Directorio no encontrado: {ruta_directorio}')
             return [resultado]
         
@@ -299,7 +334,7 @@ REGEX:powershell\\s+-[eE]ncodedcommand
             archivos_procesados = 0
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'escaneador', 
+                self.siem.log_evento('INFO', 'escaneador', 
                                          f'Iniciando escaneo de directorio: {ruta_directorio} ({total_archivos} archivos)')
             
             for archivo in archivos:
@@ -309,13 +344,13 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                     archivos_procesados += 1
                     
                     if archivos_procesados % 100 == 0 and self.siem:
-                        self.siem.registrar_evento('INFO', 'escaneador', 
+                        self.siem.log_evento('INFO', 'escaneador', 
                                                  f'Progreso: {archivos_procesados}/{total_archivos} archivos')
             
             amenazas_encontradas = len([r for r in resultados if r.es_amenaza])
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'escaneador', 
+                self.siem.log_evento('INFO', 'escaneador', 
                                          f'Escaneo completado: {archivos_procesados} archivos, {amenazas_encontradas} amenazas')
             
         except Exception as e:
@@ -324,10 +359,51 @@ REGEX:powershell\\s+-[eE]ncodedcommand
             resultados.append(resultado)
             
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'escaneador', 
+                self.siem.log_evento('ERROR', 'escaneador', 
                                          f'Error escaneando directorio {ruta_directorio}: {e}')
         
         return resultados
+    
+    def generar_reporte_directorio(self, resultados: List[ResultadoEscaneo]) -> Dict[str, Any]:
+        """Genera un reporte resumen del escaneo de directorio."""
+        total_archivos = len(resultados)
+        amenazas_encontradas = len([r for r in resultados if r.es_amenaza])
+        archivos_infectados = [r for r in resultados if r.es_amenaza]
+        
+        return {
+            'total_archivos': total_archivos,
+            'amenazas_encontradas': amenazas_encontradas,
+            'archivos_limpios': total_archivos - amenazas_encontradas,
+            'archivos_infectados': [
+                {
+                    'ruta': r.ruta,
+                    'amenazas': [r.tipo_amenaza] if r.tipo_amenaza else [],
+                    'detalles': r.detalles
+                } for r in archivos_infectados
+            ]
+        }
+    
+    def generar_reporte_markdown_directorio(self, reporte_data: Dict[str, Any]) -> str:
+        """Genera reporte en formato Markdown."""
+        md = "# Reporte de Escaneo de Directorio - Ares Aegis\n\n"
+        md += f"**Fecha:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        
+        md += "## Resumen del Escaneo\n\n"
+        md += f"- **Total de archivos:** {reporte_data['total_archivos']}\n"
+        md += f"- **Archivos limpios:** {reporte_data['archivos_limpios']}\n"
+        md += f"- **Amenazas encontradas:** {reporte_data['amenazas_encontradas']}\n\n"
+        
+        if reporte_data['archivos_infectados']:
+            md += "## Archivos Infectados\n\n"
+            for archivo in reporte_data['archivos_infectados']:
+                md += f"### {archivo['ruta']}\n\n"
+                if archivo['amenazas']:
+                    md += f"- **Amenazas:** {', '.join(archivo['amenazas'])}\n"
+                if archivo['detalles']:
+                    md += f"- **Detalles:** {archivo['detalles']}\n"
+                md += "\n"
+        
+        return md
     
     def actualizar_firmas(self, nuevas_firmas: List[str]):
         archivo_firmas = Path("configuracion/firmas.txt")
@@ -341,12 +417,12 @@ REGEX:powershell\\s+-[eE]ncodedcommand
             self.cargar_firmas()
             
             if self.siem:
-                self.siem.registrar_evento('INFO', 'escaneador', 
+                self.siem.log_evento('INFO', 'escaneador', 
                                          f'Firmas actualizadas: {len(nuevas_firmas)} nuevas firmas')
             
         except Exception as e:
             if self.siem:
-                self.siem.registrar_evento('ERROR', 'escaneador', 
+                self.siem.log_evento('ERROR', 'escaneador', 
                                          f'Error actualizando firmas: {e}')
     
     def generar_reporte_markdown(self, resultados: List[ResultadoEscaneo]) -> str:
