@@ -4,7 +4,31 @@
 		{
 			"type": "shell",
 			"label": "Ejecutar Ares Aegis (main.py)",
-			"command": "python3 antivirus_kali/main.py",
+			"command": "python3 main.py",
+			"group": "build",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "Verificar Proyecto",
+			"command": "python3 verificar_proyecto.py",
+			"group": "test",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "Ejecutar Tests",
+			"command": "python3 -m pytest tests/ -v",
+			"group": "test",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "Inicio Rápido",
+			"command": "./iniciar.sh",
 			"group": "build",
 			"isBackground": false,
 			"problemMatcher": []

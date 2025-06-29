@@ -79,17 +79,9 @@ class SIEM:
         """
         self.logger = logging.getLogger(__name__)
         
-        # Configurar archivo de eventos
+        # Configurar archivo de eventos con mejor manejo de permisos
         if archivo_eventos is None:
-            try:
-                eventos_dir = Path("/var/log/ares_aegis")
-                eventos_dir.mkdir(parents=True, exist_ok=True)
-                self.archivo_eventos = eventos_dir / "eventos_siem.json"
-            except PermissionError:
-                # Fallback para desarrollo
-                eventos_dir = Path.home() / ".ares_aegis"
-                eventos_dir.mkdir(exist_ok=True)
-                self.archivo_eventos = eventos_dir / "eventos_siem.json"
+            self.archivo_eventos = self._determinar_ruta_eventos()
         else:
             self.archivo_eventos = archivo_eventos
         
@@ -272,3 +264,53 @@ class SIEM:
             "evento_mas_antiguo": evento_mas_antiguo.isoformat(),
             "archivo_eventos": str(self.archivo_eventos)
         }
+    
+    def _determinar_ruta_eventos(self) -> Path:
+        """
+        Determina la ruta óptima para el archivo de eventos.
+        
+        Returns:
+            Path al archivo de eventos accesible
+        """
+        import os
+        
+        # Lista de rutas en orden de preferencia
+        rutas_candidatas = []
+        
+        # Si somos root, usar directorio del sistema
+        if os.geteuid() == 0:
+            rutas_candidatas.append(Path("/var/log/ares_aegis"))
+        
+        # Directorio local del proyecto
+        rutas_candidatas.append(Path.cwd() / "logs")
+        
+        # Directorio home del usuario
+        rutas_candidatas.append(Path.home() / ".ares_aegis")
+        
+        # Directorio temporal como último recurso
+        rutas_candidatas.append(Path("/tmp/ares_aegis"))
+        
+        for ruta_dir in rutas_candidatas:
+            try:
+                # Intentar crear el directorio
+                ruta_dir.mkdir(parents=True, exist_ok=True)
+                
+                # Probar si podemos escribir
+                archivo_test = ruta_dir / "test_write.tmp"
+                archivo_test.write_text("test")
+                archivo_test.unlink()
+                
+                # Si llegamos aquí, esta ruta funciona
+                return ruta_dir / "eventos_siem.json"
+                
+            except (PermissionError, OSError) as e:
+                self.logger.debug(f"No se puede usar {ruta_dir}: {e}")
+                continue
+        
+        # Si ninguna ruta funciona, usar un archivo temporal
+        import tempfile
+        temp_dir = Path(tempfile.gettempdir()) / "ares_aegis_fallback"
+        temp_dir.mkdir(parents=True, exist_ok=True)
+        return temp_dir / "eventos_siem.json"
+
+    # === MÉTODOS DE GESTIÓN DE EVENTOS ===

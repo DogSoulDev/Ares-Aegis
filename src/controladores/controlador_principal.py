@@ -22,7 +22,14 @@ from modelos.siem import SIEM, TipoEvento
 from modelos.escaneador import Escaneador, ResultadoEscaneo
 from modelos.cuarentena import GestorCuarentena
 from modelos.monitor_integridad import MonitorIntegridad
-from modelos.monitor_red import MonitorRed
+
+# Importar modelos opcionales
+try:
+    from modelos.monitor_red import MonitorRed
+    MONITOR_RED_DISPONIBLE = True
+except ImportError:
+    MonitorRed = None
+    MONITOR_RED_DISPONIBLE = False
 
 
 class ControladorPrincipal:
@@ -31,6 +38,9 @@ class ControladorPrincipal:
     def __init__(self):
         """Inicializa el controlador principal."""
         self.logger = logging.getLogger(__name__)
+        
+        # Modo de privilegios ('root' o 'limitado')
+        self.modo_privilegios = 'limitado'  # Por defecto modo limitado
         
         # Inicializar SIEM como núcleo central
         self.siem = SIEM()
@@ -50,7 +60,12 @@ class ControladorPrincipal:
             self.escaneador = Escaneador(self.siem)
             self.gestor_cuarentena = GestorCuarentena(None, self.siem)  # directorio por defecto
             self.monitor_integridad = MonitorIntegridad(None, self.siem)  # directorio por defecto
-            self.monitor_red = MonitorRed(self.siem)
+            
+            # Inicializar monitor de red si está disponible
+            if MONITOR_RED_DISPONIBLE and MonitorRed is not None:
+                self.monitor_red = MonitorRed(self.siem)
+            else:
+                self.monitor_red = None
             
             self.logger.info("Todos los módulos inicializados correctamente")
             self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, 'Módulos inicializados correctamente')
@@ -67,19 +82,30 @@ class ControladorPrincipal:
                 self.logger.warning("El sistema ya está iniciado")
                 return True
             
-            # Verificar privilegios de root
-            if not self._verificar_privilegios():
-                raise PermissionError("Se requieren privilegios de root para ejecutar Ares Aegis")
+            # Verificar privilegios según el modo
+            if self.modo_privilegios == 'root':
+                if not self._verificar_privilegios():
+                    self.logger.warning("Se esperaban privilegios de root pero no se detectaron")
+                else:
+                    self.logger.info("Privilegios de root confirmados")
+            else:
+                self.logger.info("Iniciando en modo limitado")
             
-            # Crear directorios necesarios
+            # Crear directorios necesarios (solo si tenemos permisos)
             self._crear_directorios_sistema()
             
             # Inicializar configuraciones
             self._cargar_configuraciones()
             
             self.sistema_iniciado = True
-            self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, 'Sistema Ares Aegis iniciado correctamente')
-            self.logger.info("Sistema Ares Aegis iniciado correctamente")
+            
+            if self.modo_privilegios == 'root':
+                mensaje = 'Sistema Ares Aegis iniciado con privilegios completos'
+            else:
+                mensaje = 'Sistema Ares Aegis iniciado en modo limitado'
+                
+            self.siem.log_evento(TipoEvento.SISTEMA_EVENTO, mensaje)
+            self.logger.info(mensaje)
             
             return True
             
@@ -94,13 +120,25 @@ class ControladorPrincipal:
     
     def _crear_directorios_sistema(self):
         """Crea los directorios necesarios para el funcionamiento del sistema."""
-        directorios = [
-            "/var/log/ares-aegis",
-            "/var/lib/ares-aegis",
-            "/var/lib/ares-aegis/cuarentena",
-            "/var/lib/ares-aegis/firmas",
-            "/var/lib/ares-aegis/baselines"
-        ]
+        if self.modo_privilegios == 'root':
+            # Directorios del sistema con privilegios completos
+            directorios = [
+                "/var/log/ares-aegis",
+                "/var/lib/ares-aegis",
+                "/var/lib/ares-aegis/cuarentena",
+                "/var/lib/ares-aegis/firmas",
+                "/var/lib/ares-aegis/baselines"
+            ]
+        else:
+            # Directorios en modo limitado (directorio del usuario)
+            base_dir = Path.home() / ".ares_aegis"
+            directorios = [
+                str(base_dir),
+                str(base_dir / "logs"),
+                str(base_dir / "cuarentena"),
+                str(base_dir / "firmas"),
+                str(base_dir / "baselines")
+            ]
         
         for directorio in directorios:
             try:
@@ -212,6 +250,16 @@ class ControladorPrincipal:
         """Ejecuta monitoreo de red y detecta conexiones sospechosas."""
         try:
             self.siem.log_evento(TipoEvento.RED_ACTIVIDAD, 'Iniciando monitoreo de red')
+            
+            if self.monitor_red is None:
+                self.logger.warning("Monitor de red no disponible")
+                return {
+                    'error': 'Monitor de red no disponible',
+                    'estadisticas': {'total_conexiones': 0},
+                    'conexiones_sospechosas': [],
+                    'puertos_sospechosos': [],
+                    'total_conexiones': 0
+                }
             
             # Obtener conexiones activas
             conexiones = self.monitor_red.obtener_conexiones_activas()
@@ -346,6 +394,64 @@ class ControladorPrincipal:
         except Exception as e:
             self.logger.error(f"Error obteniendo eventos SIEM: {e}")
             raise
+    
+    # === MÉTODOS DE CONFIGURACIÓN Y ESTADO ===
+    
+    def obtener_funciones_disponibles(self) -> Dict[str, bool]:
+        """
+        Retorna un diccionario con las funciones disponibles según el modo de privilegios.
+        
+        Returns:
+            Dict[str, bool]: Diccionario con funciones y su disponibilidad
+        """
+        if self.modo_privilegios == 'root':
+            return {
+                'escaneo_sistema_completo': True,
+                'monitoreo_procesos_criticos': True,
+                'analisis_logs_sistema': True,
+                'acceso_directorios_protegidos': True,
+                'cuarentena_sistema': True,
+                'monitoreo_red_completo': True,
+                'integridad_archivos_sistema': True,
+                'actualizacion_firmas': True,
+                'gestion_servicios': True,
+                'analisis_memoria': True
+            }
+        else:
+            return {
+                'escaneo_sistema_completo': False,
+                'monitoreo_procesos_criticos': False,
+                'analisis_logs_sistema': False,
+                'acceso_directorios_protegidos': False,
+                'cuarentena_sistema': False,
+                'monitoreo_red_completo': False,
+                'integridad_archivos_sistema': False,
+                'actualizacion_firmas': False,
+                'gestion_servicios': False,
+                'analisis_memoria': False,
+                'escaneo_directorio_usuario': True,
+                'cuarentena_local': True,
+                'monitoreo_red_basico': True,
+                'integridad_archivos_usuario': True
+            }
+    
+    def obtener_modo_privilegios(self) -> str:
+        """
+        Retorna el modo de privilegios actual.
+        
+        Returns:
+            str: 'root' o 'limitado'
+        """
+        return self.modo_privilegios
+    
+    def es_modo_root(self) -> bool:
+        """
+        Verifica si está ejecutándose en modo root.
+        
+        Returns:
+            bool: True si es modo root, False si es limitado
+        """
+        return self.modo_privilegios == 'root'
     
     def detener_sistema(self):
         """Detiene el sistema de forma controlada."""
