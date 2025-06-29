@@ -69,7 +69,6 @@ class VentanaPrincipal(QMainWindow):
             
             QPushButton:hover {
                 background: #2980b9;
-                transform: translateY(-1px);
             }
             
             QPushButton:pressed {

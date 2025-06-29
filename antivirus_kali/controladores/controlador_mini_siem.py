@@ -67,6 +67,10 @@ class ControladorMiniSiemIntegracion:
             return self.siem.obtener_estadisticas_completas()
         return {}
         
+    def obtener_estadisticas_completas(self):
+        """Obtener estadísticas completas del Mini-SIEM (alias para compatibilidad)"""
+        return self.obtener_estadisticas()
+        
     def obtener_eventos_recientes(self, limite=50):
         """Obtener eventos recientes"""
         if self.siem:
@@ -149,3 +153,29 @@ class ControladorMiniSiemIntegracion:
         """Exportar informe de seguridad"""
         if self.siem:
             self.siem.exportar_informe_seguridad(archivo, desde, hasta)
+        
+    async def iniciar(self):
+        """Iniciar el Mini-SIEM (alias para iniciar_monitoreo)"""
+        await self.iniciar_monitoreo()
+        
+    async def detener(self):
+        """Detener el Mini-SIEM (alias para detener_monitoreo)"""
+        await self.detener_monitoreo()
+        
+    def realizar_diagnostico_siem(self):
+        """Realizar diagnóstico del Mini-SIEM"""
+        try:
+            import time
+            diagnostico = {
+                'activo': self.esta_activo(),
+                'timestamp': str(time.time()),
+                'eventos_procesados': len(self.obtener_eventos_recientes(10)),
+                'alertas_activas': len(self.obtener_alertas_activas()),
+                'estado': 'OK' if self.esta_activo() else 'INACTIVO'
+            }
+            return diagnostico
+        except Exception as e:
+            return {
+                'error': str(e),
+                'estado': 'ERROR'
+            }

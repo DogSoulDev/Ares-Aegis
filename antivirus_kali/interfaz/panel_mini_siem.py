@@ -13,7 +13,7 @@ from PySide6.QtWidgets import (
     QListWidgetItem, QDialog, QDialogButtonBox, QFormLayout,
     QLineEdit, QDateTimeEdit, QScrollArea, QSplitter
 )
-from PySide6.QtCore import Qt, QTimer, Signal, QThread, pyqtSignal
+from PySide6.QtCore import Qt, QTimer, Signal, QThread
 from PySide6.QtGui import QFont, QColor, QPalette
 import logging
 
@@ -616,7 +616,7 @@ class PanelMiniSiem(QWidget):
     def _ejecutar_diagnostico_async(self):
         """Ejecutar diagnóstico de forma asíncrona"""
         try:
-            resultado = asyncio.run(self.controlador_siem.realizar_diagnostico())
+            resultado = self.controlador_siem.realizar_diagnostico_siem()
             # Mostrar resultado en dialog
             # self.mostrar_resultado_diagnostico(resultado)
         except Exception as e:

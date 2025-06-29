@@ -43,7 +43,7 @@ class SiemLogger:
     y rotación de archivos.
     """
     
-    def __init__(self, name: str = "AresAegis", log_level: str = "INFO"):
+    def __init__(self, name: str = "AresAegis", log_level: str = "WARNING"):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(getattr(logging, log_level.upper()))
         
@@ -85,9 +85,9 @@ class SiemLogger:
         error_handler.setLevel(logging.ERROR)
         error_handler.setFormatter(logging.Formatter(formato_detallado))
         
-        # Handler para consola con colores
+        # Handler para consola con colores (solo errores críticos)
         consola_handler = logging.StreamHandler(sys.stdout)
-        consola_handler.setLevel(logging.INFO)
+        consola_handler.setLevel(logging.ERROR)  # Solo errores y críticos en consola
         consola_handler.setFormatter(ColoredFormatter(formato_simple))
         
         # Agregar handlers

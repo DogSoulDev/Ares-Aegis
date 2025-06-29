@@ -3,3 +3,86 @@
 2025-06-28 19:30:23,033 | AresAegis | INFO | logger.py:104 | info() | Motor ClamAV inicializado
 2025-06-28 19:30:23,033 | AresAegis | INFO | logger.py:104 | info() | Motor Rootkits inicializado
 2025-06-28 19:30:23,033 | AresAegis | INFO | logger.py:104 | info() | Motor Hashes inicializado
+2025-06-28 20:22:48,720 | __main__ | ERROR | logger.py:115 | error() | Error iniciando interfaz completa: 'texto_principal'
+2025-06-28 20:22:48,722 | __main__ | ERROR | logger.py:115 | error() | Traceback (most recent call last):
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/launcher_completo.py", line 75, in main
+    ventana = VentanaPrincipalCompleta()
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/interfaz/ventana_principal_completa.py", line 799, in __init__
+    self._aplicar_estilos()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/interfaz/ventana_principal_completa.py", line 914, in _aplicar_estilos
+    self.setStyleSheet(EstiloJapones.obtener_stylesheet_completo())
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/interfaz/estilo_japones.py", line 367, in obtener_stylesheet_completo
+    color: {EstiloJapones.COLORES['texto_principal']};
+            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'texto_principal'
+
+2025-06-28 20:23:29,397 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:29] CRITICAL: Malware detectado - Rootkit detectado en kernel
+2025-06-28 20:23:31,165 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:31] CRITICAL: Intento de escalación de privilegios - Intento de acceso root
+2025-06-28 20:23:31,166 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:31] CRITICAL: Intento de escalación de privilegios - Uso de sudo sin autorización
+2025-06-28 20:23:31,182 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:31] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:23:35,183 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:35] HIGH: Vulnerabilidad detectada - CVE-2023-12345 detectada
+2025-06-28 20:23:35,184 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:35] CRITICAL: Intento de escalación de privilegios - Modificación de permisos críticos
+2025-06-28 20:23:35,184 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:35] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:23:37,167 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:37] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:23:37,212 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:37] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:23:37,213 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:37] CRITICAL: Acceso no autorizado detectado - Múltiples intentos fallidos
+2025-06-28 20:23:39,168 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:39] CRITICAL: Acceso no autorizado detectado - Múltiples intentos fallidos
+2025-06-28 20:23:41,213 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:41] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:23:41,214 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:41] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:23:43,186 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:43] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:23:45,170 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:45] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:23:45,171 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:45] CRITICAL: Acceso no autorizado detectado - Acceso fuera de horario laboral
+2025-06-28 20:23:45,215 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:45] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:23:47,187 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:47] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:23:47,188 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:47] CRITICAL: Acceso no autorizado detectado - Múltiples intentos fallidos
+2025-06-28 20:23:47,215 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:47] CRITICAL: Acceso no autorizado detectado - Múltiples intentos fallidos
+2025-06-28 20:23:49,172 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:49] HIGH: Vulnerabilidad detectada - Puerto abierto sin autorización
+2025-06-28 20:23:49,188 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:49] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:23:49,190 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:49] CRITICAL: Intento de escalación de privilegios - Uso de sudo sin autorización
+2025-06-28 20:23:49,217 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:49] CRITICAL: Malware detectado - Rootkit detectado en kernel
+2025-06-28 20:23:51,173 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:51] CRITICAL: Acceso no autorizado detectado - Múltiples intentos fallidos
+2025-06-28 20:23:51,176 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:51] CRITICAL: Acceso no autorizado detectado - Acceso fuera de horario laboral
+2025-06-28 20:23:51,217 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:51] HIGH: Vulnerabilidad detectada - Puerto abierto sin autorización
+2025-06-28 20:23:53,174 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:53] CRITICAL: Acceso no autorizado detectado - Acceso fuera de horario laboral
+2025-06-28 20:23:53,175 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:53] CRITICAL: Intento de escalación de privilegios - Intento de acceso root
+2025-06-28 20:23:53,218 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:53] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:23:55,191 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:55] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:23:55,196 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:55] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:23:55,220 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:55] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:23:55,221 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:55] CRITICAL: Intento de escalación de privilegios - Modificación de permisos críticos
+2025-06-28 20:23:57,175 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:57] CRITICAL: Acceso no autorizado detectado - Múltiples intentos fallidos
+2025-06-28 20:23:57,177 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:57] CRITICAL: Intento de escalación de privilegios - Modificación de permisos críticos
+2025-06-28 20:23:57,178 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:57] CRITICAL: Intento de escalación de privilegios - Intento de acceso root
+2025-06-28 20:23:57,191 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:57] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:23:59,177 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:59] HIGH: Vulnerabilidad detectada - Puerto abierto sin autorización
+2025-06-28 20:23:59,193 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:59] CRITICAL: Intento de escalación de privilegios - Intento de acceso root
+2025-06-28 20:23:59,220 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:59] CRITICAL: Intento de escalación de privilegios - Intento de acceso root
+2025-06-28 20:23:59,222 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:23:59] CRITICAL: Intento de escalación de privilegios - Uso de sudo sin autorización
+2025-06-28 20:24:01,177 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:01] HIGH: Vulnerabilidad detectada - CVE-2023-12345 detectada
+2025-06-28 20:24:01,178 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:01] CRITICAL: Intento de escalación de privilegios - Intento de acceso root
+2025-06-28 20:24:01,221 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:01] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:24:03,222 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:03] CRITICAL: Intento de escalación de privilegios - Modificación de permisos críticos
+2025-06-28 20:24:03,224 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:03] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:24:05,187 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:05] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:24:05,229 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:05] HIGH: Vulnerabilidad detectada - CVE-2023-12345 detectada
+2025-06-28 20:24:07,227 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:07] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:24:07,228 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:07] CRITICAL: Malware detectado - Rootkit detectado en kernel
+2025-06-28 20:24:09,182 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:09] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:24:09,203 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:09] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:24:09,204 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:09] HIGH: Vulnerabilidad detectada - CVE-2023-12345 detectada
+2025-06-28 20:24:09,225 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:09] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:24:11,182 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:11] CRITICAL: Intento de escalación de privilegios - Modificación de permisos críticos
+2025-06-28 20:24:11,204 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:11] CRITICAL: Acceso no autorizado detectado - Acceso fuera de horario laboral
+2025-06-28 20:24:11,228 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:11] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:24:13,183 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:13] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:24:13,204 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:13] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:24:15,204 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:15] CRITICAL: Acceso no autorizado detectado - Acceso fuera de horario laboral
+2025-06-28 20:24:19,228 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:19] CRITICAL: Acceso no autorizado detectado - IP no autorizada
+2025-06-28 20:24:19,229 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:19] HIGH: Vulnerabilidad detectada - Puerto abierto sin autorización
+2025-06-28 20:24:19,231 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:19] CRITICAL: Malware detectado - Troyano en directorio temporal
+2025-06-28 20:24:21,188 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:21] CRITICAL: Malware detectado - Rootkit detectado en kernel
+2025-06-28 20:24:21,229 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:21] CRITICAL: Acceso no autorizado detectado - Acceso fuera de horario laboral
+2025-06-28 20:24:21,231 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:21] CRITICAL: Malware detectado - Ransomware bloqueado
+2025-06-28 20:24:21,232 | antivirus_kali.interfaz.paneles.panel_mini_siem | WARNING | logger.py:108 | warning() | Alerta crítica: [20:24:21] CRITICAL: Acceso no autorizado detectado - Múltiples intentos fallidos
