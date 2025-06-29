@@ -1,0 +1,101 @@
+# Archivo de Firmas de Ares Aegis
+# Formato: una firma por línea
+# Tipos soportados:
+#   - Texto simple: cadenas de texto a buscar en archivos
+#   - HASH:sha256: hash SHA256 de archivos maliciosos conocidos
+#   - REGEX:expresion: expresiones regulares para patrones complejos
+
+# === FIRMAS DE TEXTO SIMPLE ===
+# Comandos comunes de backdoors y shells
+eval(base64_decode
+system($_GET
+shell_exec(
+passthru(
+exec(
+file_get_contents('http
+wget http
+curl -O
+/bin/sh -i
+nc -l -p
+python -c "import
+perl -e
+ruby -e
+
+# Palabras clave sospechosas
+backdoor
+rootkit
+keylogger
+password_steal
+malware
+trojan
+virus
+payload
+exploit
+hack
+crack
+keygen
+
+# Scripts PHP maliciosos comunes
+<?php eval(
+base64_decode(
+str_rot13(
+gzinflate(
+gzuncompress(
+preg_replace("/e"
+
+# === EXPRESIONES REGULARES ===
+# Detectar eval con base64
+REGEX:eval\s*\(\s*base64_decode
+
+# Detectar variables superglobales de PHP en contexto sospechoso
+REGEX:\$_[A-Z]+\[['\"][^'\"]*['\"]\]
+
+# Detectar system() con variables superglobales
+REGEX:system\s*\([^)]*\$_
+
+# Detectar descargas directas de scripts
+REGEX:(?:wget|curl)\s+https?://[^\s]+\.(sh|py|pl|exe|bat)
+
+# Detectar shells reversos
+REGEX:/bin/(ba)?sh\s+-[il]
+
+# Detectar netcat con parámetros de listener
+REGEX:nc\s+.*-[lp]\s+\d+
+
+# Detectar ofuscación común en JavaScript
+REGEX:eval\s*\(\s*unescape
+
+# Detectar PowerShell codificado
+REGEX:powershell\s+.*-enc\s+[A-Za-z0-9+/=]+
+
+# === HASHES SHA256 DE ARCHIVOS MALICIOSOS CONOCIDOS ===
+# Nota: Estos son ejemplos ficticios para demostración
+# En un entorno real, estos deberían ser hashes de malware conocido
+HASH:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+HASH:da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+# === FIRMAS ADICIONALES ===
+# Detectar archivos .htaccess maliciosos
+RewriteEngine On
+auto_prepend_file
+auto_append_file
+
+# Detectar scripts de minería de criptomonedas
+stratum+tcp
+xmrig
+cryptonight
+monero
+mining
+
+# Detectar inyecciones SQL comunes
+union select
+' or 1=1
+' or '1'='1
+admin'--
+1' and '1'='1
+
+# Detectar XSS comunes
+<script>alert(
+javascript:alert(
+document.cookie
+document.write(
