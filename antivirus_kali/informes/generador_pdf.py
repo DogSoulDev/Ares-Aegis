@@ -34,16 +34,8 @@ def generar_informe_pdf(resumen, ruta_pdf, usuario="Desconocido"):
     }
     try:
         # --- Portada ---
-        logo_path = Path(__file__).resolve().parent.parent / "recursos" / "Ares.jpeg"
         y = height - 120
-        if logo_path.exists():
-            try:
-                logo = ImageReader(str(logo_path))
-                logo_width = 120
-                logo_height = 120
-                c.drawImage(logo, (width-logo_width)/2, y, width=logo_width, height=logo_height, mask='auto')
-            except Exception as e:
-                logging.warning(f"No se pudo cargar el logo: {e}")
+            # Eliminado: referencia visual a logo obsoleto
         c.setFont("Helvetica-Bold", 28)
         c.setFillColor(colors.HexColor("#23272f"))
         c.drawCentredString(width/2, y-30, "Ares Aegis - Informe de Seguridad")

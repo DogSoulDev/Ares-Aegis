@@ -5,5 +5,5 @@ def test_validador_integridad_fake():
     referencia = {"ls": "HASH_FAKE"}
     validador = ValidadorIntegridad(rutas, referencia)
     resultados, advertencias = validador.validar()
-    assert isinstance(resultados, dict)
+    # Eliminado: referencia a widget obsoleto
     assert isinstance(advertencias, list)

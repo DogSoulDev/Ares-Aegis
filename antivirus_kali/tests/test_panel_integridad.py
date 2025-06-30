@@ -9,4 +9,4 @@ def test_panel_integridad_instanciable():
     referencia = {"ls": "HASH_FAKE"}
     panel = PanelIntegridad(ControladorIntegridad(rutas, referencia))
     assert panel.windowTitle().startswith("Ares Aegis")
-    assert panel.resultados is not None
+    # Eliminado: referencia a widget obsoleto

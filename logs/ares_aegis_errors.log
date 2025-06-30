@@ -1,0 +1,15 @@
+2025-06-28 20:22:48,720 | __main__ | ERROR | logger.py:115 | error() | Error iniciando interfaz completa: 'texto_principal'
+2025-06-28 20:22:48,722 | __main__ | ERROR | logger.py:115 | error() | Traceback (most recent call last):
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/launcher_completo.py", line 75, in main
+    ventana = VentanaPrincipalCompleta()
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/interfaz/ventana_principal_completa.py", line 799, in __init__
+    self._aplicar_estilos()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/interfaz/ventana_principal_completa.py", line 914, in _aplicar_estilos
+    self.setStyleSheet(EstiloJapones.obtener_stylesheet_completo())
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/dogsoul/Ares-Aegis/antivirus_kali/interfaz/estilo_japones.py", line 367, in obtener_stylesheet_completo
+    color: {EstiloJapones.COLORES['texto_principal']};
+            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'texto_principal'
+

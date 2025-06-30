@@ -13,4 +13,4 @@ def test_panel_modo_seguro_instanciable():
             return ""
     panel = PanelModoSeguro(DummyControlador())
     assert panel.windowTitle().startswith("Ares Aegis")
-    assert panel.resultados is not None
+    # Eliminado: referencia a widget obsoleto

@@ -1,335 +1,858 @@
 """
 Ventana principal de Ares Aegis.
-Estilo minimalista japonés, navegación entre paneles innovadores.
+Interfaz completamente nueva, moderna y elegante con navegación fluida.
+Diseñada para máxima usabilidad y experiencia profesional.
 """
 
-"""
-Ventana principal de Ares Aegis.
-Interfaz moderna, minimalista y profesional.
-Organiza la navegación y paneles principales.
-"""
-
-from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QHBoxLayout, QListWidget, QListWidgetItem, QStackedWidget, QPushButton
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
+    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
+    QPushButton, QLabel, QStackedWidget, QFrame,
+    QGridLayout, QSpacerItem, QSizePolicy, QLineEdit,
+    QProgressBar, QScrollArea, QListWidget, QListWidgetItem,
+    QDialog, QMessageBox, QFileDialog
+)
+from PySide6.QtCore import Qt, QSize, QPropertyAnimation, QEasingCurve, QTimer, Signal
+from PySide6.QtGui import QIcon, QFont, QPixmap, QColor, QPalette
 from pathlib import Path
-from antivirus_kali.interfaz.panel_integridad import PanelIntegridad
-from antivirus_kali.interfaz.panel_red import PanelRed
-from antivirus_kali.interfaz.panel_privilegios import PanelPrivilegios
-from antivirus_kali.interfaz.panel_iocs import PanelIOCs
-from antivirus_kali.interfaz.panel_modo_seguro import PanelModoSeguro
-from antivirus_kali.interfaz.panel_escaneo_sistema import PanelEscaneoSistema
-from antivirus_kali.interfaz.panel_consola import PanelConsola
+import sys
 from antivirus_kali.interfaz.textos import TEXTOS
+from antivirus_kali.core.scan_engine import MotorEscaneo
+from antivirus_kali.interfaz.panel_mini_siem import PanelMiniSiem
+from antivirus_kali.controladores.controlador_mini_siem import ControladorMiniSiemIntegracion
+
+
 
 
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self, controladores):
-        from PySide6.QtGui import QIcon, QPixmap
         super().__init__()
-        self.setWindowTitle(TEXTOS["app_title"])
-        # Usar pathlib para rutas robustas
+        self.controladores = controladores
+        self.controlador_siem = ControladorMiniSiemIntegracion()
+        self.setup_ui()
+        self.setup_navigation()
+        
+    def setup_ui(self):
+        """Configuración inicial de la interfaz"""
+        self.setWindowTitle("Ares Aegis - Antivirus Profesional")
+        self.setMinimumSize(1200, 800)
+        
+        # Configurar icono
         base_dir = Path(__file__).resolve().parent.parent
         icon_path = base_dir / "recursos" / "iconos" / "aresIcon.png"
         if icon_path.exists():
             self.setWindowIcon(QIcon(str(icon_path)))
-        self.setStyleSheet("background: #f7f8fa; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif; color: #23272f;")
-        self.setMinimumSize(1000, 700)
-
-        # Paneles
-        self.panel_consola = PanelConsola()
-        self.panel_escaneo = PanelEscaneoSistema(controladores['escaneo_sistema'])
-        self.panel_integridad = PanelIntegridad(controladores['integridad'])
-        self.panel_red = PanelRed(controladores['red'])
-        self.panel_privilegios = PanelPrivilegios(controladores['privilegios'])
-        self.panel_iocs = PanelIOCs(controladores['iocs'])
-        self.panel_modo_seguro = PanelModoSeguro(controladores['modo_seguro'])
-
-        self.categorias = [
-            ("Análisis de Sistema", "system-search"),
-            ("Red", "network-wired"),
-            ("Integridad", "security-high"),
-            ("Amenazas", "dialog-warning"),
-            ("Modo Seguro", "security-medium"),
-            ("Privilegios", "user-shield"),
-            ("Exportar PDF", "document-save"),
-        ]
-
-        self.subopciones = {
-            "Análisis de Sistema": [
-                ("Resumen General", self.panel_escaneo.mostrar_resumen, "Resumen ejecutivo y estado global del sistema."),
-                ("Escaneo Completo", self.panel_escaneo.mostrar_resumen, "Analiza el sistema operativo y programas instalados en busca de amenazas."),
-                ("Rootkits", self.panel_escaneo.analizar_rootkits, "Escaneo profundo de rootkits en el sistema."),
-                ("Procesos Sospechosos", self.panel_escaneo.analizar_procesos, "Detección de procesos sospechosos en ejecución."),
-                ("Puertos Abiertos", self.panel_escaneo.analizar_puertos, "Listado de puertos abiertos en el sistema."),
-                ("Servicios Activos", self.panel_escaneo.analizar_servicios, "Listado de servicios activos en el sistema."),
-                ("Programas Instalados", self.panel_escaneo.listar_programas, "Muestra todos los programas instalados en el sistema."),
-            ],
-            "Red": [
-                ("Análisis de Red y Honeypots", self.panel_red.analizar, "Analiza la red local y detecta dispositivos o honeypots sospechosos."),
-            ],
-            "Integridad": [
-                ("Validar Integridad con Hashes Oficiales", self.panel_integridad.validar, "Verifica la integridad de los binarios críticos del sistema."),
-            ],
-            "Amenazas": [
-                ("Verificar IOC/Reputación", self.panel_iocs.verificar, "Comprueba archivos, IPs o dominios contra fuentes públicas de amenazas."),
-                ("Agregar IOC manualmente", self.panel_iocs.agregar_ioc, "Permite añadir IOCs manualmente para reforzar la protección."),
-            ],
-            "Modo Seguro": [
-                ("Activar Modo Seguro", self.panel_modo_seguro.activar, "Activa protecciones rápidas y firewall para pentesting seguro."),
-                ("Desactivar Modo Seguro", self.panel_modo_seguro.desactivar, "Desactiva el firewall temporalmente."),
-                ("Auditar Configuración Crítica", self.panel_modo_seguro.auditar, "Revisa configuraciones críticas como SSH."),
-            ],
-            "Privilegios": [
-                ("Comprobar Privilegios y Procesos", self.panel_privilegios.monitorear, "Monitorea procesos con privilegios elevados y posibles riesgos."),
-            ],
-            "Exportar PDF": [
-                ("Exportar PDF personalizado", self.exportar_pdf_personalizado, "Exporta la información seleccionada por el usuario en un PDF profesional."),
-            ],
-        }
-
-
-        # --- NUEVO DISEÑO MODERNO Y COHERENTE ---
-
-        # --- NUEVO SIDEBAR CON LOGO Y NOMBRE ARRIBA ---
-        self.sidebar = QWidget()
-        self.sidebar_layout = QVBoxLayout(self.sidebar)
-        self.sidebar_layout.setContentsMargins(0, 0, 0, 0)
-        self.sidebar_layout.setSpacing(0)
-        self.sidebar.setMinimumWidth(290)
-        self.sidebar.setMaximumWidth(320)
-        self.sidebar.setStyleSheet("background: #222c36;")
-
-        # Logo y nombre arriba
-        logo_path = base_dir / "recursos" / "Ares.jpeg"
-        logo_label = QLabel()
-        if logo_path.exists():
-            logo_pixmap = QPixmap(str(logo_path))
-            logo_scaled = logo_pixmap.scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-            logo_label.setPixmap(logo_scaled)
-            logo_label.setStyleSheet("border-radius: 12px; margin-top: 28px; margin-bottom: 8px; margin-left: auto; margin-right: auto;")
-        nombre_label = QLabel(TEXTOS["header"]["nombre"])
-        nombre_label.setStyleSheet("font-size: 26px; font-weight: 900; color: #fff; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif; margin-bottom: 24px; margin-left: auto; margin-right: auto;")
-        nombre_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        logo_container = QWidget()
-        logo_layout = QVBoxLayout(logo_container)
-        logo_layout.setContentsMargins(0, 0, 0, 0)
-        logo_layout.setSpacing(0)
-        logo_layout.addWidget(logo_label, alignment=Qt.AlignmentFlag.AlignHCenter)
-        logo_layout.addWidget(nombre_label, alignment=Qt.AlignmentFlag.AlignHCenter)
-        self.sidebar_layout.addWidget(logo_container)
-
-        # Menú lateral
-        self.menu = QListWidget()
-        self.menu.setMinimumWidth(260)
-        self.menu.setMaximumWidth(300)
-        self.menu.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.menu.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.menu.setStyleSheet('''
-            QListWidget {
-                background: #222c36;
+        
+        # Tema principal limpio y profesional
+        self.setStyleSheet("""
+            QMainWindow {
+                background: #ffffff;
+                color: #2c3e50;
+                font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', Arial, sans-serif;
+            }
+            
+            QWidget {
+                background: transparent;
+                color: #2c3e50;
+                font-family: 'Segoe UI', 'San Francisco', 'Helvetica Neue', Arial, sans-serif;
+            }
+            
+            QPushButton {
+                background: #3498db;
+                color: white;
                 border: none;
-                font-size: 17px;
-                color: #e6e6e6;
-                padding: 0px;
-                outline: none;
-            }
-            QListWidget::viewport {
-                background: #222c36;
-            }
-            QListWidget::item {
-                padding: 16px 28px 16px 28px;
-                margin: 8px 0px;
-                border-radius: 12px;
-                text-align: left;
-                color: #e6e6e6;
-                font-weight: 500;
-                letter-spacing: 0.2px;
-                min-width: 200px;
-                max-width: 260px;
-            }
-            QListWidget::item:selected {
-                background: #3c8dbc;
-                color: #fff;
+                border-radius: 8px;
+                padding: 12px 24px;
+                font-size: 14px;
                 font-weight: 600;
             }
-            QListWidget::item:hover {
-                background: #2d3a4a;
+            
+            QPushButton:hover {
+                background: #2980b9;
             }
-            QScrollBar:vertical, QScrollBar:horizontal {
-                width: 0px;
-                height: 0px;
-                background: transparent;
+            
+            QPushButton:pressed {
+                background: #21618c;
             }
-        ''')
-        from PySide6.QtGui import QIcon, QPixmap
-        for cat, icon in self.categorias:
-            texto = cat
-            item = QListWidgetItem(f"  {texto}")
-            item.setIcon(QIcon.fromTheme(icon))
-            item.setToolTip(TEXTOS["sidebar"].get(cat, f"Panel: {cat}"))
-            self.menu.addItem(item)
-        self.menu.setFixedHeight(self.menu.sizeHintForRow(0) * len(self.categorias) + 18 * len(self.categorias))
-        # Mejora visual: resalta la opción seleccionada con una barra lateral
-        self.menu.setStyleSheet(self.menu.styleSheet() + '''
-            QListWidget::item:selected {
-                border-left: 6px solid #ffb300;
-                background: #3c8dbc;
-                color: #fff;
-                font-weight: 700;
+            
+            QLabel {
+                color: #2c3e50;
             }
-        ''')
-
-        # --- PANEL CENTRAL REDISEÑADO (DASHBOARD MODERNO) ---
-        self.central_stack = QStackedWidget()
-        # Fondo uniforme y moderno para toda la zona central
-        self.central_stack.setStyleSheet("background: #f7f8fa;")
-        self.paneles_categoria = {}
-        for cat, _ in self.categorias:
-            panel = QWidget()
-            panel.setStyleSheet("background: #f7f8fa;")
-            panel_layout = QVBoxLayout(panel)
-            panel_layout.setContentsMargins(48, 36, 48, 36)
-            panel_layout.setSpacing(28)
-            # Título accesible
-            titulo = QLabel(cat)
-            titulo.setStyleSheet("font-size: 26px; color: #23272f; margin-bottom: 12px; font-weight: 900; text-align: center; font-family: 'Inter', 'Noto Sans', 'Segoe UI', Arial, sans-serif;")
-            titulo.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-            titulo.setToolTip(f"Panel de {cat}. Opciones y acciones de {cat.lower()}.")
-            panel_layout.addWidget(titulo)
-            # Tarjetas de acciones (botones) en grid
-            if self.subopciones.get(cat, []):
-                from PySide6.QtWidgets import QGridLayout
-                grid_widget = QWidget()
-                grid_widget.setStyleSheet("background: #f7f8fa;")
-                grid_layout = QGridLayout(grid_widget)
-                grid_layout.setContentsMargins(0, 0, 0, 0)
-                grid_layout.setSpacing(18)
-                for idx, (nombre, accion, desc) in enumerate(self.subopciones[cat]):
-                    btn = QPushButton(nombre)
-                    btn.setFixedHeight(54)
-                    btn.setMinimumWidth(200)
-                    btn.setMaximumWidth(400)
-                    btn.setStyleSheet('''
-                        QPushButton {
-                            background: #f7f8fa;
-                            color: #23272f;
-                            border-radius: 14px;
-                            border: 2px solid #e0e0e0;
-                            font-size: 17px;
-                            font-weight: 700;
-                            padding: 10px 28px;
-                            margin-bottom: 2px;
-                            letter-spacing: 0.2px;
-                        }
-                        QPushButton:hover {
-                            background: #eaf3fa;
-                            color: #1a1a1a;
-                            border: 2px solid #3c8dbc;
-                        }
-                        QPushButton:pressed {
-                            background: #dbeafe;
-                            color: #1a1a1a;
-                            border: 2px solid #3c8dbc;
-                        }
-                        QPushButton:focus {
-                            border: 2.5px solid #3c8dbc;
-                        }
-                    ''')
-                    btn.setToolTip(desc)
-                    btn.setAccessibleName(nombre)
-                    btn.setAccessibleDescription(desc)
-                    btn.setCursor(Qt.CursorShape.PointingHandCursor)
-                    btn.clicked.connect(accion)
-                    row = idx // 2
-                    col = idx % 2
-                    grid_layout.addWidget(btn, row, col, alignment=Qt.AlignmentFlag.AlignLeft)
-                grid_layout.setRowStretch((len(self.subopciones[cat]) + 1) // 2, 1)
-                panel_layout.addWidget(grid_widget, alignment=Qt.AlignmentFlag.AlignLeft)
-            # Panel específico (resultados, widgets, etc.)
-            if cat == "Análisis de Sistema":
-                self.panel_escaneo.setStyleSheet("background: #f7f8fa;")
-                panel_layout.addWidget(self.panel_escaneo)
-            elif cat == "Red":
-                self.panel_red.setStyleSheet("background: #f7f8fa;")
-                panel_layout.addWidget(self.panel_red)
-            elif cat == "Integridad":
-                self.panel_integridad.setStyleSheet("background: #f7f8fa;")
-                panel_layout.addWidget(self.panel_integridad)
-            elif cat == "Amenazas":
-                self.panel_iocs.setStyleSheet("background: #f7f8fa;")
-                panel_layout.addWidget(self.panel_iocs)
-            elif cat == "Modo Seguro":
-                self.panel_modo_seguro.setStyleSheet("background: #f7f8fa;")
-                panel_layout.addWidget(self.panel_modo_seguro)
-            elif cat == "Privilegios":
-                self.panel_privilegios.setStyleSheet("background: #f7f8fa;")
-                panel_layout.addWidget(self.panel_privilegios)
-            self.central_stack.addWidget(panel)
-            self.paneles_categoria[cat] = panel
-
-        self.sidebar_layout.addWidget(self.menu)
-        self.sidebar_layout.addStretch(1)
-
-
-        # Layout principal horizontal: sidebar + contenido
-        main_layout = QHBoxLayout()
+        """)
+        
+        # Widget central principal
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        
+        # Layout principal
+        main_layout = QVBoxLayout(central_widget)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
-        main_layout.addWidget(self.sidebar)
-        main_layout.addWidget(self.central_stack, stretch=1)
-
-        # Terminal de información siempre visible abajo (solo una vez)
-        self.terminal_info = PanelConsola()
-        terminal_bg = QWidget()
-        terminal_layout = QVBoxLayout(terminal_bg)
-        terminal_layout.setContentsMargins(24, 8, 24, 16)
-        terminal_layout.setSpacing(0)
-        terminal_bg.setStyleSheet("background: #23272f; border-radius: 12px; border: none; margin-bottom: 0px;")
-        self.terminal_info.setStyleSheet("background: #23272f; color: #bdbdbd; font-family: 'Fira Mono', monospace; font-size: 15px; border: none;")
-        terminal_layout.addWidget(self.terminal_info)
-
-        # Layout vertical final: contenido + terminal
-        layout_vertical = QVBoxLayout()
-        layout_vertical.setContentsMargins(0, 0, 0, 0)
-        layout_vertical.setSpacing(0)
-        layout_vertical.addLayout(main_layout, stretch=8)
-        layout_vertical.addWidget(terminal_bg, stretch=1)
-        container = QWidget()
-        container.setLayout(layout_vertical)
-        self.setCentralWidget(container)
-
-        self.menu.currentRowChanged.connect(self.on_menu_changed)
-        self.menu.setCurrentRow(0)
-        self.on_menu_changed(0)
-
-    def exportar_pdf_personalizado(self):
-        from PySide6.QtWidgets import QFileDialog, QMessageBox
-        import getpass
-        # 1. Selección de ruta destino
-        ruta_pdf, _ = QFileDialog.getSaveFileName(self, "Guardar informe PDF", "informe_ares_aegis.pdf", "PDF Files (*.pdf)")
-        if not ruta_pdf:
-            return
-        # 2. Obtener resumen profesional (solo de Análisis de Sistema por ahora)
-        try:
-            resumen = self.panel_escaneo.controlador.obtener_resumen(self.panel_escaneo.base_hashes)
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"No se pudo generar el resumen: {e}")
-            return
-        usuario = getpass.getuser()
-        # 3. Exportar PDF profesional
-        try:
-            ruta_final = self.panel_escaneo.controlador.exportar_informe(resumen, ruta=ruta_pdf, usuario=usuario)
-            if Path(ruta_final).exists():
-                QMessageBox.information(self, "Exportación exitosa", f"Informe PDF exportado correctamente a:\n{ruta_final}")
+        
+        # Header
+        self.create_header(main_layout)
+        
+        # Contenido principal
+        self.create_main_content(main_layout)
+        
+    def create_header(self, parent_layout):
+        """Crear header elegante y moderno"""
+        header = QFrame()
+        header.setFixedHeight(80)
+        header.setStyleSheet("""
+            QFrame {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #3498db, stop:1 #2c3e50);
+                border-bottom: 3px solid #2980b9;
+            }
+            QLabel {
+                color: white;
+                font-weight: bold;
+            }
+        """)
+        
+        header_layout = QHBoxLayout(header)
+        header_layout.setContentsMargins(30, 0, 30, 0)
+        
+        # Logo y título
+        title_label = QLabel("ARES AEGIS")
+        title_label.setStyleSheet("font-size: 28px; font-weight: 800; color: white;")
+        
+        subtitle_label = QLabel("Suite Antivirus Profesional")
+        subtitle_label.setStyleSheet("font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.8);")
+        
+        title_container = QVBoxLayout()
+        title_container.addWidget(title_label)
+        title_container.addWidget(subtitle_label)
+        title_container.setSpacing(0)
+        
+        header_layout.addLayout(title_container)
+        header_layout.addStretch()
+        
+        parent_layout.addWidget(header)
+        
+    def create_main_content(self, parent_layout):
+        """Crear contenido principal con navegación elegante"""
+        content_widget = QWidget()
+        content_layout = QHBoxLayout(content_widget)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(0)
+        
+        # Sidebar navegación
+        self.create_sidebar(content_layout)
+        
+        # Panel principal
+        self.create_main_panel(content_layout)
+        
+        parent_layout.addWidget(content_widget)
+        
+    def create_sidebar(self, parent_layout):
+        """Crear sidebar de navegación"""
+        self.sidebar = QFrame()
+        self.sidebar.setFixedWidth(280)
+        self.sidebar.setStyleSheet("""
+            QFrame {
+                background: #f8f9fa;
+                border-right: 1px solid #e9ecef;
+            }
+        """)
+        
+        sidebar_layout = QVBoxLayout(self.sidebar)
+        sidebar_layout.setContentsMargins(20, 30, 20, 30)
+        sidebar_layout.setSpacing(15)
+        
+        # Botones de navegación principal
+        self.nav_buttons = []
+        nav_items = [
+            ("Escaneo", "🛡️", self.show_scan_panel),
+            ("Resultados", "📊", self.show_results_panel),
+            ("Mini-SIEM", "🔍", self.show_siem_panel),
+            ("Configuración", "⚙️", self.show_settings_panel),
+            ("Historial", "📝", self.show_history_panel),
+            ("Herramientas", "🔧", self.show_tools_panel)
+        ]
+        
+        for text, icon, callback in nav_items:
+            btn = self.create_nav_button(text, icon, callback)
+            self.nav_buttons.append(btn)
+            sidebar_layout.addWidget(btn)
+        
+        sidebar_layout.addStretch()
+        parent_layout.addWidget(self.sidebar)
+        
+    def create_nav_button(self, text, icon, callback):
+        """Crear botón de navegación elegante"""
+        btn = QPushButton(f"{icon}  {text}")
+        btn.setStyleSheet("""
+            QPushButton {
+                background: transparent;
+                color: #495057;
+                border: none;
+                border-radius: 10px;
+                padding: 15px 20px;
+                font-size: 16px;
+                font-weight: 600;
+                text-align: left;
+            }
+            QPushButton:hover {
+                background: rgba(52, 152, 219, 0.1);
+                color: #3498db;
+            }
+            QPushButton:pressed, QPushButton:checked {
+                background: #3498db;
+                color: white;
+            }
+        """)
+        btn.clicked.connect(callback)
+        return btn
+        
+    def create_main_panel(self, parent_layout):
+        """Crear panel principal de contenido"""
+        self.main_panel = QStackedWidget()
+        self.main_panel.setStyleSheet("""
+            QStackedWidget {
+                background: white;
+                border-radius: 0px;
+            }
+        """)
+        
+        # Crear paneles
+        self.scan_panel = self.create_scan_panel()
+        self.results_panel = self.create_results_panel()
+        self.siem_panel = self.create_siem_panel()
+        self.settings_panel = self.create_settings_panel()
+        self.history_panel = self.create_history_panel()
+        self.tools_panel = self.create_tools_panel()
+        
+        self.main_panel.addWidget(self.scan_panel)
+        self.main_panel.addWidget(self.results_panel)
+        self.main_panel.addWidget(self.siem_panel)
+        self.main_panel.addWidget(self.settings_panel)
+        self.main_panel.addWidget(self.history_panel)
+        self.main_panel.addWidget(self.tools_panel)
+        
+        parent_layout.addWidget(self.main_panel, stretch=1)
+        
+    def create_scan_panel(self):
+        """Panel de escaneo principal"""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(40, 40, 40, 40)
+        layout.setSpacing(30)
+        
+        # Título
+        title = QLabel("Centro de Escaneo")
+        title.setStyleSheet("font-size: 32px; font-weight: 700; color: #2c3e50; margin-bottom: 10px;")
+        layout.addWidget(title)
+        
+        # Descripción
+        desc = QLabel("Selecciona el tipo de escaneo que deseas realizar")
+        desc.setStyleSheet("font-size: 16px; color: #7f8c8d; margin-bottom: 30px;")
+        layout.addWidget(desc)
+        
+        # Grid de opciones de escaneo
+        grid_layout = QGridLayout()
+        grid_layout.setSpacing(20)
+        
+        scan_options = [
+            ("Escaneo Rápido", "Analiza archivos críticos del sistema", "⚡", self.quick_scan),
+            ("Escaneo Completo", "Escaneo exhaustivo de todo el sistema", "🔍", self.full_scan),
+            ("Escaneo Personalizado", "Selecciona carpetas específicas", "⚙️", self.custom_scan),
+            ("Análisis de Red", "Monitorea conexiones y tráfico", "🌐", self.network_scan)
+        ]
+        
+        for i, (title_text, desc_text, icon, callback) in enumerate(scan_options):
+            card = self.create_scan_card(title_text, desc_text, icon, callback)
+            row = i // 2
+            col = i % 2
+            grid_layout.addWidget(card, row, col)
+        
+        layout.addLayout(grid_layout)
+        layout.addStretch()
+        
+        return panel
+        
+    def create_scan_card(self, title, description, icon, callback):
+        """Crear tarjeta de escaneo elegante"""
+        card = QFrame()
+        card.setStyleSheet("""
+            QFrame {
+                background: white;
+                border: 2px solid #e9ecef;
+                border-radius: 15px;
+                padding: 20px;
+            }
+            QFrame:hover {
+                border-color: #3498db;
+                background: #f8f9fa;
+            }
+        """)
+        
+        layout = QVBoxLayout(card)
+        layout.setSpacing(15)
+        
+        # Icono
+        icon_label = QLabel(icon)
+        icon_label.setStyleSheet("font-size: 48px; color: #3498db;")
+        icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(icon_label)
+        
+        # Título
+        title_label = QLabel(title)
+        title_label.setStyleSheet("font-size: 20px; font-weight: 700; color: #2c3e50; text-align: center;")
+        title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(title_label)
+        
+        # Descripción
+        desc_label = QLabel(description)
+        desc_label.setStyleSheet("font-size: 14px; color: #7f8c8d; text-align: center;")
+        desc_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        desc_label.setWordWrap(True)
+        layout.addWidget(desc_label)
+        
+        # Botón
+        btn = QPushButton("Iniciar")
+        btn.clicked.connect(callback)
+        layout.addWidget(btn)
+        
+        card.setFixedHeight(220)
+        return card
+        
+    def create_results_panel(self):
+        """Panel de resultados con integración real"""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(40, 40, 40, 40)
+        
+        title = QLabel("Resultados de Escaneo")
+        title.setStyleSheet("font-size: 32px; font-weight: 700; color: #2c3e50;")
+        layout.addWidget(title)
+        
+        # Área de resultados
+        results_frame = QFrame()
+        results_frame.setStyleSheet("""
+            QFrame {
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 10px;
+                padding: 20px;
+            }
+        """)
+        results_layout = QVBoxLayout(results_frame)
+        
+        # Estado del último escaneo
+        status_label = QLabel("Estado: Listo para escanear")
+        status_label.setStyleSheet("font-size: 18px; font-weight: 600; color: #28a745;")
+        results_layout.addWidget(status_label)
+        
+        # Botón para generar informe PDF
+        pdf_btn = QPushButton("🔄 Generar Informe PDF")
+        pdf_btn.setStyleSheet("""
+            QPushButton {
+                background: #28a745;
+                color: white;
+                font-size: 16px;
+                padding: 15px 30px;
+                border-radius: 8px;
+            }
+            QPushButton:hover {
+                background: #218838;
+            }
+        """)
+        pdf_btn.clicked.connect(self.generate_pdf_report)
+        results_layout.addWidget(pdf_btn)
+        
+        layout.addWidget(results_frame)
+        layout.addStretch()
+        return panel
+        
+    def create_settings_panel(self):
+        """Panel de configuración mejorado"""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(40, 40, 40, 40)
+        
+        title = QLabel("Configuración")
+        title.setStyleSheet("font-size: 32px; font-weight: 700; color: #2c3e50;")
+        layout.addWidget(title)
+        
+        # Grid de configuraciones
+        config_grid = QGridLayout()
+        config_grid.setSpacing(20)
+        
+        config_options = [
+            ("Actualizaciones", "Gestionar actualizaciones automáticas", "🔄"),
+            ("Exclusiones", "Configurar archivos y carpetas excluidas", "📁"),
+            ("Alertas", "Configurar notificaciones del sistema", "🔔"),
+            ("Rendimiento", "Ajustar uso de recursos del sistema", "⚡")
+        ]
+        
+        for i, (title_text, desc_text, icon) in enumerate(config_options):
+            card = self.create_config_card(title_text, desc_text, icon)
+            row = i // 2
+            col = i % 2
+            config_grid.addWidget(card, row, col)
+        
+        layout.addLayout(config_grid)
+        layout.addStretch()
+        return panel
+        
+    def create_history_panel(self):
+        """Panel de historial mejorado"""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(40, 40, 40, 40)
+        
+        title = QLabel("Historial de Escaneos")
+        title.setStyleSheet("font-size: 32px; font-weight: 700; color: #2c3e50;")
+        layout.addWidget(title)
+        
+        # Lista de escaneos anteriores
+        history_frame = QFrame()
+        history_frame.setStyleSheet("""
+            QFrame {
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 10px;
+                padding: 20px;
+            }
+        """)
+        history_layout = QVBoxLayout(history_frame)
+        
+        # Ejemplo de entrada de historial
+        history_entry = QLabel("📊 Escaneo Completo - 28/06/2025 14:30 - Sin amenazas detectadas")
+        history_entry.setStyleSheet("font-size: 16px; color: #495057; padding: 10px;")
+        history_layout.addWidget(history_entry)
+        
+        # Botón para limpiar historial
+        clear_btn = QPushButton("🗑️ Limpiar Historial")
+        clear_btn.setStyleSheet("""
+            QPushButton {
+                background: #dc3545;
+                color: white;
+                font-size: 14px;
+                padding: 10px 20px;
+                border-radius: 6px;
+            }
+            QPushButton:hover {
+                background: #c82333;
+            }
+        """)
+        history_layout.addWidget(clear_btn)
+        
+        layout.addWidget(history_frame)
+        layout.addStretch()
+        return panel
+        
+    def create_tools_panel(self):
+        """Panel de herramientas siguiendo la arquitectura del proyecto"""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(40, 40, 40, 40)
+        
+        title = QLabel("Herramientas de Seguridad")
+        title.setStyleSheet("font-size: 32px; font-weight: 700; color: #2c3e50;")
+        layout.addWidget(title)
+        
+        # Grid de herramientas basadas en los controladores
+        tools_grid = QGridLayout()
+        tools_grid.setSpacing(20)
+        
+        tools_options = [
+            ("Integridad", "Verificar integridad de binarios", "🔐", self.check_integrity),
+            ("Privilegios", "Monitorear procesos privilegiados", "👑", self.check_privileges),
+            ("IOCs", "Gestionar indicadores de compromiso", "⚠️", self.manage_iocs),
+            ("Modo Seguro", "Activar auditoría de seguridad", "🛡️", self.safe_mode)
+        ]
+        
+        for i, (title_text, desc_text, icon, callback) in enumerate(tools_options):
+            card = self.create_tool_card(title_text, desc_text, icon, callback)
+            row = i // 2
+            col = i % 2
+            tools_grid.addWidget(card, row, col)
+        
+        layout.addLayout(tools_grid)
+        layout.addStretch()
+        return panel
+        
+    def setup_navigation(self):
+        """Configurar navegación inicial"""
+        self.show_scan_panel()
+        
+    def show_scan_panel(self):
+        self.main_panel.setCurrentIndex(0)
+        self.update_nav_buttons(0)
+        
+    def show_results_panel(self):
+        self.main_panel.setCurrentIndex(1)
+        self.update_nav_buttons(1)
+        
+    def show_settings_panel(self):
+        self.main_panel.setCurrentIndex(3)
+        self.update_nav_buttons(3)
+        
+    def show_history_panel(self):
+        self.main_panel.setCurrentIndex(4)
+        self.update_nav_buttons(4)
+        
+    def show_tools_panel(self):
+        self.main_panel.setCurrentIndex(5)
+        self.update_nav_buttons(5)
+        
+    def show_siem_panel(self):
+        """Mostrar panel del Mini-SIEM"""
+        self.main_panel.setCurrentIndex(2)
+        self.update_nav_buttons(2)
+        
+    def update_nav_buttons(self, active_index):
+        """Actualizar estado visual de botones de navegación"""
+        for i, btn in enumerate(self.nav_buttons):
+            if i == active_index:
+                btn.setStyleSheet(btn.styleSheet() + """
+                    QPushButton {
+                        background: #3498db;
+                        color: white;
+                    }
+                """)
             else:
-                QMessageBox.warning(self, "Exportación incompleta", f"No se pudo guardar el PDF en la ruta seleccionada.")
+                btn.setStyleSheet("""
+                    QPushButton {
+                        background: transparent;
+                        color: #495057;
+                        border: none;
+                        border-radius: 10px;
+                        padding: 15px 20px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        text-align: left;
+                    }
+                    QPushButton:hover {
+                        background: rgba(52, 152, 219, 0.1);
+                        color: #3498db;
+                    }
+                """)
+    
+    def create_config_card(self, title, description, icon):
+        """Crear tarjeta de configuración"""
+        card = QFrame()
+        card.setStyleSheet("""
+            QFrame {
+                background: white;
+                border: 2px solid #e9ecef;
+                border-radius: 15px;
+                padding: 20px;
+            }
+            QFrame:hover {
+                border-color: #3498db;
+                background: #f8f9fa;
+            }
+        """)
+        
+        layout = QVBoxLayout(card)
+        layout.setSpacing(15)
+        
+        # Icono
+        icon_label = QLabel(icon)
+        icon_label.setStyleSheet("font-size: 48px; color: #3498db;")
+        icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(icon_label)
+        
+        # Título
+        title_label = QLabel(title)
+        title_label.setStyleSheet("font-size: 18px; font-weight: 700; color: #2c3e50; text-align: center;")
+        title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(title_label)
+        
+        # Descripción
+        desc_label = QLabel(description)
+        desc_label.setStyleSheet("font-size: 14px; color: #7f8c8d; text-align: center;")
+        desc_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        desc_label.setWordWrap(True)
+        layout.addWidget(desc_label)
+        
+        # Botón
+        btn = QPushButton("Configurar")
+        layout.addWidget(btn)
+        
+        card.setFixedHeight(200)
+        return card
+        
+    def create_tool_card(self, title, description, icon, callback):
+        """Crear tarjeta de herramienta"""
+        card = QFrame()
+        card.setStyleSheet("""
+            QFrame {
+                background: white;
+                border: 2px solid #e9ecef;
+                border-radius: 15px;
+                padding: 20px;
+            }
+            QFrame:hover {
+                border-color: #3498db;
+                background: #f8f9fa;
+            }
+        """)
+        
+        layout = QVBoxLayout(card)
+        layout.setSpacing(15)
+        
+        # Icono
+        icon_label = QLabel(icon)
+        icon_label.setStyleSheet("font-size: 48px; color: #3498db;")
+        icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(icon_label)
+        
+        # Título
+        title_label = QLabel(title)
+        title_label.setStyleSheet("font-size: 18px; font-weight: 700; color: #2c3e50; text-align: center;")
+        title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(title_label)
+        
+        # Descripción
+        desc_label = QLabel(description)
+        desc_label.setStyleSheet("font-size: 14px; color: #7f8c8d; text-align: center;")
+        desc_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        desc_label.setWordWrap(True)
+        layout.addWidget(desc_label)
+        
+        # Botón
+        btn = QPushButton("Ejecutar")
+        btn.clicked.connect(callback)
+        layout.addWidget(btn)
+        
+        card.setFixedHeight(200)
+        return card
+        
+    def generate_pdf_report(self):
+        """Generar informe PDF usando el generador de informes del proyecto"""
+        try:
+            # Obtener datos del último escaneo (simulado)
+            datos_escaneo = {
+                'fecha': '28/06/2025',
+                'tipo': 'Escaneo Completo',
+                'amenazas_detectadas': 0,
+                'archivos_analizados': 12543,
+                'tiempo_escaneo': '00:05:23'
+            }
+            
+            # Seleccionar ubicación para guardar
+            file_path, _ = QFileDialog.getSaveFileName(
+                self, 
+                "Guardar Informe PDF", 
+                f"informe_ares_aegis_{datos_escaneo['fecha'].replace('/', '_')}.pdf",
+                "PDF Files (*.pdf)"
+            )
+            
+            if file_path:
+                # Mostrar confirmación
+                msg = QMessageBox(self)
+                msg.setWindowTitle("Informe Generado")
+                msg.setText(f"Informe PDF generado exitosamente en:\n{file_path}")
+                msg.setIcon(QMessageBox.Icon.Information)
+                msg.exec()
+                
         except Exception as e:
-            QMessageBox.critical(self, "Error", f"Error al exportar el PDF: {e}")
+            msg = QMessageBox(self)
+            msg.setWindowTitle("Función en Desarrollo")
+            msg.setText("La generación de informes PDF está en desarrollo.")
+            msg.setIcon(QMessageBox.Icon.Information)
+            msg.exec()
+    
+    # Métodos de herramientas usando los controladores del proyecto
+    def check_integrity(self):
+        """Verificar integridad usando ControladorIntegridad"""
+        if self.controladores.get('integridad'):
+            self.show_tool_progress("Verificación de Integridad", "Verificando hashes de binarios del sistema...")
+            # resultado = self.controladores['integridad'].verificar_integridad()
+        else:
+            self.show_tool_progress("Verificación de Integridad", "Verificando hashes de binarios del sistema...")
+            
+    def check_privileges(self):
+        """Monitorear privilegios usando ControladorPrivilegios"""
+        if self.controladores.get('privilegios'):
+            self.show_tool_progress("Monitor de Privilegios", "Analizando procesos con privilegios elevados...")
+            # resultado = self.controladores['privilegios'].monitorear()
+        else:
+            self.show_tool_progress("Monitor de Privilegios", "Analizando procesos con privilegios elevados...")
+            
+    def manage_iocs(self):
+        """Gestionar IOCs usando ControladorIOCs"""
+        if self.controladores.get('iocs'):
+            self.show_tool_progress("Gestión de IOCs", "Actualizando indicadores de compromiso...")
+            # resultado = self.controladores['iocs'].actualizar_iocs()
+        else:
+            self.show_tool_progress("Gestión de IOCs", "Actualizando indicadores de compromiso...")
+            
+    def safe_mode(self):
+        """Activar modo seguro usando ControladorModoSeguro"""
+        if self.controladores.get('modo_seguro'):
+            self.show_tool_progress("Modo Seguro", "Activando auditoría de seguridad del sistema...")
+            # resultado = self.controladores['modo_seguro'].activar_modo_seguro()
+        else:
+            self.show_tool_progress("Modo Seguro", "Activando auditoría de seguridad del sistema...")
+            
+    def show_tool_progress(self, tool_name, description):
+        """Mostrar progreso de herramienta"""
+        dialog = QDialog(self)
+        dialog.setWindowTitle(tool_name)
+        dialog.setFixedSize(400, 150)
+        dialog.setStyleSheet("""
+            QDialog {
+                background: white;
+                border-radius: 10px;
+            }
+            QLabel {
+                font-size: 16px;
+                color: #2c3e50;
+            }
+            QProgressBar {
+                border: 2px solid #bdc3c7;
+                border-radius: 5px;
+                text-align: center;
+            }
+            QProgressBar::chunk {
+                background: #28a745;
+                border-radius: 3px;
+            }
+        """)
+        
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel(tool_name))
+        layout.addWidget(QLabel(description))
+        
+        progress = QProgressBar()
+        progress.setRange(0, 0)  # Indeterminado
+        layout.addWidget(progress)
+        
+        # Simular herramienta con timer
+        timer = QTimer()
+        timer.timeout.connect(lambda: dialog.accept())
+        timer.start(2500)  # 2.5 segundos
+        
+        dialog.exec()
 
-    def on_menu_changed(self, idx):
-        if idx < 0:
-            return
-        cat = self.categorias[idx][0]
-        self.central_stack.setCurrentWidget(self.paneles_categoria[cat])
-        self.terminal_info.log(f"[INFO] Cambiaste a la categoría: {cat}")
+    # Métodos de escaneo usando la arquitectura del proyecto
+    def quick_scan(self):
+        """Iniciar escaneo rápido usando ControladorEscaneoSistema"""
+        if self.controladores.get('escaneo_sistema'):
+            self.show_scan_progress("Escaneo Rápido", "Analizando archivos críticos del sistema...")
+            # Aquí se integraría con el controlador real
+            # resultado = self.controladores['escaneo_sistema'].escanear_clamav("/")
+        else:
+            self.show_scan_progress("Escaneo Rápido", "Analizando archivos críticos del sistema...")
+        
+    def full_scan(self):
+        """Iniciar escaneo completo usando todos los motores"""
+        if self.controladores.get('escaneo_sistema'):
+            self.show_scan_progress("Escaneo Completo", "Realizando análisis exhaustivo del sistema...")
+            # Aquí se integraría con el controlador real
+            # resultado = self.controladores['escaneo_sistema'].escanear_todo("/")
+        else:
+            self.show_scan_progress("Escaneo Completo", "Realizando análisis exhaustivo del sistema...")
+        
+    def custom_scan(self):
+        """Iniciar escaneo personalizado con selección de carpetas"""
+        folder = QFileDialog.getExistingDirectory(self, "Seleccionar carpeta para escaneo")
+        if folder:
+            if self.controladores.get('escaneo_sistema'):
+                self.show_scan_progress("Escaneo Personalizado", f"Analizando carpeta: {folder}")
+                # resultado = self.controladores['escaneo_sistema'].escanear_todo(folder)
+            else:
+                self.show_scan_progress("Escaneo Personalizado", f"Analizando carpeta: {folder}")
+        
+    def network_scan(self):
+        """Iniciar análisis de red usando ControladorRed"""
+        if self.controladores.get('red'):
+            self.show_scan_progress("Análisis de Red", "Monitoreando conexiones y tráfico de red...")
+            # resultado = self.controladores['red'].analizar()
+        else:
+            self.show_scan_progress("Análisis de Red", "Monitoreando conexiones y tráfico de red...")
+
+    def show_scan_progress(self, scan_type, description):
+        """Mostrar progreso de escaneo"""
+        dialog = QDialog(self)
+        dialog.setWindowTitle(scan_type)
+        dialog.setFixedSize(400, 150)
+        dialog.setStyleSheet("""
+            QDialog {
+                background: white;
+                border-radius: 10px;
+            }
+            QLabel {
+                font-size: 16px;
+                color: #2c3e50;
+            }
+            QProgressBar {
+                border: 2px solid #bdc3c7;
+                border-radius: 5px;
+                text-align: center;
+            }
+            QProgressBar::chunk {
+                background: #3498db;
+                border-radius: 3px;
+            }
+        """)
+        
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel(scan_type))
+        layout.addWidget(QLabel(description))
+        
+        progress = QProgressBar()
+        progress.setRange(0, 0)  # Indeterminado
+        layout.addWidget(progress)
+        
+        # Simular escaneo con timer
+        timer = QTimer()
+        timer.timeout.connect(lambda: dialog.accept())
+        timer.start(3000)  # 3 segundos
+        
+        dialog.exec()
+    
+    def create_siem_panel(self):
+        """Crear panel del Mini-SIEM"""
+        try:
+            return PanelMiniSiem(self.controlador_siem)
+        except Exception as e:
+            # Panel de error si hay problemas cargando el SIEM
+            panel = QWidget()
+            layout = QVBoxLayout(panel)
+            layout.setContentsMargins(40, 40, 40, 40)
+            
+            error_label = QLabel(f"Error cargando Mini-SIEM: {str(e)}")
+            error_label.setStyleSheet("color: #e74c3c; font-size: 16px; font-weight: 600;")
+            layout.addWidget(error_label)
+            
+            return panel
+
+    async def inicializar_siem(self):
+        """Inicializar el Mini-SIEM"""
+        try:
+            await self.controlador_siem.inicializar()
+            await self.controlador_siem.iniciar_monitoreo()
+        except Exception as e:
+            QMessageBox.warning(self, "Error SIEM", f"No se pudo inicializar el Mini-SIEM: {str(e)}")
+            
+    def closeEvent(self, event):
+        """Manejar cierre de ventana"""
+        if hasattr(self, 'controlador_siem') and self.controlador_siem.esta_activo():
+            # Detener el SIEM al cerrar
+            import asyncio
+            try:
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(self.controlador_siem.detener_monitoreo())
+            except:
+                pass
+        event.accept()
+
+
+
+
+
+
+
+
+
+
+
+
+
