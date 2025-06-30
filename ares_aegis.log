@@ -1,0 +1,97 @@
+2025-06-29 08:31:40,857 - __main__ - INFO - Inicializando controlador principal...
+2025-06-29 08:31:40,859 - modelos.siem - INFO - Cargados 20 eventos desde archivo
+2025-06-29 08:31:40,859 - modelos.siem - INFO - SIEM inicializado. Archivo de eventos: /home/dogsoul/Ares-Aegis/logs/eventos_siem.json
+2025-06-29 08:31:40,859 - modelos.siem - INFO - escaneador | Detalles: Firmas cargadas: 6 texto, 2 hash, 3 regex
+2025-06-29 08:31:40,861 - modelos.siem - INFO - cuarentena | Detalles: Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena
+2025-06-29 08:31:40,863 - modelos.siem - INFO - fim | Detalles: Configuración cargada: 8 rutas
+2025-06-29 08:31:40,864 - modelos.siem - INFO - fim | Detalles: Monitor de integridad inicializado: 0 archivos
+2025-06-29 08:31:40,865 - modelos.siem - INFO - monitor_red | Detalles: Monitor de red inicializado
+2025-06-29 08:31:40,866 - controladores.controlador_principal - INFO - Todos los módulos inicializados correctamente
+2025-06-29 08:31:40,866 - modelos.siem - INFO - Módulos inicializados correctamente | Detalles: None
+2025-06-29 08:31:40,866 - modelos.siem - INFO - Controlador principal inicializado | Detalles: None
+2025-06-29 08:31:40,867 - controladores.controlador_principal - ERROR - Error iniciando sistema: Se requieren privilegios de root para ejecutar Ares Aegis
+2025-06-29 08:31:40,868 - modelos.siem - ERROR - Error iniciando sistema: Se requieren privilegios de root para ejecutar Ares Aegis | Detalles: None
+2025-06-29 08:31:40,868 - __main__ - WARNING - Sistema iniciado con limitaciones
+2025-06-29 08:31:40,868 - __main__ - INFO - Creando interfaz gráfica...
+2025-06-29 08:31:40,897 - vista.interfaz_principal_gui - INFO - Icono cargado: /home/dogsoul/Ares-Aegis/recursos/aresIcon.gif
+2025-06-29 08:31:40,911 - vista.interfaz_principal_gui - INFO - Imagen principal cargada: /home/dogsoul/Ares-Aegis/recursos/AresAegis.png
+2025-06-29 08:31:40,912 - modelos.siem - INFO - Cargados 28 eventos desde archivo
+2025-06-29 08:31:40,912 - modelos.siem - INFO - SIEM inicializado. Archivo de eventos: /home/dogsoul/Ares-Aegis/logs/eventos_siem.json
+2025-06-29 08:31:40,912 - modelos.siem - INFO - escaneador | Detalles: Firmas cargadas: 6 texto, 2 hash, 3 regex
+2025-06-29 08:31:40,918 - modelos.siem - INFO - FIM inicializado | Detalles: {'archivo_baseline': '/etc/ares_aegis/fim_baseline.json'}
+2025-06-29 08:31:40,920 - modelos.siem - INFO - cuarentena | Detalles: Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena
+2025-06-29 08:31:40,922 - modelos.siem - INFO - ClamAV detectado y disponible | Detalles: None
+2025-06-29 08:31:40,940 - modelos.siem - INFO - Integración externa inicializada | Detalles: {'herramientas_disponibles': ['clamscan', 'nmap', 'netstat', 'ss', 'lsof', 'chkrootkit', 'rkhunter', 'lynis']}
+2025-06-29 08:31:40,941 - modelos.siem - INFO - monitor_red | Detalles: Monitor de red inicializado
+2025-06-29 08:31:40,941 - vista.interfaz_principal_gui - INFO - Backend inicializado correctamente
+2025-06-29 08:31:40,941 - modelos.siem - INFO - Interfaz GUI inicializada | Detalles: None
+2025-06-29 08:31:43,196 - __main__ - INFO - Aplicación finalizada
+2025-06-29 11:12:40,719 - __main__ - INFO - Aplicación iniciada con privilegios de root
+2025-06-29 11:12:40,719 - __main__ - INFO - Inicializando controlador principal...
+2025-06-29 11:12:40,720 - modelos.siem - INFO - Cargados 75 eventos desde archivo
+2025-06-29 11:12:40,721 - modelos.siem - INFO - SIEM inicializado. Archivo de eventos: /home/dogsoul/Ares-Aegis/logs/eventos_siem.json
+2025-06-29 11:12:40,721 - modelos.siem - INFO - escaneador | Detalles: Firmas cargadas: 6 texto, 2 hash, 3 regex
+2025-06-29 11:12:40,722 - modelos.siem - INFO - cuarentena | Detalles: Gestor de cuarentena inicializado: /root/.ares_aegis/cuarentena
+2025-06-29 11:12:40,723 - modelos.siem - INFO - fim | Detalles: Configuración cargada: 8 rutas
+2025-06-29 11:12:40,724 - modelos.siem - INFO - fim | Detalles: Monitor de integridad inicializado: 0 archivos
+2025-06-29 11:12:40,725 - modelos.siem - INFO - monitor_red | Detalles: Monitor de red inicializado
+2025-06-29 11:12:40,726 - controladores.controlador_principal - INFO - Todos los módulos inicializados correctamente
+2025-06-29 11:12:40,726 - modelos.siem - INFO - Módulos inicializados correctamente | Detalles: None
+2025-06-29 11:12:40,727 - modelos.siem - INFO - Controlador principal inicializado | Detalles: None
+2025-06-29 11:12:40,728 - controladores.controlador_principal - INFO - Privilegios de root confirmados
+2025-06-29 11:12:40,728 - controladores.controlador_principal - INFO - Configuraciones cargadas correctamente
+2025-06-29 11:12:40,728 - modelos.siem - INFO - Sistema Ares Aegis iniciado con privilegios completos | Detalles: None
+2025-06-29 11:12:40,729 - controladores.controlador_principal - INFO - Sistema Ares Aegis iniciado con privilegios completos
+2025-06-29 11:12:40,729 - __main__ - INFO - Sistema iniciado correctamente
+2025-06-29 11:12:40,730 - __main__ - INFO - Creando interfaz gráfica...
+2025-06-29 11:12:40,763 - vista.interfaz_principal_gui - INFO - Icono cargado: /home/dogsoul/Ares-Aegis/recursos/aresIcon.gif
+2025-06-29 11:12:40,773 - vista.interfaz_principal_gui - INFO - Imagen principal cargada: /home/dogsoul/Ares-Aegis/recursos/AresAegis.png
+2025-06-29 11:12:40,774 - modelos.siem - INFO - Cargados 83 eventos desde archivo
+2025-06-29 11:12:40,774 - modelos.siem - INFO - SIEM inicializado. Archivo de eventos: /home/dogsoul/Ares-Aegis/logs/eventos_siem.json
+2025-06-29 11:12:40,774 - modelos.siem - INFO - escaneador | Detalles: Firmas cargadas: 6 texto, 2 hash, 3 regex
+2025-06-29 11:12:40,775 - modelos.siem - INFO - FIM inicializado | Detalles: {'archivo_baseline': '/etc/ares_aegis/fim_baseline.json'}
+2025-06-29 11:12:40,776 - modelos.siem - INFO - cuarentena | Detalles: Gestor de cuarentena inicializado: /root/.ares_aegis/cuarentena
+2025-06-29 11:12:40,782 - modelos.siem - INFO - ClamAV detectado y disponible | Detalles: None
+2025-06-29 11:12:40,804 - modelos.siem - INFO - Integración externa inicializada | Detalles: {'herramientas_disponibles': ['clamscan', 'nmap', 'netstat', 'ss', 'lsof', 'chkrootkit', 'rkhunter', 'lynis']}
+2025-06-29 11:12:40,806 - modelos.siem - INFO - monitor_red | Detalles: Monitor de red inicializado
+2025-06-29 11:12:40,807 - vista.interfaz_principal_gui - INFO - Backend inicializado correctamente
+2025-06-29 11:12:40,807 - modelos.siem - INFO - Interfaz GUI inicializada | Detalles: None
+2025-06-29 11:12:40,833 - vista.interfaz_principal_gui - INFO - Imagen principal mostrada con ajuste de tamaño
+2025-06-29 11:12:40,836 - __main__ - INFO - Iniciando bucle principal de la interfaz
+2025-06-29 11:13:00,294 - modelos.siem - INFO - Directorio seleccionado: /home/dogsoul/Ares-Aegis | Detalles: None
+2025-06-29 11:13:01,369 - modelos.integracion_externa - INFO - Ejecutando ClamAV en directorio: /home/dogsoul/Ares-Aegis
+2025-06-29 11:20:08,524 - __main__ - INFO - Aplicación iniciada con privilegios de root
+2025-06-29 11:20:08,524 - __main__ - INFO - Inicializando controlador principal...
+2025-06-29 11:20:08,525 - modelos.siem - INFO - Cargados 91 eventos desde archivo
+2025-06-29 11:20:08,525 - modelos.siem - INFO - SIEM inicializado. Archivo de eventos: /home/dogsoul/Ares-Aegis/logs/eventos_siem.json
+2025-06-29 11:20:08,525 - modelos.siem - INFO - escaneador | Detalles: Firmas cargadas: 6 texto, 2 hash, 3 regex
+2025-06-29 11:20:08,526 - modelos.siem - INFO - cuarentena | Detalles: Gestor de cuarentena inicializado: /root/.ares_aegis/cuarentena
+2025-06-29 11:20:08,527 - modelos.siem - INFO - fim | Detalles: Configuración cargada: 8 rutas
+2025-06-29 11:20:08,528 - modelos.siem - INFO - fim | Detalles: Monitor de integridad inicializado: 0 archivos
+2025-06-29 11:20:08,529 - modelos.siem - INFO - monitor_red | Detalles: Monitor de red inicializado
+2025-06-29 11:20:08,530 - controladores.controlador_principal - INFO - Todos los módulos inicializados correctamente
+2025-06-29 11:20:08,530 - modelos.siem - INFO - Módulos inicializados correctamente | Detalles: None
+2025-06-29 11:20:08,531 - modelos.siem - INFO - Controlador principal inicializado | Detalles: None
+2025-06-29 11:20:08,532 - controladores.controlador_principal - INFO - Privilegios de root confirmados
+2025-06-29 11:20:08,532 - controladores.controlador_principal - INFO - Configuraciones cargadas correctamente
+2025-06-29 11:20:08,532 - modelos.siem - INFO - Sistema Ares Aegis iniciado con privilegios completos | Detalles: None
+2025-06-29 11:20:08,532 - controladores.controlador_principal - INFO - Sistema Ares Aegis iniciado con privilegios completos
+2025-06-29 11:20:08,533 - __main__ - INFO - Sistema iniciado correctamente
+2025-06-29 11:20:08,533 - __main__ - INFO - Creando interfaz gráfica...
+2025-06-29 11:20:08,567 - vista.interfaz_principal_gui - INFO - Icono cargado: /home/dogsoul/Ares-Aegis/recursos/aresIcon.gif
+2025-06-29 11:20:08,578 - vista.interfaz_principal_gui - INFO - Imagen principal cargada: /home/dogsoul/Ares-Aegis/recursos/AresAegis.png
+2025-06-29 11:20:08,579 - modelos.siem - INFO - Cargados 99 eventos desde archivo
+2025-06-29 11:20:08,579 - modelos.siem - INFO - SIEM inicializado. Archivo de eventos: /home/dogsoul/Ares-Aegis/logs/eventos_siem.json
+2025-06-29 11:20:08,579 - modelos.siem - INFO - escaneador | Detalles: Firmas cargadas: 6 texto, 2 hash, 3 regex
+2025-06-29 11:20:08,580 - modelos.siem - INFO - FIM inicializado | Detalles: {'archivo_baseline': '/etc/ares_aegis/fim_baseline.json'}
+2025-06-29 11:20:08,581 - modelos.siem - INFO - cuarentena | Detalles: Gestor de cuarentena inicializado: /root/.ares_aegis/cuarentena
+2025-06-29 11:20:08,585 - modelos.siem - INFO - ClamAV detectado y disponible | Detalles: None
+2025-06-29 11:20:08,595 - modelos.siem - INFO - Integración externa inicializada | Detalles: {'herramientas_disponibles': ['clamscan', 'nmap', 'netstat', 'ss', 'lsof', 'chkrootkit', 'rkhunter', 'lynis']}
+2025-06-29 11:20:08,596 - modelos.siem - INFO - monitor_red | Detalles: Monitor de red inicializado
+2025-06-29 11:20:08,597 - vista.interfaz_principal_gui - INFO - Backend inicializado correctamente
+2025-06-29 11:20:08,597 - modelos.siem - INFO - Interfaz GUI inicializada | Detalles: None
+2025-06-29 11:20:08,638 - vista.interfaz_principal_gui - INFO - Imagen principal mostrada con ajuste de tamaño
+2025-06-29 11:20:08,640 - __main__ - INFO - Iniciando bucle principal de la interfaz
+2025-06-29 11:20:17,292 - modelos.siem - INFO - Directorio seleccionado: /home/dogsoul/Ares-Aegis | Detalles: None
+2025-06-29 11:20:26,972 - modelos.siem - INFO - Aplicación cerrada por el usuario | Detalles: None
+2025-06-29 11:20:26,983 - __main__ - INFO - Aplicación finalizada
