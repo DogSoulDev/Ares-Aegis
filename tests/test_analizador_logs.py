@@ -205,7 +205,7 @@ class TestAnalizadorLogs(unittest.TestCase):
             lineas = list(self.analizador.leer_archivo_log("/test/inexistente.log"))
         
         self.assertEqual(len(lineas), 0)
-        self.siem_mock.registrar_evento.assert_called()
+        self.siem_mock.log_evento.assert_called()
     
     def test_analizar_eventos_sospechosos_autenticacion(self):
         """Prueba análisis de eventos de autenticación fallida."""

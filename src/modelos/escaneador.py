@@ -16,16 +16,48 @@ from datetime import datetime
 
 
 class ResultadoEscaneo:
-    """Representa el resultado de un escaneo."""
+    """Representa el resultado de un escaneo de archivo."""
     
     def __init__(self, ruta: str, es_amenaza: bool = False, 
-                 tipo_amenaza: str = "", detalles: str = ""):
+                 tipo_amenaza: str = "", detalles: str = "",
+                 limpio: Optional[bool] = None, amenazas: Optional[List[str]] = None):
         self.ruta = ruta
-        self.es_amenaza = es_amenaza
+        
+        # Compatibilidad con API anterior y nueva
+        if limpio is not None:
+            self.es_amenaza = not limpio
+        else:
+            self.es_amenaza = es_amenaza
+            
+        if amenazas is not None:
+            self._amenazas_lista = amenazas
+            if amenazas:
+                self.es_amenaza = True
+                # Si no se proporcionó tipo_amenaza, usar la primera amenaza
+                if not tipo_amenaza and amenazas:
+                    self.tipo_amenaza = amenazas[0]
+        else:
+            self._amenazas_lista = [tipo_amenaza] if tipo_amenaza else []
+            
         self.tipo_amenaza = tipo_amenaza
         self.detalles = detalles
         self.fecha_escaneo = datetime.now()
         self.hash_sha256 = self._calcular_hash()
+    
+    @property
+    def archivo(self) -> str:
+        """Alias para compatibilidad."""
+        return self.ruta
+    
+    @property
+    def limpio(self) -> bool:
+        """Indica si el archivo está limpio (sin amenazas)."""
+        return not self.es_amenaza
+    
+    @property
+    def amenazas(self) -> List[str]:
+        """Lista de amenazas detectadas."""
+        return self._amenazas_lista if hasattr(self, '_amenazas_lista') else [self.tipo_amenaza] if self.es_amenaza and self.tipo_amenaza else []
     
     def _calcular_hash(self) -> str:
         try:
@@ -35,20 +67,8 @@ class ResultadoEscaneo:
             return ""
     
     def es_limpio(self) -> bool:
-        """Verifica si el archivo está limpio."""
+        """Verifica si el archivo está limpio (sin amenazas)."""
         return not self.es_amenaza
-    
-    @property
-    def limpio(self) -> bool:
-        """Propiedad de compatibilidad."""
-        return not self.es_amenaza
-    
-    @property
-    def amenazas(self) -> List[str]:
-        """Propiedad de compatibilidad para amenazas."""
-        if self.es_amenaza and self.tipo_amenaza:
-            return [self.tipo_amenaza]
-        return []
     
     def to_markdown(self) -> str:
         """Convierte el resultado a formato Markdown."""
@@ -57,8 +77,14 @@ class ResultadoEscaneo:
         md += f"**Estado:** {'✅ LIMPIO' if not self.es_amenaza else '⚠️ INFECTADO'}\n\n"
         
         if self.es_amenaza:
-            md += "## Amenazas Detectadas\n\n"
-            md += f"- **Tipo:** {self.tipo_amenaza}\n"
+            md += "## AMENAZA DETECTADA\n\n"
+            if self.tipo_amenaza:
+                md += f"- **Tipo:** {self.tipo_amenaza}\n"
+            
+            # Mostrar todas las amenazas si hay una lista
+            if hasattr(self, '_amenazas_lista') and self._amenazas_lista:
+                md += f"- **Amenazas:** {', '.join(self._amenazas_lista)}\n"
+            
             if self.detalles:
                 md += f"- **Detalles:** {self.detalles}\n"
             md += "\n"
@@ -82,8 +108,9 @@ class ResultadoEscaneo:
 
 class Escaneador:
     
-    def __init__(self, siem=None):
+    def __init__(self, siem=None, gestor_firmas=None):
         self.siem = siem
+        self.gestor_firmas = gestor_firmas
         self.firmas_texto = []
         self.firmas_hash = []
         self.firmas_regex = []
@@ -159,13 +186,10 @@ REGEX:powershell\\s+-[eE]ncodedcommand
         path_archivo = Path(ruta_archivo)
         
         if not path_archivo.exists():
-            resultado = ResultadoEscaneo(ruta_archivo, True, 
-                                       "ARCHIVO_NO_ENCONTRADO", 
-                                       "El archivo no existe")
             if self.siem:
                 self.siem.log_evento('WARNING', 'escaneador', 
                                          f'Archivo no encontrado: {ruta_archivo}')
-            return resultado
+            raise FileNotFoundError(f"El archivo no existe: {ruta_archivo}")
         
         if not path_archivo.is_file():
             resultado = ResultadoEscaneo(ruta_archivo, False, 
@@ -207,7 +231,8 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                 if hash_sha256 == hash_malicioso or hash_md5 == hash_malicioso or hash_sha1 == hash_malicioso:
                     resultado = ResultadoEscaneo(str(ruta_archivo), True, 
                                                "HASH_MALICIOSO", 
-                                               f"Hash coincide con base de datos: {hash_malicioso}")
+                                               f"Hash coincide con base de datos: {hash_malicioso}",
+                                               amenazas=[f"hash:{hash_malicioso}"])
                     if self.siem:
                         self.siem.log_evento('CRITICAL', 'escaneador', 
                                                  f'Hash malicioso detectado: {ruta_archivo}')
@@ -231,23 +256,29 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                     strings = re.findall(b'[ -~]{4,}', contenido_binario)
                     contenido_texto = '\n'.join(s.decode('ascii', errors='ignore') for s in strings).lower()
             
-            # Verificar firmas de texto
+            # Verificar firmas de texto y recolectar todas las coincidencias
+            firmas_encontradas = []
             for firma in self.firmas_texto:
                 if firma in contenido_texto:
-                    resultado = ResultadoEscaneo(str(ruta_archivo), True, 
-                                               "FIRMA_TEXTO", 
-                                               f"Firma detectada: {firma}")
-                    if self.siem:
-                        self.siem.log_evento('HIGH', 'escaneador', 
-                                                 f'Firma de texto detectada en {ruta_archivo}: {firma}')
-                    return resultado
+                    firmas_encontradas.append(firma)
+            
+            if firmas_encontradas:
+                resultado = ResultadoEscaneo(str(ruta_archivo), True, 
+                                           "FIRMA_TEXTO", 
+                                           f"Firma detectada: {', '.join(firmas_encontradas)}",
+                                           amenazas=firmas_encontradas)
+                if self.siem:
+                    self.siem.log_evento('HIGH', 'escaneador', 
+                                             f'Firmas de texto detectadas en {ruta_archivo}: {", ".join(firmas_encontradas)}')
+                return resultado
             
             # Verificar expresiones regulares
             for patron_regex in self.firmas_regex:
                 if patron_regex.search(contenido_texto):
                     resultado = ResultadoEscaneo(str(ruta_archivo), True, 
                                                "FIRMA_REGEX", 
-                                               f"Patrón regex detectado: {patron_regex.pattern}")
+                                               f"Patrón regex detectado: {patron_regex.pattern}",
+                                               amenazas=[patron_regex.pattern])
                     if self.siem:
                         self.siem.log_evento('HIGH', 'escaneador', 
                                                  f'Patrón regex detectado en {ruta_archivo}: {patron_regex.pattern}')
@@ -308,32 +339,30 @@ REGEX:powershell\\s+-[eE]ncodedcommand
             return ResultadoEscaneo(str(ruta_archivo), False, "", 
                                   f"Error en análisis heurístico: {e}")
     
-    def escanear_directorio(self, ruta_directorio: str, recursivo: bool = True) -> List[ResultadoEscaneo]:
+    def escanear_directorio(self, ruta_directorio: str, recursivo: bool = True):
         path_directorio = Path(ruta_directorio)
-        resultados = []
         
         if not path_directorio.exists():
-            resultado = ResultadoEscaneo(ruta_directorio, True, 
-                                       "DIRECTORIO_NO_ENCONTRADO", 
-                                       "El directorio no existe")
             if self.siem:
                 self.siem.log_evento('WARNING', 'escaneador', 
                                          f'Directorio no encontrado: {ruta_directorio}')
-            return [resultado]
+            raise NotADirectoryError(f"El directorio no existe: {ruta_directorio}")
         
         if not path_directorio.is_dir():
-            resultado = ResultadoEscaneo(ruta_directorio, False, 
-                                       "", "No es un directorio")
-            return [resultado]
+            raise NotADirectoryError(f"La ruta no es un directorio: {ruta_directorio}")
+        
+        resultados = []
         
         try:
             patron = "**/*" if recursivo else "*"
             archivos = list(path_directorio.glob(patron))
             
-            total_archivos = len([f for f in archivos if f.is_file()])
             archivos_procesados = 0
+            amenazas_encontradas = 0
+            archivos_infectados = 0
             
             if self.siem:
+                total_archivos = len([f for f in archivos if f.is_file()])
                 self.siem.log_evento('INFO', 'escaneador', 
                                          f'Iniciando escaneo de directorio: {ruta_directorio} ({total_archivos} archivos)')
             
@@ -343,26 +372,32 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                     resultados.append(resultado)
                     archivos_procesados += 1
                     
+                    if resultado.es_amenaza:
+                        amenazas_encontradas += 1
+                        archivos_infectados += 1
+                    
                     if archivos_procesados % 100 == 0 and self.siem:
                         self.siem.log_evento('INFO', 'escaneador', 
-                                                 f'Progreso: {archivos_procesados}/{total_archivos} archivos')
-            
-            amenazas_encontradas = len([r for r in resultados if r.es_amenaza])
+                                                 f'Progreso: {archivos_procesados} archivos')
             
             if self.siem:
                 self.siem.log_evento('INFO', 'escaneador', 
                                          f'Escaneo completado: {archivos_procesados} archivos, {amenazas_encontradas} amenazas')
             
-        except Exception as e:
-            resultado = ResultadoEscaneo(ruta_directorio, False, "", 
-                                       f"Error escaneando directorio: {e}")
-            resultados.append(resultado)
+            # Retornar diccionario con estadísticas
+            return {
+                'directorio': ruta_directorio,
+                'archivos_escaneados': archivos_procesados,
+                'amenazas_encontradas': amenazas_encontradas,
+                'archivos_infectados': archivos_infectados,
+                'resultados': resultados
+            }
             
+        except Exception as e:
             if self.siem:
                 self.siem.log_evento('ERROR', 'escaneador', 
                                          f'Error escaneando directorio {ruta_directorio}: {e}')
-        
-        return resultados
+            raise
     
     def generar_reporte_directorio(self, resultados: List[ResultadoEscaneo]) -> Dict[str, Any]:
         """Genera un reporte resumen del escaneo de directorio."""
@@ -425,21 +460,41 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                 self.siem.log_evento('ERROR', 'escaneador', 
                                          f'Error actualizando firmas: {e}')
     
-    def generar_reporte_markdown(self, resultados: List[ResultadoEscaneo]) -> str:
-        reporte = "# Reporte de Escaneo - Ares Aegis\n\n"
+    def generar_reporte_markdown(self, resultado_escaneo) -> str:
+        """Genera reporte en formato Markdown para resultados de directorio o lista de archivos."""
+        reporte = "# Reporte de Escaneo de Directorio - Ares Aegis\n\n"
         reporte += f"**Fecha:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         
-        total_archivos = len(resultados)
+        # Si es un diccionario (resultado de escanear_directorio)
+        if isinstance(resultado_escaneo, dict):
+            if 'resultados' in resultado_escaneo:
+                resultados = resultado_escaneo['resultados']
+                total_archivos = resultado_escaneo.get('archivos_escaneados', len(resultados))
+                amenazas_detectadas = resultado_escaneo.get('amenazas_encontradas', 0)
+            else:
+                # Formato legacy de diccionario
+                resultados = []
+                total_archivos = resultado_escaneo.get('archivos_escaneados', 0)
+                amenazas_detectadas = resultado_escaneo.get('amenazas_encontradas', 0)
+        else:
+            # Es una lista de ResultadoEscaneo
+            resultados = resultado_escaneo
+            total_archivos = len(resultados)
+            amenazas_detectadas = len([r for r in resultados if r.es_amenaza])
+        
         amenazas = [r for r in resultados if r.es_amenaza]
-        archivos_limpios = total_archivos - len(amenazas)
+        archivos_limpios = total_archivos - amenazas_detectadas
         
         reporte += "## Resumen\n\n"
         reporte += f"- **Total de archivos:** {total_archivos}\n"
         reporte += f"- **Archivos limpios:** {archivos_limpios}\n"
-        reporte += f"- **Amenazas detectadas:** {len(amenazas)}\n\n"
+        reporte += f"- **Amenazas detectadas:** {amenazas_detectadas}\n\n"
         
-        if amenazas:
-            reporte += "## Amenazas Detectadas\n\n"
+        if amenazas_detectadas == 0:
+            reporte += "## DIRECTORIO LIMPIO\n\n"
+            reporte += "✅ **No se encontraron amenazas** en el directorio escaneado.\n\n"
+        else:
+            reporte += "## AMENAZAS DETECTADAS\n\n"
             for amenaza in amenazas:
                 reporte += f"### {amenaza.tipo_amenaza}\n\n"
                 reporte += f"- **Archivo:** `{amenaza.ruta}`\n"
@@ -448,3 +503,78 @@ REGEX:powershell\\s+-[eE]ncodedcommand
                 reporte += f"- **Fecha:** {amenaza.fecha_escaneo.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         
         return reporte
+
+
+class GestorFirmas:
+    """Gestiona la base de datos de firmas de malware."""
+    
+    def __init__(self, archivo_firmas: Optional[Path] = None):
+        self.archivo_firmas = archivo_firmas or Path("configuracion/firmas.txt")
+        self.firmas_hash = set()
+        self.firmas_texto = []
+        self.firmas_regex = []
+        self.cargar_firmas()
+    
+    def cargar_firmas(self):
+        """Carga las firmas desde el archivo de configuración."""
+        if not self.archivo_firmas.exists():
+            return
+            
+        try:
+            with open(self.archivo_firmas, 'r', encoding='utf-8') as archivo:
+                for linea in archivo:
+                    linea = linea.strip()
+                    if linea and not linea.startswith('#'):
+                        self._procesar_firma(linea)
+        except Exception:
+            pass
+    
+    def _procesar_firma(self, linea: str):
+        """Procesa una línea de firma y la categoriza."""
+        if linea.startswith('HASH:'):
+            # Firma de hash con prefijo
+            hash_valor = linea[5:].strip().lower()
+            self.firmas_hash.add(hash_valor)
+        elif len(linea) == 64 and all(c in '0123456789abcdef' for c in linea.lower()):
+            # SHA256 directo (64 caracteres hexadecimales)
+            self.firmas_hash.add(linea.lower())
+        elif linea.startswith('REGEX:'):
+            try:
+                patron = re.compile(linea[6:].strip(), re.IGNORECASE)
+                self.firmas_regex.append(patron)
+            except re.error:
+                pass
+        else:
+            self.firmas_texto.append(linea.lower())
+    
+    def verificar_hash(self, hash_archivo: str) -> bool:
+        """Verifica si un hash está en la base de datos de firmas."""
+        return hash_archivo.lower() in self.firmas_hash
+    
+    def verificar_patrones(self, contenido: bytes) -> List[str]:
+        """Verifica patrones en el contenido del archivo."""
+        patrones_encontrados = []
+        
+        for patron in self.firmas_texto:
+            try:
+                if patron.encode() in contenido:
+                    patrones_encontrados.append(patron)
+            except:
+                continue
+                
+        for patron_regex in self.firmas_regex:
+            try:
+                if patron_regex.search(contenido.decode('utf-8', errors='ignore')):
+                    patrones_encontrados.append(patron_regex.pattern)
+            except:
+                continue
+        
+        return patrones_encontrados
+    
+    def añadir_firma_hash(self, hash_sha256: str):
+        """Añade una nueva firma de hash."""
+        self.firmas_hash.add(hash_sha256.lower())
+    
+    def añadir_firma_texto(self, texto: str):
+        """Añade un nuevo patrón de texto."""
+        self.firmas_texto.append(texto.lower())

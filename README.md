@@ -2,13 +2,13 @@
 
 ## 🛡️ Antivirus Avanzado para Kali Linux
 
-Sistema de seguridad integral desarrollado en Python con arquitectura MVC y diseño japonés minimalista.
+Sistema de seguridad integral desarrollado en Python con arquitectura MVC y principios Clean Code.
 
 ### 🚀 Características Principales
 
 - **Motor de Escaneo Interno**: Análisis basado en patrones y heurística
 - **Integración ClamAV**: Compatibilidad con motor externo
-- **Sistema SIEM**: Logging centralizado de eventos de seguridad
+- **Sistema SIEM**: Registro centralizado de eventos de seguridad
 - **File Integrity Monitoring**: Monitoreo de integridad de archivos críticos
 - **Cuarentena Inteligente**: Aislamiento automático de amenazas
 - **Monitoreo de Red**: Detección de conexiones y puertos sospechosos

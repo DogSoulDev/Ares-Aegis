@@ -863,5 +863,1524 @@
     "tipo": "SISTEMA_EVENTO",
     "mensaje": "Sistema Ares Aegis iniciado en modo limitado",
     "detalles": {}
+  },
+  {
+    "id": "20250630120956-7047",
+    "timestamp": "2025-06-30T12:09:56.001202",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Iniciando análisis completo de /tmp/tmpya1h_kj1/flujo_completo.txt"
+  },
+  {
+    "id": "20250630120956-7047",
+    "timestamp": "2025-06-30T12:09:56.003815",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Análisis completado para /tmp/tmpya1h_kj1/flujo_completo.txt"
+  },
+  {
+    "id": "20250630120956-7047",
+    "timestamp": "2025-06-30T12:09:56.004983",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Verificación de integridad COINCIDE: /tmp/tmpya1h_kj1/flujo_completo.txt"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.077064",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpwvo66tj7/malware.exe"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.077920",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.078951",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpwvo66tj7/malware.exe"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.079881",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.080384",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpwvo66tj7/malware.exe"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.081206",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.082336",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Buscando patrones específicos en /tmp/tmpwvo66tj7/malware.exe"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.083513",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpwvo66tj7/malware.exe"
+  },
+  {
+    "id": "20250630120956-2997",
+    "timestamp": "2025-06-30T12:09:56.084905",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630120958-7810",
+    "timestamp": "2025-06-30T12:09:58.088243",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Iniciando escaneo completo de vulnerabilidades"
+  },
+  {
+    "id": "20250630120958-7810",
+    "timestamp": "2025-06-30T12:09:58.089974",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Escaneo completado: 12 vulnerabilidades encontradas"
+  },
+  {
+    "id": "20250630120958-1737",
+    "timestamp": "2025-06-30T12:09:58.174758",
+    "tipo": "INFO",
+    "mensaje": "Test de modelo",
+    "detalles": {}
+  },
+  {
+    "id": "20250630120958-1347",
+    "timestamp": "2025-06-30T12:09:58.176452",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 6 texto, 2 hash, 3 regex"
+  },
+  {
+    "id": "20250630120958-1977",
+    "timestamp": "2025-06-30T12:09:58.177603",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630120958-7975",
+    "timestamp": "2025-06-30T12:09:58.178999",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630120958-7975",
+    "timestamp": "2025-06-30T12:09:58.179639",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.180280",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630120958-3318",
+    "timestamp": "2025-06-30T12:09:58.180891",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630120958-3567",
+    "timestamp": "2025-06-30T12:09:58.181823",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630120958-8882",
+    "timestamp": "2025-06-30T12:09:58.183548",
+    "tipo": "ESCANEO",
+    "mensaje": "Iniciando escaneo de archivo: /tmp/tmpy5oxk_3h.txt",
+    "detalles": {}
+  },
+  {
+    "id": "20250630120958-1347",
+    "timestamp": "2025-06-30T12:09:58.184478",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Archivo escaneado limpio: /tmp/tmpy5oxk_3h.txt"
+  },
+  {
+    "id": "20250630120958-2769",
+    "timestamp": "2025-06-30T12:09:58.185469",
+    "tipo": "RED_ACTIVIDAD",
+    "mensaje": "Iniciando monitoreo de red",
+    "detalles": {}
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.339812",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:35758 -> 13.69.68.64:443 (code-insiders)"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.340800",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:43886 -> 13.107.246.77:443 ()"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.341867",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58116 -> 140.82.112.21:443 (code-insiders)"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.343249",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:59652 -> 185.125.188.54:443 ()"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.344341",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58626 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.345281",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:60600 -> 185.125.188.59:443 ()"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.346050",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:32954 -> 20.111.1.3:443 (code-insiders)"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.347085",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58642 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630120958-9302",
+    "timestamp": "2025-06-30T12:09:58.347963",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:53300 -> 20.189.173.23:443 (code-insiders)"
+  },
+  {
+    "id": "20250630121019-4162",
+    "timestamp": "2025-06-30T12:10:19.952756",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Iniciando análisis completo de /tmp/tmpjw4bh8qb/flujo_completo.txt"
+  },
+  {
+    "id": "20250630121019-4162",
+    "timestamp": "2025-06-30T12:10:19.955914",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Análisis completado para /tmp/tmpjw4bh8qb/flujo_completo.txt"
+  },
+  {
+    "id": "20250630121019-4162",
+    "timestamp": "2025-06-30T12:10:19.956741",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Verificación de integridad COINCIDE: /tmp/tmpjw4bh8qb/flujo_completo.txt"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.037626",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpbqkz04s4/malware.exe"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.038909",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.039859",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpbqkz04s4/malware.exe"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.040934",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.041982",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpbqkz04s4/malware.exe"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.042759",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.043309",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Buscando patrones específicos en /tmp/tmpbqkz04s4/malware.exe"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.043967",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpbqkz04s4/malware.exe"
+  },
+  {
+    "id": "20250630121020-3467",
+    "timestamp": "2025-06-30T12:10:20.044791",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630121021-6330",
+    "timestamp": "2025-06-30T12:10:21.175152",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Iniciando escaneo completo de vulnerabilidades"
+  },
+  {
+    "id": "20250630121021-6330",
+    "timestamp": "2025-06-30T12:10:21.176406",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Escaneo completado: 12 vulnerabilidades encontradas"
+  },
+  {
+    "id": "20250630121021-9670",
+    "timestamp": "2025-06-30T12:10:21.243450",
+    "tipo": "INFO",
+    "mensaje": "Test de modelo",
+    "detalles": {}
+  },
+  {
+    "id": "20250630121021-3394",
+    "timestamp": "2025-06-30T12:10:21.245028",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 6 texto, 2 hash, 3 regex"
+  },
+  {
+    "id": "20250630121021-3167",
+    "timestamp": "2025-06-30T12:10:21.245774",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630121021-9206",
+    "timestamp": "2025-06-30T12:10:21.246903",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630121021-9206",
+    "timestamp": "2025-06-30T12:10:21.247897",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.248822",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630121021-3664",
+    "timestamp": "2025-06-30T12:10:21.249689",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630121021-4239",
+    "timestamp": "2025-06-30T12:10:21.250527",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630121021-4279",
+    "timestamp": "2025-06-30T12:10:21.251514",
+    "tipo": "ESCANEO",
+    "mensaje": "Iniciando escaneo de archivo: /tmp/tmp5atx3cmj.txt",
+    "detalles": {}
+  },
+  {
+    "id": "20250630121021-3394",
+    "timestamp": "2025-06-30T12:10:21.254701",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Archivo escaneado limpio: /tmp/tmp5atx3cmj.txt"
+  },
+  {
+    "id": "20250630121021-6766",
+    "timestamp": "2025-06-30T12:10:21.262478",
+    "tipo": "RED_ACTIVIDAD",
+    "mensaje": "Iniciando monitoreo de red",
+    "detalles": {}
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.440051",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:35758 -> 13.69.68.64:443 (code-insiders)"
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.441165",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58116 -> 140.82.112.21:443 (code-insiders)"
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.442286",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58626 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.443367",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:32954 -> 20.111.1.3:443 (code-insiders)"
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.444535",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58642 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.445609",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:53300 -> 20.189.173.23:443 (code-insiders)"
+  },
+  {
+    "id": "20250630121021-6887",
+    "timestamp": "2025-06-30T12:10:21.446607",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58956 -> 52.182.143.208:443 (code-insiders)"
+  },
+  {
+    "id": "20250630122931-6505",
+    "timestamp": "2025-06-30T12:29:31.629296",
+    "tipo": "INFO",
+    "mensaje": "test",
+    "detalles": "Prueba de funcionamiento"
+  },
+  {
+    "id": "20250630122931-4696",
+    "timestamp": "2025-06-30T12:29:31.631607",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630122931-9110",
+    "timestamp": "2025-06-30T12:29:31.635485",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630122949-8905",
+    "timestamp": "2025-06-30T12:29:49.297534",
+    "tipo": "INFO",
+    "mensaje": "test",
+    "detalles": "Prueba de funcionamiento"
+  },
+  {
+    "id": "20250630122949-5224",
+    "timestamp": "2025-06-30T12:29:49.299361",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630122949-1221",
+    "timestamp": "2025-06-30T12:29:49.301686",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630123021-8792",
+    "timestamp": "2025-06-30T12:30:21.153451",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Iniciando análisis completo de /tmp/tmpnaw4shd5/flujo_completo.txt"
+  },
+  {
+    "id": "20250630123021-8792",
+    "timestamp": "2025-06-30T12:30:21.155063",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Análisis completado para /tmp/tmpnaw4shd5/flujo_completo.txt"
+  },
+  {
+    "id": "20250630123021-8792",
+    "timestamp": "2025-06-30T12:30:21.156215",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Verificación de integridad COINCIDE: /tmp/tmpnaw4shd5/flujo_completo.txt"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.190115",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpfjp_jc_t/malware.exe"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.193106",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.195056",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpfjp_jc_t/malware.exe"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.197486",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.199691",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpfjp_jc_t/malware.exe"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.203066",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.204050",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Buscando patrones específicos en /tmp/tmpfjp_jc_t/malware.exe"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.207807",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpfjp_jc_t/malware.exe"
+  },
+  {
+    "id": "20250630123021-8338",
+    "timestamp": "2025-06-30T12:30:21.209765",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123022-5493",
+    "timestamp": "2025-06-30T12:30:22.343196",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Iniciando escaneo completo de vulnerabilidades"
+  },
+  {
+    "id": "20250630123022-5493",
+    "timestamp": "2025-06-30T12:30:22.344441",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Escaneo completado: 12 vulnerabilidades encontradas"
+  },
+  {
+    "id": "20250630123022-6803",
+    "timestamp": "2025-06-30T12:30:22.355658",
+    "tipo": "INFO",
+    "mensaje": "Test de modelo",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123022-3032",
+    "timestamp": "2025-06-30T12:30:22.360727",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123022-6817",
+    "timestamp": "2025-06-30T12:30:22.361887",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630123022-7762",
+    "timestamp": "2025-06-30T12:30:22.364868",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630123022-7762",
+    "timestamp": "2025-06-30T12:30:22.365580",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630123022-3914",
+    "timestamp": "2025-06-30T12:30:22.368534",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630123022-6706",
+    "timestamp": "2025-06-30T12:30:22.371559",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123022-9210",
+    "timestamp": "2025-06-30T12:30:22.374190",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123022-7800",
+    "timestamp": "2025-06-30T12:30:22.377552",
+    "tipo": "ESCANEO",
+    "mensaje": "Iniciando escaneo de archivo: /tmp/tmpbvgys45i.txt",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123022-3032",
+    "timestamp": "2025-06-30T12:30:22.380743",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Archivo escaneado limpio: /tmp/tmpbvgys45i.txt"
+  },
+  {
+    "id": "20250630123022-0088",
+    "timestamp": "2025-06-30T12:30:22.383634",
+    "tipo": "RED_ACTIVIDAD",
+    "mensaje": "Iniciando monitoreo de red",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123022-3914",
+    "timestamp": "2025-06-30T12:30:22.594945",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:46848 -> 140.82.112.22:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123022-3914",
+    "timestamp": "2025-06-30T12:30:22.597181",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:57892 -> 51.116.253.170:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123022-3914",
+    "timestamp": "2025-06-30T12:30:22.598504",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58626 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123022-3914",
+    "timestamp": "2025-06-30T12:30:22.601419",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:51048 -> 13.69.68.64:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123022-3914",
+    "timestamp": "2025-06-30T12:30:22.603024",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:32954 -> 20.111.1.3:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123022-3914",
+    "timestamp": "2025-06-30T12:30:22.604697",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58642 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123024-3032",
+    "timestamp": "2025-06-30T12:30:24.897291",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123024-6817",
+    "timestamp": "2025-06-30T12:30:24.899675",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630123024-7762",
+    "timestamp": "2025-06-30T12:30:24.902029",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630123024-7762",
+    "timestamp": "2025-06-30T12:30:24.903106",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630123024-3914",
+    "timestamp": "2025-06-30T12:30:24.904029",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630123024-6706",
+    "timestamp": "2025-06-30T12:30:24.905092",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123024-9210",
+    "timestamp": "2025-06-30T12:30:24.906561",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123024-8951",
+    "timestamp": "2025-06-30T12:30:24.907674",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Sistema Ares Aegis iniciado en modo limitado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123024-1037",
+    "timestamp": "2025-06-30T12:30:24.910119",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Test de funcionamiento",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123024-3032",
+    "timestamp": "2025-06-30T12:30:24.912254",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123025-3032",
+    "timestamp": "2025-06-30T12:30:25.281663",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123025-6817",
+    "timestamp": "2025-06-30T12:30:25.283237",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630123025-7762",
+    "timestamp": "2025-06-30T12:30:25.285114",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630123025-7762",
+    "timestamp": "2025-06-30T12:30:25.286589",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630123025-3914",
+    "timestamp": "2025-06-30T12:30:25.287349",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630123025-6706",
+    "timestamp": "2025-06-30T12:30:25.288176",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123025-9210",
+    "timestamp": "2025-06-30T12:30:25.289012",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123025-8951",
+    "timestamp": "2025-06-30T12:30:25.290120",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Sistema Ares Aegis iniciado en modo limitado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123034-2655",
+    "timestamp": "2025-06-30T12:30:34.971746",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Iniciando análisis completo de /tmp/tmpdi9m29wl/flujo_completo.txt"
+  },
+  {
+    "id": "20250630123034-2655",
+    "timestamp": "2025-06-30T12:30:34.973116",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Análisis completado para /tmp/tmpdi9m29wl/flujo_completo.txt"
+  },
+  {
+    "id": "20250630123034-2655",
+    "timestamp": "2025-06-30T12:30:34.974406",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Verificación de integridad COINCIDE: /tmp/tmpdi9m29wl/flujo_completo.txt"
+  },
+  {
+    "id": "20250630123034-3939",
+    "timestamp": "2025-06-30T12:30:34.999421",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpt21ukxm2/malware.exe"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.000803",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.002188",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpt21ukxm2/malware.exe"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.003812",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.004854",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpt21ukxm2/malware.exe"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.006228",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.007229",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Buscando patrones específicos en /tmp/tmpt21ukxm2/malware.exe"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.008258",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpt21ukxm2/malware.exe"
+  },
+  {
+    "id": "20250630123035-3939",
+    "timestamp": "2025-06-30T12:30:35.009461",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630123035-8751",
+    "timestamp": "2025-06-30T12:30:35.981360",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Iniciando escaneo completo de vulnerabilidades"
+  },
+  {
+    "id": "20250630123035-8751",
+    "timestamp": "2025-06-30T12:30:35.983157",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Escaneo completado: 12 vulnerabilidades encontradas"
+  },
+  {
+    "id": "20250630123035-9125",
+    "timestamp": "2025-06-30T12:30:35.991200",
+    "tipo": "INFO",
+    "mensaje": "Test de modelo",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123035-8474",
+    "timestamp": "2025-06-30T12:30:35.994790",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123035-9662",
+    "timestamp": "2025-06-30T12:30:35.997827",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630123036-7779",
+    "timestamp": "2025-06-30T12:30:36.000128",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630123036-7779",
+    "timestamp": "2025-06-30T12:30:36.001767",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.003467",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630123036-7203",
+    "timestamp": "2025-06-30T12:30:36.005361",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123036-2166",
+    "timestamp": "2025-06-30T12:30:36.007686",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123036-8814",
+    "timestamp": "2025-06-30T12:30:36.010519",
+    "tipo": "ESCANEO",
+    "mensaje": "Iniciando escaneo de archivo: /tmp/tmphfd1vwq_.txt",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123036-8474",
+    "timestamp": "2025-06-30T12:30:36.013132",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Archivo escaneado limpio: /tmp/tmphfd1vwq_.txt"
+  },
+  {
+    "id": "20250630123036-0166",
+    "timestamp": "2025-06-30T12:30:36.014432",
+    "tipo": "RED_ACTIVIDAD",
+    "mensaje": "Iniciando monitoreo de red",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.182464",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:46848 -> 140.82.112.22:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.183667",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:57892 -> 51.116.253.170:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.184965",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:54272 -> 13.107.5.93:443 ()"
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.186530",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58626 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.187598",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:51048 -> 13.69.68.64:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.188861",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:32954 -> 20.111.1.3:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123036-6179",
+    "timestamp": "2025-06-30T12:30:36.190086",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:58642 -> 184.31.8.34:443 (code-insiders)"
+  },
+  {
+    "id": "20250630123038-8474",
+    "timestamp": "2025-06-30T12:30:38.338077",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123038-9662",
+    "timestamp": "2025-06-30T12:30:38.339644",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630123038-7779",
+    "timestamp": "2025-06-30T12:30:38.340976",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630123038-7779",
+    "timestamp": "2025-06-30T12:30:38.342612",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630123038-6179",
+    "timestamp": "2025-06-30T12:30:38.343979",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630123038-7203",
+    "timestamp": "2025-06-30T12:30:38.345068",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123038-2166",
+    "timestamp": "2025-06-30T12:30:38.346372",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123038-6415",
+    "timestamp": "2025-06-30T12:30:38.348192",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Sistema Ares Aegis iniciado en modo limitado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123038-9677",
+    "timestamp": "2025-06-30T12:30:38.353078",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Test de funcionamiento",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123038-8474",
+    "timestamp": "2025-06-30T12:30:38.356392",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123038-8474",
+    "timestamp": "2025-06-30T12:30:38.786775",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630123038-9662",
+    "timestamp": "2025-06-30T12:30:38.788088",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630123038-7779",
+    "timestamp": "2025-06-30T12:30:38.789528",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630123038-7779",
+    "timestamp": "2025-06-30T12:30:38.791292",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630123038-6179",
+    "timestamp": "2025-06-30T12:30:38.792644",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630123038-7203",
+    "timestamp": "2025-06-30T12:30:38.793993",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123038-2166",
+    "timestamp": "2025-06-30T12:30:38.795026",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630123038-6415",
+    "timestamp": "2025-06-30T12:30:38.796589",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Sistema Ares Aegis iniciado en modo limitado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124706-6815",
+    "timestamp": "2025-06-30T12:47:06.866973",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Iniciando análisis completo de /tmp/tmpua619a4v/flujo_completo.txt"
+  },
+  {
+    "id": "20250630124706-6815",
+    "timestamp": "2025-06-30T12:47:06.872453",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Análisis completado para /tmp/tmpua619a4v/flujo_completo.txt"
+  },
+  {
+    "id": "20250630124706-6815",
+    "timestamp": "2025-06-30T12:47:06.875177",
+    "tipo": "INFO",
+    "mensaje": "analizador_archivos",
+    "detalles": "Verificación de integridad COINCIDE: /tmp/tmpua619a4v/flujo_completo.txt"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.907454",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpaygprzrm/malware.exe"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.909300",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.911043",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpaygprzrm/malware.exe"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.913204",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.914708",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpaygprzrm/malware.exe"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.916462",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.918079",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Buscando patrones específicos en /tmp/tmpaygprzrm/malware.exe"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.919784",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Iniciando análisis de cadenas de /tmp/tmpaygprzrm/malware.exe"
+  },
+  {
+    "id": "20250630124706-7591",
+    "timestamp": "2025-06-30T12:47:06.921484",
+    "tipo": "INFO",
+    "mensaje": "analizador_cadenas",
+    "detalles": "Análisis completado: 6 cadenas encontradas"
+  },
+  {
+    "id": "20250630124707-5839",
+    "timestamp": "2025-06-30T12:47:07.963494",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Iniciando escaneo completo de vulnerabilidades"
+  },
+  {
+    "id": "20250630124707-5839",
+    "timestamp": "2025-06-30T12:47:07.965402",
+    "tipo": "INFO",
+    "mensaje": "escaneador_vulnerabilidades",
+    "detalles": "Escaneo completado: 12 vulnerabilidades encontradas"
+  },
+  {
+    "id": "20250630124707-1464",
+    "timestamp": "2025-06-30T12:47:07.974093",
+    "tipo": "INFO",
+    "mensaje": "Test de modelo",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124707-0373",
+    "timestamp": "2025-06-30T12:47:07.977081",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630124707-2739",
+    "timestamp": "2025-06-30T12:47:07.978790",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630124707-9183",
+    "timestamp": "2025-06-30T12:47:07.980648",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630124707-9183",
+    "timestamp": "2025-06-30T12:47:07.982450",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630124707-7137",
+    "timestamp": "2025-06-30T12:47:07.984134",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630124707-2804",
+    "timestamp": "2025-06-30T12:47:07.988121",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124707-5472",
+    "timestamp": "2025-06-30T12:47:07.990342",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124707-4207",
+    "timestamp": "2025-06-30T12:47:07.993816",
+    "tipo": "ESCANEO",
+    "mensaje": "Iniciando escaneo de archivo: /tmp/tmpx7fec7_r.txt",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124707-0373",
+    "timestamp": "2025-06-30T12:47:07.997416",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Archivo escaneado limpio: /tmp/tmpx7fec7_r.txt"
+  },
+  {
+    "id": "20250630124708-1326",
+    "timestamp": "2025-06-30T12:47:08.001245",
+    "tipo": "RED_ACTIVIDAD",
+    "mensaje": "Iniciando monitoreo de red",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124708-7137",
+    "timestamp": "2025-06-30T12:47:08.091707",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:46848 -> 140.82.112.22:443 (code-insiders)"
+  },
+  {
+    "id": "20250630124708-7137",
+    "timestamp": "2025-06-30T12:47:08.093547",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:57892 -> 51.116.253.170:443 (code-insiders)"
+  },
+  {
+    "id": "20250630124708-7137",
+    "timestamp": "2025-06-30T12:47:08.095108",
+    "tipo": "HIGH",
+    "mensaje": "monitor_red",
+    "detalles": "Conexión sospechosa detectada: 192.168.88.131:51048 -> 13.69.68.64:443 (code-insiders)"
+  },
+  {
+    "id": "20250630124710-0373",
+    "timestamp": "2025-06-30T12:47:10.361423",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630124710-2739",
+    "timestamp": "2025-06-30T12:47:10.364752",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630124710-9183",
+    "timestamp": "2025-06-30T12:47:10.366506",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630124710-9183",
+    "timestamp": "2025-06-30T12:47:10.367994",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630124710-7137",
+    "timestamp": "2025-06-30T12:47:10.369393",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630124710-2804",
+    "timestamp": "2025-06-30T12:47:10.370954",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124710-5472",
+    "timestamp": "2025-06-30T12:47:10.372444",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124710-2228",
+    "timestamp": "2025-06-30T12:47:10.374264",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Sistema Ares Aegis iniciado en modo limitado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124710-8051",
+    "timestamp": "2025-06-30T12:47:10.378818",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Test de funcionamiento",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124710-0373",
+    "timestamp": "2025-06-30T12:47:10.382104",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630124710-0373",
+    "timestamp": "2025-06-30T12:47:10.720917",
+    "tipo": "INFO",
+    "mensaje": "escaneador",
+    "detalles": "Firmas cargadas: 48 texto, 2 hash, 8 regex"
+  },
+  {
+    "id": "20250630124710-2739",
+    "timestamp": "2025-06-30T12:47:10.722328",
+    "tipo": "INFO",
+    "mensaje": "cuarentena",
+    "detalles": "Gestor de cuarentena inicializado: /home/dogsoul/.ares_aegis/cuarentena"
+  },
+  {
+    "id": "20250630124710-9183",
+    "timestamp": "2025-06-30T12:47:10.724834",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Configuración cargada: 8 rutas"
+  },
+  {
+    "id": "20250630124710-9183",
+    "timestamp": "2025-06-30T12:47:10.727408",
+    "tipo": "INFO",
+    "mensaje": "fim",
+    "detalles": "Monitor de integridad inicializado: 0 archivos"
+  },
+  {
+    "id": "20250630124710-7137",
+    "timestamp": "2025-06-30T12:47:10.728890",
+    "tipo": "INFO",
+    "mensaje": "monitor_red",
+    "detalles": "Monitor de red inicializado"
+  },
+  {
+    "id": "20250630124710-2804",
+    "timestamp": "2025-06-30T12:47:10.730518",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Módulos inicializados correctamente",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124710-5472",
+    "timestamp": "2025-06-30T12:47:10.732659",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Controlador principal inicializado",
+    "detalles": {}
+  },
+  {
+    "id": "20250630124710-2228",
+    "timestamp": "2025-06-30T12:47:10.734965",
+    "tipo": "SISTEMA_EVENTO",
+    "mensaje": "Sistema Ares Aegis iniciado en modo limitado",
+    "detalles": {}
   }
 ]

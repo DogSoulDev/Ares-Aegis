@@ -20,7 +20,8 @@ class ConexionRed:
     """Representa una conexión de red."""
     
     def __init__(self, protocolo: str, direccion_local: str, puerto_local: int,
-                 direccion_remota: str, puerto_remoto: int, estado: str, pid: int = 0):
+                 direccion_remota: str, puerto_remoto: int, estado: str, 
+                 proceso: str = "", pid: int = 0):
         self.protocolo = protocolo
         self.direccion_local = direccion_local
         self.puerto_local = puerto_local
@@ -28,10 +29,13 @@ class ConexionRed:
         self.puerto_remoto = puerto_remoto
         self.estado = estado
         self.pid = pid
-        self.proceso = ""
+        self.proceso = proceso if proceso else ""
         self.fecha_deteccion = datetime.now()
+        self.es_sospechosa_flag = False
+        self.razones_sospecha = []
         
-        self._obtener_info_proceso()
+        if not self.proceso:
+            self._obtener_info_proceso()
     
     def _obtener_info_proceso(self):
         """Obtiene información del proceso asociado al PID."""
@@ -43,6 +47,12 @@ class ConexionRed:
                         self.proceso = archivo.read().strip()
             except:
                 self.proceso = "desconocido"
+    
+    def marcar_como_sospechosa(self, razon: str):
+        """Marca la conexión como sospechosa con la razón especificada."""
+        self.es_sospechosa_flag = True
+        if razon not in self.razones_sospecha:
+            self.razones_sospecha.append(razon)
     
     def es_sospechosa(self, puertos_conocidos: Set[int], ips_whitelist: Set[str]) -> bool:
         """Determina si la conexión es sospechosa."""
@@ -95,7 +105,9 @@ class ConexionRed:
             'estado': self.estado,
             'pid': self.pid,
             'proceso': self.proceso,
-            'fecha_deteccion': self.fecha_deteccion.isoformat()
+            'fecha_deteccion': self.fecha_deteccion.isoformat(),
+            'es_sospechosa': self.es_sospechosa_flag,
+            'razones_sospecha': self.razones_sospecha
         }
 
 
@@ -161,7 +173,7 @@ class MonitorRed:
                         
                         conexion = ConexionRed(
                             'TCP', local_addr, local_port,
-                            remote_addr, remote_port, estado, pid
+                            remote_addr, remote_port, estado, "", pid
                         )
                         conexiones.append(conexion)
         
@@ -188,7 +200,7 @@ class MonitorRed:
                         
                         conexion = ConexionRed(
                             'UDP', local_addr, local_port,
-                            remote_addr, remote_port, 'ACTIVA', pid
+                            remote_addr, remote_port, 'ACTIVA', "", pid
                         )
                         conexiones.append(conexion)
         
@@ -312,3 +324,76 @@ class MonitorRed:
                 reporte += f"- **Proceso:** {conexion.proceso} (PID: {conexion.pid})\n\n"
         
         return reporte
+
+
+class PuertoAbierto:
+    """Representa un puerto abierto en el sistema."""
+    
+    def __init__(self, puerto: int, protocolo: str, servicio: str = "", 
+                 proceso: str = "", pid: int = 0, direccion: str = ""):
+        self.puerto = puerto
+        self.protocolo = protocolo.upper()
+        self.servicio = servicio
+        self.proceso = proceso
+        self.pid = pid
+        self.direccion = direccion
+        self.fecha_deteccion = datetime.now()
+        self.es_sospechoso = False
+        self.razon_sospecha = ""
+        self.razones_sospecha = []
+        
+        self._evaluar_sospecha()
+    
+    def _evaluar_sospecha(self):
+        """Evalúa si el puerto abierto es sospechoso."""
+        # Puertos comúnmente utilizados por malware
+        puertos_sospechosos = {
+            1337, 31337, 12345, 54321, 9999, 6666, 6667, 6668, 6669,
+            7777, 27374, 30100, 53001, 27665, 20034, 9878, 10067,
+            47262, 54283, 35555, 40412, 40421, 40422, 40423, 40426,
+            58339, 5714, 28431, 31792, 33333, 65000
+        }
+        
+        # Procesos sospechosos
+        procesos_sospechosos = [
+            'nc', 'netcat', 'ncat', 'socat', 'telnet', 'backdoor',
+            'shell', 'cmd', 'powershell', 'meterpreter'
+        ]
+        
+        # Verificar puerto sospechoso
+        if self.puerto in puertos_sospechosos:
+            self.es_sospechoso = True
+            self.razon_sospecha = "Puerto comúnmente usado por malware"
+        
+        # Verificar proceso sospechoso
+        elif any(proc in self.proceso.lower() for proc in procesos_sospechosos):
+            self.es_sospechoso = True
+            self.razon_sospecha = "Proceso potencialmente malicioso"
+        
+        # Puertos altos no estándar
+        elif self.puerto > 49152 and not self.proceso:
+            self.es_sospechoso = True
+            self.razon_sospecha = "Puerto alto sin proceso identificado"
+    
+    def marcar_como_sospechoso(self, razon: str):
+        """Marca el puerto como sospechoso con la razón especificada."""
+        self.es_sospechoso = True
+        if razon not in self.razones_sospecha:
+            self.razones_sospecha.append(razon)
+        if not self.razon_sospecha:
+            self.razon_sospecha = razon
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convierte la información del puerto a diccionario."""
+        return {
+            'puerto': self.puerto,
+            'protocolo': self.protocolo,
+            'servicio': self.servicio,
+            'proceso': self.proceso,
+            'pid': self.pid,
+            'direccion': self.direccion,
+            'fecha_deteccion': self.fecha_deteccion.isoformat(),
+            'es_sospechoso': self.es_sospechoso,
+            'razon_sospecha': self.razon_sospecha,
+            'razones_sospecha': self.razones_sospecha
+        }
