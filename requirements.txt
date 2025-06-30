@@ -1,57 +1,46 @@
-# Ares Aegis - Sistema de Seguridad Avanzado con Mini-SIEM
-# Requisitos del Sistema Actualizados
+# Ares Aegis - Sistema de Seguridad Avanzado
+# Requisitos del Sistema - Solo módulos estándar de Python
 
-# === FRAMEWORK DE INTERFAZ GRÁFICA ===
-PySide6>=6.5.0
+# === NOTAS IMPORTANTES ===
+# Este proyecto usa ÚNICAMENTE módulos estándar de Python 3.8+
+# No requiere instalación de paquetes externos
 
-# === PROCESAMIENTO ASÍNCRONO ===
-aiofiles>=23.1.0
+# === MÓDULOS ESTÁNDAR UTILIZADOS ===
+# - tkinter: Interfaz gráfica de usuario
+# - subprocess: Ejecución de comandos del sistema
+# - pathlib: Manipulación de rutas
+# - hashlib: Cálculo de checksums
+# - json: Serialización de datos
+# - sqlite3: Base de datos local
+# - datetime: Manejo de fechas y tiempo
+# - os: Operaciones del sistema
+# - re: Expresiones regulares
+# - threading: Multihilo
+# - logging: Sistema de logs
+# - unittest: Framework de testing
 
-# === NOTIFICACIONES DEL SISTEMA ===
-plyer>=2.1.0
+# === HERRAMIENTAS DEL SISTEMA REQUERIDAS ===
+# Para funcionalidad completa, se requieren estas herramientas del sistema:
+# - ps: Monitoreo de procesos
+# - netstat: Análisis de red
+# - ss: Análisis de sockets (alternativa a netstat)
+# - kill: Terminación de procesos
+# - find: Búsqueda de archivos
+# - md5sum, sha256sum: Cálculo de checksums
+# - clamav (opcional): Análisis antivirus externo
 
-# === MONITOREO Y ANÁLISIS DEL SISTEMA ===
-psutil>=5.9.0
+# === INSTALACIÓN DE HERRAMIENTAS DEL SISTEMA ===
+# En Debian/Ubuntu/Kali Linux:
+# sudo apt update
+# sudo apt install clamav clamav-daemon net-tools procps coreutils
 
-# === ANÁLISIS DE ARCHIVOS Y SEGURIDAD ===
-python-magic>=0.4.27
-requests>=2.31.0
-urllib3>=2.0.4
+# === COMPATIBILIDAD ===
+# - Python 3.8 o superior
+# - Sistemas Linux (Debian, Ubuntu, Kali Linux)
+# - Privilegios de root requeridos para funcionalidad completa
 
-# === UTILIDADES Y LOGGING ===
-colorama>=0.4.6
-python-dateutil>=2.8.2
-
-# === ANÁLISIS DE MALWARE (YARA) ===
-yara-python>=4.3.1
-
-# === NETWORKING Y MONITOREO ===
-scapy>=2.5.0
-pyinotify>=0.9.6; sys_platform=="linux"
-
-# === GENERACIÓN DE REPORTES ===
-reportlab>=4.0.0
-qrcode[pil]>=7.4.0
-
-# === ANÁLISIS GRÁFICO Y VISUALIZACIÓN ===
-pyqtgraph>=0.13.0
-
-# === DESARROLLO Y TESTING (OPCIONALES) ===
-pytest>=7.4.0
-pytest-asyncio>=0.21.0
-pytest-cov>=4.1.0
-
-# === ANÁLISIS ESTÁTICO DE CÓDIGO (OPCIONALES) ===
-black>=23.7.0
-flake8>=6.0.0
-mypy>=1.5.0
-
-# === HERRAMIENTAS DE SEGURIDAD ADICIONALES ===
-# clamd>=1.0.2        # Requiere ClamAV instalado: apt install clamav clamav-daemon
-# python-nmap>=0.7.1  # Para análisis de red avanzado
-
-# === NOTAS DE INSTALACIÓN ===
-# 1. ClamAV: sudo apt install clamav clamav-daemon
-# 2. Permisos de logs: sudo usermod -a -G adm,systemd-journal $USER
-# 3. YARA puede requerir compilación: apt install libyara-dev
-# 4. Para análisis de red completo: apt install nmap
+# === FILOSOFÍA DEL PROYECTO ===
+# Este proyecto demuestra que es posible crear software de seguridad
+# robusto usando únicamente las herramientas estándar de Python,
+# sin dependencias externas que puedan introducir vulnerabilidades
+# o problemas de compatibilidad.

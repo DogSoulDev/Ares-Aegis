@@ -1,0 +1,22 @@
+# Firmas de Ares Aegis
+# Formato: una firma por línea
+# HASH:valor_hash - para hashes maliciosos
+# REGEX:patrón - para expresiones regulares
+# Texto simple - para búsqueda de cadenas
+
+# Firmas de texto comunes
+eval(base64_decode
+system($_GET
+<script>alert
+powershell -encodedcommand
+cmd.exe /c
+/bin/sh -c
+
+# Hashes maliciosos conocidos (ejemplos)
+HASH:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+HASH:da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+# Expresiones regulares
+REGEX:eval\s*\(\s*base64_decode
+REGEX:<script[^>]*>.*alert.*</script>
+REGEX:powershell\s+-[eE]ncodedcommand
