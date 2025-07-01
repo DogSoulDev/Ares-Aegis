@@ -1,14 +1,48 @@
-# Ares Aegis
+# 🛡️ Ares Aegis - Sistema Antivirus y SIEM
 
-## 🛡️ Antivirus Avanzado para Kali Linux
+**Versión 2.0.0** | **Autor: DogSoulDev** | **Fecha: Julio 2025**
 
-Sistema de seguridad integral desarrollado en Python con arquitectura MVC y principios Clean Code.
+## 📋 Descripción
 
-### 🚀 Características Principales
+Ares Aegis es un sistema antivirus y SIEM (Security Information and Event Management) completo desarrollado en Python. Inspirado en la mitología griega y con una estética japonesa, combina la potencia de detección de malware con capacidades avanzadas de monitoreo de seguridad.
 
-- **Motor de Escaneo Interno**: Análisis basado en patrones y heurística
-- **Integración ClamAV**: Compatibilidad con motor externo
-- **Sistema SIEM**: Registro centralizado de eventos de seguridad
+## ✨ Características Principales
+
+### 🔍 Sistema de Escaneado
+- **Detección de malware** basada en firmas
+- **Escaneo múltiple** de archivos y directorios
+- **Más de 80 firmas** de amenazas conocidas
+- **Soporte para múltiples tipos** de malware: virus, troyanos, ransomware, cryptominers
+
+### 🛡️ SIEM Integrado
+- **Registro centralizado** de eventos de seguridad
+- **Búsqueda y filtrado** avanzado de eventos
+- **Rotación automática** de logs
+- **Exportación de reportes** en formato Markdown
+
+### 🗂️ Sistema de Cuarentena
+- **Aislamiento seguro** de archivos infectados
+- **Compresión automática** con contraseña
+- **Restauración controlada** de archivos
+- **Gestión completa** del ciclo de vida
+
+### 📁 Monitor de Integridad (FIM)
+- **Monitoreo en tiempo real** de cambios en archivos
+- **Creación de líneas base** de integridad
+- **Detección de modificaciones** no autorizadas
+- **Alertas automáticas** de cambios críticos
+
+### 🌐 Monitor de Red
+- **Detección de conexiones** sospechosas
+- **Bloqueo automático** de IPs maliciosas
+- **Monitoreo de puertos** abiertos
+- **Análisis de tráfico** de red
+
+### 🎌 Interfaz Gráfica Japonesa
+- **Diseño inspirado** en Windows Defender
+- **Estética japonesa** con colores tradicionales
+- **Interfaz intuitiva** y fácil de usar
+- **Monitoreo en tiempo real** del estado del sistema
 - **File Integrity Monitoring**: Monitoreo de integridad de archivos críticos
 - **Cuarentena Inteligente**: Aislamiento automático de amenazas
 - **Monitoreo de Red**: Detección de conexiones y puertos sospechosos

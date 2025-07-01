@@ -1,0 +1,4629 @@
+[
+  {
+    "id": "20250701150822-1213",
+    "timestamp": "2025-07-01T15:08:22.395407",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150822-2925",
+    "timestamp": "2025-07-01T15:08:22.399185",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Prueba del sistema",
+    "detalles": {
+      "test": true
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-6648",
+    "timestamp": "2025-07-01T15:08:22.402736",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp",
+    "detalles": {
+      "tipo_escaneo": "directorio",
+      "ruta": "/tmp",
+      "recursivo": true,
+      "extensiones_filtro": null
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150822-1000",
+    "timestamp": "2025-07-01T15:08:22.406326",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/tmpfuq9vebh.txt",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/tmpfuq9vebh.txt"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-8139",
+    "timestamp": "2025-07-01T15:08:22.408197",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/tmpfuq9vebh.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpfuq9vebh.txt",
+      "tiempo_escaneo": 0.001886129379272461
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-6963",
+    "timestamp": "2025-07-01T15:08:22.410343",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.xfsm-ICE-WR9882"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-3191",
+    "timestamp": "2025-07-01T15:08:22.412435",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "ruta": "/tmp/.xfsm-ICE-WR9882",
+      "tiempo_escaneo": 0.0021202564239501953
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4054",
+    "timestamp": "2025-07-01T15:08:22.412844",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/config-err-BzU1D3"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0972",
+    "timestamp": "2025-07-01T15:08:22.414591",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "ruta": "/tmp/config-err-BzU1D3",
+      "tiempo_escaneo": 0.001950979232788086
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5394",
+    "timestamp": "2025-07-01T15:08:22.417962",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.X0-lock",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.X0-lock"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-6079",
+    "timestamp": "2025-07-01T15:08:22.418443",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.X0-lock",
+    "detalles": {
+      "ruta": "/tmp/.X0-lock",
+      "tiempo_escaneo": 0.0006618499755859375
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0429",
+    "timestamp": "2025-07-01T15:08:22.419438",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/23070"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-3668",
+    "timestamp": "2025-07-01T15:08:22.422512",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/23070",
+      "tiempo_escaneo": 0.003869771957397461
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-8219",
+    "timestamp": "2025-07-01T15:08:22.423218",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/22877"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-2694",
+    "timestamp": "2025-07-01T15:08:22.427161",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/22877",
+      "tiempo_escaneo": 0.003964900970458984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5358",
+    "timestamp": "2025-07-01T15:08:22.427446",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0469",
+    "timestamp": "2025-07-01T15:08:22.430360",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+      "tiempo_escaneo": 0.0029387474060058594
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-2144",
+    "timestamp": "2025-07-01T15:08:22.431673",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5557",
+    "timestamp": "2025-07-01T15:08:22.432780",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+      "tiempo_escaneo": 0.0014791488647460938
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5345",
+    "timestamp": "2025-07-01T15:08:22.434090",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7184",
+    "timestamp": "2025-07-01T15:08:22.435207",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+      "tiempo_escaneo": 0.001600027084350586
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7071",
+    "timestamp": "2025-07-01T15:08:22.436351",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4066",
+    "timestamp": "2025-07-01T15:08:22.437561",
+    "tipo": "AMENAZA_DETECTADA",
+    "mensaje": "Amenazas detectadas en: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+      "amenazas": [
+        "Posible código ofuscado detectado"
+      ],
+      "cantidad_amenazas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701150822-3732",
+    "timestamp": "2025-07-01T15:08:22.439211",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7180",
+    "timestamp": "2025-07-01T15:08:22.440562",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+      "tiempo_escaneo": 0.0013747215270996094
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-1308",
+    "timestamp": "2025-07-01T15:08:22.441976",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7726",
+    "timestamp": "2025-07-01T15:08:22.443412",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+      "tiempo_escaneo": 0.0017175674438476562
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5768",
+    "timestamp": "2025-07-01T15:08:22.445249",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4394",
+    "timestamp": "2025-07-01T15:08:22.447295",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+      "tiempo_escaneo": 0.002070903778076172
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7296",
+    "timestamp": "2025-07-01T15:08:22.448435",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-6417",
+    "timestamp": "2025-07-01T15:08:22.450246",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+      "tiempo_escaneo": 0.0021660327911376953
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7795",
+    "timestamp": "2025-07-01T15:08:22.454059",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-3247",
+    "timestamp": "2025-07-01T15:08:22.454695",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+      "tiempo_escaneo": 0.0007619857788085938
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-2873",
+    "timestamp": "2025-07-01T15:08:22.455206",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7786",
+    "timestamp": "2025-07-01T15:08:22.455741",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+      "tiempo_escaneo": 0.0006854534149169922
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-1687",
+    "timestamp": "2025-07-01T15:08:22.456325",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7912",
+    "timestamp": "2025-07-01T15:08:22.460233",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+      "tiempo_escaneo": 0.00393223762512207
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-2403",
+    "timestamp": "2025-07-01T15:08:22.460723",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0294",
+    "timestamp": "2025-07-01T15:08:22.461257",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+      "tiempo_escaneo": 0.0006520748138427734
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5780",
+    "timestamp": "2025-07-01T15:08:22.461913",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7864",
+    "timestamp": "2025-07-01T15:08:22.462662",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+      "tiempo_escaneo": 0.0010466575622558594
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-6738",
+    "timestamp": "2025-07-01T15:08:22.463909",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0259",
+    "timestamp": "2025-07-01T15:08:22.465451",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+      "tiempo_escaneo": 0.0020678043365478516
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-1327",
+    "timestamp": "2025-07-01T15:08:22.467609",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-1625",
+    "timestamp": "2025-07-01T15:08:22.469040",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+      "tiempo_escaneo": 0.001911163330078125
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-6278",
+    "timestamp": "2025-07-01T15:08:22.471295",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-1489",
+    "timestamp": "2025-07-01T15:08:22.473072",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+      "tiempo_escaneo": 0.0021131038665771484
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-3301",
+    "timestamp": "2025-07-01T15:08:22.476292",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-1557",
+    "timestamp": "2025-07-01T15:08:22.478217",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+      "tiempo_escaneo": 0.0022735595703125
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4184",
+    "timestamp": "2025-07-01T15:08:22.480408",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5788",
+    "timestamp": "2025-07-01T15:08:22.483871",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+      "tiempo_escaneo": 0.003867626190185547
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-6745",
+    "timestamp": "2025-07-01T15:08:22.486867",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-8562",
+    "timestamp": "2025-07-01T15:08:22.490821",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+      "tiempo_escaneo": 0.0042531490325927734
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5867",
+    "timestamp": "2025-07-01T15:08:22.492469",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-7318",
+    "timestamp": "2025-07-01T15:08:22.496400",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+      "tiempo_escaneo": 0.004359006881713867
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-8967",
+    "timestamp": "2025-07-01T15:08:22.497159",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-9342",
+    "timestamp": "2025-07-01T15:08:22.498745",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+      "tiempo_escaneo": 0.0016901493072509766
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-1874",
+    "timestamp": "2025-07-01T15:08:22.501484",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5528",
+    "timestamp": "2025-07-01T15:08:22.507175",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.007914066314697266
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0625",
+    "timestamp": "2025-07-01T15:08:22.507924",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-3651",
+    "timestamp": "2025-07-01T15:08:22.509664",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.0018460750579833984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4783",
+    "timestamp": "2025-07-01T15:08:22.512454",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4425",
+    "timestamp": "2025-07-01T15:08:22.515481",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+      "tiempo_escaneo": 0.003782033920288086
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4327",
+    "timestamp": "2025-07-01T15:08:22.518360",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-9561",
+    "timestamp": "2025-07-01T15:08:22.520598",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.00235748291015625
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-3118",
+    "timestamp": "2025-07-01T15:08:22.526141",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0565",
+    "timestamp": "2025-07-01T15:08:22.528245",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.006880283355712891
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-4279",
+    "timestamp": "2025-07-01T15:08:22.529191",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-5292",
+    "timestamp": "2025-07-01T15:08:22.530614",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.0015316009521484375
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150822-0450",
+    "timestamp": "2025-07-01T15:08:22.531414",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio completado: /tmp",
+    "detalles": {
+      "archivos_escaneados": 33,
+      "archivos_infectados": 1,
+      "amenazas_detectadas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701150822-3437",
+    "timestamp": "2025-07-01T15:08:22.535879",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo múltiple completado: 33 archivos, 1 amenazas",
+    "detalles": {
+      "rutas_escaneadas": [
+        "/tmp"
+      ],
+      "archivos_escaneados": 33,
+      "amenazas_detectadas": 1,
+      "archivos_infectados": 1,
+      "tiempo_escaneo": 0.13315629959106445
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701150822-4476",
+    "timestamp": "2025-07-01T15:08:22.543910",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de cuarentena inicializado",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena",
+      "archivos_en_cuarentena": 0
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150822-9767",
+    "timestamp": "2025-07-01T15:08:22.545054",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150822-8779",
+    "timestamp": "2025-07-01T15:08:22.551338",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Monitor de red inicializado",
+    "detalles": {},
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150822-6416",
+    "timestamp": "2025-07-01T15:08:22.553933",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador principal inicializado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed"
+      ],
+      "timestamp_inicio": "2025-07-01T15:08:22.553928"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150822-2647",
+    "timestamp": "2025-07-01T15:08:22.555031",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-01T15:08:22.555028"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150907-3606",
+    "timestamp": "2025-07-01T15:09:07.829944",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150907-1571",
+    "timestamp": "2025-07-01T15:09:07.835921",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Prueba del sistema",
+    "detalles": {
+      "test": true
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-1580",
+    "timestamp": "2025-07-01T15:09:07.850120",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp",
+    "detalles": {
+      "tipo_escaneo": "directorio",
+      "ruta": "/tmp",
+      "recursivo": true,
+      "extensiones_filtro": null
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150907-6903",
+    "timestamp": "2025-07-01T15:09:07.851671",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/tmp1knbley8.txt",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/tmp1knbley8.txt"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-6244",
+    "timestamp": "2025-07-01T15:09:07.858385",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/tmp1knbley8.txt",
+    "detalles": {
+      "ruta": "/tmp/tmp1knbley8.txt",
+      "tiempo_escaneo": 0.0067369937896728516
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-2662",
+    "timestamp": "2025-07-01T15:09:07.861938",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.xfsm-ICE-WR9882"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-4246",
+    "timestamp": "2025-07-01T15:09:07.862932",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "ruta": "/tmp/.xfsm-ICE-WR9882",
+      "tiempo_escaneo": 0.0037331581115722656
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-8577",
+    "timestamp": "2025-07-01T15:09:07.863799",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/config-err-BzU1D3"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-2359",
+    "timestamp": "2025-07-01T15:09:07.866655",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "ruta": "/tmp/config-err-BzU1D3",
+      "tiempo_escaneo": 0.002885580062866211
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-7419",
+    "timestamp": "2025-07-01T15:09:07.867392",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.X0-lock",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.X0-lock"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-6842",
+    "timestamp": "2025-07-01T15:09:07.869992",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.X0-lock",
+    "detalles": {
+      "ruta": "/tmp/.X0-lock",
+      "tiempo_escaneo": 0.0026264190673828125
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-6868",
+    "timestamp": "2025-07-01T15:09:07.871062",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/23070"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-4223",
+    "timestamp": "2025-07-01T15:09:07.875411",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/23070",
+      "tiempo_escaneo": 0.0045697689056396484
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-5869",
+    "timestamp": "2025-07-01T15:09:07.887306",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/22877"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-5414",
+    "timestamp": "2025-07-01T15:09:07.889927",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/22877",
+      "tiempo_escaneo": 0.002685546875
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-1722",
+    "timestamp": "2025-07-01T15:09:07.890842",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-6366",
+    "timestamp": "2025-07-01T15:09:07.898954",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+      "tiempo_escaneo": 0.00815725326538086
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-1037",
+    "timestamp": "2025-07-01T15:09:07.900667",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-3226",
+    "timestamp": "2025-07-01T15:09:07.902074",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+      "tiempo_escaneo": 0.0022094249725341797
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-9725",
+    "timestamp": "2025-07-01T15:09:07.903543",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-6665",
+    "timestamp": "2025-07-01T15:09:07.906864",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+      "tiempo_escaneo": 0.0033500194549560547
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-1936",
+    "timestamp": "2025-07-01T15:09:07.907748",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-4566",
+    "timestamp": "2025-07-01T15:09:07.914410",
+    "tipo": "AMENAZA_DETECTADA",
+    "mensaje": "Amenazas detectadas en: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+      "amenazas": [
+        "Posible código ofuscado detectado"
+      ],
+      "cantidad_amenazas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701150907-5528",
+    "timestamp": "2025-07-01T15:09:07.920563",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-5110",
+    "timestamp": "2025-07-01T15:09:07.924254",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+      "tiempo_escaneo": 0.0037381649017333984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-3627",
+    "timestamp": "2025-07-01T15:09:07.925222",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-8010",
+    "timestamp": "2025-07-01T15:09:07.941211",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+      "tiempo_escaneo": 0.016018152236938477
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-1399",
+    "timestamp": "2025-07-01T15:09:07.948339",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-7424",
+    "timestamp": "2025-07-01T15:09:07.951400",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+      "tiempo_escaneo": 0.005347490310668945
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-8096",
+    "timestamp": "2025-07-01T15:09:07.956669",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-9304",
+    "timestamp": "2025-07-01T15:09:07.959512",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+      "tiempo_escaneo": 0.00507044792175293
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-0830",
+    "timestamp": "2025-07-01T15:09:07.963994",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-6147",
+    "timestamp": "2025-07-01T15:09:07.966405",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+      "tiempo_escaneo": 0.005911350250244141
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-3093",
+    "timestamp": "2025-07-01T15:09:07.969346",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-9360",
+    "timestamp": "2025-07-01T15:09:07.973089",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+      "tiempo_escaneo": 0.004144906997680664
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-3137",
+    "timestamp": "2025-07-01T15:09:07.977414",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-8804",
+    "timestamp": "2025-07-01T15:09:07.985916",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+      "tiempo_escaneo": 0.009022235870361328
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-0230",
+    "timestamp": "2025-07-01T15:09:07.993190",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150907-8998",
+    "timestamp": "2025-07-01T15:09:07.998663",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+      "tiempo_escaneo": 0.005856513977050781
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-7936",
+    "timestamp": "2025-07-01T15:09:08.003293",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-0261",
+    "timestamp": "2025-07-01T15:09:08.005569",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+      "tiempo_escaneo": 0.002839803695678711
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-4751",
+    "timestamp": "2025-07-01T15:09:08.007149",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-4413",
+    "timestamp": "2025-07-01T15:09:08.012833",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+      "tiempo_escaneo": 0.005710601806640625
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-7101",
+    "timestamp": "2025-07-01T15:09:08.016326",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-3122",
+    "timestamp": "2025-07-01T15:09:08.021940",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+      "tiempo_escaneo": 0.005740642547607422
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-6068",
+    "timestamp": "2025-07-01T15:09:08.023268",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-3811",
+    "timestamp": "2025-07-01T15:09:08.027571",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+      "tiempo_escaneo": 0.004332780838012695
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-1209",
+    "timestamp": "2025-07-01T15:09:08.030656",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-5032",
+    "timestamp": "2025-07-01T15:09:08.034836",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+      "tiempo_escaneo": 0.004292011260986328
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-3568",
+    "timestamp": "2025-07-01T15:09:08.041449",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-1565",
+    "timestamp": "2025-07-01T15:09:08.046149",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+      "tiempo_escaneo": 0.0047299861907958984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-2976",
+    "timestamp": "2025-07-01T15:09:08.051134",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-9525",
+    "timestamp": "2025-07-01T15:09:08.055990",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+      "tiempo_escaneo": 0.005985260009765625
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-6973",
+    "timestamp": "2025-07-01T15:09:08.059963",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-0707",
+    "timestamp": "2025-07-01T15:09:08.061897",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+      "tiempo_escaneo": 0.003856182098388672
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-4116",
+    "timestamp": "2025-07-01T15:09:08.065390",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-5575",
+    "timestamp": "2025-07-01T15:09:08.067752",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+      "tiempo_escaneo": 0.0033097267150878906
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-1475",
+    "timestamp": "2025-07-01T15:09:08.072140",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-8879",
+    "timestamp": "2025-07-01T15:09:08.078103",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+      "tiempo_escaneo": 0.005995035171508789
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-1112",
+    "timestamp": "2025-07-01T15:09:08.082127",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-2642",
+    "timestamp": "2025-07-01T15:09:08.087887",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+      "tiempo_escaneo": 0.008524179458618164
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-2688",
+    "timestamp": "2025-07-01T15:09:08.091567",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-8603",
+    "timestamp": "2025-07-01T15:09:08.093275",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+      "tiempo_escaneo": 0.0023572444915771484
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-5373",
+    "timestamp": "2025-07-01T15:09:08.099757",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-1240",
+    "timestamp": "2025-07-01T15:09:08.102297",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+      "tiempo_escaneo": 0.002597332000732422
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-1063",
+    "timestamp": "2025-07-01T15:09:08.105228",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-9697",
+    "timestamp": "2025-07-01T15:09:08.110160",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.004961729049682617
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-7963",
+    "timestamp": "2025-07-01T15:09:08.111957",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-6149",
+    "timestamp": "2025-07-01T15:09:08.116870",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.0050694942474365234
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-3569",
+    "timestamp": "2025-07-01T15:09:08.120138",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-5832",
+    "timestamp": "2025-07-01T15:09:08.125323",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+      "tiempo_escaneo": 0.0051767826080322266
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-6227",
+    "timestamp": "2025-07-01T15:09:08.128805",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-5796",
+    "timestamp": "2025-07-01T15:09:08.132297",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.00353240966796875
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-4623",
+    "timestamp": "2025-07-01T15:09:08.138346",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-6700",
+    "timestamp": "2025-07-01T15:09:08.142404",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.004086971282958984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-3143",
+    "timestamp": "2025-07-01T15:09:08.145955",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-6024",
+    "timestamp": "2025-07-01T15:09:08.147635",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.0017156600952148438
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701150908-5321",
+    "timestamp": "2025-07-01T15:09:08.152719",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio completado: /tmp",
+    "detalles": {
+      "archivos_escaneados": 37,
+      "archivos_infectados": 1,
+      "amenazas_detectadas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701150908-6454",
+    "timestamp": "2025-07-01T15:09:08.160153",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo múltiple completado: 37 archivos, 1 amenazas",
+    "detalles": {
+      "rutas_escaneadas": [
+        "/tmp"
+      ],
+      "archivos_escaneados": 37,
+      "amenazas_detectadas": 1,
+      "archivos_infectados": 1,
+      "tiempo_escaneo": 0.31005191802978516
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701150908-3606",
+    "timestamp": "2025-07-01T15:09:08.167736",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150908-3902",
+    "timestamp": "2025-07-01T15:09:08.176776",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de cuarentena inicializado",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena",
+      "archivos_en_cuarentena": 0
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150908-3630",
+    "timestamp": "2025-07-01T15:09:08.185062",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150908-4617",
+    "timestamp": "2025-07-01T15:09:08.193467",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Monitor de red inicializado",
+    "detalles": {},
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150908-0302",
+    "timestamp": "2025-07-01T15:09:08.196811",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador principal inicializado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed"
+      ],
+      "timestamp_inicio": "2025-07-01T15:09:08.196806"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701150908-4087",
+    "timestamp": "2025-07-01T15:09:08.199993",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-01T15:09:08.199991"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151023-9991",
+    "timestamp": "2025-07-01T15:10:23.522371",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151023-5357",
+    "timestamp": "2025-07-01T15:10:23.531258",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Prueba del sistema",
+    "detalles": {
+      "test": true
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-5159",
+    "timestamp": "2025-07-01T15:10:23.554027",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp",
+    "detalles": {
+      "tipo_escaneo": "directorio",
+      "ruta": "/tmp",
+      "recursivo": true,
+      "extensiones_filtro": null
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151023-7972",
+    "timestamp": "2025-07-01T15:10:23.568062",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/tmpad_cbipo.txt",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/tmpad_cbipo.txt"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-8047",
+    "timestamp": "2025-07-01T15:10:23.581177",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/tmpad_cbipo.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpad_cbipo.txt",
+      "tiempo_escaneo": 0.013138771057128906
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-1484",
+    "timestamp": "2025-07-01T15:10:23.590380",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.xfsm-ICE-WR9882"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-3958",
+    "timestamp": "2025-07-01T15:10:23.597697",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "ruta": "/tmp/.xfsm-ICE-WR9882",
+      "tiempo_escaneo": 0.007370710372924805
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-5330",
+    "timestamp": "2025-07-01T15:10:23.605802",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/config-err-BzU1D3"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-6710",
+    "timestamp": "2025-07-01T15:10:23.616375",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "ruta": "/tmp/config-err-BzU1D3",
+      "tiempo_escaneo": 0.010623931884765625
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-6179",
+    "timestamp": "2025-07-01T15:10:23.624466",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.X0-lock",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.X0-lock"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0756",
+    "timestamp": "2025-07-01T15:10:23.631908",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.X0-lock",
+    "detalles": {
+      "ruta": "/tmp/.X0-lock",
+      "tiempo_escaneo": 0.007504940032958984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0435",
+    "timestamp": "2025-07-01T15:10:23.635887",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/23070"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-7976",
+    "timestamp": "2025-07-01T15:10:23.648131",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/23070",
+      "tiempo_escaneo": 0.01228475570678711
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-7658",
+    "timestamp": "2025-07-01T15:10:23.656124",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/22877"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-4267",
+    "timestamp": "2025-07-01T15:10:23.664476",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/22877",
+      "tiempo_escaneo": 0.008400440216064453
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-8430",
+    "timestamp": "2025-07-01T15:10:23.671211",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-9027",
+    "timestamp": "2025-07-01T15:10:23.680038",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+      "tiempo_escaneo": 0.008875370025634766
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-1264",
+    "timestamp": "2025-07-01T15:10:23.686524",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-3295",
+    "timestamp": "2025-07-01T15:10:23.700313",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+      "tiempo_escaneo": 0.013836383819580078
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-2854",
+    "timestamp": "2025-07-01T15:10:23.707610",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-7792",
+    "timestamp": "2025-07-01T15:10:23.715495",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+      "tiempo_escaneo": 0.007940053939819336
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-9184",
+    "timestamp": "2025-07-01T15:10:23.720784",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0560",
+    "timestamp": "2025-07-01T15:10:23.729337",
+    "tipo": "AMENAZA_DETECTADA",
+    "mensaje": "Amenazas detectadas en: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+      "amenazas": [
+        "Posible código ofuscado detectado"
+      ],
+      "cantidad_amenazas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701151023-9899",
+    "timestamp": "2025-07-01T15:10:23.734344",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-8368",
+    "timestamp": "2025-07-01T15:10:23.741643",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+      "tiempo_escaneo": 0.0073392391204833984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0121",
+    "timestamp": "2025-07-01T15:10:23.747743",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-4158",
+    "timestamp": "2025-07-01T15:10:23.754088",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+      "tiempo_escaneo": 0.0063991546630859375
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-3252",
+    "timestamp": "2025-07-01T15:10:23.768767",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-7743",
+    "timestamp": "2025-07-01T15:10:23.777046",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+      "tiempo_escaneo": 0.008335351943969727
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-2532",
+    "timestamp": "2025-07-01T15:10:23.783749",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-6390",
+    "timestamp": "2025-07-01T15:10:23.792076",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+      "tiempo_escaneo": 0.008369207382202148
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-9508",
+    "timestamp": "2025-07-01T15:10:23.799623",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-3105",
+    "timestamp": "2025-07-01T15:10:23.805553",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+      "tiempo_escaneo": 0.005991935729980469
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-1418",
+    "timestamp": "2025-07-01T15:10:23.815826",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0676",
+    "timestamp": "2025-07-01T15:10:23.819278",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+      "tiempo_escaneo": 0.0035092830657958984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-2910",
+    "timestamp": "2025-07-01T15:10:23.823992",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-9146",
+    "timestamp": "2025-07-01T15:10:23.833898",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+      "tiempo_escaneo": 0.010036945343017578
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0982",
+    "timestamp": "2025-07-01T15:10:23.838154",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-6663",
+    "timestamp": "2025-07-01T15:10:23.843798",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+      "tiempo_escaneo": 0.005686044692993164
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-4004",
+    "timestamp": "2025-07-01T15:10:23.853261",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-7239",
+    "timestamp": "2025-07-01T15:10:23.858084",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+      "tiempo_escaneo": 0.004877567291259766
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-7445",
+    "timestamp": "2025-07-01T15:10:23.864917",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-8706",
+    "timestamp": "2025-07-01T15:10:23.871487",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+      "tiempo_escaneo": 0.006615638732910156
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0466",
+    "timestamp": "2025-07-01T15:10:23.876704",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-6191",
+    "timestamp": "2025-07-01T15:10:23.885194",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+      "tiempo_escaneo": 0.00853276252746582
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-9382",
+    "timestamp": "2025-07-01T15:10:23.893848",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-4904",
+    "timestamp": "2025-07-01T15:10:23.900695",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+      "tiempo_escaneo": 0.006913661956787109
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-3520",
+    "timestamp": "2025-07-01T15:10:23.907801",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0416",
+    "timestamp": "2025-07-01T15:10:23.914872",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+      "tiempo_escaneo": 0.007115602493286133
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-3012",
+    "timestamp": "2025-07-01T15:10:23.921048",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-3074",
+    "timestamp": "2025-07-01T15:10:23.929282",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+      "tiempo_escaneo": 0.008292675018310547
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-1490",
+    "timestamp": "2025-07-01T15:10:23.934056",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-0879",
+    "timestamp": "2025-07-01T15:10:23.939711",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+      "tiempo_escaneo": 0.00569462776184082
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-8891",
+    "timestamp": "2025-07-01T15:10:23.946462",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-5372",
+    "timestamp": "2025-07-01T15:10:23.955505",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+      "tiempo_escaneo": 0.009093999862670898
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-6412",
+    "timestamp": "2025-07-01T15:10:23.961968",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-1064",
+    "timestamp": "2025-07-01T15:10:23.969436",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+      "tiempo_escaneo": 0.007511138916015625
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-1860",
+    "timestamp": "2025-07-01T15:10:23.978400",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-4651",
+    "timestamp": "2025-07-01T15:10:23.984164",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+      "tiempo_escaneo": 0.005820751190185547
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-8350",
+    "timestamp": "2025-07-01T15:10:23.990324",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151023-7664",
+    "timestamp": "2025-07-01T15:10:23.996757",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+      "tiempo_escaneo": 0.006575822830200195
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-0590",
+    "timestamp": "2025-07-01T15:10:24.000732",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-4659",
+    "timestamp": "2025-07-01T15:10:24.005696",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+      "tiempo_escaneo": 0.0050013065338134766
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-4794",
+    "timestamp": "2025-07-01T15:10:24.011592",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-4521",
+    "timestamp": "2025-07-01T15:10:24.015578",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+      "tiempo_escaneo": 0.004025936126708984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-8788",
+    "timestamp": "2025-07-01T15:10:24.017854",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-9628",
+    "timestamp": "2025-07-01T15:10:24.019717",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.0018913745880126953
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-6500",
+    "timestamp": "2025-07-01T15:10:24.021565",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-2943",
+    "timestamp": "2025-07-01T15:10:24.023399",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.001859903335571289
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-7288",
+    "timestamp": "2025-07-01T15:10:24.026099",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-8905",
+    "timestamp": "2025-07-01T15:10:24.028456",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+      "tiempo_escaneo": 0.002386331558227539
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-9692",
+    "timestamp": "2025-07-01T15:10:24.030598",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-1838",
+    "timestamp": "2025-07-01T15:10:24.032734",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.0021653175354003906
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-4693",
+    "timestamp": "2025-07-01T15:10:24.035582",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-7555",
+    "timestamp": "2025-07-01T15:10:24.041950",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.00640106201171875
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-7424",
+    "timestamp": "2025-07-01T15:10:24.055873",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-7335",
+    "timestamp": "2025-07-01T15:10:24.062737",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.0069580078125
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701151024-8127",
+    "timestamp": "2025-07-01T15:10:24.064939",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio completado: /tmp",
+    "detalles": {
+      "archivos_escaneados": 37,
+      "archivos_infectados": 1,
+      "amenazas_detectadas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701151024-2050",
+    "timestamp": "2025-07-01T15:10:24.077735",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo múltiple completado: 37 archivos, 1 amenazas",
+    "detalles": {
+      "rutas_escaneadas": [
+        "/tmp"
+      ],
+      "archivos_escaneados": 37,
+      "amenazas_detectadas": 1,
+      "archivos_infectados": 1,
+      "tiempo_escaneo": 0.5236883163452148
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701151024-9991",
+    "timestamp": "2025-07-01T15:10:24.088247",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151024-8131",
+    "timestamp": "2025-07-01T15:10:24.099613",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de cuarentena inicializado",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena",
+      "archivos_en_cuarentena": 0
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151024-3626",
+    "timestamp": "2025-07-01T15:10:24.106734",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151024-3835",
+    "timestamp": "2025-07-01T15:10:24.115972",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Monitor de red inicializado",
+    "detalles": {},
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151024-2763",
+    "timestamp": "2025-07-01T15:10:24.130743",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador principal inicializado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed"
+      ],
+      "timestamp_inicio": "2025-07-01T15:10:24.130734"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701151024-5145",
+    "timestamp": "2025-07-01T15:10:24.140141",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-01T15:10:24.140139"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152859-5972",
+    "timestamp": "2025-07-01T15:28:59.609635",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152859-1877",
+    "timestamp": "2025-07-01T15:28:59.625538",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Prueba del sistema",
+    "detalles": {
+      "test": true
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-8303",
+    "timestamp": "2025-07-01T15:28:59.643865",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp",
+    "detalles": {
+      "tipo_escaneo": "directorio",
+      "ruta": "/tmp",
+      "recursivo": true,
+      "extensiones_filtro": null
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152859-2272",
+    "timestamp": "2025-07-01T15:28:59.660156",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/tmpgmi47y2w.txt",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/tmpgmi47y2w.txt"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2258",
+    "timestamp": "2025-07-01T15:28:59.668901",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/tmpgmi47y2w.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpgmi47y2w.txt",
+      "tiempo_escaneo": 0.008842706680297852
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-0024",
+    "timestamp": "2025-07-01T15:28:59.677240",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.xfsm-ICE-WR9882"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-1933",
+    "timestamp": "2025-07-01T15:28:59.691848",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "ruta": "/tmp/.xfsm-ICE-WR9882",
+      "tiempo_escaneo": 0.01462101936340332
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-6187",
+    "timestamp": "2025-07-01T15:28:59.702776",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/config-err-BzU1D3"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2516",
+    "timestamp": "2025-07-01T15:28:59.709072",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "ruta": "/tmp/config-err-BzU1D3",
+      "tiempo_escaneo": 0.006345033645629883
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-1807",
+    "timestamp": "2025-07-01T15:28:59.722419",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.X0-lock",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.X0-lock"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-3499",
+    "timestamp": "2025-07-01T15:28:59.732759",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.X0-lock",
+    "detalles": {
+      "ruta": "/tmp/.X0-lock",
+      "tiempo_escaneo": 0.010386228561401367
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-3474",
+    "timestamp": "2025-07-01T15:28:59.739401",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/23070"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-9906",
+    "timestamp": "2025-07-01T15:28:59.748134",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/23070",
+      "tiempo_escaneo": 0.008772850036621094
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-5031",
+    "timestamp": "2025-07-01T15:28:59.754545",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/22877"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-9913",
+    "timestamp": "2025-07-01T15:28:59.761665",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/22877",
+      "tiempo_escaneo": 0.007262229919433594
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-1493",
+    "timestamp": "2025-07-01T15:28:59.772047",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-1802",
+    "timestamp": "2025-07-01T15:28:59.779032",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+      "tiempo_escaneo": 0.00703883171081543
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-0073",
+    "timestamp": "2025-07-01T15:28:59.791364",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-5711",
+    "timestamp": "2025-07-01T15:28:59.797471",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+      "tiempo_escaneo": 0.0061511993408203125
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2555",
+    "timestamp": "2025-07-01T15:28:59.803990",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-9388",
+    "timestamp": "2025-07-01T15:28:59.818821",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+      "tiempo_escaneo": 0.014992475509643555
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2166",
+    "timestamp": "2025-07-01T15:28:59.827923",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2194",
+    "timestamp": "2025-07-01T15:28:59.838394",
+    "tipo": "AMENAZA_DETECTADA",
+    "mensaje": "Amenazas detectadas en: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+      "amenazas": [
+        "Posible código ofuscado detectado"
+      ],
+      "cantidad_amenazas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701152859-8102",
+    "timestamp": "2025-07-01T15:28:59.843282",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-6806",
+    "timestamp": "2025-07-01T15:28:59.846505",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+      "tiempo_escaneo": 0.0032570362091064453
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-8807",
+    "timestamp": "2025-07-01T15:28:59.861491",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-5261",
+    "timestamp": "2025-07-01T15:28:59.872853",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+      "tiempo_escaneo": 0.011415958404541016
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-8990",
+    "timestamp": "2025-07-01T15:28:59.883904",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-5696",
+    "timestamp": "2025-07-01T15:28:59.891924",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+      "tiempo_escaneo": 0.008132457733154297
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-8799",
+    "timestamp": "2025-07-01T15:28:59.899876",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2503",
+    "timestamp": "2025-07-01T15:28:59.907587",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+      "tiempo_escaneo": 0.00804758071899414
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-6289",
+    "timestamp": "2025-07-01T15:28:59.919072",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2147",
+    "timestamp": "2025-07-01T15:28:59.926153",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+      "tiempo_escaneo": 0.007345914840698242
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-4253",
+    "timestamp": "2025-07-01T15:28:59.934352",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-8563",
+    "timestamp": "2025-07-01T15:28:59.939017",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+      "tiempo_escaneo": 0.004741668701171875
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-2011",
+    "timestamp": "2025-07-01T15:28:59.952357",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-4204",
+    "timestamp": "2025-07-01T15:28:59.962981",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+      "tiempo_escaneo": 0.010759115219116211
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-4335",
+    "timestamp": "2025-07-01T15:28:59.970297",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-7123",
+    "timestamp": "2025-07-01T15:28:59.978244",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+      "tiempo_escaneo": 0.007992744445800781
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-3261",
+    "timestamp": "2025-07-01T15:28:59.986797",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152859-6537",
+    "timestamp": "2025-07-01T15:28:59.994894",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+      "tiempo_escaneo": 0.008144617080688477
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-2968",
+    "timestamp": "2025-07-01T15:29:00.001637",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3409",
+    "timestamp": "2025-07-01T15:29:00.005687",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+      "tiempo_escaneo": 0.0040950775146484375
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-4135",
+    "timestamp": "2025-07-01T15:29:00.012868",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3111",
+    "timestamp": "2025-07-01T15:29:00.017371",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+      "tiempo_escaneo": 0.004537343978881836
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-1303",
+    "timestamp": "2025-07-01T15:29:00.021728",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-8216",
+    "timestamp": "2025-07-01T15:29:00.030433",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+      "tiempo_escaneo": 0.009575366973876953
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3959",
+    "timestamp": "2025-07-01T15:29:00.034626",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-8533",
+    "timestamp": "2025-07-01T15:29:00.039319",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+      "tiempo_escaneo": 0.005854129791259766
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-0420",
+    "timestamp": "2025-07-01T15:29:00.045361",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-4653",
+    "timestamp": "2025-07-01T15:29:00.052173",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+      "tiempo_escaneo": 0.008514404296875
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3059",
+    "timestamp": "2025-07-01T15:29:00.059708",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3472",
+    "timestamp": "2025-07-01T15:29:00.065879",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+      "tiempo_escaneo": 0.006210803985595703
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-5120",
+    "timestamp": "2025-07-01T15:29:00.068893",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-8863",
+    "timestamp": "2025-07-01T15:29:00.074457",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+      "tiempo_escaneo": 0.005649089813232422
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-7198",
+    "timestamp": "2025-07-01T15:29:00.078610",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3328",
+    "timestamp": "2025-07-01T15:29:00.083347",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+      "tiempo_escaneo": 0.006453752517700195
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-2752",
+    "timestamp": "2025-07-01T15:29:00.086418",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3183",
+    "timestamp": "2025-07-01T15:29:00.091443",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+      "tiempo_escaneo": 0.00505375862121582
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-0143",
+    "timestamp": "2025-07-01T15:29:00.099714",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-8926",
+    "timestamp": "2025-07-01T15:29:00.104500",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+      "tiempo_escaneo": 0.005187273025512695
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-6172",
+    "timestamp": "2025-07-01T15:29:00.110086",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3843",
+    "timestamp": "2025-07-01T15:29:00.116608",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+      "tiempo_escaneo": 0.0078089237213134766
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-7256",
+    "timestamp": "2025-07-01T15:29:00.121597",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-2071",
+    "timestamp": "2025-07-01T15:29:00.126566",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+      "tiempo_escaneo": 0.00501561164855957
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-3247",
+    "timestamp": "2025-07-01T15:29:00.132164",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-0091",
+    "timestamp": "2025-07-01T15:29:00.134748",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.0026161670684814453
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-2900",
+    "timestamp": "2025-07-01T15:29:00.139272",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-6274",
+    "timestamp": "2025-07-01T15:29:00.142168",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.0029268264770507812
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-9973",
+    "timestamp": "2025-07-01T15:29:00.148729",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-6852",
+    "timestamp": "2025-07-01T15:29:00.152730",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+      "tiempo_escaneo": 0.004311084747314453
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-9564",
+    "timestamp": "2025-07-01T15:29:00.155339",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-6489",
+    "timestamp": "2025-07-01T15:29:00.161964",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.0066525936126708984
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-8133",
+    "timestamp": "2025-07-01T15:29:00.166185",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-1987",
+    "timestamp": "2025-07-01T15:29:00.168334",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.0021772384643554688
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-5957",
+    "timestamp": "2025-07-01T15:29:00.170499",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-1514",
+    "timestamp": "2025-07-01T15:29:00.177611",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.007189750671386719
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152900-5142",
+    "timestamp": "2025-07-01T15:29:00.182021",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio completado: /tmp",
+    "detalles": {
+      "archivos_escaneados": 37,
+      "archivos_infectados": 1,
+      "amenazas_detectadas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701152900-8585",
+    "timestamp": "2025-07-01T15:29:00.188678",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo múltiple completado: 37 archivos, 1 amenazas",
+    "detalles": {
+      "rutas_escaneadas": [
+        "/tmp"
+      ],
+      "archivos_escaneados": 37,
+      "amenazas_detectadas": 1,
+      "archivos_infectados": 1,
+      "tiempo_escaneo": 0.5447983741760254
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701152900-5972",
+    "timestamp": "2025-07-01T15:29:00.197560",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152900-1664",
+    "timestamp": "2025-07-01T15:29:00.205197",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de cuarentena inicializado",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena",
+      "archivos_en_cuarentena": 0
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152900-3263",
+    "timestamp": "2025-07-01T15:29:00.218430",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152900-2355",
+    "timestamp": "2025-07-01T15:29:00.234018",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Monitor de red inicializado",
+    "detalles": {},
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152900-8184",
+    "timestamp": "2025-07-01T15:29:00.238904",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador principal inicializado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed"
+      ],
+      "timestamp_inicio": "2025-07-01T15:29:00.238897"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152900-9807",
+    "timestamp": "2025-07-01T15:29:00.245797",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-01T15:29:00.245795"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152912-0141",
+    "timestamp": "2025-07-01T15:29:12.741990",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152912-5970",
+    "timestamp": "2025-07-01T15:29:12.752056",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Prueba del sistema",
+    "detalles": {
+      "test": true
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-9621",
+    "timestamp": "2025-07-01T15:29:12.776558",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp",
+    "detalles": {
+      "tipo_escaneo": "directorio",
+      "ruta": "/tmp",
+      "recursivo": true,
+      "extensiones_filtro": null
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152912-6031",
+    "timestamp": "2025-07-01T15:29:12.787818",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/tmpturr7o4m.txt",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/tmpturr7o4m.txt"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-0900",
+    "timestamp": "2025-07-01T15:29:12.799727",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/tmpturr7o4m.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpturr7o4m.txt",
+      "tiempo_escaneo": 0.011933326721191406
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-9063",
+    "timestamp": "2025-07-01T15:29:12.808466",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.xfsm-ICE-WR9882"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-1909",
+    "timestamp": "2025-07-01T15:29:12.819187",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.xfsm-ICE-WR9882",
+    "detalles": {
+      "ruta": "/tmp/.xfsm-ICE-WR9882",
+      "tiempo_escaneo": 0.0107574462890625
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-6673",
+    "timestamp": "2025-07-01T15:29:12.823869",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/config-err-BzU1D3"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-2680",
+    "timestamp": "2025-07-01T15:29:12.836364",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/config-err-BzU1D3",
+    "detalles": {
+      "ruta": "/tmp/config-err-BzU1D3",
+      "tiempo_escaneo": 0.012528181076049805
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-8203",
+    "timestamp": "2025-07-01T15:29:12.847364",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/.X0-lock",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/.X0-lock"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-8032",
+    "timestamp": "2025-07-01T15:29:12.856553",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/.X0-lock",
+    "detalles": {
+      "ruta": "/tmp/.X0-lock",
+      "tiempo_escaneo": 0.009233236312866211
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-4121",
+    "timestamp": "2025-07-01T15:29:12.863284",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/23070"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-0934",
+    "timestamp": "2025-07-01T15:29:12.868760",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/23070",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/23070",
+      "tiempo_escaneo": 0.0055086612701416016
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-3556",
+    "timestamp": "2025-07-01T15:29:12.875124",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/hsperfdata_dogsoul/22877"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-2725",
+    "timestamp": "2025-07-01T15:29:12.881753",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/hsperfdata_dogsoul/22877",
+    "detalles": {
+      "ruta": "/tmp/hsperfdata_dogsoul/22877",
+      "tiempo_escaneo": 0.006657838821411133
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-5771",
+    "timestamp": "2025-07-01T15:29:12.890987",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-3970",
+    "timestamp": "2025-07-01T15:29:12.906149",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_190038_17513964387970_VSCode.log",
+      "tiempo_escaneo": 0.015198945999145508
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-3751",
+    "timestamp": "2025-07-01T15:29:12.919249",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-8478",
+    "timestamp": "2025-07-01T15:29:12.927152",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183912_17513951527930_VSCode.log",
+      "tiempo_escaneo": 0.007947444915771484
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-0043",
+    "timestamp": "2025-07-01T15:29:12.932510",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-5743",
+    "timestamp": "2025-07-01T15:29:12.941132",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+    "detalles": {
+      "ruta": "/tmp/VSLiveshareLogs/20250701_183844_17513951243040_VSCode.log",
+      "tiempo_escaneo": 0.00865936279296875
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-1020",
+    "timestamp": "2025-07-01T15:29:12.949744",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-3205",
+    "timestamp": "2025-07-01T15:29:12.957378",
+    "tipo": "AMENAZA_DETECTADA",
+    "mensaje": "Amenazas detectadas en: /tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+    "detalles": {
+      "ruta": "/tmp/remote-file-71752ccfe2464e99/c3c247d2650b9e9812703cea263cadd9fb0d64e7c87f24655f7c07229d6dcc36/0197c748ca0c-0x8DA40081B2F7F5B",
+      "amenazas": [
+        "Posible código ofuscado detectado"
+      ],
+      "cantidad_amenazas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701152912-5105",
+    "timestamp": "2025-07-01T15:29:12.965909",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-8399",
+    "timestamp": "2025-07-01T15:29:12.969610",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-47.tmp",
+      "tiempo_escaneo": 0.0037348270416259766
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-1081",
+    "timestamp": "2025-07-01T15:29:12.975643",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-3483",
+    "timestamp": "2025-07-01T15:29:12.981166",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-45.tmp",
+      "tiempo_escaneo": 0.005555152893066406
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-2238",
+    "timestamp": "2025-07-01T15:29:12.987054",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152912-5031",
+    "timestamp": "2025-07-01T15:29:12.994746",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-43.tmp",
+      "tiempo_escaneo": 0.007719755172729492
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-6393",
+    "timestamp": "2025-07-01T15:29:13.002237",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-9467",
+    "timestamp": "2025-07-01T15:29:13.008434",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-41.tmp",
+      "tiempo_escaneo": 0.00623321533203125
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-5309",
+    "timestamp": "2025-07-01T15:29:13.018410",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-6701",
+    "timestamp": "2025-07-01T15:29:13.021846",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-39.tmp",
+      "tiempo_escaneo": 0.003472566604614258
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-5145",
+    "timestamp": "2025-07-01T15:29:13.033563",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-5211",
+    "timestamp": "2025-07-01T15:29:13.038978",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-37.tmp",
+      "tiempo_escaneo": 0.005511045455932617
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-1486",
+    "timestamp": "2025-07-01T15:29:13.065466",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-0013",
+    "timestamp": "2025-07-01T15:29:13.074860",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-35.tmp",
+      "tiempo_escaneo": 0.011760473251342773
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-3197",
+    "timestamp": "2025-07-01T15:29:13.079060",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-6075",
+    "timestamp": "2025-07-01T15:29:13.086903",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-33.tmp",
+      "tiempo_escaneo": 0.00787496566772461
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-9066",
+    "timestamp": "2025-07-01T15:29:13.090076",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-0146",
+    "timestamp": "2025-07-01T15:29:13.095070",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-31.tmp",
+      "tiempo_escaneo": 0.005028486251831055
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-3881",
+    "timestamp": "2025-07-01T15:29:13.102364",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-3556",
+    "timestamp": "2025-07-01T15:29:13.105274",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-29.tmp",
+      "tiempo_escaneo": 0.0029480457305908203
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-2633",
+    "timestamp": "2025-07-01T15:29:13.110319",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-9204",
+    "timestamp": "2025-07-01T15:29:13.114293",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-27.tmp",
+      "tiempo_escaneo": 0.0040018558502197266
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-6308",
+    "timestamp": "2025-07-01T15:29:13.121891",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-0062",
+    "timestamp": "2025-07-01T15:29:13.125887",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-25.tmp",
+      "tiempo_escaneo": 0.004029750823974609
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-8738",
+    "timestamp": "2025-07-01T15:29:13.132754",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-7831",
+    "timestamp": "2025-07-01T15:29:13.138144",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-23.tmp",
+      "tiempo_escaneo": 0.00542449951171875
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4008",
+    "timestamp": "2025-07-01T15:29:13.143243",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4649",
+    "timestamp": "2025-07-01T15:29:13.148184",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-21.tmp",
+      "tiempo_escaneo": 0.00497126579284668
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-9503",
+    "timestamp": "2025-07-01T15:29:13.151506",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-5235",
+    "timestamp": "2025-07-01T15:29:13.157412",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-19.tmp",
+      "tiempo_escaneo": 0.005936861038208008
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-3842",
+    "timestamp": "2025-07-01T15:29:13.163739",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-7782",
+    "timestamp": "2025-07-01T15:29:13.173450",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-17.tmp",
+      "tiempo_escaneo": 0.00975489616394043
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-8508",
+    "timestamp": "2025-07-01T15:29:13.181248",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-0809",
+    "timestamp": "2025-07-01T15:29:13.190723",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-15.tmp",
+      "tiempo_escaneo": 0.009512901306152344
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4865",
+    "timestamp": "2025-07-01T15:29:13.198426",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-2142",
+    "timestamp": "2025-07-01T15:29:13.206974",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-13.tmp",
+      "tiempo_escaneo": 0.008583545684814453
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-6450",
+    "timestamp": "2025-07-01T15:29:13.214557",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4923",
+    "timestamp": "2025-07-01T15:29:13.219889",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-11.tmp",
+      "tiempo_escaneo": 0.005377054214477539
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4793",
+    "timestamp": "2025-07-01T15:29:13.224612",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-6692",
+    "timestamp": "2025-07-01T15:29:13.229573",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-9.tmp",
+      "tiempo_escaneo": 0.00515294075012207
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-7666",
+    "timestamp": "2025-07-01T15:29:13.243694",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-2686",
+    "timestamp": "2025-07-01T15:29:13.261235",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-7.tmp",
+      "tiempo_escaneo": 0.01758408546447754
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-2572",
+    "timestamp": "2025-07-01T15:29:13.271967",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-3939",
+    "timestamp": "2025-07-01T15:29:13.283061",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.011144161224365234
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-5973",
+    "timestamp": "2025-07-01T15:29:13.294862",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4318",
+    "timestamp": "2025-07-01T15:29:13.314488",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/cf5684bff296cdfaa07df210a8d30096b9b8c58eab/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.019672155380249023
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4730",
+    "timestamp": "2025-07-01T15:29:13.332463",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-5108",
+    "timestamp": "2025-07-01T15:29:13.354980",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-5.tmp",
+      "tiempo_escaneo": 0.022572994232177734
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-8205",
+    "timestamp": "2025-07-01T15:29:13.378240",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-1712",
+    "timestamp": "2025-07-01T15:29:13.395294",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-3.tmp",
+      "tiempo_escaneo": 0.017119884490966797
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-2843",
+    "timestamp": "2025-07-01T15:29:13.410632",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-2143",
+    "timestamp": "2025-07-01T15:29:13.422210",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/86189901ede3e70cae475b2829f9edeb9ad42d4ca9/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.011625289916992188
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-1389",
+    "timestamp": "2025-07-01T15:29:13.434960",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de archivo iniciado: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "tipo_escaneo": "archivo_individual",
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp"
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-6686",
+    "timestamp": "2025-07-01T15:29:13.447642",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Archivo limpio: /tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+    "detalles": {
+      "ruta": "/tmp/python-languageserver-cancellation/13bd1b0935bb5db874f82a60bac9626809d2f48ae2/cancellation-bg-0.tmp",
+      "tiempo_escaneo": 0.012741565704345703
+    },
+    "nivel_criticidad": "BAJO"
+  },
+  {
+    "id": "20250701152913-4109",
+    "timestamp": "2025-07-01T15:29:13.466361",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio completado: /tmp",
+    "detalles": {
+      "archivos_escaneados": 37,
+      "archivos_infectados": 1,
+      "amenazas_detectadas": 1
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701152913-3794",
+    "timestamp": "2025-07-01T15:29:13.484598",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo múltiple completado: 37 archivos, 1 amenazas",
+    "detalles": {
+      "rutas_escaneadas": [
+        "/tmp"
+      ],
+      "archivos_escaneados": 37,
+      "amenazas_detectadas": 1,
+      "archivos_infectados": 1,
+      "tiempo_escaneo": 0.7080519199371338
+    },
+    "nivel_criticidad": "ALTO"
+  },
+  {
+    "id": "20250701152913-0141",
+    "timestamp": "2025-07-01T15:29:13.504197",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152913-7265",
+    "timestamp": "2025-07-01T15:29:13.516750",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de cuarentena inicializado",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena",
+      "archivos_en_cuarentena": 0
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152913-9477",
+    "timestamp": "2025-07-01T15:29:13.538058",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152913-4016",
+    "timestamp": "2025-07-01T15:29:13.549897",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Monitor de red inicializado",
+    "detalles": {},
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152913-7322",
+    "timestamp": "2025-07-01T15:29:13.562335",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador principal inicializado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed"
+      ],
+      "timestamp_inicio": "2025-07-01T15:29:13.562328"
+    },
+    "nivel_criticidad": "MEDIO"
+  },
+  {
+    "id": "20250701152913-1469",
+    "timestamp": "2025-07-01T15:29:13.573351",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-01T15:29:13.573348"
+    },
+    "nivel_criticidad": "MEDIO"
+  }
+]

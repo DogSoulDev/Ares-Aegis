@@ -1,101 +1,122 @@
-# Archivo de Firmas de Ares Aegis
-# Formato: una firma por línea
-# Tipos soportados:
-#   - Texto simple: cadenas de texto a buscar en archivos
-#   - HASH:sha256: hash SHA256 de archivos maliciosos conocidos
-#   - REGEX:expresion: expresiones regulares para patrones complejos
+# Base de datos de firmas de malware para Ares Aegis
+# Formato: tipo_amenaza|patrón|descripción|severidad
+# Severidad: ALTA, MEDIA, BAJA
 
-# === FIRMAS DE TEXTO SIMPLE ===
-# Comandos comunes de backdoors y shells
-eval(base64_decode
-system($_GET
-shell_exec(
-passthru(
-exec(
-file_get_contents('http
-wget http
-curl -O
-/bin/sh -i
-nc -l -p
-python -c "import
-perl -e
-ruby -e
+# Virus y troyanos comunes
+VIRUS|X5O!P%@AP[4\PZX54(P^)7CC)7}$|EICAR Test File|MEDIA
+TROJAN|BEGIN PGP MESSAGE|Posible mensaje cifrado malicioso|MEDIA
+ROOTKIT|ZwQueryDirectoryFile|Hook API sospechoso|ALTA
+BACKDOOR|cmd.exe /c|Ejecución de comando sospechosa|ALTA
+MALWARE|CreateRemoteThread|Inyección de código|ALTA
 
-# Palabras clave sospechosas
-backdoor
-rootkit
-keylogger
-password_steal
-malware
-trojan
-virus
-payload
-exploit
-hack
-crack
-keygen
+# Patrones de scripts maliciosos
+SCRIPT|eval(|Ejecución de código dinámico|MEDIA
+SCRIPT|base64_decode|Decodificación sospechosa|MEDIA
+SCRIPT|shell_exec|Ejecución de shell|ALTA
+SCRIPT|system(|Llamada al sistema|ALTA
+SCRIPT|exec(|Ejecución de código|MEDIA
 
-# Scripts PHP maliciosos comunes
-<?php eval(
-base64_decode(
-str_rot13(
-gzinflate(
-gzuncompress(
-preg_replace("/e"
+# Patrones de PowerShell malicioso
+POWERSHELL|powershell.exe -enc|PowerShell codificado|ALTA
+POWERSHELL|Invoke-Expression|Ejecución dinámica PS|MEDIA
+POWERSHELL|DownloadString|Descarga remota PS|ALTA
+POWERSHELL|IEX|Alias de Invoke-Expression|MEDIA
+POWERSHELL|Start-Process -WindowStyle Hidden|Proceso oculto|MEDIA
 
-# === EXPRESIONES REGULARES ===
-# Detectar eval con base64
-REGEX:eval\s*\(\s*base64_decode
+# Patrones de documentos maliciosos
+MACRO|Auto_Open|Macro de apertura automática|ALTA
+MACRO|Workbook_Open|Macro de libro Excel|ALTA
+MACRO|Shell.Application|Ejecución via Shell|ALTA
+MACRO|WScript.Shell|Script de Windows|ALTA
+MACRO|CreateObject|Creación de objeto COM|MEDIA
 
-# Detectar variables superglobales de PHP en contexto sospechoso
-REGEX:\$_[A-Z]+\[['\"][^'\"]*['\"]\]
+# Patrones de red sospechosos
+NETWORK|nc -l|Netcat listener|ALTA
+NETWORK|/bin/bash|Shell remoto|ALTA
+NETWORK|wget http|Descarga remota|MEDIA
+NETWORK|curl -o|Descarga con curl|MEDIA
+NETWORK|ftp://|Transferencia FTP|BAJA
 
-# Detectar system() con variables superglobales
-REGEX:system\s*\([^)]*\$_
+# Patrones de cryptominers
+MINER|stratum+tcp|Protocolo de minería|ALTA
+MINER|cryptonight|Algoritmo de minería|ALTA
+MINER|xmrig|Software de minería|ALTA
+MINER|monero|Criptomoneda|MEDIA
+MINER|bitcoin|Criptomoneda|MEDIA
 
-# Detectar descargas directas de scripts
-REGEX:(?:wget|curl)\s+https?://[^\s]+\.(sh|py|pl|exe|bat)
+# Patrones de phishing
+PHISHING|Account will be suspended|Texto de phishing|MEDIA
+PHISHING|Click here to verify|Texto de phishing|MEDIA
+PHISHING|Urgent action required|Texto de phishing|MEDIA
+PHISHING|paypal.com-|Dominio falso|ALTA
+PHISHING|facebook.com-|Dominio falso|ALTA
 
-# Detectar shells reversos
-REGEX:/bin/(ba)?sh\s+-[il]
+# Patrones de ransomware
+RANSOMWARE|Your files have been encrypted|Mensaje de ransomware|ALTA
+RANSOMWARE|Bitcoin payment|Pago de rescate|ALTA
+RANSOMWARE|.encrypted|Extensión de archivo|ALTA
+RANSOMWARE|README.txt|Archivo de instrucciones|MEDIA
+RANSOMWARE|DECRYPT_INSTRUCTION|Instrucciones de descifrado|ALTA
 
-# Detectar netcat con parámetros de listener
-REGEX:nc\s+.*-[lp]\s+\d+
+# Patrones de keyloggers
+KEYLOGGER|GetAsyncKeyState|Captura de teclas|ALTA
+KEYLOGGER|SetWindowsHookEx|Hook de ventana|ALTA
+KEYLOGGER|WH_KEYBOARD_LL|Hook de teclado|ALTA
+KEYLOGGER|keylog|Término de keylogger|MEDIA
+KEYLOGGER|capture.keys|Captura de teclas|ALTA
 
-# Detectar ofuscación común en JavaScript
-REGEX:eval\s*\(\s*unescape
+# Patrones de exploits
+EXPLOIT|buffer overflow|Desbordamiento de buffer|ALTA
+EXPLOIT|shellcode|Código de shell|ALTA
+EXPLOIT|NOP sled|Técnica de exploit|ALTA
+EXPLOIT|ROP chain|Return-oriented programming|ALTA
+EXPLOIT|heap spray|Técnica de exploit|ALTA
 
-# Detectar PowerShell codificado
-REGEX:powershell\s+.*-enc\s+[A-Za-z0-9+/=]+
+# Patrones de archivos sospechosos
+SUSPICIOUS|.exe.exe|Doble extensión|MEDIA
+SUSPICIOUS|.scr|Archivo de protector|MEDIA
+SUSPICIOUS|.pif|Archivo de información|MEDIA
+SUSPICIOUS|.com|Archivo ejecutable COM|BAJA
+SUSPICIOUS|.bat|Archivo por lotes|BAJA
 
-# === HASHES SHA256 DE ARCHIVOS MALICIOSOS CONOCIDOS ===
-# Nota: Estos son ejemplos ficticios para demostración
-# En un entorno real, estos deberían ser hashes de malware conocido
-HASH:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-HASH:da39a3ee5e6b4b0d3255bfef95601890afd80709
+# Patrones de bypass de seguridad
+BYPASS|amsi.dll|Bypass AMSI|ALTA
+BYPASS|etw.dll|Bypass ETW|ALTA
+BYPASS|wldp.dll|Bypass WLDP|ALTA
+BYPASS|Reflection.Assembly|Carga de ensamblado|MEDIA
+BYPASS|UnsafeNativeMethods|Métodos nativos|MEDIA
 
-# === FIRMAS ADICIONALES ===
-# Detectar archivos .htaccess maliciosos
-RewriteEngine On
-auto_prepend_file
-auto_append_file
+# Patrones de archivos específicos peligrosos
+DANGEROUS|autorun.inf|Ejecución automática|ALTA
+DANGEROUS|hosts|Modificación de hosts|MEDIA
+DANGEROUS|startup|Inicio automático|MEDIA
+DANGEROUS|registry|Modificación de registro|MEDIA
+DANGEROUS|services.exe|Proceso crítico|ALTA
 
-# Detectar scripts de minería de criptomonedas
-stratum+tcp
-xmrig
-cryptonight
-monero
-mining
+# Patrones de técnicas de evasión
+EVASION|sleep(|Retardo de ejecución|MEDIA
+EVASION|time.sleep|Retardo Python|MEDIA
+EVASION|setTimeout|Retardo JavaScript|MEDIA
+EVASION|VirtualAlloc|Asignación de memoria|MEDIA
+EVASION|CreateThread|Creación de hilo|MEDIA
 
-# Detectar inyecciones SQL comunes
-union select
-' or 1=1
-' or '1'='1
-admin'--
-1' and '1'='1
+# Patrones específicos de Linux
+LINUX|/proc/self/exe|Auto-referencia ejecutable|MEDIA
+LINUX|chmod +x|Cambio de permisos|MEDIA
+LINUX|crontab -e|Modificación de cron|MEDIA
+LINUX|/etc/passwd|Archivo de usuarios|ALTA
+LINUX|/etc/shadow|Archivo de contraseñas|ALTA
 
-# Detectar XSS comunes
-<script>alert(
-javascript:alert(
-document.cookie
-document.write(
+# Patrones de persistencia
+PERSISTENCE|HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run|Clave de registro de inicio|ALTA
+PERSISTENCE|HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run|Clave de registro de inicio|ALTA
+PERSISTENCE|%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup|Carpeta de inicio|ALTA
+PERSISTENCE|schtasks /create|Creación de tarea programada|ALTA
+PERSISTENCE|at.exe|Programador de tareas|MEDIA
+
+# Actualizaciones recientes - Nuevas amenazas 2024
+TROJAN|BlackCat|Ransomware BlackCat|ALTA
+TROJAN|LockBit|Ransomware LockBit|ALTA
+MALWARE|Qbot|Trojan bancario|ALTA
+MALWARE|Emotet|Trojan modular|ALTA
+BACKDOOR|Cobalt Strike|Herramienta de post-explotación|ALTA
