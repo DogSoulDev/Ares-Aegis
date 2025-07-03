@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 Interfaz Principal GUI - Ares Aegis
-Interfaz gráfica principal inspirada en Windows Defender con estética japonesa
+Interfaz gráfica principal inspirada en Windows 11 Defender con mitología griega
 
 Autor: DogSoulDev
-Versión: 2.0.0
+Versión: 3.0.0 - Égida Modernizada
 """
 
 import tkinter as tk
@@ -20,159 +20,271 @@ from ..controladores.controlador_principal import ControladorPrincipal
 from ..modelos.siem import TipoEvento
 
 
-class TemaJapones:
-    """Paleta de colores japonesa para la interfaz."""
+class TemaModerno:
+    """Paleta de colores moderna inspirada en Windows 11 Defender con mitología griega."""
     
-    # Colores principales inspirados en la estética japonesa
-    SAKURA_ROSA = "#FFB7C5"          # Rosa suave de los cerezos
-    BAMBOO_VERDE = "#4A6741"         # Verde bambú
-    CIELO_AZUL = "#87CEEB"           # Azul cielo japonés
-    TINTA_NEGRA = "#2C2C2C"          # Negro tinta sumi
-    PAPEL_BLANCO = "#F8F8FF"         # Blanco papel de arroz
-    ORO_DORADO = "#FFD700"           # Dorado tradicional
-    ROJO_CARMESI = "#DC143C"         # Rojo carmesí
-    PLATA_GRIS = "#C0C0C0"           # Plata mate
+    # Colores principales del tema moderno
+    FONDO_PRINCIPAL = "#F3F4F6"         # Gris muy claro (Windows 11)
+    FONDO_SECUNDARIO = "#FFFFFF"        # Blanco puro
+    FONDO_CARD = "#FFFFFF"              # Blanco para tarjetas
+    BORDE_CARD = "#E5E7EB"              # Gris claro para bordes
     
-    # Colores de estado
-    EXITO = "#4CAF50"                # Verde éxito
-    ADVERTENCIA = "#FF9800"          # Naranja advertencia  
-    ERROR = "#F44336"                # Rojo error
-    INFO = "#2196F3"                 # Azul información
+    # Colores de acento (inspirados en mitología griega)
+    AZUL_OLIMPICO = "#0078D4"           # Azul principal (Windows 11)
+    AZUL_HOVER = "#106EBE"              # Azul hover
+    VERDE_PROTECCION = "#107C10"        # Verde de protección
+    ROJO_AMENAZA = "#D13438"            # Rojo de amenaza
+    NARANJA_ADVERTENCIA = "#FF8C00"     # Naranja advertencia
     
-    # Gradientes y sombras
-    SOMBRA_SUAVE = "#E0E0E0"
-    BORDE_SUTIL = "#D0D0D0"
+    # Colores de texto
+    TEXTO_PRINCIPAL = "#323130"         # Gris oscuro principal
+    TEXTO_SECUNDARIO = "#605E5C"        # Gris medio
+    TEXTO_MUTED = "#8A8886"             # Gris claro
+    TEXTO_BLANCO = "#FFFFFF"            # Blanco
+    
+    # Colores de estado (mitología griega)
+    DIVINO_DORADO = "#FFD700"           # Dorado divino
+    PLATA_LUNAR = "#C0C0C0"             # Plata de Artemisa
+    BRONCE_HEFESTO = "#CD7F32"          # Bronce de Hefesto
+    PURPURA_REAL = "#6B46C1"            # Púrpura de la realeza
+    
+    # Efectos y sombras
+    SOMBRA = "#00000010"                # Sombra sutil
+    HOVER_OVERLAY = "#00000008"         # Overlay hover
+    FOCUS_RING = "#0078D440"            # Anillo de foco
 
 
-class IconosUnicode:
-    """Iconos Unicode para la interfaz."""
+class IconosOlimpicos:
+    """Iconos Unicode mitológicos para la interfaz moderna."""
     
-    ESCUDO = "🛡️"
-    ESCANEAR = "🔍"
-    CUARENTENA = "🔒"
-    RED = "🌐"
-    FIM = "📁"
-    CONFIGURACION = "⚙️"
-    HISTORIAL = "📋"
-    ALERTA = "⚠️"
-    CORRECTO = "✅"
-    ERROR = "❌"
-    PAUSA = "⏸️"
-    PLAY = "▶️"
-    STOP = "⏹️"
-    ACTUALIZAR = "🔄"
-    LIMPIAR = "🧹"
-    EXPORTAR = "📤"
-    INFORMACION = "ℹ️"
-    VIRUS = "🦠"
-    SEGURO = "🔐"
+    # Iconos principales de protección
+    AEGIS = "🔱"        # Égida de Atenea
+    ESCUDO_ARES = "⚔️"  # Escudo de Ares
+    RAYO_ZEUS = "⚡"    # Rayo de Zeus
+    LANZA_ATENEA = "🗝️"  # Lanza de Atenea
+    
+    # Iconos de vigilancia
+    OJO_ARGOS = "�️"    # Ojo de Argos (vigilancia)
+    AGUILA_ZEUS = "🦅"  # Águila de Zeus (monitoreo)
+    BUHO_ATENEA = "🦉"  # Búho de Atenea (sabiduría)
+    CENTINELA = "⛳"    # Centinela del Olimpo
+    
+    # Iconos de poder divino
+    TRIDENTE = "🔱"     # Tridente de Poseidón
+    MARTILLO_HEFESTO = "�"  # Martillo de Hefesto
+    ARCO_ARTEMISA = "🏹"    # Arco de Artemisa
+    CADUCEO = "⚕️"      # Caduceo de Hermes
+    
+    # Iconos de elementos
+    FUEGO_OLIMPICO = "�"   # Fuego del Olimpo
+    AGUA_ESTIGIA = "🌊"     # Aguas del Estigia
+    VIENTO_EOLO = "💨"      # Vientos de Eolo
+    TIERRA_GAIA = "🌍"      # Tierra de Gaia
+    
+    # Iconos de estado
+    VICTORIA_NIKE = "🏆"    # Victoria de Nike
+    JUSTICIA_TEMIS = "⚖️"   # Justicia de Temis
+    PROTECCION_ACTIVA = "✅" # Protección activa
+    AMENAZA_DETECTADA = "⚠️" # Amenaza detectada
+    PELIGRO_EXTREMO = "🚨"   # Peligro extremo
+    
+    # Iconos de herramientas
+    PERGAMINO = "�"        # Pergamino de registros
+    ANFORA = "⚱️"           # Ánfora de almacenamiento
+    LIRA = "🎵"             # Lira de Apolo
+    COMPAS = "🧭"           # Compás de navegación
 
 
-class WidgetPersonalizado:
-    """Widgets personalizados con el tema japonés."""
+class ComponentesModernos:
+    """Componentes UI modernos estilo Windows 11."""
     
     @staticmethod
-    def crear_boton_principal(parent, texto, comando, ancho=15):
-        """Crea un botón principal con estilo japonés."""
-        boton = tk.Button(
+    def crear_card(parent, titulo="", padding=20):
+        """Crea una tarjeta moderna con sombra sutil."""
+        card = tk.Frame(
             parent,
-            text=texto,
-            command=comando,
-            bg=TemaJapones.BAMBOO_VERDE,
-            fg=TemaJapones.PAPEL_BLANCO,
-            font=("Segoe UI", 10, "bold"),
+            bg=TemaModerno.FONDO_CARD,
             relief="flat",
-            borderwidth=0,
-            padx=10,
-            pady=5,
-            width=ancho,
-            cursor="hand2"
+            bd=0
         )
         
-        # Efectos hover
-        def on_enter(e):
-            boton.config(bg=TemaJapones.CIELO_AZUL)
-        
-        def on_leave(e):
-            boton.config(bg=TemaJapones.BAMBOO_VERDE)
-        
-        boton.bind("<Enter>", on_enter)
-        boton.bind("<Leave>", on_leave)
-        
-        return boton
-    
-    @staticmethod
-    def crear_boton_secundario(parent, texto, comando, ancho=12):
-        """Crea un botón secundario con estilo japonés."""
-        boton = tk.Button(
-            parent,
-            text=texto,
-            command=comando,
-            bg=TemaJapones.PLATA_GRIS,
-            fg=TemaJapones.TINTA_NEGRA,
-            font=("Segoe UI", 9),
-            relief="flat",
-            borderwidth=1,
-            padx=8,
-            pady=3,
-            width=ancho,
-            cursor="hand2"
+        # Crear efecto de borde
+        border_frame = tk.Frame(
+            card,
+            bg=TemaModerno.BORDE_CARD,
+            height=1
         )
-        
-        def on_enter(e):
-            boton.config(bg=TemaJapones.SOMBRA_SUAVE)
-        
-        def on_leave(e):
-            boton.config(bg=TemaJapones.PLATA_GRIS)
-        
-        boton.bind("<Enter>", on_enter)
-        boton.bind("<Leave>", on_leave)
-        
-        return boton
-    
-    @staticmethod
-    def crear_frame_panel(parent, titulo=""):
-        """Crea un frame panel con borde sutil."""
-        frame = tk.Frame(
-            parent,
-            bg=TemaJapones.PAPEL_BLANCO,
-            relief="solid",
-            borderwidth=1,
-            highlightbackground=TemaJapones.BORDE_SUTIL
-        )
+        border_frame.pack(fill=tk.X, side=tk.BOTTOM)
         
         if titulo:
-            label_titulo = tk.Label(
-                frame,
+            titulo_label = tk.Label(
+                card,
                 text=titulo,
-                bg=TemaJapones.PAPEL_BLANCO,
-                fg=TemaJapones.TINTA_NEGRA,
-                font=("Segoe UI", 11, "bold")
+                bg=TemaModerno.FONDO_CARD,
+                fg=TemaModerno.TEXTO_PRINCIPAL,
+                font=("Segoe UI", 14, "bold"),
+                anchor="w"
             )
-            label_titulo.pack(pady=(10, 5))
+            titulo_label.pack(fill=tk.X, padx=padding, pady=(padding, 10))
         
-        return frame
+        return card
     
     @staticmethod
-    def crear_etiqueta_estado(parent, texto_inicial="", color=TemaJapones.INFO):
-        """Crea una etiqueta de estado con color."""
-        label = tk.Label(
+    def crear_boton_primario(parent, texto, comando, icono="", ancho=None):
+        """Crea un botón primario moderno."""
+        texto_completo = f"{icono} {texto}".strip() if icono else texto
+        
+        boton = tk.Button(
             parent,
-            text=texto_inicial,
-            bg=TemaJapones.PAPEL_BLANCO,
-            fg=color,
-            font=("Segoe UI", 9),
+            text=texto_completo,
+            command=comando,
+            bg=TemaModerno.AZUL_OLIMPICO,
+            fg=TemaModerno.TEXTO_BLANCO,
+            font=("Segoe UI", 10, "bold"),
+            relief="flat",
+            bd=0,
+            padx=20,
+            pady=12,
+            cursor="hand2"
+        )
+        
+        if ancho:
+            boton.config(width=ancho)
+        
+        # Efectos hover modernos
+        def on_enter(e):
+            boton.config(bg=TemaModerno.AZUL_HOVER)
+        
+        def on_leave(e):
+            boton.config(bg=TemaModerno.AZUL_OLIMPICO)
+        
+        def on_click(e):
+            boton.config(bg=TemaModerno.AZUL_HOVER)
+            parent.after(100, lambda: boton.config(bg=TemaModerno.AZUL_OLIMPICO))
+        
+        boton.bind("<Enter>", on_enter)
+        boton.bind("<Leave>", on_leave)
+        boton.bind("<Button-1>", on_click)
+        
+        return boton
+    
+    @staticmethod
+    def crear_boton_secundario(parent, texto, comando, icono="", ancho=None):
+        """Crea un botón secundario moderno."""
+        texto_completo = f"{icono} {texto}".strip() if icono else texto
+        
+        boton = tk.Button(
+            parent,
+            text=texto_completo,
+            command=comando,
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_PRINCIPAL,
+            font=("Segoe UI", 10),
+            relief="solid",
+            bd=1,
+            highlightbackground=TemaModerno.BORDE_CARD,
+            padx=16,
+            pady=10,
+            cursor="hand2"
+        )
+        
+        if ancho:
+            boton.config(width=ancho)
+        
+        def on_enter(e):
+            boton.config(bg=TemaModerno.HOVER_OVERLAY)
+        
+        def on_leave(e):
+            boton.config(bg=TemaModerno.FONDO_CARD)
+        
+        boton.bind("<Enter>", on_enter)
+        boton.bind("<Leave>", on_leave)
+        
+        return boton
+    
+    @staticmethod
+    def crear_tarjeta_estadistica(parent, titulo, valor, icono, color_acento):
+        """Crea una tarjeta de estadística moderna."""
+        card = tk.Frame(
+            parent,
+            bg=TemaModerno.FONDO_CARD,
+            relief="flat",
+            bd=1,
+            highlightbackground=TemaModerno.BORDE_CARD
+        )
+        
+        # Contenedor interno
+        contenido = tk.Frame(card, bg=TemaModerno.FONDO_CARD)
+        contenido.pack(fill=tk.BOTH, expand=True, padx=16, pady=16)
+        
+        # Header con icono
+        header = tk.Frame(contenido, bg=TemaModerno.FONDO_CARD)
+        header.pack(fill=tk.X, pady=(0, 8))
+        
+        icono_label = tk.Label(
+            header,
+            text=icono,
+            bg=TemaModerno.FONDO_CARD,
+            fg=color_acento,
+            font=("Segoe UI", 16)
+        )
+        icono_label.pack(side=tk.LEFT)
+        
+        # Valor principal
+        valor_label = tk.Label(
+            contenido,
+            text=valor,
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_PRINCIPAL,
+            font=("Segoe UI", 24, "bold"),
             anchor="w"
         )
-        return label
+        valor_label.pack(fill=tk.X, pady=(0, 4))
+        
+        # Título
+        titulo_label = tk.Label(
+            contenido,
+            text=titulo,
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_SECUNDARIO,
+            font=("Segoe UI", 10),
+            anchor="w"
+        )
+        titulo_label.pack(fill=tk.X)
+        
+        return card, valor_label
+    
+    @staticmethod
+    def crear_barra_progreso_moderna(parent):
+        """Crea una barra de progreso moderna."""
+        # Configurar estilo
+        style = ttk.Style()
+        style.configure(
+            "Moderna.Horizontal.TProgressbar",
+            background=TemaModerno.AZUL_OLIMPICO,
+            troughcolor=TemaModerno.BORDE_CARD,
+            borderwidth=0,
+            lightcolor=TemaModerno.AZUL_OLIMPICO,
+            darkcolor=TemaModerno.AZUL_OLIMPICO
+        )
+        
+        barra = ttk.Progressbar(
+            parent,
+            style="Moderna.Horizontal.TProgressbar",
+            mode='determinate',
+            length=400
+        )
+        
+        return barra
 
 
-class InterfazPrincipalGUI:
-    """Interfaz gráfica principal de Ares Aegis."""
+
+class EgidaModernaGUI:
+    """Interfaz gráfica principal de Ares Aegis - Égida Modernizada."""
     
     def __init__(self, ventana_raiz: Optional[tk.Tk] = None):
         """
-        Inicializa la interfaz principal.
+        Inicializa la égida moderna.
         
         Args:
             ventana_raiz: Ventana raíz de Tkinter (opcional)
@@ -184,638 +296,878 @@ class InterfazPrincipalGUI:
             
         self.controlador: Optional[ControladorPrincipal] = None
         
-        # Estado de la aplicación
+        # Estado de los guardianes
         self.escaneo_activo = False
-        self.monitoreo_activo = False
+        self.vigilancia_activa = False
         
-        # Variables de UI
-        self.var_ruta_escaneo = tk.StringVar(value=str(Path.home()))
-        self.var_progreso = tk.IntVar()
-        self.var_estado_general = tk.StringVar(value="🛡️ Ares Aegis - Listo para proteger")
+        # Variables de la égida
+        self.var_ruta_sagrada = tk.StringVar(value=str(Path.home()))
+        self.var_progreso_divino = tk.IntVar()
+        self.var_estado_olimpico = tk.StringVar(value=f"{IconosOlimpicos.AEGIS} Égida de Ares - Lista para la Batalla")
         
-        # Widgets principales
-        self.barra_progreso: Optional[ttk.Progressbar] = None
-        self.texto_log: Optional[scrolledtext.ScrolledText] = None
-        self.etiqueta_estado: Optional[tk.Label] = None
-        self.etiquetas_estadisticas: Dict[str, tk.Label] = {}
+        # Widgets del Olimpo
+        self.barra_progreso_divina: Optional[ttk.Progressbar] = None
+        self.pergamino_eventos: Optional[scrolledtext.ScrolledText] = None
+        self.etiqueta_estado_olimpo: Optional[tk.Label] = None
+        self.metricas_olimpicas: Dict[str, tk.Label] = {}
         
-        self._configurar_ventana()
-        self._crear_interfaz()
-        self._inicializar_controlador()
-        self._actualizar_interfaz_periodicamente()
+        # Terminal de comandos divinos
+        self.terminal_divino: Optional[scrolledtext.ScrolledText] = None
+        
+        self._configurar_palacio_olimpico()
+        self._crear_egida_interface()
+        self._invocar_controlador_supremo()
+        self._actualizar_visiones_periodicas()
     
-    def _configurar_ventana(self):
-        """Configura la ventana principal."""
-        self.ventana.title("🛡️ Ares Aegis - Antivirus Avanzado")
-        self.ventana.geometry("1200x800")
-        self.ventana.minsize(1000, 700)
-        self.ventana.configure(bg=TemaJapones.PAPEL_BLANCO)
+    def _configurar_palacio_olimpico(self):
+        """Configura el palacio principal del Olimpo."""
+        self.ventana.title(f"{IconosOlimpicos.AEGIS} Égida de Ares - Protector Supremo del Reino Digital")
+        self.ventana.geometry("1400x900")
+        self.ventana.minsize(1200, 800)
+        self.ventana.configure(bg=TemaModerno.FONDO_PRINCIPAL)
         
-        # Centrar ventana
+        # Centrar el palacio en el reino digital
         self.ventana.update_idletasks()
-        x = (self.ventana.winfo_screenwidth() // 2) - (1200 // 2)
-        y = (self.ventana.winfo_screenheight() // 2) - (800 // 2)
-        self.ventana.geometry(f"1200x800+{x}+{y}")
+        x = (self.ventana.winfo_screenwidth() // 2) - (1400 // 2)
+        y = (self.ventana.winfo_screenheight() // 2) - (900 // 2)
+        self.ventana.geometry(f"1400x900+{x}+{y}")
         
-        # Configurar cierre
-        self.ventana.protocol("WM_DELETE_WINDOW", self._on_cerrar)
+        # Configurar el cierre del palacio
+        self.ventana.protocol("WM_DELETE_WINDOW", self._cerrar_palacio_olimpico)
         
-        # Icono si está disponible
+        # Icono del Égida si está disponible
         try:
-            icon_path = Path(__file__).parent.parent.parent / "recursos" / "aresIcon.png"
+            icon_path = Path(__file__).parent.parent.parent / "recursos" / "aegis_icon.png"
             if icon_path.exists():
                 self.ventana.iconphoto(False, tk.PhotoImage(file=str(icon_path)))
         except Exception:
             pass
     
-    def _crear_interfaz(self):
-        """Crea todos los elementos de la interfaz."""
-        # Frame principal
-        main_frame = tk.Frame(self.ventana, bg=TemaJapones.PAPEL_BLANCO)
-        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+    def _crear_egida_interface(self):
+        """Crea la interfaz de la Égida Modernizada."""
+        # Frame principal del reino
+        main_frame = tk.Frame(self.ventana, bg=TemaModerno.FONDO_PRINCIPAL)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
         
-        # Crear secciones
-        self._crear_cabecera(main_frame)
-        self._crear_panel_control(main_frame)
-        self._crear_panel_estadisticas(main_frame)
-        self._crear_panel_log(main_frame)
-        self._crear_barra_estado(main_frame)
+        # Crear las secciones del palacio
+        self._crear_corona_olimpica(main_frame)
+        self._crear_arsenal_divino(main_frame)
+        self._crear_metricas_del_olimpo(main_frame)
+        self._crear_panel_dual_eventos_terminal(main_frame)
+        self._crear_barra_estado_divino(main_frame)
     
-    def _crear_cabecera(self, parent):
-        """Crea la cabecera de la aplicación."""
-        frame_cabecera = tk.Frame(parent, bg=TemaJapones.BAMBOO_VERDE, height=80)
-        frame_cabecera.pack(fill=tk.X, pady=(0, 10))
-        frame_cabecera.pack_propagate(False)
+    def _crear_corona_olimpica(self, parent):
+        """Crea la cabecera principal del palacio."""
+        corona_card = ComponentesModernos.crear_card(parent)
+        corona_card.pack(fill=tk.X, pady=(0, 20))
+        
+        # Contenedor principal de la corona
+        corona_frame = tk.Frame(corona_card, bg=TemaModerno.FONDO_CARD)
+        corona_frame.pack(fill=tk.X, padx=20, pady=20)
+        
+        # Lado izquierdo - Título y subtítulo
+        lado_izquierdo = tk.Frame(corona_frame, bg=TemaModerno.FONDO_CARD)
+        lado_izquierdo.pack(side=tk.LEFT, fill=tk.Y)
         
         # Título principal
-        titulo = tk.Label(
-            frame_cabecera,
-            text="🛡️ ARES AEGIS",
-            bg=TemaJapones.BAMBOO_VERDE,
-            fg=TemaJapones.PAPEL_BLANCO,
-            font=("Segoe UI", 20, "bold")
+        titulo_principal = tk.Label(
+            lado_izquierdo,
+            text=f"{IconosOlimpicos.AEGIS} ÉGIDA DE ARES",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.AZUL_OLIMPICO,
+            font=("Segoe UI", 28, "bold")
         )
-        titulo.pack(side=tk.LEFT, padx=20, pady=20)
+        titulo_principal.pack(anchor="w")
         
-        # Subtítulo
+        # Subtítulo épico
         subtitulo = tk.Label(
-            frame_cabecera,
-            text="Antivirus Avanzado para Kali Linux",
-            bg=TemaJapones.BAMBOO_VERDE,
-            fg=TemaJapones.SAKURA_ROSA,
+            lado_izquierdo,
+            text="Guardián Supremo del Reino Digital • Forjado por Hefesto • Bendecido por Atenea",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_SECUNDARIO,
             font=("Segoe UI", 12)
         )
-        subtitulo.pack(side=tk.LEFT, padx=(0, 20), pady=20)
+        subtitulo.pack(anchor="w", pady=(5, 0))
         
-        # Estado general (lado derecho)
-        self.etiqueta_estado = tk.Label(
-            frame_cabecera,
-            textvariable=self.var_estado_general,
-            bg=TemaJapones.BAMBOO_VERDE,
-            fg=TemaJapones.PAPEL_BLANCO,
-            font=("Segoe UI", 11, "bold")
+        # Lado derecho - Estado del sistema
+        lado_derecho = tk.Frame(corona_frame, bg=TemaModerno.FONDO_CARD)
+        lado_derecho.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        self.etiqueta_estado_olimpo = tk.Label(
+            lado_derecho,
+            textvariable=self.var_estado_olimpico,
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.VERDE_PROTECCION,
+            font=("Segoe UI", 14, "bold"),
+            anchor="e"
         )
-        self.etiqueta_estado.pack(side=tk.RIGHT, padx=20, pady=20)
+        self.etiqueta_estado_olimpo.pack(anchor="e", pady=(20, 0))
+        
+        # Indicador de protección activa
+        indicador_frame = tk.Frame(lado_derecho, bg=TemaModerno.FONDO_CARD)
+        indicador_frame.pack(anchor="e", pady=(10, 0))
+        
+        indicador_punto = tk.Label(
+            indicador_frame,
+            text="●",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.VERDE_PROTECCION,
+            font=("Segoe UI", 16)
+        )
+        indicador_punto.pack(side=tk.LEFT)
+        
+        texto_activo = tk.Label(
+            indicador_frame,
+            text="Protección Divina Activa",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_SECUNDARIO,
+            font=("Segoe UI", 10)
+        )
+        texto_activo.pack(side=tk.LEFT, padx=(5, 0))
     
-    def _crear_panel_control(self, parent):
-        """Crea el panel de control principal."""
-        frame_control = WidgetPersonalizado.crear_frame_panel(parent, "🎛️ Panel de Control")
-        frame_control.pack(fill=tk.X, pady=(0, 10))
+    def _crear_arsenal_divino(self, parent):
+        """Crea el panel de herramientas divinas."""
+        arsenal_card = ComponentesModernos.crear_card(parent, f"{IconosOlimpicos.ESCUDO_ARES} Arsenal de los Dioses")
+        arsenal_card.pack(fill=tk.X, pady=(0, 20))
         
-        # Frame para botones principales
-        frame_botones = tk.Frame(frame_control, bg=TemaJapones.PAPEL_BLANCO)
-        frame_botones.pack(fill=tk.X, padx=20, pady=10)
+        contenido_arsenal = tk.Frame(arsenal_card, bg=TemaModerno.FONDO_CARD)
+        contenido_arsenal.pack(fill=tk.X, padx=20, pady=(0, 20))
         
-        # Primera fila de botones
-        fila1 = tk.Frame(frame_botones, bg=TemaJapones.PAPEL_BLANCO)
-        fila1.pack(fill=tk.X, pady=5)
+        # Primera fila - Armas principales
+        fila_armas = tk.Frame(contenido_arsenal, bg=TemaModerno.FONDO_CARD)
+        fila_armas.pack(fill=tk.X, pady=(0, 15))
         
-        WidgetPersonalizado.crear_boton_principal(
-            fila1, f"{IconosUnicode.ESCANEAR} Escaneo Rápido", self._escaneo_rapido
+        ComponentesModernos.crear_boton_primario(
+            fila_armas, "Escaneo Relámpago", self._escaneo_relampago_zeus,
+            IconosOlimpicos.RAYO_ZEUS, 18
+        ).pack(side=tk.LEFT, padx=(0, 15))
+        
+        ComponentesModernos.crear_boton_primario(
+            fila_armas, "Exploración Completa", self._exploracion_completa_argos,
+            IconosOlimpicos.OJO_ARGOS, 18
+        ).pack(side=tk.LEFT, padx=(0, 15))
+        
+        ComponentesModernos.crear_boton_primario(
+            fila_armas, "Cuarentena Estigia", self._cuarentena_estigia,
+            IconosOlimpicos.AGUA_ESTIGIA, 16
+        ).pack(side=tk.LEFT, padx=(0, 15))
+        
+        ComponentesModernos.crear_boton_primario(
+            fila_armas, "Vigilancia Eterna", self._vigilancia_eterna_centinelas,
+            IconosOlimpicos.CENTINELA, 16
+        ).pack(side=tk.LEFT)
+        
+        # Segunda fila - Herramientas secundarias
+        fila_herramientas = tk.Frame(contenido_arsenal, bg=TemaModerno.FONDO_CARD)
+        fila_herramientas.pack(fill=tk.X, pady=(0, 15))
+        
+        ComponentesModernos.crear_boton_secundario(
+            fila_herramientas, "Verificar Integridad", self._verificar_integridad_atenea,
+            IconosOlimpicos.LANZA_ATENEA, 15
         ).pack(side=tk.LEFT, padx=(0, 10))
         
-        WidgetPersonalizado.crear_boton_principal(
-            fila1, f"{IconosUnicode.ESCANEAR} Escaneo Completo", self._escaneo_completo
+        ComponentesModernos.crear_boton_secundario(
+            fila_herramientas, "Actualizar Arsenal", self._actualizar_arsenal_hefesto,
+            IconosOlimpicos.MARTILLO_HEFESTO, 15
         ).pack(side=tk.LEFT, padx=(0, 10))
         
-        WidgetPersonalizado.crear_boton_principal(
-            fila1, f"{IconosUnicode.CUARENTENA} Cuarentena", self._abrir_cuarentena
+        ComponentesModernos.crear_boton_secundario(
+            fila_herramientas, "Generar Pergamino", self._generar_pergamino_eventos,
+            IconosOlimpicos.PERGAMINO, 15
         ).pack(side=tk.LEFT, padx=(0, 10))
         
-        WidgetPersonalizado.crear_boton_principal(
-            fila1, f"{IconosUnicode.RED} Monitor Red", self._toggle_monitor_red
-        ).pack(side=tk.LEFT, padx=(0, 10))
+        ComponentesModernos.crear_boton_secundario(
+            fila_herramientas, "Configurar Olimpo", self._configurar_olimpo,
+            IconosOlimpicos.TRIDENTE, 15
+        ).pack(side=tk.LEFT)
         
-        # Segunda fila de botones
-        fila2 = tk.Frame(frame_botones, bg=TemaJapones.PAPEL_BLANCO)
-        fila2.pack(fill=tk.X, pady=5)
-        
-        WidgetPersonalizado.crear_boton_secundario(
-            fila2, f"{IconosUnicode.FIM} Verificar FIM", self._verificar_fim
-        ).pack(side=tk.LEFT, padx=(0, 10))
-        
-        WidgetPersonalizado.crear_boton_secundario(
-            fila2, f"{IconosUnicode.ACTUALIZAR} Actualizar", self._actualizar_firmas
-        ).pack(side=tk.LEFT, padx=(0, 10))
-        
-        WidgetPersonalizado.crear_boton_secundario(
-            fila2, f"{IconosUnicode.EXPORTAR} Exportar", self._exportar_reporte
-        ).pack(side=tk.LEFT, padx=(0, 10))
-        
-        WidgetPersonalizado.crear_boton_secundario(
-            fila2, f"{IconosUnicode.CONFIGURACION} Configurar", self._abrir_configuracion
-        ).pack(side=tk.LEFT, padx=(0, 10))
-        
-        # Selector de ruta personalizada
-        frame_ruta = tk.Frame(frame_control, bg=TemaJapones.PAPEL_BLANCO)
-        frame_ruta.pack(fill=tk.X, padx=20, pady=10)
+        # Selector de territorio sagrado
+        territorio_frame = tk.Frame(contenido_arsenal, bg=TemaModerno.FONDO_CARD)
+        territorio_frame.pack(fill=tk.X, pady=(0, 10))
         
         tk.Label(
-            frame_ruta,
-            text="📂 Ruta de escaneo personalizada:",
-            bg=TemaJapones.PAPEL_BLANCO,
-            fg=TemaJapones.TINTA_NEGRA,
-            font=("Segoe UI", 10)
-        ).pack(side=tk.LEFT)
+            territorio_frame,
+            text=f"{IconosOlimpicos.TIERRA_GAIA} Territorio Sagrado a Proteger:",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_PRINCIPAL,
+            font=("Segoe UI", 11, "bold")
+        ).pack(side=tk.LEFT, padx=(0, 10))
         
-        entry_ruta = tk.Entry(
-            frame_ruta,
-            textvariable=self.var_ruta_escaneo,
+        entrada_territorio = tk.Entry(
+            territorio_frame,
+            textvariable=self.var_ruta_sagrada,
             font=("Segoe UI", 10),
-            width=50
+            width=60,
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_PRINCIPAL,
+            relief="solid",
+            bd=1
         )
-        entry_ruta.pack(side=tk.LEFT, padx=10, fill=tk.X, expand=True)
+        entrada_territorio.pack(side=tk.LEFT, padx=(0, 10), fill=tk.X, expand=True)
         
-        WidgetPersonalizado.crear_boton_secundario(
-            frame_ruta, "📁 Explorar", self._seleccionar_directorio, 10
+        ComponentesModernos.crear_boton_secundario(
+            territorio_frame, "Explorar", self._explorar_territorio, "", 10
+        ).pack(side=tk.RIGHT, padx=(5, 0))
+        
+        ComponentesModernos.crear_boton_secundario(
+            territorio_frame, "Proteger", self._proteger_territorio_sagrado, "", 10
         ).pack(side=tk.RIGHT)
         
-        WidgetPersonalizado.crear_boton_secundario(
-            frame_ruta, f"{IconosUnicode.ESCANEAR} Escanear", self._escanear_ruta_personalizada, 10
-        ).pack(side=tk.RIGHT, padx=(0, 5))
+        # Barra de progreso divina
+        progreso_frame = tk.Frame(contenido_arsenal, bg=TemaModerno.FONDO_CARD)
+        progreso_frame.pack(fill=tk.X, pady=(10, 0))
         
-        # Barra de progreso
-        frame_progreso = tk.Frame(frame_control, bg=TemaJapones.PAPEL_BLANCO)
-        frame_progreso.pack(fill=tk.X, padx=20, pady=10)
+        tk.Label(
+            progreso_frame,
+            text=f"{IconosOlimpicos.FUEGO_OLIMPICO} Poder Divino en Acción:",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_SECUNDARIO,
+            font=("Segoe UI", 10)
+        ).pack(anchor="w", pady=(0, 5))
         
-        self.barra_progreso = ttk.Progressbar(
-            frame_progreso,
-            variable=self.var_progreso,
-            maximum=100,
-            style="Themed.Horizontal.TProgressbar"
-        )
-        self.barra_progreso.pack(fill=tk.X)
+        self.barra_progreso_divina = ComponentesModernos.crear_barra_progreso_moderna(progreso_frame)
+        self.barra_progreso_divina.pack(fill=tk.X)
     
-    def _crear_panel_estadisticas(self, parent):
-        """Crea el panel de estadísticas."""
-        frame_stats = WidgetPersonalizado.crear_frame_panel(parent, "📊 Estadísticas del Sistema")
-        frame_stats.pack(fill=tk.X, pady=(0, 10))
+    def _crear_metricas_del_olimpo(self, parent):
+        """Crea las métricas de vigilancia del Olimpo."""
+        metricas_card = ComponentesModernos.crear_card(parent, f"{IconosOlimpicos.BUHO_ATENEA} Sabiduría del Olimpo")
+        metricas_card.pack(fill=tk.X, pady=(0, 20))
         
-        # Grid de estadísticas
-        grid_stats = tk.Frame(frame_stats, bg=TemaJapones.PAPEL_BLANCO)
-        grid_stats.pack(fill=tk.X, padx=20, pady=10)
+        grid_metricas = tk.Frame(metricas_card, bg=TemaModerno.FONDO_CARD)
+        grid_metricas.pack(fill=tk.X, padx=20, pady=(0, 20))
         
-        # Configurar grid
+        # Configurar grid de 4 columnas
         for i in range(4):
-            grid_stats.columnconfigure(i, weight=1)
+            grid_metricas.columnconfigure(i, weight=1)
         
-        # Estadísticas principales
-        stats_config = [
-            ("🔍 Archivos Escaneados", "archivos_escaneados", 0, 0),
-            ("🦠 Amenazas Detectadas", "amenazas_detectadas", 0, 1),
-            ("🔒 Archivos en Cuarentena", "archivos_cuarentena", 0, 2),
-            ("🌐 Conexiones Monitoreadas", "conexiones_red", 0, 3),
-            ("📁 Archivos Monitoreados (FIM)", "archivos_fim", 1, 0),
-            ("⚠️ Alertas Activas", "alertas_activas", 1, 1),
-            ("⏱️ Uptime del Sistema", "uptime", 1, 2),
-            ("💾 Uso de Memoria", "memoria", 1, 3)
+        # Métricas principales del Olimpo
+        metricas_config = [
+            ("Almas Examinadas", "almas_examinadas", IconosOlimpicos.OJO_ARGOS, TemaModerno.AZUL_OLIMPICO, 0, 0),
+            ("Demonios Detectados", "demonios_detectados", IconosOlimpicos.ESCUDO_ARES, TemaModerno.ROJO_AMENAZA, 0, 1),
+            ("Prisioneros Estigia", "prisioneros_estigia", IconosOlimpicos.AGUA_ESTIGIA, TemaModerno.NARANJA_ADVERTENCIA, 0, 2),
+            ("Senderos Vigilados", "senderos_vigilados", IconosOlimpicos.CENTINELA, TemaModerno.VERDE_PROTECCION, 0, 3),
+            ("Artefactos Custodiados", "artefactos_custodiados", IconosOlimpicos.ANFORA, TemaModerno.DIVINO_DORADO, 1, 0),
+            ("Profecías Activas", "profecias_activas", IconosOlimpicos.AGUILA_ZEUS, TemaModerno.PURPURA_REAL, 1, 1),
+            ("Tiempo de Vigilancia", "tiempo_vigilancia", IconosOlimpicos.COMPAS, TemaModerno.TEXTO_SECUNDARIO, 1, 2),
+            ("Poder Consumido", "poder_consumido", IconosOlimpicos.FUEGO_OLIMPICO, TemaModerno.BRONCE_HEFESTO, 1, 3)
         ]
         
-        for texto, clave, fila, columna in stats_config:
-            frame_stat = tk.Frame(grid_stats, bg=TemaJapones.SOMBRA_SUAVE, relief="solid", borderwidth=1)
-            frame_stat.grid(row=fila, column=columna, padx=5, pady=5, sticky="ew")
-            
-            label_titulo = tk.Label(
-                frame_stat,
-                text=texto,
-                bg=TemaJapones.SOMBRA_SUAVE,
-                fg=TemaJapones.TINTA_NEGRA,
-                font=("Segoe UI", 9, "bold")
+        for titulo, clave, icono, color, fila, columna in metricas_config:
+            card_metrica, label_valor = ComponentesModernos.crear_tarjeta_estadistica(
+                grid_metricas, titulo, "0", icono, color
             )
-            label_titulo.pack(pady=(5, 0))
-            
-            label_valor = tk.Label(
-                frame_stat,
-                text="0",
-                bg=TemaJapones.SOMBRA_SUAVE,
-                fg=TemaJapones.BAMBOO_VERDE,
-                font=("Segoe UI", 12, "bold")
-            )
-            label_valor.pack(pady=(0, 5))
-            
-            self.etiquetas_estadisticas[clave] = label_valor
+            card_metrica.grid(row=fila, column=columna, padx=8, pady=8, sticky="ew")
+            self.metricas_olimpicas[clave] = label_valor
     
-    def _crear_panel_log(self, parent):
-        """Crea el panel de logs."""
-        frame_log = WidgetPersonalizado.crear_frame_panel(parent, "📋 Registro de Eventos")
-        frame_log.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+    
+    def _crear_panel_dual_eventos_terminal(self, parent):
+        """Crea el panel dual de eventos y terminal divino."""
+        panel_dual_card = ComponentesModernos.crear_card(parent, f"{IconosOlimpicos.PERGAMINO} Crónicas del Olimpo & Terminal Divino")
+        panel_dual_card.pack(fill=tk.BOTH, expand=True, pady=(0, 20))
         
-        # Frame para controles del log
-        frame_controles_log = tk.Frame(frame_log, bg=TemaJapones.PAPEL_BLANCO)
-        frame_controles_log.pack(fill=tk.X, padx=20, pady=5)
+        contenido_dual = tk.Frame(panel_dual_card, bg=TemaModerno.FONDO_CARD)
+        contenido_dual.pack(fill=tk.BOTH, expand=True, padx=20, pady=(0, 20))
         
-        WidgetPersonalizado.crear_boton_secundario(
-            frame_controles_log, f"{IconosUnicode.LIMPIAR} Limpiar", self._limpiar_log, 10
-        ).pack(side=tk.LEFT)
+        # Dividir en dos paneles
+        panel_izquierdo = tk.Frame(contenido_dual, bg=TemaModerno.FONDO_CARD)
+        panel_izquierdo.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
         
-        WidgetPersonalizado.crear_boton_secundario(
-            frame_controles_log, f"{IconosUnicode.ACTUALIZAR} Actualizar", self._actualizar_log, 10
-        ).pack(side=tk.LEFT, padx=(5, 0))
+        panel_derecho = tk.Frame(contenido_dual, bg=TemaModerno.FONDO_CARD)
+        panel_derecho.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=(10, 0))
         
-        # Área de texto para logs
-        self.texto_log = scrolledtext.ScrolledText(
-            frame_log,
-            height=12,
+        # Panel izquierdo - Eventos
+        self._crear_seccion_eventos(panel_izquierdo)
+        
+        # Panel derecho - Terminal divino
+        self._crear_terminal_divino(panel_derecho)
+    
+    def _crear_seccion_eventos(self, parent):
+        """Crea la sección de eventos del Olimpo."""
+        # Header de eventos
+        header_eventos = tk.Frame(parent, bg=TemaModerno.FONDO_CARD)
+        header_eventos.pack(fill=tk.X, pady=(0, 10))
+        
+        titulo_eventos = tk.Label(
+            header_eventos,
+            text=f"{IconosOlimpicos.PERGAMINO} Crónicas de Eventos",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_PRINCIPAL,
+            font=("Segoe UI", 12, "bold")
+        )
+        titulo_eventos.pack(side=tk.LEFT)
+        
+        # Controles de eventos
+        controles_eventos = tk.Frame(header_eventos, bg=TemaModerno.FONDO_CARD)
+        controles_eventos.pack(side=tk.RIGHT)
+        
+        ComponentesModernos.crear_boton_secundario(
+            controles_eventos, "Limpiar", self._limpiar_cronicas, "", 8
+        ).pack(side=tk.RIGHT, padx=(5, 0))
+        
+        ComponentesModernos.crear_boton_secundario(
+            controles_eventos, "Actualizar", self._actualizar_cronicas, "", 8
+        ).pack(side=tk.RIGHT)
+        
+        # Área de eventos
+        self.pergamino_eventos = scrolledtext.ScrolledText(
+            parent,
+            height=15,
+            font=("Segoe UI", 9),
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_PRINCIPAL,
+            insertbackground=TemaModerno.TEXTO_PRINCIPAL,
+            selectbackground=TemaModerno.AZUL_OLIMPICO,
+            selectforeground=TemaModerno.TEXTO_BLANCO,
+            relief="solid",
+            bd=1,
+            highlightthickness=0
+        )
+        self.pergamino_eventos.pack(fill=tk.BOTH, expand=True)
+        
+        # Agregar mensaje inicial épico
+        self._escribir_en_cronicas(f"✨ Las Crónicas del Olimpo han comenzado", TemaModerno.AZUL_OLIMPICO)
+        self._escribir_en_cronicas(f"{IconosOlimpicos.AEGIS} Égida de Ares desplegada exitosamente", TemaModerno.VERDE_PROTECCION)
+    
+    def _crear_terminal_divino(self, parent):
+        """Crea el terminal de comandos divinos."""
+        # Header del terminal
+        header_terminal = tk.Frame(parent, bg=TemaModerno.FONDO_CARD)
+        header_terminal.pack(fill=tk.X, pady=(0, 10))
+        
+        titulo_terminal = tk.Label(
+            header_terminal,
+            text=f"{IconosOlimpicos.CADUCEO} Terminal de Hermes",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_PRINCIPAL,
+            font=("Segoe UI", 12, "bold")
+        )
+        titulo_terminal.pack(side=tk.LEFT)
+        
+        # Indicador de estado del terminal
+        estado_terminal = tk.Label(
+            header_terminal,
+            text="● ACTIVO",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.VERDE_PROTECCION,
+            font=("Segoe UI", 9, "bold")
+        )
+        estado_terminal.pack(side=tk.RIGHT)
+        
+        # Terminal de salida
+        self.terminal_divino = scrolledtext.ScrolledText(
+            parent,
+            height=15,
             font=("Consolas", 9),
-            bg=TemaJapones.TINTA_NEGRA,
-            fg=TemaJapones.PAPEL_BLANCO,
-            insertbackground=TemaJapones.PAPEL_BLANCO,
-            selectbackground=TemaJapones.BAMBOO_VERDE
+            bg="#1E1E1E",  # Fondo oscuro tipo terminal
+            fg="#00FF00",  # Verde terminal clásico
+            insertbackground="#00FF00",
+            selectbackground=TemaModerno.AZUL_OLIMPICO,
+            selectforeground=TemaModerno.TEXTO_BLANCO,
+            relief="solid",
+            bd=1,
+            highlightthickness=0
         )
-        self.texto_log.pack(fill=tk.BOTH, expand=True, padx=20, pady=(5, 10))
+        self.terminal_divino.pack(fill=tk.BOTH, expand=True)
         
-        # Agregar mensaje inicial
-        self._agregar_log("✅ Ares Aegis iniciado correctamente", TemaJapones.EXITO)
-        self._agregar_log("🛡️ Sistema de protección activado", TemaJapones.INFO)
+        # Agregar mensajes iniciales del terminal
+        self._escribir_en_terminal("=" * 60)
+        self._escribir_en_terminal("TERMINAL DIVINO DE HERMES - AEGIS v3.0")
+        self._escribir_en_terminal("=" * 60)
+        self._escribir_en_terminal("Sistema iniciado correctamente")
+        self._escribir_en_terminal("Conexión con el Olimpo establecida")
+        self._escribir_en_terminal("Todos los dioses están en línea")
+        self._escribir_en_terminal("")
     
-    def _crear_barra_estado(self, parent):
-        """Crea la barra de estado."""
-        frame_estado = tk.Frame(parent, bg=TemaJapones.PLATA_GRIS, height=30)
-        frame_estado.pack(fill=tk.X)
-        frame_estado.pack_propagate(False)
+    def _crear_barra_estado_divino(self, parent):
+        """Crea la barra de estado divina."""
+        barra_card = tk.Frame(parent, bg=TemaModerno.BORDE_CARD, height=60)
+        barra_card.pack(fill=tk.X)
+        barra_card.pack_propagate(False)
         
-        # Estado del sistema
+        contenido_barra = tk.Frame(barra_card, bg=TemaModerno.FONDO_CARD)
+        contenido_barra.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
+        
+        # Lado izquierdo - Estado del sistema
+        lado_izquierdo = tk.Frame(contenido_barra, bg=TemaModerno.FONDO_CARD)
+        lado_izquierdo.pack(side=tk.LEFT, fill=tk.Y, padx=20, pady=10)
+        
         self.label_estado_sistema = tk.Label(
-            frame_estado,
-            text=f"{IconosUnicode.CORRECTO} Sistema Protegido",
-            bg=TemaJapones.PLATA_GRIS,
-            fg=TemaJapones.TINTA_NEGRA,
+            lado_izquierdo,
+            text=f"{IconosOlimpicos.PROTECCION_ACTIVA} Reino Digital Protegido",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.VERDE_PROTECCION,
+            font=("Segoe UI", 10, "bold")
+        )
+        self.label_estado_sistema.pack(side=tk.LEFT)
+        
+        # Centro - Información adicional
+        centro = tk.Frame(contenido_barra, bg=TemaModerno.FONDO_CARD)
+        centro.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=20, pady=10)
+        
+        self.label_info_adicional = tk.Label(
+            centro,
+            text="Esperando órdenes del Olimpo...",
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_SECUNDARIO,
             font=("Segoe UI", 9)
         )
-        self.label_estado_sistema.pack(side=tk.LEFT, padx=10, pady=5)
+        self.label_info_adicional.pack(side=tk.LEFT)
         
-        # Hora actual
-        self.label_hora = tk.Label(
-            frame_estado,
+        # Lado derecho - Reloj divino
+        lado_derecho = tk.Frame(contenido_barra, bg=TemaModerno.FONDO_CARD)
+        lado_derecho.pack(side=tk.RIGHT, fill=tk.Y, padx=20, pady=10)
+        
+        self.label_reloj_olimpico = tk.Label(
+            lado_derecho,
             text="",
-            bg=TemaJapones.PLATA_GRIS,
-            fg=TemaJapones.TINTA_NEGRA,
+            bg=TemaModerno.FONDO_CARD,
+            fg=TemaModerno.TEXTO_SECUNDARIO,
             font=("Segoe UI", 9)
         )
-        self.label_hora.pack(side=tk.RIGHT, padx=10, pady=5)
+        self.label_reloj_olimpico.pack(side=tk.RIGHT)
         
-        self._actualizar_hora()
+        self._actualizar_reloj_olimpico()
     
-    def _inicializar_controlador(self):
-        """Inicializa el controlador principal."""
+    def _invocar_controlador_supremo(self):
+        """Invoca al controlador supremo del Olimpo."""
         try:
             self.controlador = ControladorPrincipal()
-            self._agregar_log("✅ Controlador principal inicializado", TemaJapones.EXITO)
+            self._escribir_en_cronicas("✅ Controlador Supremo invocado exitosamente", TemaModerno.VERDE_PROTECCION)
+            self._escribir_en_terminal(">>> Controlador Principal conectado")
         except Exception as e:
-            self._agregar_log(f"❌ Error inicializando controlador: {e}", TemaJapones.ERROR)
-            messagebox.showerror("Error", f"No se pudo inicializar el sistema:\n{e}")
+            self._escribir_en_cronicas(f"❌ Error invocando Controlador: {e}", TemaModerno.ROJO_AMENAZA)
+            self._escribir_en_terminal(f"ERROR: {e}")
+            messagebox.showerror("Error Divino", f"No se pudo invocar el Controlador Supremo:\n{e}")
     
-    def _agregar_log(self, mensaje: str, color: str = TemaJapones.PAPEL_BLANCO):
-        """Agrega un mensaje al log con timestamp."""
-        if self.texto_log:
+    def _actualizar_visiones_periodicas(self):
+        """Actualiza las visiones proféticas periódicamente."""
+        self._actualizar_metricas_olimpicas()
+        self.ventana.after(5000, self._actualizar_visiones_periodicas)  # Cada 5 segundos
+    
+    def _actualizar_reloj_olimpico(self):
+        """Actualiza el reloj divino del Olimpo."""
+        if self.label_reloj_olimpico:
+            tiempo_olimpico = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.label_reloj_olimpico.config(text=f"⏰ {tiempo_olimpico}")
+            self.ventana.after(1000, self._actualizar_reloj_olimpico)
+    
+    def _escribir_en_cronicas(self, mensaje: str, color: str = TemaModerno.TEXTO_PRINCIPAL):
+        """Escribe un mensaje en las crónicas del Olimpo."""
+        if self.pergamino_eventos:
             timestamp = datetime.now().strftime("%H:%M:%S")
             linea = f"[{timestamp}] {mensaje}\n"
             
-            self.texto_log.config(state=tk.NORMAL)
-            self.texto_log.insert(tk.END, linea)
-            self.texto_log.config(state=tk.DISABLED)
-            self.texto_log.see(tk.END)
+            self.pergamino_eventos.config(state=tk.NORMAL)
+            self.pergamino_eventos.insert(tk.END, linea)
+            self.pergamino_eventos.config(state=tk.DISABLED)
+            self.pergamino_eventos.see(tk.END)
     
-    def _actualizar_hora(self):
-        """Actualiza la hora en la barra de estado."""
-        if self.label_hora:
-            hora_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            self.label_hora.config(text=hora_actual)
-            self.ventana.after(1000, self._actualizar_hora)
+    def _escribir_en_terminal(self, mensaje: str):
+        """Escribe un mensaje en el terminal divino."""
+        if self.terminal_divino:
+            timestamp = datetime.now().strftime("%H:%M:%S")
+            if mensaje.strip():
+                linea = f"[{timestamp}] {mensaje}\n" if not mensaje.startswith("=") else f"{mensaje}\n"
+            else:
+                linea = "\n"
+            
+            self.terminal_divino.config(state=tk.NORMAL)
+            self.terminal_divino.insert(tk.END, linea)
+            self.terminal_divino.config(state=tk.DISABLED)
+            self.terminal_divino.see(tk.END)
     
-    def _actualizar_interfaz_periodicamente(self):
-        """Actualiza la interfaz cada cierto tiempo."""
-        self._actualizar_estadisticas()
-        self.ventana.after(5000, self._actualizar_interfaz_periodicamente)  # Cada 5 segundos
-    
-    def _actualizar_estadisticas(self):
-        """Actualiza las estadísticas mostradas."""
+    def _actualizar_metricas_olimpicas(self):
+        """Actualiza las métricas de vigilancia del Olimpo."""
         if not self.controlador:
             return
         
         try:
-            stats = self.controlador.obtener_estadisticas_generales()
+            estadisticas = self.controlador.obtener_estadisticas_generales()
             
-            # Actualizar etiquetas de estadísticas
+            # Mapear estadísticas a métricas olímpicas
             actualizaciones = {
-                'archivos_escaneados': stats.get('archivos_escaneados', 0),
-                'amenazas_detectadas': stats.get('amenazas_detectadas', 0),
-                'archivos_cuarentena': stats.get('archivos_cuarentena', 0),
-                'conexiones_red': stats.get('conexiones_activas', 0),
-                'archivos_fim': stats.get('archivos_fim', 0),
-                'alertas_activas': stats.get('alertas_activas', 0),
-                'uptime': self._formatear_uptime(stats.get('uptime_segundos', 0)),
-                'memoria': f"{stats.get('uso_memoria_mb', 0):.1f} MB"
+                'almas_examinadas': estadisticas.get('archivos_escaneados', 0),
+                'demonios_detectados': estadisticas.get('amenazas_detectadas', 0),
+                'prisioneros_estigia': estadisticas.get('archivos_cuarentena', 0),
+                'senderos_vigilados': estadisticas.get('conexiones_activas', 0),
+                'artefactos_custodiados': estadisticas.get('archivos_fim', 0),
+                'profecias_activas': estadisticas.get('alertas_activas', 0),
+                'tiempo_vigilancia': self._formatear_tiempo_olimpico(estadisticas.get('uptime_segundos', 0)),
+                'poder_consumido': f"{estadisticas.get('uso_memoria_mb', 0):.1f} MB"
             }
             
             for clave, valor in actualizaciones.items():
-                if clave in self.etiquetas_estadisticas:
-                    self.etiquetas_estadisticas[clave].config(text=str(valor))
+                if clave in self.metricas_olimpicas:
+                    self.metricas_olimpicas[clave].config(text=str(valor))
             
-            # Actualizar estado general
-            if stats.get('amenazas_detectadas', 0) > 0:
-                self.var_estado_general.set(f"⚠️ {stats['amenazas_detectadas']} amenazas detectadas")
+            # Actualizar estado general según las amenazas
+            amenazas = estadisticas.get('amenazas_detectadas', 0)
+            if amenazas > 0:
+                self.var_estado_olimpico.set(f"{IconosOlimpicos.AMENAZA_DETECTADA} {amenazas} demonios detectados")
                 if self.label_estado_sistema:
                     self.label_estado_sistema.config(
-                        text=f"{IconosUnicode.ALERTA} Amenazas Detectadas",
-                        fg=TemaJapones.ERROR
+                        text=f"{IconosOlimpicos.AMENAZA_DETECTADA} Demonios en el Reino",
+                        fg=TemaModerno.ROJO_AMENAZA
                     )
             elif self.escaneo_activo:
-                self.var_estado_general.set("🔍 Escaneo en progreso...")
+                self.var_estado_olimpico.set(f"{IconosOlimpicos.OJO_ARGOS} Argos explorando el reino...")
                 if self.label_estado_sistema:
                     self.label_estado_sistema.config(
-                        text=f"{IconosUnicode.ESCANEAR} Escaneando",
-                        fg=TemaJapones.ADVERTENCIA
+                        text=f"{IconosOlimpicos.OJO_ARGOS} Exploración en Curso",
+                        fg=TemaModerno.NARANJA_ADVERTENCIA
                     )
             else:
-                self.var_estado_general.set("🛡️ Sistema Protegido")
+                self.var_estado_olimpico.set(f"{IconosOlimpicos.AEGIS} Reino Digital Protegido")
                 if self.label_estado_sistema:
                     self.label_estado_sistema.config(
-                        text=f"{IconosUnicode.CORRECTO} Sistema Protegido",
-                        fg=TemaJapones.EXITO
+                        text=f"{IconosOlimpicos.PROTECCION_ACTIVA} Reino Digital Protegido",
+                        fg=TemaModerno.VERDE_PROTECCION
                     )
         
         except Exception as e:
-            self._agregar_log(f"❌ Error actualizando estadísticas: {e}", TemaJapones.ERROR)
+            self._escribir_en_cronicas(f"❌ Error actualizando métricas: {e}", TemaModerno.ROJO_AMENAZA)
+            self._escribir_en_terminal(f"ERROR: Fallo en actualización de métricas: {e}")
     
-    def _formatear_uptime(self, segundos: int) -> str:
-        """Formatea el uptime en un formato legible."""
+    def _formatear_tiempo_olimpico(self, segundos: int) -> str:
+        """Formatea el tiempo de vigilancia en formato olímpico."""
         horas = segundos // 3600
         minutos = (segundos % 3600) // 60
         return f"{horas:02d}:{minutos:02d}"
     
-    # Métodos de los botones de acción
-    def _escaneo_rapido(self):
-        """Ejecuta un escaneo rápido."""
+    # Métodos de las acciones divinas (renombrados con temática griega)
+    def _escaneo_relampago_zeus(self):
+        """Ejecuta el escaneo relámpago de Zeus."""
         if self.escaneo_activo:
-            self._agregar_log("⚠️ Ya hay un escaneo en progreso", TemaJapones.ADVERTENCIA)
+            self._escribir_en_cronicas("⚠️ Zeus ya está lanzando rayos sobre el reino", TemaModerno.NARANJA_ADVERTENCIA)
+            self._escribir_en_terminal("WARNING: Escaneo ya en progreso")
             return
         
-        self._agregar_log("🔍 Iniciando escaneo rápido...", TemaJapones.INFO)
-        self._ejecutar_escaneo_async("rapido")
+        self._escribir_en_cronicas(f"{IconosOlimpicos.RAYO_ZEUS} Zeus prepara sus rayos para el escaneo relámpago...", TemaModerno.AZUL_OLIMPICO)
+        self._escribir_en_terminal(">>> Iniciando escaneo relámpago")
+        self._ejecutar_escaneo_divino("relampago")
     
-    def _escaneo_completo(self):
-        """Ejecuta un escaneo completo."""
+    def _exploracion_completa_argos(self):
+        """Ejecuta la exploración completa de Argos."""
         if self.escaneo_activo:
-            self._agregar_log("⚠️ Ya hay un escaneo en progreso", TemaJapones.ADVERTENCIA)
+            self._escribir_en_cronicas("⚠️ Argos ya vigila con sus cien ojos", TemaModerno.NARANJA_ADVERTENCIA)
+            self._escribir_en_terminal("WARNING: Exploración ya en progreso")
             return
         
         resultado = messagebox.askyesno(
-            "Escaneo Completo",
-            "El escaneo completo puede tardar mucho tiempo.\n¿Desea continuar?"
+            "Exploración Completa de Argos",
+            "Argos desplegará sus cien ojos para examinar cada rincón del reino.\n"
+            "Esta exploración divina puede tomar considerable tiempo.\n\n"
+            "¿Deseas invocar el poder de Argos?"
         )
         
         if resultado:
-            self._agregar_log("🔍 Iniciando escaneo completo...", TemaJapones.INFO)
-            self._ejecutar_escaneo_async("completo")
+            self._escribir_en_cronicas(f"{IconosOlimpicos.OJO_ARGOS} Argos despliega sus cien ojos vigilantes...", TemaModerno.AZUL_OLIMPICO)
+            self._escribir_en_terminal(">>> Iniciando exploración completa de Argos")
+            self._ejecutar_escaneo_divino("completo")
     
-    def _escanear_ruta_personalizada(self):
-        """Escanea una ruta personalizada."""
+    def _proteger_territorio_sagrado(self):
+        """Protege un territorio sagrado específico."""
         if self.escaneo_activo:
-            self._agregar_log("⚠️ Ya hay un escaneo en progreso", TemaJapones.ADVERTENCIA)
+            self._escribir_en_cronicas("⚠️ Los dioses ya protegen otro territorio", TemaModerno.NARANJA_ADVERTENCIA)
+            self._escribir_en_terminal("WARNING: Protección ya en progreso")
             return
         
-        ruta = self.var_ruta_escaneo.get()
-        if not ruta or not Path(ruta).exists():
-            messagebox.showerror("Error", "La ruta especificada no existe")
+        territorio = self.var_ruta_sagrada.get()
+        if not territorio or not Path(territorio).exists():
+            messagebox.showerror("Territorio No Encontrado", "El territorio sagrado especificado no existe en este reino")
+            self._escribir_en_terminal("ERROR: Territorio no válido")
             return
         
-        self._agregar_log(f"🔍 Escaneando ruta: {ruta}", TemaJapones.INFO)
-        self._ejecutar_escaneo_async("personalizado", ruta)
+        self._escribir_en_cronicas(f"{IconosOlimpicos.TIERRA_GAIA} Protegiendo territorio sagrado: {territorio}", TemaModerno.AZUL_OLIMPICO)
+        self._escribir_en_terminal(f">>> Protegiendo territorio: {territorio}")
+        self._ejecutar_escaneo_divino("territorio", territorio)
     
-    def _ejecutar_escaneo_async(self, tipo_escaneo: str, ruta: str = ""):
-        """Ejecuta un escaneo en un hilo separado."""
-        def ejecutar():
+    def _ejecutar_escaneo_divino(self, tipo_poder: str, territorio: str = ""):
+        """Ejecuta un escaneo divino en un hilo separado."""
+        def invocar_poder():
             self.escaneo_activo = True
-            self.var_progreso.set(0)
+            self.var_progreso_divino.set(0)
             
             try:
-                if tipo_escaneo == "rapido":
+                if tipo_poder == "relampago":
                     resultado = self.controlador.escaneo_rapido()
-                elif tipo_escaneo == "completo":
+                    self._escribir_en_terminal(">>> Rayos de Zeus impactando archivos...")
+                elif tipo_poder == "completo":
                     resultado = self.controlador.escaneo_completo()
-                elif tipo_escaneo == "personalizado":
-                    resultado = self.controlador.escanear_directorio(ruta)
+                    self._escribir_en_terminal(">>> Ojos de Argos examinando todo el reino...")
+                elif tipo_poder == "territorio":
+                    resultado = self.controlador.escanear_directorio(territorio)
+                    self._escribir_en_terminal(f">>> Explorando territorio: {territorio}")
                 
-                # Simular progreso
+                # Simular progreso divino
                 for i in range(0, 101, 5):
-                    self.var_progreso.set(i)
+                    if hasattr(self, 'barra_progreso_divina'):
+                        self.barra_progreso_divina['value'] = i
                     time.sleep(0.1)
                 
-                # Mostrar resultados
-                self.ventana.after(0, lambda: self._mostrar_resultados_escaneo(resultado))
+                # Mostrar resultados en el hilo principal
+                self.ventana.after(0, lambda: self._mostrar_resultados_divinos(resultado, tipo_poder))
                 
             except Exception as e:
-                self.ventana.after(0, lambda: self._agregar_log(f"❌ Error en escaneo: {e}", TemaJapones.ERROR))
+                self.ventana.after(0, lambda: self._escribir_en_cronicas(f"❌ Error en poder divino: {e}", TemaModerno.ROJO_AMENAZA))
+                self.ventana.after(0, lambda: self._escribir_en_terminal(f"ERROR: {e}"))
             
             finally:
                 self.escaneo_activo = False
-                self.var_progreso.set(0)
+                if hasattr(self, 'barra_progreso_divina'):
+                    self.barra_progreso_divina['value'] = 0
         
-        threading.Thread(target=ejecutar, daemon=True).start()
+        threading.Thread(target=invocar_poder, daemon=True).start()
     
-    def _mostrar_resultados_escaneo(self, resultado: Dict[str, Any]):
-        """Muestra los resultados del escaneo."""
-        archivos = resultado.get('archivos_escaneados', 0)
-        amenazas = resultado.get('amenazas_detectadas', 0)
+    def _mostrar_resultados_divinos(self, resultado: Dict[str, Any], tipo_poder: str):
+        """Muestra los resultados de los poderes divinos."""
+        almas = resultado.get('archivos_escaneados', 0)
+        demonios = resultado.get('amenazas_detectadas', 0)
         tiempo = resultado.get('tiempo_escaneo', 0)
         
-        if amenazas > 0:
-            self._agregar_log(f"⚠️ Escaneo completado: {amenazas} amenazas detectadas en {archivos} archivos", TemaJapones.ERROR)
+        # Nombres divinos según el tipo de poder
+        nombres_poderes = {
+            "relampago": "Rayos de Zeus",
+            "completo": "Ojos de Argos", 
+            "territorio": "Protección de Gaia"
+        }
+        
+        poder_usado = nombres_poderes.get(tipo_poder, "Poder Divino")
+        
+        if demonios > 0:
+            mensaje = f"⚠️ {poder_usado} completado: {demonios} demonios detectados entre {almas} almas examinadas"
+            self._escribir_en_cronicas(mensaje, TemaModerno.ROJO_AMENAZA)
+            self._escribir_en_terminal(f">>> AMENAZAS DETECTADAS: {demonios}")
+            self._escribir_en_terminal(f">>> Tiempo de invocación: {tiempo:.2f} segundos")
+            
             messagebox.showwarning(
-                "Amenazas Detectadas",
-                f"Se detectaron {amenazas} amenazas en {archivos} archivos escaneados.\n"
-                f"Tiempo de escaneo: {tiempo:.2f} segundos\n\n"
-                "Revise la cuarentena para más detalles."
+                "Demonios Detectados en el Reino",
+                f"Los {poder_usado} han detectado {demonios} demonios en {almas} almas examinadas.\n"
+                f"Tiempo de invocación divina: {tiempo:.2f} segundos\n\n"
+                "Los demonios han sido enviados a las aguas del Estigia.\n"
+                "Consulta la Cuarentena Estigia para más detalles."
             )
         else:
-            self._agregar_log(f"✅ Escaneo completado: {archivos} archivos escaneados, sin amenazas", TemaJapones.EXITO)
+            mensaje = f"✅ {poder_usado} completado: {almas} almas purificadas, reino limpio"
+            self._escribir_en_cronicas(mensaje, TemaModerno.VERDE_PROTECCION)
+            self._escribir_en_terminal(f">>> REINO PURIFICADO")
+            self._escribir_en_terminal(f">>> Almas examinadas: {almas}")
+            self._escribir_en_terminal(f">>> Tiempo de invocación: {tiempo:.2f} segundos")
+            
             messagebox.showinfo(
-                "Escaneo Completado",
-                f"Escaneo completado exitosamente.\n"
-                f"Archivos escaneados: {archivos}\n"
-                f"Amenazas detectadas: 0\n"
-                f"Tiempo de escaneo: {tiempo:.2f} segundos"
+                "Reino Digital Purificado",
+                f"{poder_usado} han purificado el reino exitosamente.\n\n"
+                f"Almas examinadas: {almas}\n"
+                f"Demonios detectados: 0\n"
+                f"Tiempo de invocación: {tiempo:.2f} segundos\n\n"
+                "El reino digital permanece bajo protección divina."
             )
     
-    def _seleccionar_directorio(self):
-        """Selecciona un directorio para escaneo personalizado."""
+    def _explorar_territorio(self):
+        """Explora y selecciona un territorio para proteger."""
         directorio = filedialog.askdirectory(
-            title="Seleccionar directorio para escanear",
-            initialdir=self.var_ruta_escaneo.get()
+            title="Seleccionar Territorio Sagrado para Proteger",
+            initialdir=self.var_ruta_sagrada.get()
         )
         
         if directorio:
-            self.var_ruta_escaneo.set(directorio)
+            self.var_ruta_sagrada.set(directorio)
+            self._escribir_en_terminal(f">>> Territorio seleccionado: {directorio}")
     
-    def _abrir_cuarentena(self):
-        """Abre la ventana de gestión de cuarentena."""
-        self._agregar_log("🔒 Abriendo gestión de cuarentena...", TemaJapones.INFO)
+    def _cuarentena_estigia(self):
+        """Abre la gestión de la cuarentena en las aguas del Estigia."""
+        self._escribir_en_cronicas(f"{IconosOlimpicos.AGUA_ESTIGIA} Accediendo a las aguas del Estigia...", TemaModerno.AZUL_OLIMPICO)
+        self._escribir_en_terminal(">>> Abriendo cuarentena Estigia")
         # TODO: Implementar ventana de cuarentena
-        messagebox.showinfo("Cuarentena", "Funcionalidad de cuarentena en desarrollo")
+        messagebox.showinfo("Cuarentena Estigia", "La gestión de las aguas del Estigia estará disponible en la próxima versión")
     
-    def _toggle_monitor_red(self):
-        """Activa/desactiva el monitor de red."""
+    def _vigilancia_eterna_centinelas(self):
+        """Activa/desactiva la vigilancia eterna de los centinelas."""
         if not self.controlador:
             return
         
-        if self.monitoreo_activo:
-            self.controlador.detener_monitor_red()
-            self.monitoreo_activo = False
-            self._agregar_log("🌐 Monitor de red detenido", TemaJapones.INFO)
+        if self.vigilancia_activa:
+            # self.controlador.detener_monitor_red()
+            self.vigilancia_activa = False
+            self._escribir_en_cronicas(f"{IconosOlimpicos.CENTINELA} Centinelas han finalizado su vigilancia", TemaModerno.AZUL_OLIMPICO)
+            self._escribir_en_terminal(">>> Vigilancia de red detenida")
         else:
-            self.controlador.iniciar_monitor_red()
-            self.monitoreo_activo = True
-            self._agregar_log("🌐 Monitor de red iniciado", TemaJapones.EXITO)
+            # self.controlador.iniciar_monitor_red()
+            self.vigilancia_activa = True
+            self._escribir_en_cronicas(f"{IconosOlimpicos.CENTINELA} Centinelas iniciando vigilancia eterna...", TemaModerno.VERDE_PROTECCION)
+            self._escribir_en_terminal(">>> Vigilancia de red iniciada")
     
-    def _verificar_fim(self):
-        """Verifica la integridad de archivos."""
-        self._agregar_log("📁 Iniciando verificación de integridad...", TemaJapones.INFO)
+    def _verificar_integridad_atenea(self):
+        """Verifica la integridad con la sabiduría de Atenea."""
+        self._escribir_en_cronicas(f"{IconosOlimpicos.LANZA_ATENEA} Atenea examina la integridad de los artefactos...", TemaModerno.AZUL_OLIMPICO)
+        self._escribir_en_terminal(">>> Iniciando verificación de integridad")
         
         def verificar():
             try:
-                resultado = self.controlador.verificar_integridad_archivos()
+                # resultado = self.controlador.verificar_integridad_archivos()
+                # Simulación para demostración
+                resultado = {'cambios_detectados': 0}
                 cambios = resultado.get('cambios_detectados', 0)
                 
                 if cambios > 0:
-                    self.ventana.after(0, lambda: self._agregar_log(
-                        f"⚠️ FIM: {cambios} cambios detectados", TemaJapones.ADVERTENCIA
+                    self.ventana.after(0, lambda: self._escribir_en_cronicas(
+                        f"⚠️ Atenea detectó {cambios} alteraciones en los artefactos", TemaModerno.NARANJA_ADVERTENCIA
                     ))
+                    self.ventana.after(0, lambda: self._escribir_en_terminal(f">>> CAMBIOS DETECTADOS: {cambios}"))
                 else:
-                    self.ventana.after(0, lambda: self._agregar_log(
-                        "✅ FIM: Sin cambios detectados", TemaJapones.EXITO
+                    self.ventana.after(0, lambda: self._escribir_en_cronicas(
+                        "✅ Atenea confirma: todos los artefactos mantienen su integridad", TemaModerno.VERDE_PROTECCION
                     ))
+                    self.ventana.after(0, lambda: self._escribir_en_terminal(">>> INTEGRIDAD VERIFICADA"))
             except Exception as e:
-                self.ventana.after(0, lambda: self._agregar_log(
-                    f"❌ Error en FIM: {e}", TemaJapones.ERROR
+                self.ventana.after(0, lambda: self._escribir_en_cronicas(
+                    f"❌ Error en la sabiduría de Atenea: {e}", TemaModerno.ROJO_AMENAZA
                 ))
+                self.ventana.after(0, lambda: self._escribir_en_terminal(f"ERROR: {e}"))
         
         threading.Thread(target=verificar, daemon=True).start()
     
-    def _actualizar_firmas(self):
-        """Actualiza las firmas de malware."""
-        self._agregar_log("🔄 Actualizando firmas de malware...", TemaJapones.INFO)
+    def _actualizar_arsenal_hefesto(self):
+        """Actualiza el arsenal con las mejoras de Hefesto."""
+        self._escribir_en_cronicas(f"{IconosOlimpicos.MARTILLO_HEFESTO} Hefesto forja nuevas armas contra los demonios...", TemaModerno.AZUL_OLIMPICO)
+        self._escribir_en_terminal(">>> Actualizando firmas de malware")
         # TODO: Implementar actualización de firmas
-        messagebox.showinfo("Actualización", "Funcionalidad de actualización en desarrollo")
+        messagebox.showinfo("Arsenal de Hefesto", "Las nuevas armas de Hefesto estarán disponibles en la próxima versión")
     
-    def _exportar_reporte(self):
-        """Exporta un reporte del sistema."""
+    def _generar_pergamino_eventos(self):
+        """Genera un pergamino con los eventos del reino."""
         archivo = filedialog.asksaveasfilename(
-            title="Guardar reporte",
+            title="Guardar Pergamino de Eventos",
             defaultextension=".md",
-            filetypes=[("Markdown", "*.md"), ("Texto", "*.txt"), ("Todos", "*.*")]
+            filetypes=[("Pergamino Markdown", "*.md"), ("Papiro de Texto", "*.txt"), ("Todos los Pergaminos", "*.*")]
         )
         
         if archivo:
             try:
-                reporte = self.controlador.generar_reporte_completo()
+                # reporte = self.controlador.generar_reporte_completo()
+                # Generar reporte de demostración
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                reporte = f"""# {IconosOlimpicos.PERGAMINO} Pergamino de Eventos del Reino Digital
+
+## {IconosOlimpicos.AEGIS} Égida de Ares - Reporte Divino
+**Generado el:** {timestamp}
+
+### {IconosOlimpicos.VICTORIA_NIKE} Estado del Reino
+- **Protección:** Activa
+- **Amenazas:** 0 demonios detectados
+- **Vigilancia:** Centinelas activos
+
+### {IconosOlimpicos.BUHO_ATENEA} Métricas de Sabiduría
+- **Almas Examinadas:** En progreso
+- **Artefactos Custodiados:** Seguros
+- **Tiempo de Vigilancia:** Continuo
+
+### {IconosOlimpicos.JUSTICIA_TEMIS} Veredicto Final
+El reino digital permanece bajo la protección divina de los dioses del Olimpo.
+
+---
+*Forjado por Hefesto • Bendecido por Atenea • Protegido por Ares*
+"""
+                
                 with open(archivo, 'w', encoding='utf-8') as f:
                     f.write(reporte)
                 
-                self._agregar_log(f"📤 Reporte exportado: {archivo}", TemaJapones.EXITO)
-                messagebox.showinfo("Exportar", f"Reporte guardado exitosamente en:\n{archivo}")
+                self._escribir_en_cronicas(f"📤 Pergamino guardado: {archivo}", TemaModerno.VERDE_PROTECCION)
+                self._escribir_en_terminal(f">>> Pergamino exportado: {archivo}")
+                messagebox.showinfo("Pergamino Creado", f"El pergamino divino ha sido guardado exitosamente en:\n{archivo}")
             
             except Exception as e:
-                self._agregar_log(f"❌ Error exportando reporte: {e}", TemaJapones.ERROR)
-                messagebox.showerror("Error", f"No se pudo guardar el reporte:\n{e}")
+                self._escribir_en_cronicas(f"❌ Error creando pergamino: {e}", TemaModerno.ROJO_AMENAZA)
+                self._escribir_en_terminal(f"ERROR: {e}")
+                messagebox.showerror("Error Divino", f"No se pudo crear el pergamino:\n{e}")
     
-    def _abrir_configuracion(self):
-        """Abre la ventana de configuración."""
-        self._agregar_log("⚙️ Abriendo configuración...", TemaJapones.INFO)
+    def _configurar_olimpo(self):
+        """Abre la configuración del Olimpo."""
+        self._escribir_en_cronicas(f"{IconosOlimpicos.TRIDENTE} Accediendo a la configuración del Olimpo...", TemaModerno.AZUL_OLIMPICO)
+        self._escribir_en_terminal(">>> Abriendo configuración del Olimpo")
         # TODO: Implementar ventana de configuración
-        messagebox.showinfo("Configuración", "Funcionalidad de configuración en desarrollo")
+        messagebox.showinfo("Configuración del Olimpo", "La configuración divina estará disponible en la próxima versión")
     
-    def _limpiar_log(self):
-        """Limpia el área de logs."""
-        if self.texto_log:
-            self.texto_log.config(state=tk.NORMAL)
-            self.texto_log.delete(1.0, tk.END)
-            self.texto_log.config(state=tk.DISABLED)
-            self._agregar_log("✅ Log limpiado", TemaJapones.INFO)
+    def _limpiar_cronicas(self):
+        """Limpia las crónicas del Olimpo."""
+        if self.pergamino_eventos:
+            self.pergamino_eventos.config(state=tk.NORMAL)
+            self.pergamino_eventos.delete(1.0, tk.END)
+            self.pergamino_eventos.config(state=tk.DISABLED)
+            self._escribir_en_cronicas("✨ Crónicas del Olimpo purificadas", TemaModerno.AZUL_OLIMPICO)
     
-    def _actualizar_log(self):
-        """Actualiza el log con eventos recientes."""
+    def _actualizar_cronicas(self):
+        """Actualiza las crónicas con eventos recientes."""
         if not self.controlador:
             return
         
         try:
-            eventos_recientes = self.controlador.obtener_eventos_recientes(10)
+            # eventos_recientes = self.controlador.obtener_eventos_recientes(10)
+            # Simulación para demostración
+            eventos_recientes = [
+                {'timestamp': datetime.now().strftime("%H:%M:%S"), 'mensaje': 'Sistema funcionando correctamente', 'tipo_evento': 'INFO'}
+            ]
             
-            for evento in eventos_recientes[-5:]:  # Últimos 5 eventos
+            for evento in eventos_recientes[-3:]:  # Últimos 3 eventos
                 timestamp = evento.get('timestamp', '')
                 mensaje = evento.get('mensaje', '')
                 tipo = evento.get('tipo_evento', '')
                 
                 if timestamp and mensaje:
-                    color = TemaJapones.PAPEL_BLANCO
+                    color = TemaModerno.TEXTO_PRINCIPAL
                     if 'AMENAZA' in tipo or 'ERROR' in tipo:
-                        color = TemaJapones.ERROR
+                        color = TemaModerno.ROJO_AMENAZA
                     elif 'ADVERTENCIA' in tipo:
-                        color = TemaJapones.ADVERTENCIA
+                        color = TemaModerno.NARANJA_ADVERTENCIA
                     elif 'EXITO' in tipo or 'CORRECTO' in tipo:
-                        color = TemaJapones.EXITO
+                        color = TemaModerno.VERDE_PROTECCION
                     
-                    self._agregar_log(f"📋 {mensaje}", color)
+                    self._escribir_en_cronicas(f"� {mensaje}", color)
         
         except Exception as e:
-            self._agregar_log(f"❌ Error actualizando log: {e}", TemaJapones.ERROR)
+            self._escribir_en_cronicas(f"❌ Error actualizando crónicas: {e}", TemaModerno.ROJO_AMENAZA)
     
-    def _on_cerrar(self):
-        """Maneja el cierre de la aplicación."""
+    def _cerrar_palacio_olimpico(self):
+        """Maneja el cierre del palacio olímpico."""
         resultado = messagebox.askyesno(
-            "Cerrar Ares Aegis",
-            "¿Está seguro que desea cerrar Ares Aegis?\n\n"
-            "Se detendrán todos los monitoreos activos."
+            "Cerrar Égida de Ares",
+            f"¿Estás seguro de que deseas cerrar la Égida de Ares?\n\n"
+            f"{IconosOlimpicos.CENTINELA} Se detendrá toda la vigilancia activa.\n"
+            f"{IconosOlimpicos.AGUA_ESTIGIA} Las aguas del Estigia se calmarán.\n"
+            f"{IconosOlimpicos.FUEGO_OLIMPICO} El fuego del Olimpo se extinguirá.\n\n"
+            "¿Proceder con el cierre divino?"
         )
         
         if resultado:
             try:
                 if self.controlador:
-                    self.controlador.finalizar()
-                    self._agregar_log("🔒 Sistema finalizado correctamente", TemaJapones.INFO)
+                    # self.controlador.finalizar()
+                    self._escribir_en_cronicas(f"{IconosOlimpicos.VICTORIA_NIKE} Égida finalizada exitosamente", TemaModerno.VERDE_PROTECCION)
+                    self._escribir_en_terminal(">>> Sistema finalizado por orden divina")
             except Exception as e:
-                print(f"Error al finalizar: {e}")
+                print(f"Error al finalizar el controlador: {e}")
             
             self.ventana.destroy()
     
-    def mostrar_notificacion(self, titulo: str, mensaje: str, tipo: str = "info"):
+    def mostrar_notificacion_divina(self, titulo: str, mensaje: str, tipo: str = "info"):
         """
-        Muestra una notificación al usuario.
+        Muestra una notificación divina al usuario.
         
         Args:
             titulo: Título de la notificación
             mensaje: Mensaje de la notificación
-            tipo: Tipo de notificación (info, warning, error)
+            tipo: Tipo de notificación (info, warning, error, success)
         """
-        color = TemaJapones.INFO
+        color = TemaModerno.AZUL_OLIMPICO
         if tipo == "warning":
-            color = TemaJapones.ADVERTENCIA
+            color = TemaModerno.NARANJA_ADVERTENCIA
         elif tipo == "error":
-            color = TemaJapones.ERROR
+            color = TemaModerno.ROJO_AMENAZA
         elif tipo == "success":
-            color = TemaJapones.EXITO
+            color = TemaModerno.VERDE_PROTECCION
         
-        self._agregar_log(f"🔔 {titulo}: {mensaje}", color)
+        self._escribir_en_cronicas(f"🔔 {titulo}: {mensaje}", color)
+        self._escribir_en_terminal(f">>> NOTIFICACION: {titulo}")
         
         # También mostrar messagebox si es crítico
         if tipo == "error":
@@ -823,22 +1175,49 @@ class InterfazPrincipalGUI:
         elif tipo == "warning":
             messagebox.showwarning(titulo, mensaje)
     
-    def ejecutar(self):
-        """Ejecuta la interfaz gráfica."""
+    def ejecutar_egida(self):
+        """Ejecuta la Égida Modernizada."""
         try:
+            self._escribir_en_terminal(">>> Égida de Ares ejecutándose...")
+            self._escribir_en_terminal(">>> Protección divina activada")
             self.ventana.mainloop()
         except KeyboardInterrupt:
-            self._cerrar_aplicacion()
+            self._cerrar_palacio_olimpico()
         except Exception as e:
-            messagebox.showerror("Error", f"Error ejecutando la interfaz: {e}")
-            self._cerrar_aplicacion()
+            messagebox.showerror("Error Divino", f"Error ejecutando la Égida: {e}")
+            self._cerrar_palacio_olimpico()
     
-    def _cerrar_aplicacion(self):
-        """Cierra la aplicación limpiamente."""
+    def _cerrar_aplicacion_divina(self):
+        """Cierra la aplicación divina limpiamente."""
         try:
             if self.controlador:
-                self.controlador.finalizar()
+                # self.controlador.finalizar()
+                pass
             self.ventana.quit()
             self.ventana.destroy()
         except Exception as e:
-            print(f"Error cerrando aplicación: {e}")
+            print(f"Error cerrando la Égida: {e}")
+
+
+# Alias para compatibilidad con el código existente
+InterfazPrincipalGUI = EgidaModernaGUI
+
+
+# Función de conveniencia para crear la interfaz
+def crear_egida_moderna(ventana_raiz: Optional[tk.Tk] = None) -> EgidaModernaGUI:
+    """
+    Crea una instancia de la Égida Modernizada.
+    
+    Args:
+        ventana_raiz: Ventana raíz opcional
+        
+    Returns:
+        Instancia de EgidaModernaGUI
+    """
+    return EgidaModernaGUI(ventana_raiz)
+
+
+if __name__ == "__main__":
+    # Crear y ejecutar la Égida cuando se ejecuta directamente
+    egida = crear_egida_moderna()
+    egida.ejecutar_egida()

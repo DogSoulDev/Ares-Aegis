@@ -1,65 +1,126 @@
 #!/usr/bin/env python3
-"""
-Ares Aegis - Sistema Antivirus y SIEM
-Punto de entrada principal del sistema
+# -*- coding: utf-8 -*-
 
-Autor: DogSoulDev
-Versión: 2.0.0
+"""
+🛡️ Ares Aegis - Sistema Antivirus y SIEM
+🎌 Archivo Principal de Inicio
+📅 Fecha: 3 de Julio, 2025
+👤 Autor: DogSoulDev
+🔰 Versión: 2.0.0
+
+🌸 "En el silencio del código, la protección florece como sakura en primavera" 🌸
 """
 
-import os
 import sys
-import time
+import os
 import signal
+import logging
 from pathlib import Path
 
-def verificar_privilegios():
-    """Verifica si el script se ejecuta con privilegios de administrador."""
-    if os.geteuid() != 0:
-        print("🚨 Error: Este programa requiere privilegios de administrador")
-        print("💡 Ejecuta con: sudo python3 main.py")
-        sys.exit(1)
+# Agregar el directorio del proyecto al path
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root))
 
-def manejar_senal(signum, frame):
-    """Maneja las señales del sistema para cierre limpio."""
-    print("\n🛑 Señal de interrupción recibida. Cerrando Ares Aegis...")
-    # Aquí se podría agregar limpieza adicional
+# Configurar el logging básico
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('ares_aegis.log', encoding='utf-8'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+logger = logging.getLogger('AresAegis')
+
+def mostrar_banner():
+    """🎌 Muestra el banner artístico del sistema"""
+    banner = """
+🎌 ════════════════════════════════════════════════════════════════════════ 🎌
+    
+            🛡️  ARES AEGIS - SISTEMA ANTIVIRUS Y SIEM  🛡️
+            
+    🌸 "En el silencio del código, la protección florece como sakura" 🌸
+    
+    🔰 Versión: 2.0.0
+    👤 Autor: DogSoulDev  
+    📅 Fecha: 3 de Julio, 2025
+    🏯 Arquitectura: Estilo Japonés Moderno
+    
+    ⚔️  MÓDULOS ACTIVOS:
+    🔍 Escaneador de Archivos       | 🌐 Monitor de Red
+    🧬 Análisis Dinámico           | 📊 SIEM Inteligente  
+    🔐 FIM (File Integrity)        | 🚨 Sistema de Alertas
+    🛡️  Descontaminación          | 📈 Reportes Épicos
+    
+🎌 ════════════════════════════════════════════════════════════════════════ 🎌
+"""
+    print(banner)
+
+def verificar_permisos():
+    """🔒 Verifica que el programa se ejecute con permisos adecuados"""
+    if os.geteuid() != 0:
+        logger.warning("⚠️  Ejecutándose sin privilegios de root")
+        logger.info("💡 Algunas funciones pueden estar limitadas")
+        return False
+    return True
+
+def signal_handler(signum, frame):
+    """🔌 Manejador de señales para cierre limpio"""
+    logger.info("🔒 Recibida señal de cierre, finalizando Ares Aegis...")
     sys.exit(0)
 
 def main():
-    """Función principal."""
-    # Configurar manejo de señales
-    signal.signal(signal.SIGINT, manejar_senal)
-    signal.signal(signal.SIGTERM, manejar_senal)
-    
-    print("🛡️  Iniciando Ares Aegis - Sistema Antivirus y SIEM")
-    print("=" * 50)
-    
-    # Verificar privilegios
-    verificar_privilegios()
-    
+    """🚀 Función principal"""
     try:
-        # Importar e inicializar la interfaz principal
-        from ares_aegis.vista.interfaz_principal_gui import InterfazPrincipalGUI
+        # Configurar manejadores de señales
+        signal.signal(signal.SIGINT, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
         
-        print("🔧 Inicializando interfaz gráfica...")
-        interfaz = InterfazPrincipalGUI()
+        # Mostrar banner
+        mostrar_banner()
         
-        print("✅ Sistema iniciado exitosamente")
-        print("🖥️  Abriendo interfaz gráfica...")
+        # Verificar permisos
+        tiene_permisos = verificar_permisos()
+        if tiene_permisos:
+            logger.info("✅ Ejecutándose con privilegios de administrador")
         
-        # Ejecutar la interfaz
-        interfaz.ejecutar()
+        # Importar y crear el controlador principal
+        from ares_aegis.controladores.controlador_principal import ControladorPrincipal
+        
+        logger.info("🔧 Inicializando sistema Ares Aegis...")
+        
+        # Crear el controlador principal
+        controlador = ControladorPrincipal()
+        
+        logger.info("✅ Sistema Ares Aegis iniciado correctamente")
+        logger.info("🎌 Para detener el sistema usa Ctrl+C")
+        
+        # Ejecutar el controlador principal
+        controlador.ejecutar()
         
     except ImportError as e:
-        print(f"❌ Error de importación: {e}")
-        print("💡 Asegúrate de que todos los módulos estén presentes")
+        logger.error(f"❌ Error de importación: {e}")
+        logger.error("💡 Verifica que todos los módulos estén instalados")
         sys.exit(1)
+        
+    except KeyboardInterrupt:
+        logger.info("🔒 Cierre del sistema solicitado por el usuario")
+        
     except Exception as e:
-        print(f"❌ Error inesperado: {e}")
+        logger.error(f"❌ Error inesperado: {e}")
+        logger.error("🔧 Contacta con el desarrollador para soporte")
         sys.exit(1)
+        
     finally:
-        print("🔒 Ares Aegis finalizado")
+        logger.info("🙏 ¡Gracias por usar Ares Aegis!")
 
 if __name__ == "__main__":
-    main()
+    try:
+        # Ejecutar la función principal
+        main()
+    except KeyboardInterrupt:
+        print("\n🔒 Ares Aegis finalizado por el usuario")
+    except Exception as e:
+        print(f"❌ Error crítico: {e}")
+        sys.exit(1)

@@ -18,7 +18,24 @@ from ..modelos.siem import SIEM, TipoEvento
 from ..modelos.escaneador import Escaneador
 from ..modelos.fim import FIM
 from ..modelos.monitor_red import MonitorRed
-from ..modelos.cuarentena import Cuarentena
+from ..modelos.gestor_cuarentena import Cuarentena
+from ..modelos.monitor_procesos import MonitorProcesos
+from ..modelos.analizador_dinamico import AnalizadorDinamico
+from ..modelos.analizador_archivos import AnalizadorArchivos
+from ..modelos.analizador_cadenas import AnalizadorCadenas
+from ..modelos.analizador_comportamiento_procesos import AnalizadorComportamientoProcesos
+from ..modelos.analizador_comportamiento_red import AnalizadorComportamientoRed
+from ..modelos.escaneador_vulnerabilidades_red import EscaneadorVulnerabilidadesRed
+from ..modelos.escaneador_vulnerabilidades_sistema import EscaneadorVulnerabilidadesSistema
+from ..modelos.integracion_externa import IntegracionExterna
+from ..modelos.sistema_reportes_notificaciones import SistemaReportesNotificaciones
+from ..modelos.respuesta_automatizada import RespuestaAutomatizada
+from ..modelos.analizador_registros import AnalizadorRegistros
+from ..modelos.respondedor_incidentes import RespondedorIncidentes
+from ..modelos.buscador_cve import BuscadorCVE
+from ..modelos.gestor_cheatsheets import GestorCheatsheets
+from ..modelos.visor_hex import VisorHex
+from ..modelos.descontaminacion_inteligente import DescontaminacionInteligente
 
 # Importar utilidades
 from ..utilidades.ayuda_logging import configurar_logger_modulo
@@ -39,6 +56,31 @@ class ControladorPrincipal:
         self.monitor_red: Optional[MonitorRed] = None
         self.cuarentena: Optional[Cuarentena] = None
         
+        # Componentes de análisis avanzado
+        self.monitor_procesos: Optional[MonitorProcesos] = None
+        self.analizador_dinamico: Optional[AnalizadorDinamico] = None
+        self.analizador_archivos: Optional[AnalizadorArchivos] = None
+        self.analizador_cadenas: Optional[AnalizadorCadenas] = None
+        self.analizador_comportamiento_procesos: Optional[AnalizadorComportamientoProcesos] = None
+        self.analizador_comportamiento_red: Optional[AnalizadorComportamientoRed] = None
+        
+        # Componentes de vulnerabilidades
+        self.escaneador_vuln_red: Optional[EscaneadorVulnerabilidadesRed] = None
+        self.escaneador_vuln_sistema: Optional[EscaneadorVulnerabilidadesSistema] = None
+        self.buscador_cve: Optional[BuscadorCVE] = None
+        
+        # Componentes de gestión y respuesta
+        self.integracion_externa: Optional[IntegracionExterna] = None
+        self.sistema_reportes: Optional[SistemaReportesNotificaciones] = None
+        self.respuesta_automatizada: Optional[RespuestaAutomatizada] = None
+        self.analizador_registros: Optional[AnalizadorRegistros] = None
+        self.respondedor_incidentes: Optional[RespondedorIncidentes] = None
+        
+        # Componentes de utilidades
+        self.gestor_cheatsheets: Optional[GestorCheatsheets] = None
+        self.visor_hex: Optional[VisorHex] = None
+        self.descontaminacion: Optional[DescontaminacionInteligente] = None
+        
         # Estado del sistema
         self.sistema_iniciado = False
         self.lock = threading.Lock()
@@ -53,36 +95,101 @@ class ControladorPrincipal:
         try:
             # 1. Inicializar SIEM (core)
             self.siem = SIEM()
-            self.logger.info("SIEM inicializado")
+            self.logger.info("SIEM inicializado - Los Ojos de Argos despiertan")
             
-            # 2. Inicializar componentes que dependen del SIEM
+            # 2. Inicializar componentes principales que dependen del SIEM
             self.escaneador = Escaneador(self.siem)
-            self.logger.info("Escaneador inicializado")
+            self.logger.info("Escaneador inicializado - Los Cazadores de Artemisa listos")
             
             self.cuarentena = Cuarentena(self.siem)
-            self.logger.info("Sistema de cuarentena inicializado")
+            self.logger.info("Cuarentena inicializada - Las Celdas de Hades preparadas")
             
             self.fim = FIM(self.siem)
-            self.logger.info("FIM inicializado")
+            self.logger.info("FIM inicializado - Los Vigilantes de Heimdall en guardia")
             
             self.monitor_red = MonitorRed(self.siem)
-            self.logger.info("Monitor de red inicializado")
+            self.logger.info("Monitor de red inicializado - Los Centinelas de Poseidón alertas")
+            
+            # 3. Inicializar componentes de análisis avanzado
+            self.monitor_procesos = MonitorProcesos(self.siem)
+            self.logger.info("Monitor de procesos inicializado - Los Espías de Hermes activos")
+            
+            self.analizador_dinamico = AnalizadorDinamico()
+            self.logger.info("Analizador dinámico inicializado - Los Oráculos de Apolo revelan secretos")
+            
+            self.analizador_archivos = AnalizadorArchivos(self.siem)
+            self.logger.info("Analizador de archivos inicializado - Los Escribas de Atenea examinan")
+            
+            self.analizador_cadenas = AnalizadorCadenas(self.siem)
+            self.logger.info("Analizador de cadenas inicializado - Los Descifradores de Orfeo interpretan")
+            
+            self.analizador_comportamiento_procesos = AnalizadorComportamientoProcesos(self.siem)
+            self.logger.info("Análisis de comportamiento de procesos - Los Psicólogos de Dioniso estudian")
+            
+            self.analizador_comportamiento_red = AnalizadorComportamientoRed(self.siem)
+            self.logger.info("Análisis de comportamiento de red - Los Estrategas de Ares planifican")
+            
+            # 4. Inicializar componentes de vulnerabilidades
+            self.escaneador_vuln_red = EscaneadorVulnerabilidadesRed()
+            self.logger.info("Escaneador de vulnerabilidades de red - Los Exploradores de Odín buscan")
+            
+            self.escaneador_vuln_sistema = EscaneadorVulnerabilidadesSistema(self.siem)
+            self.logger.info("Escaneador de vulnerabilidades del sistema - Los Inspectores de Hefesto revisan")
+            
+            self.buscador_cve = BuscadorCVE(self.siem)
+            self.logger.info("Buscador CVE inicializado - Los Oráculos de Delfos consultan")
+            
+            # 5. Inicializar componentes de gestión y respuesta
+            self.integracion_externa = IntegracionExterna(self.siem)
+            self.logger.info("Integración externa - Los Embajadores de Iris conectan")
+            
+            self.sistema_reportes = SistemaReportesNotificaciones(self.siem)
+            self.logger.info("Sistema de reportes - Los Heraldos de Hermes informan")
+            
+            self.respuesta_automatizada = RespuestaAutomatizada()
+            self.logger.info("Respuesta automatizada - Los Autómatas de Hefesto responden")
+            
+            self.analizador_registros = AnalizadorRegistros(self.siem)
+            self.logger.info("Analizador de registros - Los Escribas de Temis registran")
+            
+            self.respondedor_incidentes = RespondedorIncidentes(self.siem)
+            self.logger.info("Respondedor de incidentes - Los Guardianes de Némesis protegen")
+            
+            # 6. Inicializar componentes de utilidades
+            self.gestor_cheatsheets = GestorCheatsheets()
+            self.logger.info("Gestor de cheatsheets - Los Escribanos de Hermes organizan")
+            
+            self.visor_hex = VisorHex(self.siem)
+            self.logger.info("Visor hexadecimal - Los Decifradores de Thot revelan")
+            
+            self.descontaminacion = DescontaminacionInteligente(self.siem, self.cuarentena)
+            self.logger.info("Descontaminación inteligente - Los Purificadores de Asclepio sanan")
             
             # Registrar inicialización exitosa
             if self.siem:
+                componentes_inicializados = [
+                    'SIEM', 'Escaneador', 'Cuarentena', 'FIM', 'MonitorRed',
+                    'MonitorProcesos', 'AnalizadorDinamico', 'AnalizadorArchivos', 'AnalizadorCadenas',
+                    'AnalizadorComportamientoProcesos', 'AnalizadorComportamientoRed',
+                    'EscaneadorVulnRed', 'EscaneadorVulnSistema', 'BuscadorCVE',
+                    'IntegracionExterna', 'SistemaReportes', 'RespuestaAutomatizada',
+                    'AnalizadorRegistros', 'RespondedorIncidentes',
+                    'GestorCheatsheets', 'VisorHex', 'Descontaminacion'
+                ]
+                
                 self.siem.registrar_evento(
                     TipoEvento.SISTEMA_INICIADO,
-                    "Controlador principal inicializado exitosamente",
+                    "Todos los componentes de Ares Aegis han despertado exitosamente",
                     {
-                        'componentes_inicializados': [
-                            'SIEM', 'Escaneador', 'Cuarentena', 'FIM', 'MonitorRed'
-                        ],
+                        'componentes_inicializados': componentes_inicializados,
+                        'total_componentes': len(componentes_inicializados),
                         'timestamp_inicio': datetime.now().isoformat()
                     },
-                    "MEDIO"
+                    "ALTO"
                 )
             
             self.sistema_iniciado = True
+            self.logger.info("⚔️ ARES AEGIS COMPLETAMENTE OPERATIVO - Todos los dioses del Olimpo han despertado ⚔️")
             
         except Exception as e:
             self.logger.error(f"Error inicializando componentes: {e}")
@@ -470,6 +577,38 @@ class ControladorPrincipal:
         md += "*Reporte generado automáticamente por Ares Aegis*\n"
         
         return md
+    
+    def ejecutar(self):
+        """
+        Ejecuta el sistema Ares Aegis con interfaz gráfica.
+        
+        Este es el método principal que inicia la interfaz de usuario.
+        """
+        try:
+            self.logger.info("Iniciando interfaz gráfica de Ares Aegis")
+            
+            # Importar la interfaz gráfica
+            from ..vista.interfaz_principal_gui import InterfazPrincipalGUI
+            
+            # Crear y ejecutar la interfaz
+            interfaz = InterfazPrincipalGUI()
+            # Asignar el controlador a la interfaz
+            interfaz.controlador = self
+            interfaz.ejecutar_egida()
+            
+        except ImportError as e:
+            self.logger.error(f"Error importando interfaz gráfica: {e}")
+            print("❌ Error: No se pudo cargar la interfaz gráfica del Égida")
+            print("💡 Verifica que tkinter esté instalado correctamente")
+            raise
+        
+        except Exception as e:
+            self.logger.error(f"Error ejecutando interfaz: {e}")
+            print(f"❌ Error inesperado en la interfaz divina: {e}")
+            raise
+        
+        finally:
+            self.finalizar()
     
     def finalizar(self):
         """Finaliza el controlador y todos sus componentes."""

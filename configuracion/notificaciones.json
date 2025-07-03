@@ -1,0 +1,18 @@
+{
+  "email_habilitado": false,
+  "smtp_servidor": "smtp.gmail.com",
+  "smtp_puerto": 587,
+  "email_origen": "",
+  "email_password": "",
+  "emails_destino": [],
+  "telegram_habilitado": false,
+  "telegram_token": "",
+  "telegram_chat_id": "",
+  "notificaciones_desktop": true,
+  "webhook_url": "",
+  "niveles_notificacion": [
+    "CRITICO",
+    "ALTO",
+    "MEDIO"
+  ]
+}
