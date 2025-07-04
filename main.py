@@ -1,112 +1,49 @@
 #!/usr/bin/env python3
 """
-Punto de Entrada Principal - Ares Aegis
-Antivirus Avanzado para Kali Linux
+Ares Aegis - Sistema Avanzado de Ciberseguridad
+Punto de entrada principal de la aplicación
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
+La copia, distribución o modificación no autorizada está estrictamente prohibida.
+
+Versión: 3.0.0
 """
 
 import sys
 import os
-import tkinter as tk
 import logging
+from pathlib import Path
 
-# Añadir el directorio src al path para importaciones
-src_path = os.path.join(os.path.dirname(__file__), 'src')
-sys.path.insert(0, src_path)
+sys.path.insert(0, str(Path(__file__).parent))
 
-try:
-    from vista.interfaz_principal_gui import InterfazPrincipalGUI
-    from controladores.controlador_principal import ControladorPrincipal
-    from utilidades.escalacion_privilegios import gestionar_privilegios_inicial
-except ImportError as e:
-    print(f"Error de importación: {e}")
-    print("Verifique que todos los módulos están correctamente instalados")
-    sys.exit(1)
-
-
-def configurar_logging():
-    """Configura el sistema de logging."""
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler('ares_aegis.log'),
-            logging.StreamHandler()
-        ]
-    )
+from ares_aegis.vista.interfaz_principal import InterfazPrincipal
+from ares_aegis.utilidades.ayuda_logging import configurar_logging_completo
 
 
 def main():
-    """Función principal."""
-    print("🛡️  Iniciando Ares Aegis: Antivirus Avanzado para Kali Linux")
-    print("=" * 60)
-
-    # Gestionar privilegios antes de continuar
-    modo_privilegios = gestionar_privilegios_inicial()
-
-    # Configurar logging
-    configurar_logging()
-    logger = logging.getLogger(__name__)
-
-    # Mostrar información sobre el modo de ejecución
-    if modo_privilegios == 'root':
-        print("✅ Ares Aegis iniciado con privilegios completos")
-        logger.info("Aplicación iniciada con privilegios de root")
-    else:
-        print("⚠️  Ares Aegis iniciado en modo limitado")
-        logger.warning("Aplicación iniciada en modo limitado")
-
+    """Función principal de entrada."""
     try:
-        # Inicializar controlador principal
-        logger.info("Inicializando controlador principal...")
-        controlador = ControladorPrincipal()
-
-        # Configurar el modo de privilegios en el controlador
-        controlador.modo_privilegios = modo_privilegios
-
-        # Intentar iniciar el sistema
-        if controlador.iniciar_sistema():
-            logger.info("Sistema iniciado correctamente")
-        else:
-            logger.warning("Sistema iniciado con limitaciones")
-
-        # Crear ventana principal
-        logger.info("Creando interfaz gráfica...")
-        root = tk.Tk()
-
-        # Inicializar interfaz
-        interfaz = InterfazPrincipalGUI(root, controlador)
-
-        # Configurar el modo de privilegios en la interfaz
-        interfaz.modo_privilegios = modo_privilegios
-
-        # Iniciar loop principal de la GUI
-        logger.info("Iniciando bucle principal de la interfaz")
-        if modo_privilegios == 'root':
-            print("✅ Ares Aegis iniciado correctamente con funcionalidad completa")
-        else:
-            print("⚠️  Ares Aegis iniciado en modo limitado")
-        print("   Interfaz gráfica disponible")
-
-        root.mainloop()
-
+        logger = configurar_logging_completo()
+        
+        logger.info("=" * 60)
+        logger.info("Iniciando Ares Aegis - Sistema de Ciberseguridad")
+        logger.info("=" * 60)
+        
+        app = InterfazPrincipal()
+        return app.ejecutar()
+        
     except KeyboardInterrupt:
-        print("\n⚡ Interrupción por teclado detectada")
-        logger.info("Aplicación cerrada por el usuario")
-
+        print("\nInterrumpido por el usuario")
+        logging.info("Aplicación interrumpida por el usuario")
+        return True
+        
     except Exception as e:
-        print(f"❌ Error crítico: {e}")
-        logger.error(f"Error crítico en main: {e}")
-        return 1
-
-    finally:
-        print("🔒 Ares Aegis finalizado")
-        logger.info("Aplicación finalizada")
-
-    return 0
+        print(f"Error crítico: {e}")
+        logging.error(f"Error crítico en main: {e}", exc_info=True)
+        return False
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    success = main()
+    sys.exit(0 if success else 1)

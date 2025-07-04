@@ -1,0 +1,145 @@
+{
+  "CVE-2021-44228": {
+    "cve_id": "CVE-2021-44228",
+    "description": "Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints",
+    "cvss_score": 10.0,
+    "severity": "CRITICO",
+    "published_date": "2021-12-10T00:00:00",
+    "modified_date": "2023-11-07T00:00:00",
+    "affected_products": [
+      "log4j",
+      "apache-log4j",
+      "log4j-core"
+    ],
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-44228"
+    ],
+    "cwe_ids": [
+      "CWE-502",
+      "CWE-400",
+      "CWE-20"
+    ],
+    "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+    "exploitation_available": true,
+    "metadatos": {
+      "log4shell": true,
+      "rce": true
+    }
+  },
+  "CVE-2022-0778": {
+    "cve_id": "CVE-2022-0778",
+    "description": "Infinite loop in BN_mod_sqrt() reachable when parsing certificates",
+    "cvss_score": 7.5,
+    "severity": "ALTO",
+    "published_date": "2022-03-15T00:00:00",
+    "modified_date": "2023-11-07T00:00:00",
+    "affected_products": [
+      "openssl"
+    ],
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2022-0778"
+    ],
+    "cwe_ids": [
+      "CWE-835"
+    ],
+    "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+    "exploitation_available": false,
+    "metadatos": {
+      "dos": true
+    }
+  },
+  "CVE-2021-4034": {
+    "cve_id": "CVE-2021-4034",
+    "description": "A local privilege escalation vulnerability was found on polkit",
+    "cvss_score": 7.8,
+    "severity": "ALTO",
+    "published_date": "2022-01-26T00:00:00",
+    "modified_date": "2023-11-07T00:00:00",
+    "affected_products": [
+      "polkit",
+      "policykit-1"
+    ],
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-4034"
+    ],
+    "cwe_ids": [
+      "CWE-269"
+    ],
+    "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "exploitation_available": true,
+    "metadatos": {
+      "privilege_escalation": true,
+      "pwnkit": true
+    }
+  },
+  "CVE-2022-22965": {
+    "cve_id": "CVE-2022-22965",
+    "description": "Spring Framework RCE via Data Binding on JDK 9+",
+    "cvss_score": 9.8,
+    "severity": "CRITICO",
+    "published_date": "2022-04-01T00:00:00",
+    "modified_date": "2023-11-07T00:00:00",
+    "affected_products": [
+      "spring-framework",
+      "spring-core"
+    ],
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2022-22965"
+    ],
+    "cwe_ids": [
+      "CWE-94"
+    ],
+    "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    "exploitation_available": true,
+    "metadatos": {
+      "spring4shell": true,
+      "rce": true
+    }
+  },
+  "CVE-2021-3156": {
+    "cve_id": "CVE-2021-3156",
+    "description": "Heap-based buffer overflow in sudo",
+    "cvss_score": 7.8,
+    "severity": "ALTO",
+    "published_date": "2021-01-26T00:00:00",
+    "modified_date": "2023-11-07T00:00:00",
+    "affected_products": [
+      "sudo"
+    ],
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-3156"
+    ],
+    "cwe_ids": [
+      "CWE-122"
+    ],
+    "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "exploitation_available": true,
+    "metadatos": {
+      "baron_samedit": true,
+      "privilege_escalation": true
+    }
+  },
+  "CVE-2022-0847": {
+    "cve_id": "CVE-2022-0847",
+    "description": "Improper permission validation in Linux kernel",
+    "cvss_score": 7.8,
+    "severity": "ALTO",
+    "published_date": "2022-03-07T00:00:00",
+    "modified_date": "2023-11-07T00:00:00",
+    "affected_products": [
+      "linux-kernel"
+    ],
+    "references": [
+      "https://nvd.nist.gov/vuln/detail/CVE-2022-0847"
+    ],
+    "cwe_ids": [
+      "CWE-269"
+    ],
+    "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+    "exploitation_available": true,
+    "metadatos": {
+      "dirty_pipe": true,
+      "privilege_escalation": true
+    }
+  }
+}

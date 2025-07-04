@@ -1,0 +1,811 @@
+{
+  "timestamp": "2025-07-02T08:30:43.664361",
+  "cheatsheets": {
+    "reconocimiento": {
+      "nombre": "Reconocimiento del Sistema",
+      "descripcion": "Comandos para reconocimiento inicial del sistema",
+      "categoria": "reconocimiento",
+      "autor": "Ares Aegis",
+      "version": "1.0",
+      "fecha_creacion": "2025-07-02T08:30:43.664338",
+      "fecha_modificacion": "2025-07-02T08:30:43.664341",
+      "comandos": [
+        {
+          "nombre": "Información del Sistema",
+          "descripcion": "Obtener información básica del sistema",
+          "comando": "uname -a",
+          "ejemplo": "uname -a",
+          "categoria": "reconocimiento",
+          "tags": [
+            "sistema",
+            "informacion",
+            "kernel"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man uname"
+          ]
+        },
+        {
+          "nombre": "Procesos en Ejecución",
+          "descripcion": "Listar todos los procesos activos",
+          "comando": "ps aux",
+          "ejemplo": "ps aux | grep -i suspicious",
+          "categoria": "reconocimiento",
+          "tags": [
+            "procesos",
+            "monitoring"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man ps"
+          ]
+        },
+        {
+          "nombre": "Conexiones de Red",
+          "descripcion": "Mostrar conexiones de red activas",
+          "comando": "netstat -tulnp",
+          "ejemplo": "netstat -tulnp | grep LISTEN",
+          "categoria": "reconocimiento",
+          "tags": [
+            "red",
+            "conexiones",
+            "puertos"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man netstat"
+          ]
+        },
+        {
+          "nombre": "Usuarios Conectados",
+          "descripcion": "Ver usuarios actualmente conectados",
+          "comando": "who -a",
+          "ejemplo": "who -a",
+          "categoria": "reconocimiento",
+          "tags": [
+            "usuarios",
+            "sesiones"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man who"
+          ]
+        },
+        {
+          "nombre": "Historial de Comandos",
+          "descripcion": "Revisar el historial de comandos del usuario",
+          "comando": "history",
+          "ejemplo": "history | tail -20",
+          "categoria": "reconocimiento",
+          "tags": [
+            "historial",
+            "comandos"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man history"
+          ]
+        },
+        {
+          "nombre": "Archivos con SUID",
+          "descripcion": "Buscar archivos con bit SUID activado",
+          "comando": "find / -perm -4000 -type f 2>/dev/null",
+          "ejemplo": "find /usr -perm -4000 -type f 2>/dev/null",
+          "categoria": "reconocimiento",
+          "tags": [
+            "suid",
+            "privilegios",
+            "escalada"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man find"
+          ]
+        }
+      ],
+      "metadatos": {
+        "prioridad": "alta",
+        "frecuencia_uso": "diaria"
+      }
+    },
+    "escaneo-red": {
+      "nombre": "Escaneo de Red",
+      "descripcion": "Comandos para escaneo y reconocimiento de red",
+      "categoria": "escaneo",
+      "autor": "Ares Aegis",
+      "version": "1.0",
+      "fecha_creacion": "2025-07-02T08:30:43.664346",
+      "fecha_modificacion": "2025-07-02T08:30:43.664346",
+      "comandos": [
+        {
+          "nombre": "Ping de Red",
+          "descripcion": "Verificar conectividad básica",
+          "comando": "ping -c 4 {target}",
+          "ejemplo": "ping -c 4 192.168.1.1",
+          "categoria": "escaneo",
+          "tags": [
+            "ping",
+            "conectividad",
+            "red"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man ping"
+          ]
+        },
+        {
+          "nombre": "Escaneo de Puertos TCP",
+          "descripcion": "Escanear puertos TCP básicos con netcat",
+          "comando": "nc -zv {target} {port}",
+          "ejemplo": "nc -zv 192.168.1.1 80",
+          "categoria": "escaneo",
+          "tags": [
+            "tcp",
+            "puertos",
+            "netcat"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man nc"
+          ]
+        },
+        {
+          "nombre": "Detección de Hosts Activos",
+          "descripcion": "Detectar hosts activos en red local",
+          "comando": "for i in {1..254}; do ping -c 1 -W 1 192.168.1.$i >/dev/null && echo \"192.168.1.$i is up\"; done",
+          "ejemplo": "for i in {1..10}; do ping -c 1 -W 1 192.168.1.$i >/dev/null && echo \"192.168.1.$i is up\"; done",
+          "categoria": "escaneo",
+          "tags": [
+            "discovery",
+            "hosts",
+            "ping-sweep"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "bash manual"
+          ]
+        },
+        {
+          "nombre": "Información de Interfaz de Red",
+          "descripcion": "Mostrar configuración de interfaces de red",
+          "comando": "ip addr show",
+          "ejemplo": "ip addr show eth0",
+          "categoria": "escaneo",
+          "tags": [
+            "interfaz",
+            "ip",
+            "configuracion"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man ip"
+          ]
+        },
+        {
+          "nombre": "Tabla de Enrutamiento",
+          "descripcion": "Mostrar tabla de enrutamiento",
+          "comando": "ip route show",
+          "ejemplo": "ip route show",
+          "categoria": "escaneo",
+          "tags": [
+            "routing",
+            "gateway",
+            "red"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man ip"
+          ]
+        },
+        {
+          "nombre": "Servidores DNS",
+          "descripcion": "Ver configuración DNS",
+          "comando": "cat /etc/resolv.conf",
+          "ejemplo": "cat /etc/resolv.conf",
+          "categoria": "escaneo",
+          "tags": [
+            "dns",
+            "configuracion"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man resolv.conf"
+          ]
+        }
+      ],
+      "metadatos": {
+        "prioridad": "alta",
+        "frecuencia_uso": "semanal"
+      }
+    },
+    "analisis-logs": {
+      "nombre": "Análisis de Logs",
+      "descripcion": "Comandos para análisis y monitoreo de logs del sistema",
+      "categoria": "logs",
+      "autor": "Ares Aegis",
+      "version": "1.0",
+      "fecha_creacion": "2025-07-02T08:30:43.664350",
+      "fecha_modificacion": "2025-07-02T08:30:43.664350",
+      "comandos": [
+        {
+          "nombre": "Últimos Logins",
+          "descripcion": "Ver últimos inicios de sesión",
+          "comando": "last -n 20",
+          "ejemplo": "last -n 20",
+          "categoria": "logs",
+          "tags": [
+            "login",
+            "usuarios",
+            "sesiones"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man last"
+          ]
+        },
+        {
+          "nombre": "Logs de Autenticación",
+          "descripcion": "Revisar logs de autenticación SSH",
+          "comando": "grep 'Failed password' /var/log/auth.log | tail -20",
+          "ejemplo": "grep 'Failed password' /var/log/auth.log | tail -20",
+          "categoria": "logs",
+          "tags": [
+            "ssh",
+            "autenticacion",
+            "fallos"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man grep"
+          ]
+        },
+        {
+          "nombre": "IPs con Fallos SSH",
+          "descripcion": "Extraer IPs con intentos fallidos SSH",
+          "comando": "grep 'Failed password' /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -nr",
+          "ejemplo": "grep 'Failed password' /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -nr | head -10",
+          "categoria": "logs",
+          "tags": [
+            "ssh",
+            "ips",
+            "ataques"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "avanzado",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man awk",
+            "man sort"
+          ]
+        },
+        {
+          "nombre": "Logs del Sistema",
+          "descripcion": "Monitorear logs del sistema en tiempo real",
+          "comando": "tail -f /var/log/syslog",
+          "ejemplo": "tail -f /var/log/syslog | grep -i error",
+          "categoria": "logs",
+          "tags": [
+            "syslog",
+            "tiempo-real",
+            "monitoring"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man tail"
+          ]
+        },
+        {
+          "nombre": "Logs por Fecha",
+          "descripcion": "Filtrar logs por fecha específica",
+          "comando": "grep '$(date +\"%b %d\")' /var/log/syslog",
+          "ejemplo": "grep 'Dec 15' /var/log/syslog",
+          "categoria": "logs",
+          "tags": [
+            "fecha",
+            "filtrado"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man date",
+            "man grep"
+          ]
+        },
+        {
+          "nombre": "Comandos Sudo Ejecutados",
+          "descripcion": "Ver comandos ejecutados con sudo",
+          "comando": "grep 'COMMAND=' /var/log/auth.log",
+          "ejemplo": "grep 'COMMAND=' /var/log/auth.log | tail -10",
+          "categoria": "logs",
+          "tags": [
+            "sudo",
+            "comandos",
+            "privilegios"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man grep"
+          ]
+        }
+      ],
+      "metadatos": {
+        "prioridad": "alta",
+        "frecuencia_uso": "diaria"
+      }
+    },
+    "forense": {
+      "nombre": "Análisis Forense",
+      "descripcion": "Comandos para análisis forense básico y verificación de integridad",
+      "categoria": "forense",
+      "autor": "Ares Aegis",
+      "version": "1.0",
+      "fecha_creacion": "2025-07-02T08:30:43.664353",
+      "fecha_modificacion": "2025-07-02T08:30:43.664354",
+      "comandos": [
+        {
+          "nombre": "Hash MD5 de Archivo",
+          "descripcion": "Calcular hash MD5 para verificar integridad",
+          "comando": "md5sum {file}",
+          "ejemplo": "md5sum /bin/bash",
+          "categoria": "forense",
+          "tags": [
+            "hash",
+            "integridad",
+            "md5"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man md5sum"
+          ]
+        },
+        {
+          "nombre": "Hash SHA256 de Archivo",
+          "descripcion": "Calcular hash SHA256 para verificar integridad",
+          "comando": "sha256sum {file}",
+          "ejemplo": "sha256sum /bin/bash",
+          "categoria": "forense",
+          "tags": [
+            "hash",
+            "integridad",
+            "sha256"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man sha256sum"
+          ]
+        },
+        {
+          "nombre": "Archivos Modificados Recientemente",
+          "descripcion": "Buscar archivos modificados en las últimas 24 horas",
+          "comando": "find /home -type f -mtime -1 2>/dev/null",
+          "ejemplo": "find /home -type f -mtime -1 2>/dev/null | head -20",
+          "categoria": "forense",
+          "tags": [
+            "archivos",
+            "modificacion",
+            "timeline"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man find"
+          ]
+        },
+        {
+          "nombre": "Información Detallada de Archivo",
+          "descripcion": "Obtener metadatos completos de un archivo",
+          "comando": "stat {file}",
+          "ejemplo": "stat /etc/passwd",
+          "categoria": "forense",
+          "tags": [
+            "metadatos",
+            "timestamps",
+            "permisos"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man stat"
+          ]
+        },
+        {
+          "nombre": "Strings en Binarios",
+          "descripcion": "Extraer strings legibles de archivos binarios",
+          "comando": "strings {file} | head -20",
+          "ejemplo": "strings /bin/ls | head -20",
+          "categoria": "forense",
+          "tags": [
+            "strings",
+            "binarios",
+            "analisis"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man strings"
+          ]
+        },
+        {
+          "nombre": "Archivos Abiertos por Proceso",
+          "descripcion": "Listar archivos abiertos por un proceso específico",
+          "comando": "lsof -p {pid}",
+          "ejemplo": "lsof -p 1234",
+          "categoria": "forense",
+          "tags": [
+            "lsof",
+            "archivos",
+            "procesos"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man lsof"
+          ]
+        }
+      ],
+      "metadatos": {
+        "prioridad": "media",
+        "frecuencia_uso": "ocasional"
+      }
+    },
+    "hardening": {
+      "nombre": "Hardening del Sistema",
+      "descripcion": "Comandos para endurecimiento y configuración segura",
+      "categoria": "hardening",
+      "autor": "Ares Aegis",
+      "version": "1.0",
+      "fecha_creacion": "2025-07-02T08:30:43.664356",
+      "fecha_modificacion": "2025-07-02T08:30:43.664357",
+      "comandos": [
+        {
+          "nombre": "Actualizar Sistema",
+          "descripcion": "Actualizar todos los paquetes del sistema",
+          "comando": "apt update && apt upgrade -y",
+          "ejemplo": "sudo apt update && sudo apt upgrade -y",
+          "categoria": "hardening",
+          "tags": [
+            "actualizacion",
+            "paquetes",
+            "seguridad"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man apt"
+          ]
+        },
+        {
+          "nombre": "Configurar Firewall UFW",
+          "descripcion": "Habilitar firewall básico con UFW",
+          "comando": "ufw enable",
+          "ejemplo": "sudo ufw enable && sudo ufw status",
+          "categoria": "hardening",
+          "tags": [
+            "firewall",
+            "ufw",
+            "red"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man ufw"
+          ]
+        },
+        {
+          "nombre": "Deshabilitar Servicios Innecesarios",
+          "descripcion": "Listar y deshabilitar servicios no esenciales",
+          "comando": "systemctl list-unit-files --type=service --state=enabled",
+          "ejemplo": "systemctl list-unit-files --type=service --state=enabled | grep -v essential",
+          "categoria": "hardening",
+          "tags": [
+            "servicios",
+            "systemd",
+            "reduccion-superficie"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "avanzado",
+          "peligrosidad": "peligroso",
+          "referencias": [
+            "man systemctl"
+          ]
+        },
+        {
+          "nombre": "Configurar SSH Seguro",
+          "descripcion": "Verificar configuración SSH segura",
+          "comando": "grep -E '^(PermitRootLogin|PasswordAuthentication|Port)' /etc/ssh/sshd_config",
+          "ejemplo": "grep -E '^(PermitRootLogin|PasswordAuthentication|Port)' /etc/ssh/sshd_config",
+          "categoria": "hardening",
+          "tags": [
+            "ssh",
+            "configuracion",
+            "acceso-remoto"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man sshd_config"
+          ]
+        },
+        {
+          "nombre": "Permisos de Archivos Críticos",
+          "descripcion": "Verificar permisos de archivos sensibles",
+          "comando": "ls -la /etc/passwd /etc/shadow /etc/group",
+          "ejemplo": "ls -la /etc/passwd /etc/shadow /etc/group",
+          "categoria": "hardening",
+          "tags": [
+            "permisos",
+            "archivos-criticos"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man ls"
+          ]
+        },
+        {
+          "nombre": "Configurar Fail2Ban",
+          "descripcion": "Verificar estado de Fail2Ban",
+          "comando": "fail2ban-client status",
+          "ejemplo": "sudo fail2ban-client status sshd",
+          "categoria": "hardening",
+          "tags": [
+            "fail2ban",
+            "proteccion",
+            "ssh"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "seguro",
+          "referencias": [
+            "man fail2ban-client"
+          ]
+        }
+      ],
+      "metadatos": {
+        "prioridad": "alta",
+        "frecuencia_uso": "mensual"
+      }
+    },
+    "respuesta-incidentes": {
+      "nombre": "Respuesta a Incidentes",
+      "descripcion": "Comandos de emergencia para respuesta rápida a incidentes",
+      "categoria": "respuesta",
+      "autor": "Ares Aegis",
+      "version": "1.0",
+      "fecha_creacion": "2025-07-02T08:30:43.664359",
+      "fecha_modificacion": "2025-07-02T08:30:43.664360",
+      "comandos": [
+        {
+          "nombre": "Terminar Proceso Sospechoso",
+          "descripcion": "Terminar un proceso por PID",
+          "comando": "kill -TERM {pid}",
+          "ejemplo": "kill -TERM 1234",
+          "categoria": "respuesta",
+          "tags": [
+            "proceso",
+            "terminacion",
+            "incidente"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "intermedio",
+          "peligrosidad": "peligroso",
+          "referencias": [
+            "man kill"
+          ]
+        },
+        {
+          "nombre": "Bloquear IP con iptables",
+          "descripcion": "Bloquear una IP específica",
+          "comando": "iptables -A INPUT -s {ip} -j DROP",
+          "ejemplo": "sudo iptables -A INPUT -s 192.168.1.100 -j DROP",
+          "categoria": "respuesta",
+          "tags": [
+            "iptables",
+            "bloqueo",
+            "ip"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "avanzado",
+          "peligrosidad": "peligroso",
+          "referencias": [
+            "man iptables"
+          ]
+        },
+        {
+          "nombre": "Aislar Archivo Sospechoso",
+          "descripcion": "Mover archivo a cuarentena",
+          "comando": "mv {file} /tmp/cuarentena/",
+          "ejemplo": "sudo mv /home/user/suspicious.bin /tmp/cuarentena/",
+          "categoria": "respuesta",
+          "tags": [
+            "cuarentena",
+            "archivo",
+            "aislamiento"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man mv"
+          ]
+        },
+        {
+          "nombre": "Desconectar Interfaz de Red",
+          "descripcion": "Deshabilitar interfaz de red para contención",
+          "comando": "ip link set {interface} down",
+          "ejemplo": "sudo ip link set eth0 down",
+          "categoria": "respuesta",
+          "tags": [
+            "red",
+            "aislamiento",
+            "contencion"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "avanzado",
+          "peligrosidad": "peligroso",
+          "referencias": [
+            "man ip"
+          ]
+        },
+        {
+          "nombre": "Crear Snapshot de Memoria",
+          "descripcion": "Crear dump de memoria para análisis",
+          "comando": "dd if=/dev/mem of=/tmp/memory_dump.bin",
+          "ejemplo": "sudo dd if=/dev/mem of=/tmp/memory_dump.bin count=1000",
+          "categoria": "respuesta",
+          "tags": [
+            "memoria",
+            "dump",
+            "forense"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "avanzado",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man dd"
+          ]
+        },
+        {
+          "nombre": "Cambiar Contraseña de Emergencia",
+          "descripcion": "Cambiar contraseña de usuario comprometido",
+          "comando": "passwd {usuario}",
+          "ejemplo": "sudo passwd compromised_user",
+          "categoria": "respuesta",
+          "tags": [
+            "password",
+            "usuario",
+            "compromiso"
+          ],
+          "plataforma": [
+            "linux"
+          ],
+          "nivel": "basico",
+          "peligrosidad": "moderado",
+          "referencias": [
+            "man passwd"
+          ]
+        }
+      ],
+      "metadatos": {
+        "prioridad": "critica",
+        "frecuencia_uso": "emergencia"
+      }
+    }
+  }
+}

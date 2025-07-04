@@ -1,22 +1,122 @@
-# Firmas de Ares Aegis
-# Formato: una firma por línea
-# HASH:valor_hash - para hashes maliciosos
-# REGEX:patrón - para expresiones regulares
-# Texto simple - para búsqueda de cadenas
+# Base de datos de firmas de malware para Ares Aegis
+# Formato: tipo_amenaza|patrón|descripción|severidad
+# Severidad: ALTA, MEDIA, BAJA
 
-# Firmas de texto comunes
-eval(base64_decode
-system($_GET
-<script>alert
-powershell -encodedcommand
-cmd.exe /c
-/bin/sh -c
+# Virus y troyanos comunes
+VIRUS|X5O!P%@AP[4\PZX54(P^)7CC)7}$|EICAR Test File|MEDIA
+TROJAN|BEGIN PGP MESSAGE|Posible mensaje cifrado malicioso|MEDIA
+ROOTKIT|ZwQueryDirectoryFile|Hook API sospechoso|ALTA
+BACKDOOR|cmd.exe /c|Ejecución de comando sospechosa|ALTA
+MALWARE|CreateRemoteThread|Inyección de código|ALTA
 
-# Hashes maliciosos conocidos (ejemplos)
-HASH:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-HASH:da39a3ee5e6b4b0d3255bfef95601890afd80709
+# Patrones de scripts maliciosos
+SCRIPT|eval(|Ejecución de código dinámico|MEDIA
+SCRIPT|base64_decode|Decodificación sospechosa|MEDIA
+SCRIPT|shell_exec|Ejecución de shell|ALTA
+SCRIPT|system(|Llamada al sistema|ALTA
+SCRIPT|exec(|Ejecución de código|MEDIA
 
-# Expresiones regulares
-REGEX:eval\s*\(\s*base64_decode
-REGEX:<script[^>]*>.*alert.*</script>
-REGEX:powershell\s+-[eE]ncodedcommand
+# Patrones de PowerShell malicioso
+POWERSHELL|powershell.exe -enc|PowerShell codificado|ALTA
+POWERSHELL|Invoke-Expression|Ejecución dinámica PS|MEDIA
+POWERSHELL|DownloadString|Descarga remota PS|ALTA
+POWERSHELL|IEX|Alias de Invoke-Expression|MEDIA
+POWERSHELL|Start-Process -WindowStyle Hidden|Proceso oculto|MEDIA
+
+# Patrones de documentos maliciosos
+MACRO|Auto_Open|Macro de apertura automática|ALTA
+MACRO|Workbook_Open|Macro de libro Excel|ALTA
+MACRO|Shell.Application|Ejecución via Shell|ALTA
+MACRO|WScript.Shell|Script de Windows|ALTA
+MACRO|CreateObject|Creación de objeto COM|MEDIA
+
+# Patrones de red sospechosos
+NETWORK|nc -l|Netcat listener|ALTA
+NETWORK|/bin/bash|Shell remoto|ALTA
+NETWORK|wget http|Descarga remota|MEDIA
+NETWORK|curl -o|Descarga con curl|MEDIA
+NETWORK|ftp://|Transferencia FTP|BAJA
+
+# Patrones de cryptominers
+MINER|stratum+tcp|Protocolo de minería|ALTA
+MINER|cryptonight|Algoritmo de minería|ALTA
+MINER|xmrig|Software de minería|ALTA
+MINER|monero|Criptomoneda|MEDIA
+MINER|bitcoin|Criptomoneda|MEDIA
+
+# Patrones de phishing
+PHISHING|Account will be suspended|Texto de phishing|MEDIA
+PHISHING|Click here to verify|Texto de phishing|MEDIA
+PHISHING|Urgent action required|Texto de phishing|MEDIA
+PHISHING|paypal.com-|Dominio falso|ALTA
+PHISHING|facebook.com-|Dominio falso|ALTA
+
+# Patrones de ransomware
+RANSOMWARE|Your files have been encrypted|Mensaje de ransomware|ALTA
+RANSOMWARE|Bitcoin payment|Pago de rescate|ALTA
+RANSOMWARE|.encrypted|Extensión de archivo|ALTA
+RANSOMWARE|README.txt|Archivo de instrucciones|MEDIA
+RANSOMWARE|DECRYPT_INSTRUCTION|Instrucciones de descifrado|ALTA
+
+# Patrones de keyloggers
+KEYLOGGER|GetAsyncKeyState|Captura de teclas|ALTA
+KEYLOGGER|SetWindowsHookEx|Hook de ventana|ALTA
+KEYLOGGER|WH_KEYBOARD_LL|Hook de teclado|ALTA
+KEYLOGGER|keylog|Término de keylogger|MEDIA
+KEYLOGGER|capture.keys|Captura de teclas|ALTA
+
+# Patrones de exploits
+EXPLOIT|buffer overflow|Desbordamiento de buffer|ALTA
+EXPLOIT|shellcode|Código de shell|ALTA
+EXPLOIT|NOP sled|Técnica de exploit|ALTA
+EXPLOIT|ROP chain|Return-oriented programming|ALTA
+EXPLOIT|heap spray|Técnica de exploit|ALTA
+
+# Patrones de archivos sospechosos
+SUSPICIOUS|.exe.exe|Doble extensión|MEDIA
+SUSPICIOUS|.scr|Archivo de protector|MEDIA
+SUSPICIOUS|.pif|Archivo de información|MEDIA
+SUSPICIOUS|.com|Archivo ejecutable COM|BAJA
+SUSPICIOUS|.bat|Archivo por lotes|BAJA
+
+# Patrones de bypass de seguridad
+BYPASS|amsi.dll|Bypass AMSI|ALTA
+BYPASS|etw.dll|Bypass ETW|ALTA
+BYPASS|wldp.dll|Bypass WLDP|ALTA
+BYPASS|Reflection.Assembly|Carga de ensamblado|MEDIA
+BYPASS|UnsafeNativeMethods|Métodos nativos|MEDIA
+
+# Patrones de archivos específicos peligrosos
+DANGEROUS|autorun.inf|Ejecución automática|ALTA
+DANGEROUS|hosts|Modificación de hosts|MEDIA
+DANGEROUS|startup|Inicio automático|MEDIA
+DANGEROUS|registry|Modificación de registro|MEDIA
+DANGEROUS|services.exe|Proceso crítico|ALTA
+
+# Patrones de técnicas de evasión
+EVASION|sleep(|Retardo de ejecución|MEDIA
+EVASION|time.sleep|Retardo Python|MEDIA
+EVASION|setTimeout|Retardo JavaScript|MEDIA
+EVASION|VirtualAlloc|Asignación de memoria|MEDIA
+EVASION|CreateThread|Creación de hilo|MEDIA
+
+# Patrones específicos de Linux
+LINUX|/proc/self/exe|Auto-referencia ejecutable|MEDIA
+LINUX|chmod +x|Cambio de permisos|MEDIA
+LINUX|crontab -e|Modificación de cron|MEDIA
+LINUX|/etc/passwd|Archivo de usuarios|ALTA
+LINUX|/etc/shadow|Archivo de contraseñas|ALTA
+
+# Patrones de persistencia
+PERSISTENCE|HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run|Clave de registro de inicio|ALTA
+PERSISTENCE|HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run|Clave de registro de inicio|ALTA
+PERSISTENCE|%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup|Carpeta de inicio|ALTA
+PERSISTENCE|schtasks /create|Creación de tarea programada|ALTA
+PERSISTENCE|at.exe|Programador de tareas|MEDIA
+
+# Actualizaciones recientes - Nuevas amenazas 2024
+TROJAN|BlackCat|Ransomware BlackCat|ALTA
+TROJAN|LockBit|Ransomware LockBit|ALTA
+MALWARE|Qbot|Trojan bancario|ALTA
+MALWARE|Emotet|Trojan modular|ALTA
+BACKDOOR|Cobalt Strike|Herramienta de post-explotación|ALTA
