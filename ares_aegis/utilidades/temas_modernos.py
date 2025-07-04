@@ -1,467 +1,992 @@
 #!/usr/bin/env python3
 """
-Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
-Todos los derechos reservados. Este código es propietario y confidencial.
+Ares Aegis - Temas Modernos
+Sistema de temas para la interfaz de usuario
 
-Sistema de Temas Modernos
+Autor: DogSoulDev
+Versión: 3.0.0
 """
 
-import tkinter as tk
-from tkinter import ttk
-from typing import Dict, Any, Optional, List, Tuple, Callable, Union
+from typing import Dict, Any, Optional, List
 
 
 class TemaClaro:
-    FONDO_PRINCIPAL = "#FAFBFC"
-    FONDO_SECUNDARIO = "#FFFFFF"
-    FONDO_CARD = "#FFFFFF"
-    BORDE = "#E1E4E8"
+    """Tema claro para la interfaz con colores modernos profesionales."""
     
-    PRIMARIO = "#0366D6"
-    PRIMARIO_HOVER = "#0258C7"
-    SECUNDARIO = "#6F42C1"
+    # Colores principales - Paleta profesional inspirada en aplicaciones de ciberseguridad modernas
+    FONDO_PRINCIPAL = "#fafbfc"       # Gris ultra claro, profesional
+    FONDO_SECUNDARIO = "#f1f3f4"      # Gris claro para barras de navegación
+    FONDO_CARD = "#ffffff"            # Blanco puro para tarjetas con sombra
+    FONDO_SIDEBAR = "#2c3e50"         # Azul gris oscuro para sidebar profesional
+    TEXTO_PRINCIPAL = "#2d3436"       # Gris muy oscuro para máxima legibilidad
+    TEXTO_SECUNDARIO = "#636e72"      # Gris medio para texto secundario
+    TEXTO_MUTED = "#a2a8b0"          # Gris claro para texto deshabilitado
+    TEXTO_SIDEBAR = "#ecf0f1"         # Texto claro para sidebar oscuro
+    PRIMARIO = "#0984e3"             # Azul profesional para elementos principales
+    SECUNDARIO = "#74b9ff"           # Azul claro para elementos secundarios
+    ACCENT = "#6c5ce7"               # Violeta para elementos de acento
+    EXITO = "#00b894"                # Verde profesional para éxito
+    SUCCESS = "#00b894"              # Alias para éxito
+    WARNING = "#fdcb6e"              # Amarillo profesional para advertencias
+    DANGER = "#e17055"               # Rojo profesional para errores/peligro
+    ERROR = "#e17055"                # Alias para peligro
+    INFO = "#74b9ff"                 # Azul claro para información
+    BORDER = "#ddd"                  # Color de bordes sutil
+    SHADOW = "#00000010"             # Sombra muy sutil
+    HOVER = "#f8f9fa"                # Color de hover sutil
     
-    EXITO = "#28A745"
-    ADVERTENCIA = "#FFC107"
-    ERROR = "#DC3545"                  # Rojo error
-    INFO = "#17A2B8"                   # Azul info
+    # Colores específicos para ciberseguridad - Inspirados en dashboards profesionales
+    AMENAZA_CRITICA = "#d63031"      # Rojo intenso profesional
+    AMENAZA_ALTA = "#e17055"         # Rojo-naranja para amenazas altas
+    AMENAZA_MEDIA = "#f39c12"        # Naranja profesional
+    AMENAZA_BAJA = "#f1c40f"         # Amarillo para amenazas bajas
+    PROTEGIDO = "#00b894"            # Verde profesional para estado seguro
+    ESCANEANDO = "#0984e3"           # Azul para procesos activos
+    MONITOREANDO = "#6c5ce7"         # Violeta para monitoreo
+    DESCONOCIDO = "#95a5a6"          # Gris para estados indefinidos
+    CUARENTENA = "#e67e22"           # Naranja para elementos en cuarentena
+    LIMPIO = "#27ae60"               # Verde para elementos limpios
     
-    # Texto
-    TEXTO_PRINCIPAL = "#24292E"        # Gris oscuro
-    TEXTO_SECUNDARIO = "#586069"       # Gris medio
-    TEXTO_MUTED = "#959DA5"            # Gris claro
-    TEXTO_LINK = "#0366D6"             # Azul enlace
+    # Colores para gráficos y métricas
+    GRAFICO_1 = "#0984e3"            # Azul principal
+    GRAFICO_2 = "#00b894"            # Verde
+    GRAFICO_3 = "#e17055"            # Rojo-naranja
+    GRAFICO_4 = "#6c5ce7"            # Violeta
+    GRAFICO_5 = "#fdcb6e"            # Amarillo
     
-    # Efectos
-    SOMBRA_SUAVE = "#E1E4E8"
-    SOMBRA_MEDIA = "#D1D5DA"
-    SOMBRA_FUERTE = "#BDC3C7"
+    @staticmethod
+    def obtener_colores() -> Dict[str, str]:
+        """Retorna los colores del tema claro."""
+        return {
+            "bg_principal": TemaClaro.FONDO_PRINCIPAL,
+            "bg_secundario": TemaClaro.FONDO_SECUNDARIO,
+            "bg_card": TemaClaro.FONDO_CARD,
+            "bg_sidebar": TemaClaro.FONDO_SIDEBAR,
+            "text_principal": TemaClaro.TEXTO_PRINCIPAL,
+            "text_secundario": TemaClaro.TEXTO_SECUNDARIO,
+            "text_muted": TemaClaro.TEXTO_MUTED,
+            "text_sidebar": TemaClaro.TEXTO_SIDEBAR,
+            "primario": TemaClaro.PRIMARIO,
+            "secundario": TemaClaro.SECUNDARIO,
+            "accent": TemaClaro.ACCENT,
+            "success": TemaClaro.SUCCESS,
+            "warning": TemaClaro.WARNING,
+            "danger": TemaClaro.DANGER,
+            "info": TemaClaro.INFO,
+            "border": TemaClaro.BORDER,
+            "shadow": TemaClaro.SHADOW,
+            "hover": TemaClaro.HOVER,
+            "amenaza_critica": TemaClaro.AMENAZA_CRITICA,
+            "amenaza_alta": TemaClaro.AMENAZA_ALTA,
+            "amenaza_media": TemaClaro.AMENAZA_MEDIA,
+            "amenaza_baja": TemaClaro.AMENAZA_BAJA,
+            "protegido": TemaClaro.PROTEGIDO,
+            "escaneando": TemaClaro.ESCANEANDO,
+            "monitoreando": TemaClaro.MONITOREANDO,
+            "desconocido": TemaClaro.DESCONOCIDO,
+            "cuarentena": TemaClaro.CUARENTENA,
+            "limpio": TemaClaro.LIMPIO
+        }
     
-    # Gradientes
-    GRADIENTE_PRIMARIO = ["#0366D6", "#0258C7"]
-    GRADIENTE_SECUNDARIO = ["#6F42C1", "#5A32A3"]
-    GRADIENTE_EXITO = ["#28A745", "#20923C"]
+    @staticmethod
+    def obtener_fuentes() -> Dict[str, Any]:
+        """Retorna la configuración de fuentes modernas."""
+        return {
+            "titulo": ("Segoe UI", 18, "bold"),
+            "subtitulo": ("Segoe UI", 14, "bold"),
+            "subtitulo_card": ("Segoe UI", 12, "bold"),
+            "normal": ("Segoe UI", 10),
+            "pequeña": ("Segoe UI", 9),
+            "codigo": ("Consolas", 10),
+            "monospace": ("Liberation Mono", 9),
+            "icono": ("Segoe UI Symbol", 14),
+            "icono_grande": ("Segoe UI Symbol", 20),
+            "metrica": ("Segoe UI", 24, "bold"),
+            "badge": ("Segoe UI", 8, "bold")
+        }
 
 
 class TemaOscuro:
-    """Tema oscuro moderno inspirado en Discord, VS Code y GitHub Dark."""
+    """Tema oscuro para la interfaz con colores modernos profesionales."""
     
-    # Colores base
-    FONDO_PRINCIPAL = "#0D1117"        # Negro GitHub Dark
-    FONDO_SECUNDARIO = "#161B22"       # Gris muy oscuro
-    FONDO_CARD = "#21262D"             # Gris oscuro para tarjetas
-    BORDE = "#30363D"                  # Gris para bordes
+    # Colores principales - Paleta oscura moderna y profesional
+    FONDO_PRINCIPAL = "#1e1e2e"       # Gris muy oscuro moderno
+    FONDO_SECUNDARIO = "#313244"      # Gris oscuro para navegación
+    FONDO_CARD = "#313244"            # Gris oscuro para tarjetas
+    FONDO_SIDEBAR = "#181825"         # Negro azulado para sidebar
+    TEXTO_PRINCIPAL = "#cdd6f4"       # Blanco azulado para texto principal
+    TEXTO_SECUNDARIO = "#bac2de"      # Gris azulado para texto secundario
+    TEXTO_MUTED = "#6c7086"          # Gris medio para texto deshabilitado
+    TEXTO_SIDEBAR = "#f38ba8"         # Rosa sutil para sidebar
+    PRIMARIO = "#89b4fa"             # Azul claro profesional
+    SECUNDARIO = "#74c7ec"           # Cian para elementos secundarios
+    ACCENT = "#cba6f7"               # Violeta para elementos de acento
+    EXITO = "#a6e3a1"                # Verde claro para éxito
+    SUCCESS = "#a6e3a1"              # Alias para éxito
+    WARNING = "#f9e2af"              # Amarillo claro para advertencias
+    DANGER = "#f38ba8"               # Rosa para errores/peligro
+    ERROR = "#f38ba8"                # Alias para peligro
+    INFO = "#74c7ec"                 # Cian para información
+    BORDER = "#45475a"               # Color de bordes oscuro
+    SHADOW = "#00000040"             # Sombra más intensa
+    HOVER = "#45475a"                # Color de hover oscuro
     
-    # Colores de acento
-    PRIMARIO = "#5865F2"               # Azul Discord
-    PRIMARIO_HOVER = "#4752C4"         # Azul hover
-    SECUNDARIO = "#7289DA"             # Azul claro Discord
+    # Colores específicos para ciberseguridad - Tema oscuro profesional
+    AMENAZA_CRITICA = "#f38ba8"      # Rosa intenso para amenazas críticas
+    AMENAZA_ALTA = "#fab387"         # Naranja claro para amenazas altas
+    AMENAZA_MEDIA = "#f9e2af"        # Amarillo claro para amenazas medias
+    AMENAZA_BAJA = "#a6e3a1"         # Verde claro para amenazas bajas
+    PROTEGIDO = "#a6e3a1"            # Verde claro para estado seguro
+    ESCANEANDO = "#89b4fa"           # Azul claro para procesos
+    MONITOREANDO = "#cba6f7"         # Violeta para monitoreo
+    DESCONOCIDO = "#6c7086"          # Gris para estados indefinidos
+    CUARENTENA = "#fab387"           # Naranja claro para cuarentena
+    LIMPIO = "#a6e3a1"               # Verde claro para elementos limpios
     
-    # Estados
-    EXITO = "#57F287"                  # Verde Discord
-    ADVERTENCIA = "#FEE75C"            # Amarillo Discord
-    ERROR = "#ED4245"                  # Rojo Discord
-    INFO = "#5865F2"                   # Azul Discord
+    # Colores para gráficos y métricas
+    GRAFICO_1 = "#89b4fa"            # Azul claro
+    GRAFICO_2 = "#a6e3a1"            # Verde claro
+    GRAFICO_3 = "#f38ba8"            # Rosa
+    GRAFICO_4 = "#cba6f7"            # Violeta
+    GRAFICO_5 = "#f9e2af"            # Amarillo claro
     
-    # Texto
-    TEXTO_PRINCIPAL = "#F0F6FC"        # Blanco GitHub Dark
-    TEXTO_SECUNDARIO = "#8B949E"       # Gris claro
-    TEXTO_MUTED = "#6E7681"            # Gris medio
-    TEXTO_LINK = "#58A6FF"             # Azul claro
+    @staticmethod
+    def obtener_colores() -> Dict[str, str]:
+        """Retorna los colores del tema oscuro."""
+        return {
+            "bg_principal": TemaOscuro.FONDO_PRINCIPAL,
+            "bg_secundario": TemaOscuro.FONDO_SECUNDARIO,
+            "bg_card": TemaOscuro.FONDO_CARD,
+            "bg_sidebar": TemaOscuro.FONDO_SIDEBAR,
+            "text_principal": TemaOscuro.TEXTO_PRINCIPAL,
+            "text_secundario": TemaOscuro.TEXTO_SECUNDARIO,
+            "text_muted": TemaOscuro.TEXTO_MUTED,
+            "text_sidebar": TemaOscuro.TEXTO_SIDEBAR,
+            "primario": TemaOscuro.PRIMARIO,
+            "secundario": TemaOscuro.SECUNDARIO,
+            "accent": TemaOscuro.ACCENT,
+            "success": TemaOscuro.SUCCESS,
+            "warning": TemaOscuro.WARNING,
+            "danger": TemaOscuro.DANGER,
+            "info": TemaOscuro.INFO,
+            "border": TemaOscuro.BORDER,
+            "shadow": TemaOscuro.SHADOW,
+            "hover": TemaOscuro.HOVER,
+            "amenaza_critica": TemaOscuro.AMENAZA_CRITICA,
+            "amenaza_alta": TemaOscuro.AMENAZA_ALTA,
+            "amenaza_media": TemaOscuro.AMENAZA_MEDIA,
+            "amenaza_baja": TemaOscuro.AMENAZA_BAJA,
+            "protegido": TemaOscuro.PROTEGIDO,
+            "escaneando": TemaOscuro.ESCANEANDO,
+            "monitoreando": TemaOscuro.MONITOREANDO,
+            "desconocido": TemaOscuro.DESCONOCIDO,
+            "cuarentena": TemaOscuro.CUARENTENA,
+            "limpio": TemaOscuro.LIMPIO
+        }
     
-    # Efectos
-    SOMBRA_SUAVE = "#0D1117"
-    SOMBRA_MEDIA = "#010409"
-    SOMBRA_FUERTE = "#000000"
-    
-    # Gradientes
-    GRADIENTE_PRIMARIO = ["#5865F2", "#4752C4"]
-    GRADIENTE_SECUNDARIO = ["#7289DA", "#5B6DCF"]
-    GRADIENTE_EXITO = ["#57F287", "#3DDD78"]
+    @staticmethod
+    def obtener_fuentes() -> Dict[str, Any]:
+        """Retorna la configuración de fuentes modernas."""
+        return {
+            "titulo": ("Segoe UI", 18, "bold"),
+            "subtitulo": ("Segoe UI", 14, "bold"),
+            "subtitulo_card": ("Segoe UI", 12, "bold"),
+            "normal": ("Segoe UI", 10),
+            "pequeña": ("Segoe UI", 9),
+            "codigo": ("Consolas", 10),
+            "monospace": ("Liberation Mono", 9),
+            "icono": ("Segoe UI Symbol", 14),
+            "icono_grande": ("Segoe UI Symbol", 20),
+            "metrica": ("Segoe UI", 24, "bold"),
+            "badge": ("Segoe UI", 8, "bold")
+        }
 
 
 class ComponentesModernos:
-    """Componentes de interfaz ultra-modernos con efectos avanzados."""
+    """Componentes modernos ultra-profesionales para la interfaz usando solo Python/Tkinter."""
     
     @staticmethod
-    def crear_card_ultra_moderna(parent: tk.Widget, titulo: str = "", padding: int = 20) -> tuple[tk.Frame, tk.Frame]:
-        """Crea una tarjeta ultra-moderna con efectos de sombra y gradientes.
+    def crear_boton_ultra_moderno(parent, texto: str, comando=None, estilo: str = "primario", icono: Optional[str] = None):
+        """Crea un botón moderno ultra estilizado con efectos visuales."""
+        import tkinter as tk
+        from typing import Callable, Optional
         
-        Returns:
-            tuple: (shadow_container, content_frame)
-        """
-        # Contenedor principal con efecto de sombra
-        shadow_container = tk.Frame(parent, bg=TemaClaro.SOMBRA_SUAVE, bd=0, relief="flat")
+        # Colores según el estilo - Paleta profesional
+        estilos = {
+            "primario": {"bg": "#0984e3", "fg": "#ffffff", "hover": "#0770c4", "active": "#055a9b"},
+            "secundario": {"bg": "#74b9ff", "fg": "#ffffff", "hover": "#5ba7ff", "active": "#4295ff"},
+            "exito": {"bg": "#00b894", "fg": "#ffffff", "hover": "#00a085", "active": "#008876"},
+            "peligro": {"bg": "#e17055", "fg": "#ffffff", "hover": "#dc6249", "active": "#d7543d"},
+            "advertencia": {"bg": "#fdcb6e", "fg": "#2d3436", "hover": "#fcc74b", "active": "#fbc328"},
+            "outline": {"bg": "#ffffff", "fg": "#0984e3", "hover": "#f8f9fa", "active": "#e9ecef"},
+            "ghost": {"bg": "#fafbfc", "fg": "#636e72", "hover": "#f1f3f4", "active": "#e9ecef"}
+        }
         
-        # Capa de sombra media
-        shadow_layer = tk.Frame(shadow_container, bg=TemaClaro.SOMBRA_MEDIA, bd=0, relief="flat")
-        shadow_layer.pack(fill=tk.BOTH, expand=True, padx=2, pady=2)
+        color_config = estilos.get(estilo, estilos["primario"])
         
-        # Tarjeta principal
-        card = tk.Frame(
-            shadow_layer,
-            bg=TemaClaro.FONDO_CARD,
-            bd=0,
+        try:
+            bg_color = parent.cget('bg') if hasattr(parent, 'cget') else "#ffffff"
+        except:
+            bg_color = "#ffffff"
+        
+        # Frame contenedor con padding
+        frame = tk.Frame(parent, bg=bg_color)
+        
+        # Crear botón con estilo moderno
+        boton = tk.Button(
+            frame,
+            text=f"{icono} {texto}" if icono else texto,
+            command=comando if comando is not None else lambda: None,
+            bg=color_config["bg"],
+            fg=color_config["fg"],
             relief="flat",
-            highlightbackground=TemaClaro.BORDE,
+            borderwidth=0,
+            cursor="hand2",
+            font=("Segoe UI", 10, "normal"),
+            padx=20,
+            pady=10
+        )
+        
+        # Efectos de hover y click
+        def on_enter(e):
+            boton.config(bg=color_config["hover"])
+            
+        def on_leave(e):
+            boton.config(bg=color_config["bg"])
+            
+        def on_click(e):
+            boton.config(bg=color_config["active"])
+            boton.after(100, lambda: boton.config(bg=color_config["hover"]))
+        
+        boton.bind("<Enter>", on_enter)
+        boton.bind("<Leave>", on_leave)
+        boton.bind("<Button-1>", on_click)
+        
+        boton.pack(fill=tk.BOTH, expand=True)
+        return frame
+    
+    @staticmethod
+    def crear_card_ultra_moderna(parent, titulo: str = "", descripcion: str = "", padding: int = 20, 
+                                icono: Optional[str] = None, color_acento: str = "#0984e3"):
+        """Crea una tarjeta moderna ultra estilizada con sombra y efectos."""
+        import tkinter as tk
+        
+        # Container principal con efecto de elevación
+        container = tk.Frame(
+            parent,
+            bg="#ffffff",
+            relief="flat",
+            borderwidth=0,
+            highlightbackground="#e0e6ed",
             highlightthickness=1
         )
-        card.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
         
-        # Contenido de la tarjeta
-        content_frame = tk.Frame(card, bg=TemaClaro.FONDO_CARD)
-        content_frame.pack(fill=tk.BOTH, expand=True, padx=padding, pady=padding)
+        # Simular sombra con frames adicionales
+        shadow_frame = tk.Frame(parent, bg="#f1f3f4", height=2)
+        shadow_frame.place(in_=container, relx=0.01, rely=0.01, relwidth=0.99, relheight=0.99)
         
+        # Header de la tarjeta si hay título
         if titulo:
+            header_frame = tk.Frame(container, bg="#fafbfc", height=60)
+            header_frame.pack(fill=tk.X)
+            header_frame.pack_propagate(False)
+            
+            # Frame para icono y título
+            title_frame = tk.Frame(header_frame, bg="#fafbfc")
+            title_frame.pack(fill=tk.BOTH, expand=True, padx=padding, pady=15)
+            
+            # Icono si se proporciona
+            if icono:
+                icon_label = tk.Label(
+                    title_frame,
+                    text=icono,
+                    font=("Segoe UI", 16),
+                    bg="#fafbfc",
+                    fg=color_acento
+                )
+                icon_label.pack(side=tk.LEFT, padx=(0, 10))
+            
+            # Título
             titulo_label = tk.Label(
-                content_frame,
+                title_frame,
                 text=titulo,
                 font=("Segoe UI", 14, "bold"),
-                bg=TemaClaro.FONDO_CARD,
-                fg=TemaClaro.TEXTO_PRINCIPAL
+                bg="#fafbfc",
+                fg="#2d3436"
             )
-            titulo_label.pack(anchor="w", pady=(0, 10))
+            titulo_label.pack(side=tk.LEFT)
+            
+            # Descripción si se proporciona
+            if descripcion:
+                desc_label = tk.Label(
+                    header_frame,
+                    text=descripcion,
+                    font=("Segoe UI", 9),
+                    bg="#fafbfc",
+                    fg="#636e72"
+                )
+                desc_label.pack(padx=padding, pady=(0, 10), anchor=tk.W)
         
-        # Efectos hover para la tarjeta
-        def card_hover_enter(e):
-            card.config(highlightbackground=TemaClaro.PRIMARIO)
-            shadow_layer.config(bg=TemaClaro.SOMBRA_FUERTE)
+        # Contenido de la tarjeta
+        content_frame = tk.Frame(container, bg="#ffffff")
+        content_frame.pack(fill=tk.BOTH, expand=True, padx=padding, pady=padding)
         
-        def card_hover_leave(e):
-            card.config(highlightbackground=TemaClaro.BORDE)
-            shadow_layer.config(bg=TemaClaro.SOMBRA_MEDIA)
+        # Efectos de hover
+        def on_enter(e):
+            container.config(highlightbackground="#74b9ff")
+            
+        def on_leave(e):
+            container.config(highlightbackground="#e0e6ed")
         
-        card.bind("<Enter>", card_hover_enter)
-        card.bind("<Leave>", card_hover_leave)
+        container.bind("<Enter>", on_enter)
+        container.bind("<Leave>", on_leave)
         
-        return shadow_container, content_frame
+        # Propiedades para acceso
+        setattr(container, 'content_frame', content_frame)
+        setattr(content_frame, 'FONDO_CARD', "#ffffff")
+        
+        return container, content_frame
     
     @staticmethod
-    def crear_boton_ultra_moderno(
-        parent: tk.Widget,
-        texto: str,
-        comando: Callable,
-        estilo: str = "primario",
-        icono: str = "",
-        ancho: Optional[int] = None
-    ) -> tk.Frame:
-        """Crea un botón ultra-moderno con efectos avanzados."""
+    def crear_badge_estado(parent, texto: str, estado: str = "info"):
+        """Crea un badge/etiqueta de estado moderno."""
+        import tkinter as tk
         
-        # Definir colores según el estilo
-        if estilo == "primario":
-            color_normal = TemaClaro.PRIMARIO
-            color_hover = TemaClaro.PRIMARIO_HOVER
-            color_texto = "#FFFFFF"
-        elif estilo == "secundario":
-            color_normal = TemaClaro.SECUNDARIO
-            color_hover = "#5A32A3"
-            color_texto = "#FFFFFF"
-        elif estilo == "exito":
-            color_normal = TemaClaro.EXITO
-            color_hover = "#20923C"
-            color_texto = "#FFFFFF"
-        elif estilo == "peligro":
-            color_normal = TemaClaro.ERROR
-            color_hover = "#C82333"
-            color_texto = "#FFFFFF"
-        else:  # outline
-            color_normal = TemaClaro.FONDO_CARD
-            color_hover = TemaClaro.FONDO_PRINCIPAL
-            color_texto = TemaClaro.TEXTO_PRINCIPAL
+        # Colores según el estado
+        colores_estado = {
+            "exito": {"bg": "#d1f2eb", "fg": "#00b894", "border": "#00b894"},
+            "peligro": {"bg": "#fdedec", "fg": "#e17055", "border": "#e17055"},
+            "advertencia": {"bg": "#fef9e7", "fg": "#f39c12", "border": "#f39c12"},
+            "info": {"bg": "#e3f2fd", "fg": "#0984e3", "border": "#0984e3"},
+            "neutral": {"bg": "#f8f9fa", "fg": "#636e72", "border": "#dee2e6"}
+        }
         
-        # Contenedor con sombra
-        button_container = tk.Frame(parent, bg=TemaClaro.SOMBRA_SUAVE, bd=0, relief="flat")
+        colores = colores_estado.get(estado, colores_estado["info"])
         
-        # Capa de sombra
-        shadow_frame = tk.Frame(button_container, bg=TemaClaro.SOMBRA_MEDIA, bd=0, relief="flat")
-        shadow_frame.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
-        
-        # Texto completo del botón
-        texto_completo = f"{icono} {texto}".strip()
-        
-        # Botón principal
-        boton = tk.Button(
-            shadow_frame,
-            text=texto_completo,
-            command=comando,
-            bg=color_normal,
-            fg=color_texto,
-            font=("Segoe UI", 11, "bold"),
-            relief="flat",
-            bd=0,
-            padx=25,
-            pady=12,
-            cursor="hand2",
-            activebackground=color_hover,
-            activeforeground=color_texto
-        )
-        boton.pack(fill=tk.BOTH, expand=True)
-        
-        if ancho:
-            boton.config(width=ancho)
-        
-        # Efectos de animación avanzados
-        def boton_hover_enter(e):
-            boton.config(bg=color_hover, font=("Segoe UI", 11, "bold"))
-            shadow_frame.config(bg=TemaClaro.SOMBRA_FUERTE)
-            # Efecto de elevación
-            button_container.pack_configure(padx=0, pady=0)
-        
-        def boton_hover_leave(e):
-            boton.config(bg=color_normal, font=("Segoe UI", 11, "bold"))
-            shadow_frame.config(bg=TemaClaro.SOMBRA_MEDIA)
-            button_container.pack_configure(padx=1, pady=1)
-        
-        def boton_click(e):
-            # Efecto de click
-            boton.config(bg=color_hover)
-            parent.after(100, lambda: boton.config(bg=color_normal))
-        
-        boton.bind("<Enter>", boton_hover_enter)
-        boton.bind("<Leave>", boton_hover_leave)
-        boton.bind("<Button-1>", boton_click)
-        
-        return button_container
-    
-    @staticmethod
-    def crear_campo_entrada_moderno(
-        parent: tk.Widget,
-        placeholder: str = "",
-        es_password: bool = False,
-        ancho: int = 30
-    ) -> tk.Frame:
-        """Crea un campo de entrada moderno con efectos."""
-        
-        # Contenedor con borde
-        entry_container = tk.Frame(
+        # Frame del badge
+        badge_frame = tk.Frame(
             parent,
-            bg=TemaClaro.BORDE,
-            bd=0,
-            relief="flat",
-            highlightthickness=1,
-            highlightbackground=TemaClaro.BORDE
+            bg=colores["bg"],
+            relief="solid",
+            borderwidth=1,
+            highlightbackground=colores["border"],
+            highlightthickness=1
         )
         
-        # Campo de entrada
-        entry = tk.Entry(
-            entry_container,
-            font=("Segoe UI", 11),
-            bg=TemaClaro.FONDO_CARD,
-            fg=TemaClaro.TEXTO_PRINCIPAL,
-            bd=0,
-            relief="flat",
-            insertbackground=TemaClaro.PRIMARIO,
-            selectbackground=TemaClaro.PRIMARIO,
-            selectforeground="#FFFFFF",
-            width=ancho,
-            show="*" if es_password else ""
+        # Label del texto
+        label = tk.Label(
+            badge_frame,
+            text=texto,
+            bg=colores["bg"],
+            fg=colores["fg"],
+            font=("Segoe UI", 8, "bold"),
+            padx=8,
+            pady=2
         )
-        entry.pack(padx=1, pady=1)
+        label.pack()
+        
+        return badge_frame
+    
+    @staticmethod
+    def crear_input_moderno(parent, placeholder: str = "", tipo: str = "texto"):
+        """Crea un input moderno con placeholder y efectos."""
+        import tkinter as tk
+        
+        # Frame contenedor
+        input_frame = tk.Frame(parent, bg="#ffffff")
+        
+        # Variable para el texto
+        var = tk.StringVar()
+        
+        # Entry principal
+        entry = tk.Entry(
+            input_frame,
+            textvariable=var,
+            font=("Segoe UI", 10),
+            bg="#ffffff",
+            fg="#2d3436",
+            relief="flat",
+            borderwidth=0,
+            insertbackground="#0984e3"
+        )
+        
+        # Frame para el borde personalizado
+        border_frame = tk.Frame(
+            input_frame,
+            bg="#dee2e6",
+            height=2
+        )
+        
+        entry.pack(fill=tk.X, padx=12, pady=(12, 4))
+        border_frame.pack(fill=tk.X)
         
         # Placeholder
         if placeholder:
-            entry.insert(0, placeholder)
-            entry.config(fg=TemaClaro.TEXTO_MUTED)
-            
             def on_focus_in(e):
                 if entry.get() == placeholder:
                     entry.delete(0, tk.END)
-                    entry.config(fg=TemaClaro.TEXTO_PRINCIPAL)
-            
+                    entry.config(fg="#2d3436")
+                border_frame.config(bg="#0984e3")
+                
             def on_focus_out(e):
                 if not entry.get():
                     entry.insert(0, placeholder)
-                    entry.config(fg=TemaClaro.TEXTO_MUTED)
+                    entry.config(fg="#a2a8b0")
+                border_frame.config(bg="#dee2e6")
             
             entry.bind("<FocusIn>", on_focus_in)
             entry.bind("<FocusOut>", on_focus_out)
+            
+            # Configurar placeholder inicial
+            entry.insert(0, placeholder)
+            entry.config(fg="#a2a8b0")
         
-        # Efectos hover y focus
-        def entry_focus_in(e):
-            entry_container.config(highlightbackground=TemaClaro.PRIMARIO)
+        # Configurar tipo específico
+        if tipo == "password":
+            entry.config(show="*")
         
-        def entry_focus_out(e):
-            entry_container.config(highlightbackground=TemaClaro.BORDE)
+        setattr(input_frame, 'entry', entry)
+        setattr(input_frame, 'get_value', lambda: var.get() if var.get() != placeholder else "")
         
-        entry.bind("<FocusIn>", entry_focus_in)
-        entry.bind("<FocusOut>", entry_focus_out)
-        
-        return entry_container
+        return input_frame
     
     @staticmethod
-    def crear_progress_bar_moderna(
-        parent: tk.Widget,
-        valor_inicial: int = 0,
-        valor_maximo: int = 100
-    ) -> tk.Frame:
-        """Crea una barra de progreso moderna."""
+    def crear_metrica_profesional(parent, valor: str, etiqueta: str, icono: str = "📊", 
+                                 color: str = "#0984e3", tendencia: Optional[str] = None):
+        """Crea una métrica profesional con iconos y tendencias."""
+        import tkinter as tk
         
-        # Estilo personalizado para la barra de progreso
-        style = ttk.Style()
-        style.theme_use('clam')
+        # Frame principal
+        metric_frame = tk.Frame(parent, bg="#ffffff")
         
-        # Configurar colores modernos
-        style.configure(
-            "Moderna.Horizontal.TProgressbar",
-            background=TemaClaro.PRIMARIO,
-            troughcolor=TemaClaro.FONDO_PRINCIPAL,
-            borderwidth=0,
-            lightcolor=TemaClaro.PRIMARIO,
-            darkcolor=TemaClaro.PRIMARIO
+        # Frame superior con icono y valor
+        top_frame = tk.Frame(metric_frame, bg="#ffffff")
+        top_frame.pack(fill=tk.X, pady=(10, 5))
+        
+        # Icono
+        icon_label = tk.Label(
+            top_frame,
+            text=icono,
+            font=("Segoe UI", 20),
+            bg="#ffffff",
+            fg=color
         )
+        icon_label.pack(side=tk.LEFT, padx=(10, 15))
         
-        # Contenedor con sombra
-        progress_container = tk.Frame(parent, bg=TemaClaro.SOMBRA_SUAVE, bd=0, relief="flat")
+        # Valor
+        valor_label = tk.Label(
+            top_frame,
+            text=valor,
+            font=("Segoe UI", 24, "bold"),
+            bg="#ffffff",
+            fg="#2d3436"
+        )
+        valor_label.pack(side=tk.LEFT)
+        
+        # Tendencia si se proporciona
+        if tendencia:
+            trend_color = "#00b894" if tendencia.startswith("↑") else "#e17055" if tendencia.startswith("↓") else "#636e72"
+            trend_label = tk.Label(
+                top_frame,
+                text=tendencia,
+                font=("Segoe UI", 12),
+                bg="#ffffff",
+                fg=trend_color
+            )
+            trend_label.pack(side=tk.RIGHT, padx=(0, 10))
+        
+        # Etiqueta
+        etiqueta_label = tk.Label(
+            metric_frame,
+            text=etiqueta,
+            font=("Segoe UI", 10),
+            bg="#ffffff",
+            fg="#636e72"
+        )
+        etiqueta_label.pack(pady=(0, 10))
+        
+        return metric_frame
+    
+    @staticmethod
+    def crear_progress_moderno(parent, valor: int = 0, maximo: int = 100, color: str = "#0984e3"):
+        """Crea una barra de progreso moderna."""
+        import tkinter as tk
+        
+        # Frame contenedor
+        progress_frame = tk.Frame(parent, bg="#ffffff")
+        
+        # Fondo de la barra
+        bg_frame = tk.Frame(
+            progress_frame,
+            bg="#f1f3f4",
+            height=8
+        )
+        bg_frame.pack(fill=tk.X, padx=10, pady=5)
+        bg_frame.pack_propagate(False)
         
         # Barra de progreso
-        progress = ttk.Progressbar(
-            progress_container,
-            style="Moderna.Horizontal.TProgressbar",
-            mode='determinate',
-            value=valor_inicial,
-            maximum=valor_maximo
+        progress_bar = tk.Frame(
+            bg_frame,
+            bg=color,
+            height=8
         )
-        progress.pack(fill=tk.X, padx=1, pady=1)
         
-        return progress_container
+        # Calcular ancho basado en el valor
+        def actualizar_progreso(nuevo_valor):
+            porcentaje = min(nuevo_valor / maximo, 1.0)
+            progress_bar.place(relwidth=porcentaje, relheight=1.0)
+        
+        # Configurar progreso inicial
+        actualizar_progreso(valor)
+        
+        # Label con porcentaje
+        porcentaje_label = tk.Label(
+            progress_frame,
+            text=f"{int((valor/maximo)*100)}%",
+            font=("Segoe UI", 9),
+            bg="#ffffff",
+            fg="#636e72"
+        )
+        porcentaje_label.pack(pady=(2, 5))
+        
+        # Método para actualizar
+        setattr(progress_frame, 'actualizar', lambda v: (
+            actualizar_progreso(v),
+            porcentaje_label.config(text=f"{int((v/maximo)*100)}%")
+        ))
+        
+        return progress_frame
     
     @staticmethod
-    def crear_tooltip_moderno(widget: tk.Widget, texto: str):
-        """Crea un tooltip moderno para un widget."""
+    def crear_sidebar_profesional(parent, ancho: int = 250):
+        """Crea una sidebar profesional moderna para navegación."""
+        import tkinter as tk
         
-        def mostrar_tooltip(event):
-            tooltip = tk.Toplevel()
-            tooltip.wm_overrideredirect(True)
-            tooltip.configure(bg=TemaOscuro.FONDO_CARD)
-            
-            label = tk.Label(
-                tooltip,
-                text=texto,
-                font=("Segoe UI", 9),
-                bg=TemaOscuro.FONDO_CARD,
-                fg=TemaOscuro.TEXTO_PRINCIPAL,
-                padx=8,
-                pady=4,
-                relief="flat",
-                bd=1,
-                borderwidth=1
-            )
-            label.pack()
-            
-            # Posicionar tooltip
-            x = event.x_root + 10
-            y = event.y_root + 10
-            tooltip.geometry(f"+{x}+{y}")
-            
-            # Auto-ocultar después de 3 segundos
-            tooltip.after(3000, tooltip.destroy)
+        # Frame principal de la sidebar
+        sidebar_frame = tk.Frame(
+            parent,
+            bg="#2c3e50",
+            width=ancho
+        )
+        sidebar_frame.pack_propagate(False)
         
-        widget.bind("<Enter>", mostrar_tooltip)
-
-
-class EfectosAnimacion:
-    """Clase para manejar efectos de animación modernos."""
+        # Header de la sidebar
+        header_frame = tk.Frame(sidebar_frame, bg="#34495e", height=80)
+        header_frame.pack(fill=tk.X)
+        header_frame.pack_propagate(False)
+        
+        # Logo/Título
+        logo_label = tk.Label(
+            header_frame,
+            text="🛡️ Ares Aegis",
+            font=("Segoe UI", 16, "bold"),
+            bg="#34495e",
+            fg="#ecf0f1"
+        )
+        logo_label.pack(expand=True)
+        
+        # Frame para navegación
+        nav_frame = tk.Frame(sidebar_frame, bg="#2c3e50")
+        nav_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=20)
+        
+        setattr(sidebar_frame, 'nav_frame', nav_frame)
+        return sidebar_frame
     
     @staticmethod
-    def animar_fade_in(widget: tk.Widget, duracion: int = 500):
-        """Animación fade in para un widget."""
-        alpha = 0.0
-        increment = 1.0 / (duracion / 50)  # 50ms intervals
+    def crear_item_navegacion(parent, texto: str, icono: str, comando=None, activo: bool = False):
+        """Crea un item de navegación para la sidebar."""
+        import tkinter as tk
         
-        def fade():
-            nonlocal alpha
-            if alpha < 1.0:
-                alpha += increment
-                # Simular transparencia cambiando colores
-                widget.after(50, fade)
-        
-        fade()
-    
-    @staticmethod
-    def animar_slide_in(widget: tk.Widget, direccion: str = "left", duracion: int = 300):
-        """Animación slide in para un widget."""
-        if direccion == "left":
-            start_x = -widget.winfo_reqwidth()
-            end_x = 0
-        elif direccion == "right":
-            start_x = widget.winfo_reqwidth()
-            end_x = 0
+        # Colores según estado
+        if activo:
+            bg_color = "#3498db"
+            fg_color = "#ffffff"
         else:
-            return
+            bg_color = "#2c3e50"
+            fg_color = "#bdc3c7"
         
-        frames = duracion // 20  # 20ms intervals
-        increment = (end_x - start_x) / frames
-        current_x = start_x
+        # Frame del item
+        item_frame = tk.Frame(parent, bg=bg_color, cursor="hand2")
+        item_frame.pack(fill=tk.X, pady=2)
         
-        def slide():
-            nonlocal current_x
-            if abs(current_x - end_x) > abs(increment):
-                current_x += increment
-                widget.place(x=current_x)
-                widget.after(20, slide)
-            else:
-                widget.place(x=end_x)
+        # Label con icono y texto
+        item_label = tk.Label(
+            item_frame,
+            text=f"{icono}  {texto}",
+            font=("Segoe UI", 11),
+            bg=bg_color,
+            fg=fg_color,
+            anchor="w",
+            padx=15,
+            pady=12
+        )
+        item_label.pack(fill=tk.X)
         
-        slide()
+        # Efectos hover
+        def on_enter(e):
+            if not activo:
+                item_frame.config(bg="#34495e")
+                item_label.config(bg="#34495e", fg="#ecf0f1")
+                
+        def on_leave(e):
+            if not activo:
+                item_frame.config(bg="#2c3e50")
+                item_label.config(bg="#2c3e50", fg="#bdc3c7")
+        
+        def on_click(e):
+            if comando:
+                comando()
+        
+        item_frame.bind("<Enter>", on_enter)
+        item_frame.bind("<Leave>", on_leave)
+        item_frame.bind("<Button-1>", on_click)
+        item_label.bind("<Enter>", on_enter)
+        item_label.bind("<Leave>", on_leave)
+        item_label.bind("<Button-1>", on_click)
+        
+        return item_frame
     
     @staticmethod
-    def pulso_color(widget: tk.Widget, color_inicio: str, color_fin: str, duracion: int = 1000):
-        """Efecto de pulso de color."""
-        def hex_to_rgb(hex_color):
-            hex_color = hex_color.lstrip('#')
-            return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    def crear_alerta_profesional(parent, mensaje: str, tipo: str = "info", accion: Optional[str] = None):
+        """Crea una alerta profesional moderna."""
+        import tkinter as tk
         
-        def rgb_to_hex(rgb):
-            return '#{:02x}{:02x}{:02x}'.format(int(rgb[0]), int(rgb[1]), int(rgb[2]))
+        # Configuración por tipo
+        tipos_config = {
+            "exito": {
+                "bg": "#d4edda", "fg": "#155724", "border": "#c3e6cb",
+                "icono": "✅", "titulo": "Éxito"
+            },
+            "error": {
+                "bg": "#f8d7da", "fg": "#721c24", "border": "#f5c6cb",
+                "icono": "❌", "titulo": "Error"
+            },
+            "advertencia": {
+                "bg": "#fff3cd", "fg": "#856404", "border": "#ffeaa7",
+                "icono": "⚠️", "titulo": "Advertencia"
+            },
+            "info": {
+                "bg": "#d1ecf1", "fg": "#0c5460", "border": "#bee5eb",
+                "icono": "ℹ️", "titulo": "Información"
+            },
+            "critico": {
+                "bg": "#f5c6cb", "fg": "#721c24", "border": "#f1b0b7",
+                "icono": "🚨", "titulo": "Crítico"
+            }
+        }
         
-        rgb_inicio = hex_to_rgb(color_inicio)
-        rgb_fin = hex_to_rgb(color_fin)
+        config = tipos_config.get(tipo, tipos_config["info"])
         
-        frames = duracion // 50  # 50ms intervals
+        # Frame principal
+        alert_frame = tk.Frame(
+            parent,
+            bg=config["bg"],
+            relief="solid",
+            borderwidth=1,
+            highlightbackground=config["border"],
+            highlightthickness=1
+        )
         
-        def interpolar(frame):
-            if frame > frames:
-                return
-            
-            # Interpolación lineal
-            factor = frame / frames
-            r = rgb_inicio[0] + (rgb_fin[0] - rgb_inicio[0]) * factor
-            g = rgb_inicio[1] + (rgb_fin[1] - rgb_inicio[1]) * factor
-            b = rgb_inicio[2] + (rgb_fin[2] - rgb_inicio[2]) * factor
-            
-            color_actual = rgb_to_hex((r, g, b))
-            
-            try:
-                widget.config(bg=color_actual)
-            except:
-                pass
-            
-            widget.after(50, lambda: interpolar(frame + 1))
+        # Frame contenido
+        content_frame = tk.Frame(alert_frame, bg=config["bg"])
+        content_frame.pack(fill=tk.X, padx=15, pady=12)
         
-        interpolar(0)
-
-
-# Configuración global de temas
-TEMA_ACTUAL = "claro"
-
-def obtener_tema_actual():
-    """Obtiene el tema actual."""
-    return TemaClaro if TEMA_ACTUAL == "claro" else TemaOscuro
-
-def cambiar_tema(nuevo_tema: str):
-    """Cambia el tema global."""
-    global TEMA_ACTUAL
-    TEMA_ACTUAL = nuevo_tema
-
-def aplicar_tema_widget(widget: tk.Widget, tipo_widget: str = "frame"):
-    """Aplica el tema actual a un widget."""
-    tema = obtener_tema_actual()
+        # Frame superior con icono y título
+        top_frame = tk.Frame(content_frame, bg=config["bg"])
+        top_frame.pack(fill=tk.X, pady=(0, 5))
+        
+        # Icono y título
+        title_label = tk.Label(
+            top_frame,
+            text=f"{config['icono']} {config['titulo']}",
+            font=("Segoe UI", 10, "bold"),
+            bg=config["bg"],
+            fg=config["fg"]
+        )
+        title_label.pack(side=tk.LEFT)
+        
+        # Botón cerrar
+        close_btn = tk.Label(
+            top_frame,
+            text="✕",
+            font=("Segoe UI", 10, "bold"),
+            bg=config["bg"],
+            fg=config["fg"],
+            cursor="hand2"
+        )
+        close_btn.pack(side=tk.RIGHT)
+        close_btn.bind("<Button-1>", lambda e: alert_frame.destroy())
+        
+        # Mensaje
+        msg_label = tk.Label(
+            content_frame,
+            text=mensaje,
+            font=("Segoe UI", 9),
+            bg=config["bg"],
+            fg=config["fg"],
+            wraplength=400,
+            justify=tk.LEFT
+        )
+        msg_label.pack(anchor="w")
+        
+        # Botón de acción si se proporciona
+        if accion:
+            action_btn = ComponentesModernos.crear_boton_ultra_moderno(
+                content_frame, accion, estilo="primario"
+            )
+            action_btn.pack(anchor="w", pady=(10, 0))
+        
+        return alert_frame
     
-    if tipo_widget == "frame":
-        widget.config(bg=tema.FONDO_PRINCIPAL)
-    elif tipo_widget == "label":
-        widget.config(bg=tema.FONDO_PRINCIPAL, fg=tema.TEXTO_PRINCIPAL)
-    elif tipo_widget == "button":
-        widget.config(bg=tema.PRIMARIO, fg="#FFFFFF")
-    elif tipo_widget == "entry":
-        widget.config(bg=tema.FONDO_CARD, fg=tema.TEXTO_PRINCIPAL)
+    @staticmethod
+    def crear_tabla_moderna(parent, columnas: List[str], datos: Optional[List[List[str]]] = None):
+        """Crea una tabla moderna con estilo profesional."""
+        import tkinter as tk
+        
+        # Frame contenedor
+        table_frame = tk.Frame(parent, bg="#ffffff")
+        
+        # Frame para headers
+        header_frame = tk.Frame(table_frame, bg="#f8f9fa", height=40)
+        header_frame.pack(fill=tk.X)
+        header_frame.pack_propagate(False)
+        
+        # Headers
+        for i, columna in enumerate(columnas):
+            header_label = tk.Label(
+                header_frame,
+                text=columna,
+                font=("Segoe UI", 10, "bold"),
+                bg="#f8f9fa",
+                fg="#495057",
+                relief="flat",
+                borderwidth=1,
+                highlightbackground="#dee2e6"
+            )
+            header_label.grid(row=0, column=i, sticky="ew", padx=1)
+            header_frame.grid_columnconfigure(i, weight=1)
+        
+        # Frame para datos con scroll
+        data_frame = tk.Frame(table_frame, bg="#ffffff")
+        data_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Canvas y scrollbar para scroll
+        canvas = tk.Canvas(data_frame, bg="#ffffff", highlightthickness=0)
+        scrollbar = tk.Scrollbar(data_frame, orient="vertical", command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas, bg="#ffffff")
+        
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+        
+        # Datos si se proporcionan
+        if datos:
+            for i, fila in enumerate(datos):
+                for j, valor in enumerate(fila):
+                    bg_color = "#ffffff" if i % 2 == 0 else "#f8f9fa"
+                    cell_label = tk.Label(
+                        scrollable_frame,
+                        text=valor,
+                        font=("Segoe UI", 9),
+                        bg=bg_color,
+                        fg="#495057",
+                        relief="flat",
+                        borderwidth=1,
+                        highlightbackground="#dee2e6",
+                        padx=10,
+                        pady=8
+                    )
+                    cell_label.grid(row=i, column=j, sticky="ew", padx=1, pady=1)
+                    scrollable_frame.grid_columnconfigure(j, weight=1)
+        
+        # Métodos para manipular datos
+        def agregar_fila(nueva_fila):
+            i = len(scrollable_frame.winfo_children()) // len(columnas)
+            for j, valor in enumerate(nueva_fila):
+                bg_color = "#ffffff" if i % 2 == 0 else "#f8f9fa"
+                cell_label = tk.Label(
+                    scrollable_frame,
+                    text=valor,
+                    font=("Segoe UI", 9),
+                    bg=bg_color,
+                    fg="#495057",
+                    relief="flat",
+                    borderwidth=1,
+                    highlightbackground="#dee2e6",
+                    padx=10,
+                    pady=8
+                )
+                cell_label.grid(row=i, column=j, sticky="ew", padx=1, pady=1)
+        
+        setattr(table_frame, 'agregar_fila', agregar_fila)
+        return table_frame
+    
+    @staticmethod
+    def estilo_boton(tema: str = "claro") -> Dict[str, Any]:
+        """Retorna el estilo para botones."""
+        if tema == "oscuro":
+            return {
+                "bg": "#4dabf7",
+                "fg": "#ffffff",
+                "activebackground": "#339af0",
+                "activeforeground": "#ffffff",
+                "relief": "flat",
+                "borderwidth": 0,
+                "cursor": "hand2"
+            }
+        else:
+            return {
+                "bg": "#007bff",
+                "fg": "#ffffff",
+                "activebackground": "#0056b3",
+                "activeforeground": "#ffffff",
+                "relief": "flat",
+                "borderwidth": 0,
+                "cursor": "hand2"
+            }
+    
+    @staticmethod
+    def estilo_entrada(tema: str = "claro") -> Dict[str, Any]:
+        """Retorna el estilo para campos de entrada."""
+        if tema == "oscuro":
+            return {
+                "bg": "#3c3c3c",
+                "fg": "#ffffff",
+                "insertbackground": "#ffffff",
+                "selectbackground": "#4dabf7",
+                "selectforeground": "#ffffff",
+                "relief": "flat",
+                "borderwidth": 1,
+                "highlightthickness": 1,
+                "highlightcolor": "#4dabf7"
+            }
+        else:
+            return {
+                "bg": "#ffffff",
+                "fg": "#212529",
+                "insertbackground": "#212529",
+                "selectbackground": "#007bff",
+                "selectforeground": "#ffffff",
+                "relief": "flat",
+                "borderwidth": 1,
+                "highlightthickness": 1,
+                "highlightcolor": "#007bff"
+            }
+    
+    @staticmethod
+    def estilo_texto(tema: str = "claro") -> Dict[str, Any]:
+        """Retorna el estilo para áreas de texto."""
+        if tema == "oscuro":
+            return {
+                "bg": "#2b2b2b",
+                "fg": "#ffffff",
+                "insertbackground": "#ffffff",
+                "selectbackground": "#4dabf7",
+                "selectforeground": "#ffffff",
+                "relief": "flat",
+                "borderwidth": 1,
+                "wrap": "word"
+            }
+        else:
+            return {
+                "bg": "#ffffff",
+                "fg": "#212529",
+                "insertbackground": "#212529",
+                "selectbackground": "#007bff",
+                "selectforeground": "#ffffff",
+                "relief": "flat",
+                "borderwidth": 1,
+                "wrap": "word"
+            }
+    
+    @staticmethod
+    def estilo_marco(tema: str = "claro") -> Dict[str, Any]:
+        """Retorna el estilo para marcos."""
+        if tema == "oscuro":
+            return {
+                "bg": "#3c3c3c",
+                "relief": "flat",
+                "borderwidth": 1,
+                "highlightbackground": "#555555"
+            }
+        else:
+            return {
+                "bg": "#f8f9fa",
+                "relief": "flat", 
+                "borderwidth": 1,
+                "highlightbackground": "#dee2e6"
+            }
+    
+    @staticmethod
+    def aplicar_tema_ventana(ventana, tema: str = "claro") -> None:
+        """Aplica un tema a una ventana completa."""
+        colores = TemaClaro.obtener_colores() if tema == "claro" else TemaOscuro.obtener_colores()
+        
+        try:
+            ventana.configure(bg=colores["bg_principal"])
+        except Exception:
+            pass  # Algunos widgets no soportan todos los atributos
+    
+    @staticmethod
+    def configurar_widget(widget, tipo: str, tema: str = "claro") -> None:
+        """Configura un widget con el estilo apropiado."""
+        try:
+            if tipo == "boton":
+                widget.configure(**ComponentesModernos.estilo_boton(tema))
+            elif tipo == "entrada":
+                widget.configure(**ComponentesModernos.estilo_entrada(tema))
+            elif tipo == "texto":
+                widget.configure(**ComponentesModernos.estilo_texto(tema))
+            elif tipo == "marco":
+                widget.configure(**ComponentesModernos.estilo_marco(tema))
+        except Exception:
+            pass  # Algunos widgets pueden no soportar ciertos atributos
+
+
+def obtener_tema_sistema() -> str:
+    """Intenta detectar el tema del sistema."""
+    try:
+        import platform
+        if platform.system() == "Windows":
+            # En Windows, por defecto usamos tema claro
+            return "claro"
+        elif platform.system() == "Darwin":  # macOS
+            # En macOS, por defecto usamos tema claro
+            return "claro"
+        else:  # Linux y otros
+            # En Linux, por defecto usamos tema claro
+            return "claro"
+    except Exception:
+        return "claro"
+
+
+def crear_esquema_colores_personalizado(base: str = "claro") -> Dict[str, str]:
+    """Crea un esquema de colores personalizado basado en un tema base."""
+    if base == "oscuro":
+        return TemaOscuro.obtener_colores()
+    else:
+        return TemaClaro.obtener_colores()
+
+
+# Configuración por defecto
+TEMA_POR_DEFECTO = obtener_tema_sistema()
+COLORES_POR_DEFECTO = crear_esquema_colores_personalizado(TEMA_POR_DEFECTO)
+FUENTES_POR_DEFECTO = TemaClaro.obtener_fuentes() if TEMA_POR_DEFECTO == "claro" else TemaOscuro.obtener_fuentes()
+
+__all__ = [
+    'TemaClaro',
+    'TemaOscuro', 
+    'ComponentesModernos',
+    'obtener_tema_sistema',
+    'crear_esquema_colores_personalizado',
+    'TEMA_POR_DEFECTO',
+    'COLORES_POR_DEFECTO',
+    'FUENTES_POR_DEFECTO'
+]

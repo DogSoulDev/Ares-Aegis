@@ -3,18 +3,21 @@
 Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
 Todos los derechos reservados. Este código es propietario y confidencial.
 
-Escaneador Principal - Ares Aegis
+Escaneador de Malware Avanzado - Ares Aegis
+Sistema de detección de amenazas con análisis multicapa y motor heurístico
 """
 
 import os
 import hashlib
 import re
 import time
+import threading
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Union
-from datetime import datetime
+from typing import List, Dict, Any, Optional, Union, Callable
+from datetime import datetime, timedelta
+from collections import defaultdict, deque
 
-from .siem import SIEM, TipoEvento
+from .siem import SIEM, TipoEvento, NivelCriticidad
 from ..utilidades.validaciones import (
     validar_ruta_archivo, validar_ruta_directorio, 
     validar_permisos_lectura, es_ruta_segura
@@ -26,19 +29,194 @@ from ..utilidades.ayuda_rutas import (
 from ..utilidades.ayuda_logging import configurar_logger_modulo
 
 
+class TipoAmenaza:
+    """Constantes para tipos de amenazas detectadas."""
+    VIRUS = "VIRUS"
+    TROJAN = "TROJAN"
+    ROOTKIT = "ROOTKIT"
+    BACKDOOR = "BACKDOOR"
+    MALWARE = "MALWARE"
+    SCRIPT_MALICIOSO = "SCRIPT"
+    RANSOMWARE = "RANSOMWARE"
+    KEYLOGGER = "KEYLOGGER"
+    EXPLOIT = "EXPLOIT"
+    SUSPICIOUS = "SUSPICIOUS"
+    BYPASS = "BYPASS"
+    DANGEROUS = "DANGEROUS"
+    SPYWARE = "SPYWARE"
+    ADWARE = "ADWARE"
+    PHISHING = "PHISHING"
+    CRYPTOMINER = "CRYPTOMINER"
+
+
+class NivelRiesgo:
+    """Niveles de riesgo para amenazas detectadas."""
+    CRITICO = "CRÍTICO"          # Amenaza inmediata y peligrosa
+    ALTO = "ALTO"                # Amenaza significativa
+    MEDIO = "MEDIO"              # Sospechoso, requiere atención
+    BAJO = "BAJO"                # Posible falso positivo
+    INFORMATIVO = "INFORMATIVO"  # Solo información
+
+
+class FirmaDeteccion:
+    """Representa una firma de detección de malware."""
+    
+    def __init__(self, tipo: str, patron: str, descripcion: str, 
+                 nivel_riesgo: str, familia: str = "Genérico"):
+        """
+        Inicializa una firma de detección.
+        
+        Args:
+            tipo: Tipo de amenaza (usar constantes TipoAmenaza)
+            patron: Patrón de detección (texto, regex, hash)
+            descripcion: Descripción de la amenaza
+            nivel_riesgo: Nivel de riesgo (usar constantes NivelRiesgo)
+            familia: Familia de malware
+        """
+        self.tipo = tipo
+        self.patron = patron
+        self.descripcion = descripcion
+        self.nivel_riesgo = nivel_riesgo
+        self.familia = familia
+        self.detectado_veces = 0
+        self.ultima_deteccion = None
+        self.patron_compilado = None
+        
+        # Compilar regex si es necesario
+        if patron.startswith('REGEX:'):
+            try:
+                self.patron_compilado = re.compile(patron[6:], re.IGNORECASE | re.MULTILINE)
+            except re.error:
+                self.patron_compilado = None
+    
+    def detectar(self, contenido: str) -> bool:
+        """Detecta si el patrón coincide en el contenido."""
+        try:
+            if self.patron_compilado:
+                match = self.patron_compilado.search(contenido)
+            else:
+                match = self.patron.lower() in contenido.lower()
+            
+            if match:
+                self.detectado_veces += 1
+                self.ultima_deteccion = datetime.now()
+                return True
+            return False
+        except Exception:
+            return False
+
+
+class AnalizadorHeuristico:
+    """Motor de análisis heurístico para detección de amenazas desconocidas."""
+    
+    def __init__(self):
+        """Inicializa el analizador heurístico."""
+        self.patrones_sospechosos = [
+            # Patrones de obfuscación
+            r'eval\s*\(\s*["\'].*["\']',
+            r'base64_decode\s*\(',
+            r'gzinflate\s*\(',
+            r'str_rot13\s*\(',
+            
+            # Patrones de ejecución remota
+            r'system\s*\(\s*\$',
+            r'exec\s*\(\s*\$',
+            r'shell_exec\s*\(',
+            r'passthru\s*\(',
+            
+            # Patrones de red sospechosos
+            r'fsockopen\s*\(',
+            r'socket_create\s*\(',
+            r'curl_exec\s*\(',
+            
+            # Patrones de manipulación de archivos
+            r'file_get_contents\s*\(\s*["\']https?://',
+            r'fwrite\s*\(\s*.*\$_',
+            r'file_put_contents\s*\(\s*.*\$_'
+        ]
+        
+        self.patrones_compilados = []
+        for patron in self.patrones_sospechosos:
+            try:
+                self.patrones_compilados.append(re.compile(patron, re.IGNORECASE))
+            except re.error:
+                continue
+    
+    def analizar(self, contenido: str, extension: str = "") -> Dict[str, Any]:
+        """
+        Realiza análisis heurístico del contenido.
+        
+        Returns:
+            Diccionario con resultados del análisis heurístico
+        """
+        resultado = {
+            'puntuacion_riesgo': 0,
+            'patrones_detectados': [],
+            'es_sospechoso': False,
+            'recomendacion': 'SEGURO'
+        }
+        
+        # Analizar patrones sospechosos
+        for i, patron in enumerate(self.patrones_compilados):
+            if patron.search(contenido):
+                resultado['patrones_detectados'].append(self.patrones_sospechosos[i])
+                resultado['puntuacion_riesgo'] += 10
+        
+        # Análisis de entropía (detectar código ofuscado)
+        entropia = self._calcular_entropia(contenido)
+        if entropia > 7.5:  # Alta entropía indica posible ofuscación
+            resultado['puntuacion_riesgo'] += 15
+            resultado['patrones_detectados'].append('Alta entropía detectada')
+        
+        # Análisis específico por extensión
+        if extension.lower() in ['.exe', '.dll', '.so']:
+            resultado['puntuacion_riesgo'] += 5  # Archivos ejecutables son más riesgosos
+        
+        # Determinar si es sospechoso
+        if resultado['puntuacion_riesgo'] >= 20:
+            resultado['es_sospechoso'] = True
+            resultado['recomendacion'] = 'CUARENTENA'
+        elif resultado['puntuacion_riesgo'] >= 10:
+            resultado['recomendacion'] = 'REVISAR'
+        
+        return resultado
+    
+    def _calcular_entropia(self, datos: str) -> float:
+        """Calcula la entropía de Shannon de los datos."""
+        if not datos:
+            return 0.0
+        
+        # Contar frecuencia de caracteres
+        frecuencias = {}
+        for char in datos:
+            frecuencias[char] = frecuencias.get(char, 0) + 1
+        
+        # Calcular entropía
+        entropia = 0.0
+        longitud = len(datos)
+        
+        for freq in frecuencias.values():
+            probabilidad = freq / longitud
+            if probabilidad > 0:
+                import math
+                entropia -= probabilidad * math.log2(probabilidad)
+        
+        return entropia
+
+
 class ResultadoEscaneo:
-    """Representa el resultado del escaneo de un archivo."""
+    """Representa el resultado del escaneo de un archivo con información detallada."""
     
     def __init__(self, ruta: str, es_limpio: bool = True, 
-                 amenazas_detectadas: Optional[List[str]] = None,
+                 amenazas_detectadas: Optional[List[Dict[str, Any]]] = None,
                  detalles_adicionales: Optional[Dict[str, Any]] = None):
         """
-        Inicializa un resultado de escaneo.
+        Inicializa un resultado de escaneo con información completa.
         
         Args:
             ruta: Ruta del archivo escaneado
             es_limpio: True si el archivo está limpio, False si hay amenazas
-            amenazas_detectadas: Lista de amenazas encontradas
+            amenazas_detectadas: Lista de amenazas encontradas con detalles
             detalles_adicionales: Información adicional del escaneo
         """
         self.ruta = ruta
@@ -47,7 +225,11 @@ class ResultadoEscaneo:
         self.detalles_adicionales = detalles_adicionales or {}
         self.timestamp_escaneo = datetime.now()
         self.hash_sha256 = self._calcular_hash()
+        self.hash_md5 = self._calcular_hash_md5()
         self.tamaño_archivo = self._obtener_tamaño()
+        self.tiempo_escaneo = 0.0
+        self.nivel_riesgo_maximo = self._determinar_nivel_riesgo()
+        self.recomendacion = self._generar_recomendacion()
     
     def _calcular_hash(self) -> str:
         """Calcula el hash SHA256 del archivo."""
@@ -58,6 +240,20 @@ class ResultadoEscaneo:
         except Exception:
             return ""
     
+    def _calcular_hash_md5(self) -> Optional[str]:
+        """Calcula el hash MD5 del archivo."""
+        try:
+            if not os.path.exists(self.ruta):
+                return None
+            
+            hash_md5 = hashlib.md5()
+            with open(self.ruta, 'rb') as archivo:
+                for chunk in iter(lambda: archivo.read(4096), b""):
+                    hash_md5.update(chunk)
+            return hash_md5.hexdigest()
+        except Exception:
+            return None
+    
     def _obtener_tamaño(self) -> int:
         """Obtiene el tamaño del archivo en bytes."""
         try:
@@ -65,12 +261,56 @@ class ResultadoEscaneo:
         except Exception:
             return 0
     
+    def _determinar_nivel_riesgo(self) -> str:
+        """Determina el nivel de riesgo máximo basado en las amenazas detectadas."""
+        if not self.amenazas_detectadas:
+            return NivelRiesgo.INFORMATIVO
+        
+        niveles_orden = [
+            NivelRiesgo.CRITICO,
+            NivelRiesgo.ALTO,
+            NivelRiesgo.MEDIO,
+            NivelRiesgo.BAJO,
+            NivelRiesgo.INFORMATIVO
+        ]
+        
+        for nivel in niveles_orden:
+            if any(amenaza.get('nivel_riesgo') == nivel for amenaza in self.amenazas_detectadas):
+                return nivel
+        
+        return NivelRiesgo.INFORMATIVO
+    
+    def _generar_recomendacion(self) -> str:
+        """Genera una recomendación basada en el resultado del escaneo."""
+        if self.es_limpio:
+            return "✅ Archivo seguro - No se requiere acción"
+        
+        if self.nivel_riesgo_maximo == NivelRiesgo.CRITICO:
+            return "🚨 ELIMINAR INMEDIATAMENTE - Amenaza crítica detectada"
+        elif self.nivel_riesgo_maximo == NivelRiesgo.ALTO:
+            return "⚠️ CUARENTENA RECOMENDADA - Amenaza de alto riesgo"
+        elif self.nivel_riesgo_maximo == NivelRiesgo.MEDIO:
+            return "🔍 REVISAR MANUALMENTE - Actividad sospechosa"
+        else:
+            return "📋 MONITOREAR - Posible falso positivo"
+    
     def tiene_amenazas(self) -> bool:
         """Verifica si el archivo tiene amenazas."""
         return not self.es_limpio and len(self.amenazas_detectadas) > 0
     
+    def obtener_resumen(self) -> str:
+        """Obtiene un resumen del resultado del escaneo."""
+        estado = "LIMPIO" if self.es_limpio else "INFECTADO"
+        amenazas_count = len(self.amenazas_detectadas)
+        
+        resumen = f"[{estado}] {self.ruta}"
+        if not self.es_limpio:
+            resumen += f" - {amenazas_count} amenaza(s) - Riesgo: {self.nivel_riesgo_maximo}"
+        
+        return resumen
+    
     def to_dict(self) -> Dict[str, Any]:
-        """Convierte el resultado a diccionario."""
+        """Convierte el resultado a diccionario para serialización."""
         return {
             'ruta': self.ruta,
             'es_limpio': self.es_limpio,
@@ -78,145 +318,180 @@ class ResultadoEscaneo:
             'detalles_adicionales': self.detalles_adicionales,
             'timestamp_escaneo': self.timestamp_escaneo.isoformat(),
             'hash_sha256': self.hash_sha256,
-            'tamaño_archivo': self.tamaño_archivo
+            'hash_md5': self.hash_md5,
+            'tamaño_archivo': self.tamaño_archivo,
+            'tiempo_escaneo': self.tiempo_escaneo,
+            'nivel_riesgo_maximo': self.nivel_riesgo_maximo,
+            'recomendacion': self.recomendacion
         }
+
+
+class EscaneadorMalware:
+    """
+    Escaneador de Malware Avanzado de Ares Aegis.
     
-    def to_markdown(self) -> str:
-        """Convierte el resultado a formato Markdown."""
-        estado = "✅ LIMPIO" if self.es_limpio else "⚠️ INFECTADO"
-        
-        md = f"## Resultado de Escaneo\n\n"
-        md += f"**Archivo:** `{self.ruta}`\n"
-        md += f"**Estado:** {estado}\n"
-        md += f"**Fecha:** {self.timestamp_escaneo.strftime('%Y-%m-%d %H:%M:%S')}\n"
-        md += f"**Tamaño:** {self.tamaño_archivo} bytes\n"
-        
-        if self.hash_sha256:
-            md += f"**SHA256:** `{self.hash_sha256}`\n"
-        
-        if self.tiene_amenazas():
-            md += f"\n### 🚨 Amenazas Detectadas\n\n"
-            for amenaza in self.amenazas_detectadas:
-                md += f"- {amenaza}\n"
-        
-        if self.detalles_adicionales:
-            md += f"\n### Detalles Adicionales\n\n"
-            for clave, valor in self.detalles_adicionales.items():
-                md += f"- **{clave}:** {valor}\n"
-        
-        md += "\n"
-        return md
-
-
-class Escaneador:
-    """Escaneador principal de Ares Aegis."""
+    Características principales:
+    - Motor de detección multicapa con firmas avanzadas
+    - Análisis heurístico para detección de amenazas desconocidas
+    - Sistema de puntuación de riesgo adaptativo
+    - Cache inteligente para optimización de rendimiento
+    - Correlación con SIEM para análisis de patrones
+    """
     
     def __init__(self, siem: SIEM):
         """
-        Inicializa el escaneador.
+        Inicializa el escaneador avanzado.
         
         Args:
             siem: Instancia del SIEM para registro de eventos
         """
         self.siem = siem
-        self.logger = configurar_logger_modulo("escaneador")
+        self.logger = configurar_logger_modulo("escaneador_malware")
         
-        # Cargar firmas de malware
-        self.firmas_texto: List[str] = []
-        self.firmas_regex: List[re.Pattern] = []
-        self.firmas_hash: List[str] = []
+        # Base de datos de firmas avanzada
+        self.firmas_deteccion: List[FirmaDeteccion] = []
+        self.firmas_por_tipo: Dict[str, List[FirmaDeteccion]] = defaultdict(list)
+        self.firmas_hash: Dict[str, FirmaDeteccion] = {}
         
-        self._cargar_firmas()
+        # Motor heurístico
+        self.analizador_heuristico = AnalizadorHeuristico()
         
-        # Estadísticas de escaneo
+        # Cache de resultados
+        self.cache_escaneos: Dict[str, ResultadoEscaneo] = {}
+        self.cache_max_size = 1000
+        
+        # Estadísticas avanzadas
         self.estadisticas = {
             'archivos_escaneados': 0,
             'amenazas_detectadas': 0,
-            'tiempo_total_escaneo': 0,
-            'ultimo_escaneo': None
+            'detecciones_por_tipo': defaultdict(int),
+            'tiempo_total_escaneo': 0.0,
+            'ultimo_escaneo': None,
+            'cache_hits': 0,
+            'analisis_heuristico_activado': 0
         }
         
-        # Contadores globales
-        self.total_archivos_escaneados = 0
-        self.total_amenazas_detectadas = 0
-        self.ultimo_escaneo = None
+        # Configuración del escaneador
+        self.configuracion = {
+            'max_tamaño_archivo': 500 * 1024 * 1024,  # 500MB
+            'usar_cache': True,
+            'analisis_heuristico': True,
+            'nivel_sensibilidad': 'MEDIO',  # BAJO, MEDIO, ALTO
+            'extensiones_peligrosas': {
+                '.exe', '.scr', '.bat', '.cmd', '.com', '.pif', 
+                '.vbs', '.js', '.jar', '.app', '.deb', '.rpm'
+            },
+            'extensiones_ejecutables': {
+                '.exe', '.dll', '.so', '.dylib', '.sys', '.bin'
+            }
+        }
         
-        self.logger.info("Escaneador inicializado correctamente")
+        # Inicializar componentes
+        self._cargar_firmas_avanzadas()
+        
+        # Registrar inicio en SIEM
+        self.siem.registrar_evento(
+            TipoEvento.SISTEMA_INICIADO,
+            "Escaneador de Malware Avanzado inicializado",
+            {
+                'firmas_cargadas': len(self.firmas_deteccion),
+                'tipos_amenaza': len(self.firmas_por_tipo),
+                'motor_heuristico': True,
+                'cache_habilitado': self.configuracion['usar_cache']
+            },
+            NivelCriticidad.INFORMATIVO
+        )
+        
+        self.logger.info(f"Escaneador avanzado inicializado con {len(self.firmas_deteccion)} firmas")
     
-    def _cargar_firmas(self):
-        """Carga las firmas de malware desde el archivo de configuración."""
+    def _cargar_firmas_avanzadas(self):
+        """Carga firmas avanzadas desde el archivo de configuración."""
         try:
-            rutas_sistema = obtener_rutas_sistema()
-            archivo_firmas = rutas_sistema['archivo_firmas']
-            
-            # Si no existe el archivo del sistema, usar archivo local
-            if not os.path.exists(archivo_firmas):
-                archivo_firmas = Path.cwd() / "recursos" / "firmas.txt"
+            # Usar configuración local
+            archivo_firmas = Path.cwd() / "configuracion" / "firmas.txt"
             
             if os.path.exists(archivo_firmas):
-                with open(archivo_firmas, 'r', encoding='utf-8') as archivo:
-                    for linea in archivo:
-                        linea = linea.strip()
-                        
-                        # Saltar líneas vacías y comentarios
-                        if not linea or linea.startswith('#'):
-                            continue
-                        
-                        # Procesar diferentes tipos de firmas
-                        if linea.startswith('HASH:'):
-                            hash_valor = linea[5:].strip()
-                            self.firmas_hash.append(hash_valor)
-                        
-                        elif linea.startswith('REGEX:'):
-                            patron_regex = linea[6:].strip()
-                            try:
-                                regex_compilado = re.compile(patron_regex, re.IGNORECASE)
-                                self.firmas_regex.append(regex_compilado)
-                            except re.error as e:
-                                self.logger.warning(f"Error compilando regex '{patron_regex}': {e}")
-                        
-                        else:
-                            # Firma de texto simple
-                            self.firmas_texto.append(linea.lower())
-                
-                self.logger.info(f"Firmas cargadas: {len(self.firmas_texto)} texto, "
-                               f"{len(self.firmas_hash)} hash, {len(self.firmas_regex)} regex")
+                self._procesar_archivo_firmas(str(archivo_firmas))
             else:
-                self.logger.warning(f"Archivo de firmas no encontrado: {archivo_firmas}")
                 self._crear_firmas_por_defecto()
-        
+                
+            self.logger.info(f"Firmas cargadas: {len(self.firmas_deteccion)} total")
+            
         except Exception as e:
             self.logger.error(f"Error cargando firmas: {e}")
             self._crear_firmas_por_defecto()
     
+    def _procesar_archivo_firmas(self, archivo_firmas: str):
+        """Procesa el archivo de firmas y crea objetos FirmaDeteccion."""
+        with open(archivo_firmas, 'r', encoding='utf-8') as archivo:
+            for numero_linea, linea in enumerate(archivo, 1):
+                linea = linea.strip()
+                
+                # Saltar líneas vacías y comentarios
+                if not linea or linea.startswith('#'):
+                    continue
+                
+                try:
+                    # Formato: tipo|patrón|descripción|severidad
+                    partes = linea.split('|')
+                    if len(partes) >= 4:
+                        tipo = partes[0].strip()
+                        patron = partes[1].strip()
+                        descripcion = partes[2].strip()
+                        severidad = partes[3].strip()
+                        
+                        # Mapear severidad a nivel de riesgo
+                        nivel_riesgo = self._mapear_severidad(severidad)
+                        
+                        # Crear firma de detección
+                        firma = FirmaDeteccion(tipo, patron, descripcion, nivel_riesgo)
+                        self.firmas_deteccion.append(firma)
+                        self.firmas_por_tipo[tipo].append(firma)
+                        
+                        # Si es un hash, agregarlo al diccionario de hashes
+                        if patron.startswith('HASH:'):
+                            hash_valor = patron[5:].strip()
+                            self.firmas_hash[hash_valor] = firma
+                            
+                except Exception as e:
+                    self.logger.warning(f"Error procesando línea {numero_linea}: {e}")
+                    continue
+    
+    def _mapear_severidad(self, severidad: str) -> str:
+        """Mapea severidad del archivo a nivel de riesgo."""
+        mapeo = {
+            'ALTA': NivelRiesgo.ALTO,
+            'MEDIA': NivelRiesgo.MEDIO,
+            'BAJA': NivelRiesgo.BAJO,
+            'CRITICA': NivelRiesgo.CRITICO
+        }
+        return mapeo.get(severidad.upper(), NivelRiesgo.MEDIO)
+    
     def _crear_firmas_por_defecto(self):
-        """Crea firmas básicas por defecto si no se puede cargar el archivo."""
-        self.firmas_texto = [
-            'eval(base64_decode',
-            'system($_get',
-            'shell_exec(',
-            'backdoor',
-            'malware',
-            'virus',
-            'trojan'
+        """Crea firmas básicas por defecto."""
+        firmas_base = [
+            (TipoAmenaza.VIRUS, "X5O!P%@AP[4\\PZX54(P^)7CC)7}$", "EICAR Test File", NivelRiesgo.MEDIO),
+            (TipoAmenaza.TROJAN, "BEGIN PGP MESSAGE", "Mensaje cifrado sospechoso", NivelRiesgo.MEDIO),
+            (TipoAmenaza.BACKDOOR, "cmd.exe /c", "Ejecución de comando sospechosa", NivelRiesgo.ALTO),
+            (TipoAmenaza.MALWARE, "CreateRemoteThread", "Inyección de código", NivelRiesgo.ALTO),
+            (TipoAmenaza.SCRIPT_MALICIOSO, "eval(", "Ejecución dinámica", NivelRiesgo.MEDIO),
+            (TipoAmenaza.SCRIPT_MALICIOSO, "base64_decode", "Decodificación sospechosa", NivelRiesgo.MEDIO),
+            (TipoAmenaza.SCRIPT_MALICIOSO, "shell_exec", "Ejecución de shell", NivelRiesgo.ALTO),
+            (TipoAmenaza.RANSOMWARE, "Your files have been encrypted", "Mensaje ransomware", NivelRiesgo.CRITICO),
+            (TipoAmenaza.KEYLOGGER, "GetAsyncKeyState", "Captura de teclas", NivelRiesgo.ALTO),
+            (TipoAmenaza.ROOTKIT, "ZwQueryDirectoryFile", "Hook API sospechoso", NivelRiesgo.ALTO)
         ]
         
-        # Algunas regex básicas
-        try:
-            self.firmas_regex = [
-                re.compile(r'eval\s*\(\s*base64_decode', re.IGNORECASE),
-                re.compile(r'\$_[A-Z]+\[[\'"][^\'"]*[\'\"]\]', re.IGNORECASE),
-                re.compile(r'system\s*\([^)]*\$_', re.IGNORECASE)
-            ]
-        except Exception as e:
-            self.logger.error(f"Error creando regex por defecto: {e}")
-            self.firmas_regex = []
+        for tipo, patron, descripcion, nivel in firmas_base:
+            firma = FirmaDeteccion(tipo, patron, descripcion, nivel)
+            self.firmas_deteccion.append(firma)
+            self.firmas_por_tipo[tipo].append(firma)
         
-        self.logger.info("Usando firmas por defecto")
+        self.logger.info(f"Usando {len(firmas_base)} firmas por defecto")
     
     def escanear_archivo(self, ruta_archivo: str) -> ResultadoEscaneo:
         """
-        Escanea un archivo individual.
+        Escanea un archivo en busca de malware con análisis multicapa.
         
         Args:
             ruta_archivo: Ruta del archivo a escanear
@@ -225,519 +500,198 @@ class Escaneador:
             ResultadoEscaneo: Resultado del escaneo
         """
         inicio_tiempo = time.time()
+        hash_archivo = None
         
-        # Validaciones básicas
-        if not validar_ruta_archivo(ruta_archivo):
-            return ResultadoEscaneo(
-                ruta_archivo, 
-                es_limpio=True,
-                detalles_adicionales={'error': 'Archivo no válido o no existe'}
-            )
-        
-        if not validar_permisos_lectura(ruta_archivo):
-            return ResultadoEscaneo(
-                ruta_archivo,
-                es_limpio=True,
-                detalles_adicionales={'error': 'Sin permisos de lectura'}
-            )
-        
-        if not es_ruta_segura(ruta_archivo):
-            return ResultadoEscaneo(
-                ruta_archivo,
-                es_limpio=True,
-                detalles_adicionales={'error': 'Ruta no segura'}
-            )
-        
-        self.logger.info(f"Iniciando escaneo de archivo: {ruta_archivo}")
-        self.siem.registrar_evento(
-            TipoEvento.ESCANEO_INICIADO,
-            f"Escaneo de archivo iniciado: {ruta_archivo}",
-            {'tipo_escaneo': 'archivo_individual', 'ruta': ruta_archivo},
-            "BAJO"
-        )
-        
-        amenazas_detectadas = []
-        detalles = {}
+        # Verificar cache primero
+        if self.configuracion['usar_cache']:
+            hash_archivo = self._calcular_hash_rapido(ruta_archivo)
+            if hash_archivo and hash_archivo in self.cache_escaneos:
+                self.estadisticas['cache_hits'] += 1
+                return self.cache_escaneos[hash_archivo]
         
         try:
-            # Leer contenido del archivo
-            with open(ruta_archivo, 'rb') as archivo:
-                contenido_bytes = archivo.read()
-                contenido_texto = contenido_bytes.decode('utf-8', errors='ignore').lower()
+            # Validaciones iniciales
+            if not validar_ruta_archivo(ruta_archivo):
+                return ResultadoEscaneo(
+                    ruta_archivo, 
+                    False, 
+                    [{'tipo': 'ERROR', 'descripcion': 'Archivo no válido o no accesible'}]
+                )
             
-            # Verificar hash del archivo
-            hash_archivo = hashlib.sha256(contenido_bytes).hexdigest()
-            if hash_archivo in self.firmas_hash:
-                amenazas_detectadas.append(f"Hash malicioso detectado: {hash_archivo[:16]}...")
+            # Verificar tamaño
+            tamaño_archivo = obtener_tamaño_archivo(ruta_archivo)
+            if tamaño_archivo > self.configuracion['max_tamaño_archivo']:
+                return ResultadoEscaneo(
+                    ruta_archivo,
+                    True,
+                    [],
+                    {'motivo_salto': 'Archivo demasiado grande', 'tamaño': tamaño_archivo}
+                )
             
-            # Verificar firmas de texto
-            for firma in self.firmas_texto:
-                if firma in contenido_texto:
-                    amenazas_detectadas.append(f"Firma maliciosa detectada: {firma}")
-            
-            # Verificar firmas regex
-            for regex in self.firmas_regex:
-                if regex.search(contenido_texto):
-                    amenazas_detectadas.append(f"Patrón malicioso detectado: {regex.pattern[:50]}...")
-            
-            # Análisis heurístico básico
-            amenazas_heuristicas = self._analisis_heuristico(contenido_texto, ruta_archivo)
-            amenazas_detectadas.extend(amenazas_heuristicas)
-            
-            detalles = {
-                'tamaño_archivo': len(contenido_bytes),
-                'hash_sha256': hash_archivo,
-                'firmas_verificadas': len(self.firmas_texto) + len(self.firmas_regex) + len(self.firmas_hash)
+            amenazas_detectadas = []
+            detalles_escaneo = {
+                'metodo_deteccion': [],
+                'tiempo_escaneo': 0.0,
+                'tamaño_archivo': tamaño_archivo
             }
-        
-        except UnicodeDecodeError:
-            # Archivo binario, análisis limitado
-            try:
-                with open(ruta_archivo, 'rb') as archivo:
-                    contenido_bytes = archivo.read()
-                
-                hash_archivo = hashlib.sha256(contenido_bytes).hexdigest()
-                if hash_archivo in self.firmas_hash:
-                    amenazas_detectadas.append(f"Hash malicioso detectado: {hash_archivo[:16]}...")
-                
-                detalles = {
-                    'tamaño_archivo': len(contenido_bytes),
-                    'hash_sha256': hash_archivo,
-                    'tipo_archivo': 'binario'
-                }
             
-            except Exception as e:
-                self.logger.error(f"Error procesando archivo binario {ruta_archivo}: {e}")
-                detalles['error'] = f"Error procesando archivo: {e}"
-        
+            # Registrar inicio de escaneo
+            self.siem.registrar_evento(
+                TipoEvento.ESCANEO_INICIADO,
+                f"Iniciando escaneo de malware: {ruta_archivo}",
+                {'ruta': ruta_archivo, 'tamaño': tamaño_archivo},
+                NivelCriticidad.INFORMATIVO
+            )
+            
+            # 1. Verificación por hash (más rápida)
+            hash_sha256 = self._calcular_hash_completo(ruta_archivo)
+            if hash_sha256 in self.firmas_hash:
+                firma = self.firmas_hash[hash_sha256]
+                amenazas_detectadas.append({
+                    'tipo': firma.tipo,
+                    'descripcion': firma.descripcion,
+                    'nivel_riesgo': firma.nivel_riesgo,
+                    'metodo_deteccion': 'HASH',
+                    'firma_id': hash_sha256
+                })
+                detalles_escaneo['metodo_deteccion'].append('HASH')
+            
+            # 2. Análisis de contenido (firmas de patrón)
+            try:
+                with open(ruta_archivo, 'r', encoding='utf-8', errors='ignore') as archivo:
+                    contenido = archivo.read()
+                
+                # Verificar firmas de detección
+                for firma in self.firmas_deteccion:
+                    if firma.detectar(contenido):
+                        amenazas_detectadas.append({
+                            'tipo': firma.tipo,
+                            'descripcion': firma.descripcion,
+                            'nivel_riesgo': firma.nivel_riesgo,
+                            'metodo_deteccion': 'PATRON',
+                            'patron': firma.patron
+                        })
+                        
+                        # Actualizar estadísticas de firma
+                        self.estadisticas['detecciones_por_tipo'][firma.tipo] += 1
+                
+                detalles_escaneo['metodo_deteccion'].append('PATRON')
+                
+                # 3. Análisis heurístico si está habilitado
+                if self.configuracion['analisis_heuristico']:
+                    extension = Path(ruta_archivo).suffix
+                    resultado_heuristico = self.analizador_heuristico.analizar(contenido, extension)
+                    
+                    if resultado_heuristico['es_sospechoso']:
+                        amenazas_detectadas.append({
+                            'tipo': 'HEURISTICO',
+                            'descripcion': f"Análisis heurístico: {', '.join(resultado_heuristico['patrones_detectados'])}",
+                            'nivel_riesgo': NivelRiesgo.MEDIO,
+                            'metodo_deteccion': 'HEURISTICO',
+                            'puntuacion_riesgo': resultado_heuristico['puntuacion_riesgo']
+                        })
+                        
+                        self.estadisticas['analisis_heuristico_activado'] += 1
+                    
+                    detalles_escaneo['analisis_heuristico'] = resultado_heuristico
+                    detalles_escaneo['metodo_deteccion'].append('HEURISTICO')
+                
+            except UnicodeDecodeError:
+                # Archivo binario - solo análisis por hash
+                detalles_escaneo['tipo_archivo'] = 'binario'
+                pass
+            
+            # Calcular tiempo de escaneo
+            tiempo_transcurrido = time.time() - inicio_tiempo
+            detalles_escaneo['tiempo_escaneo'] = tiempo_transcurrido
+            
+            # Crear resultado
+            es_limpio = len(amenazas_detectadas) == 0
+            resultado = ResultadoEscaneo(
+                ruta_archivo,
+                es_limpio,
+                amenazas_detectadas,
+                detalles_escaneo
+            )
+            resultado.tiempo_escaneo = tiempo_transcurrido
+            
+            # Actualizar estadísticas
+            self.estadisticas['archivos_escaneados'] += 1
+            if not es_limpio:
+                self.estadisticas['amenazas_detectadas'] += len(amenazas_detectadas)
+            self.estadisticas['tiempo_total_escaneo'] += tiempo_transcurrido
+            self.estadisticas['ultimo_escaneo'] = datetime.now()
+            
+            # Registrar resultado en SIEM
+            if not es_limpio:
+                self.siem.registrar_evento(
+                    TipoEvento.MALWARE_DETECTADO,
+                    f"Malware detectado en {ruta_archivo}",
+                    {
+                        'ruta': ruta_archivo,
+                        'amenazas': len(amenazas_detectadas),
+                        'nivel_riesgo': resultado.nivel_riesgo_maximo,
+                        'hash_sha256': hash_sha256
+                    },
+                    NivelCriticidad.ALTO if resultado.nivel_riesgo_maximo in [NivelRiesgo.ALTO, NivelRiesgo.CRITICO] else NivelCriticidad.MEDIO
+                )
+            
+            # Guardar en cache
+            if self.configuracion['usar_cache'] and hash_archivo:
+                if len(self.cache_escaneos) >= self.cache_max_size:
+                    # Limpiar cache (FIFO)
+                    oldest_key = next(iter(self.cache_escaneos))
+                    del self.cache_escaneos[oldest_key]
+                
+                self.cache_escaneos[hash_archivo] = resultado
+            
+            return resultado
+            
         except Exception as e:
             self.logger.error(f"Error escaneando archivo {ruta_archivo}: {e}")
-            detalles['error'] = f"Error durante escaneo: {e}"
-        
-        # Crear resultado
-        es_limpio = len(amenazas_detectadas) == 0
-        resultado = ResultadoEscaneo(
-            ruta_archivo,
-            es_limpio=es_limpio,
-            amenazas_detectadas=amenazas_detectadas,
-            detalles_adicionales=detalles
-        )
-        
-        # Actualizar estadísticas
-        self.estadisticas['archivos_escaneados'] += 1
-        if not es_limpio:
-            self.estadisticas['amenazas_detectadas'] += len(amenazas_detectadas)
-        
-        tiempo_transcurrido = time.time() - inicio_tiempo
-        self.estadisticas['tiempo_total_escaneo'] += tiempo_transcurrido
-        self.estadisticas['ultimo_escaneo'] = datetime.now()
-        
-        # Registrar resultado en SIEM
-        if es_limpio:
-            self.siem.registrar_evento(
-                TipoEvento.ESCANEO_FINALIZADO,
-                f"Archivo limpio: {ruta_archivo}",
-                {'ruta': ruta_archivo, 'tiempo_escaneo': tiempo_transcurrido},
-                "BAJO"
+            return ResultadoEscaneo(
+                ruta_archivo,
+                False,
+                [{'tipo': 'ERROR', 'descripcion': f'Error de escaneo: {str(e)}'}],
+                {'error': str(e)}
             )
-        else:
-            self.siem.registrar_evento(
-                TipoEvento.AMENAZA_DETECTADA,
-                f"Amenazas detectadas en: {ruta_archivo}",
-                {
-                    'ruta': ruta_archivo,
-                    'amenazas': amenazas_detectadas,
-                    'cantidad_amenazas': len(amenazas_detectadas)
-                },
-                "ALTO"
-            )
-        
-        self.logger.info(f"Escaneo completado: {ruta_archivo} - "
-                        f"{'LIMPIO' if es_limpio else f'{len(amenazas_detectadas)} amenaza(s)'}")
-        
-        return resultado
     
-    def _analisis_heuristico(self, contenido: str, ruta_archivo: str) -> List[str]:
-        """
-        Realiza análisis heurístico básico del contenido.
-        
-        Args:
-            contenido: Contenido del archivo en texto
-            ruta_archivo: Ruta del archivo
-            
-        Returns:
-            List[str]: Lista de amenazas heurísticas detectadas
-        """
-        amenazas = []
-        
+    def _calcular_hash_rapido(self, ruta_archivo: str) -> Optional[str]:
+        """Calcula un hash rápido para el cache."""
         try:
-            # Detectar alta concentración de código ofuscado
-            if self._detectar_ofuscacion(contenido):
-                amenazas.append("Posible código ofuscado detectado")
-            
-            # Detectar patrones de shell reverso
-            if self._detectar_shell_reverso(contenido):
-                amenazas.append("Posible shell reverso detectado")
-            
-            # Detectar keyloggers básicos
-            if self._detectar_keylogger(contenido):
-                amenazas.append("Posible keylogger detectado")
-            
-            # Análisis por extensión de archivo
-            extension = Path(ruta_archivo).suffix.lower()
-            if extension in ['.php', '.jsp', '.asp']:
-                if self._detectar_webshell(contenido):
-                    amenazas.append("Posible webshell detectado")
-        
-        except Exception as e:
-            self.logger.warning(f"Error en análisis heurístico: {e}")
-        
-        return amenazas
+            stat = os.stat(ruta_archivo)
+            # Usar tamaño + tiempo de modificación como hash rápido
+            return hashlib.md5(f"{stat.st_size}_{stat.st_mtime}".encode()).hexdigest()
+        except Exception:
+            return None
     
-    def _detectar_ofuscacion(self, contenido: str) -> bool:
-        """Detecta posible código ofuscado."""
-        # Buscar alta densidad de caracteres especiales
-        caracteres_especiales = sum(1 for c in contenido if c in '!@#$%^&*(){}[]|\\:";\'<>?,./~`')
-        densidad = caracteres_especiales / len(contenido) if len(contenido) > 0 else 0
-        
-        return densidad > 0.15  # Más del 15% de caracteres especiales
-    
-    def _detectar_shell_reverso(self, contenido: str) -> bool:
-        """Detecta patrones de shell reverso."""
-        patrones_shell = [
-            'nc -e',
-            'bash -i',
-            '/bin/sh -i',
-            'python -c',
-            'perl -e',
-            'ruby -e'
-        ]
-        
-        return any(patron in contenido for patron in patrones_shell)
-    
-    def _detectar_keylogger(self, contenido: str) -> bool:
-        """Detecta patrones de keylogger."""
-        patrones_keylogger = [
-            'keylog',
-            'getkeystate',
-            'setwindowshook',
-            'rawinput',
-            'keyboard',
-            'keystroke'
-        ]
-        
-        return sum(1 for patron in patrones_keylogger if patron in contenido) >= 2
-    
-    def _detectar_webshell(self, contenido: str) -> bool:
-        """Detecta patrones de webshell."""
-        patrones_webshell = [
-            '$_post',
-            '$_get',
-            'system(',
-            'exec(',
-            'shell_exec(',
-            'passthru(',
-            'eval(',
-            'file_get_contents'
-        ]
-        
-        return sum(1 for patron in patrones_webshell if patron in contenido) >= 3
-    
-    def escanear_directorio(self, ruta_directorio: str, recursivo: bool = True,
-                           extensiones_filtro: Optional[List[str]] = None) -> List[ResultadoEscaneo]:
-        """
-        Escanea un directorio completo.
-        
-        Args:
-            ruta_directorio: Ruta del directorio a escanear
-            recursivo: Si debe escanear subdirectorios
-            extensiones_filtro: Lista de extensiones a escanear (opcional)
-            
-        Returns:
-            List[ResultadoEscaneo]: Lista de resultados de escaneo
-        """
-        if not validar_ruta_directorio(ruta_directorio):
-            self.logger.error(f"Directorio no válido: {ruta_directorio}")
-            return []
-        
-        self.logger.info(f"Iniciando escaneo de directorio: {ruta_directorio}")
-        self.siem.registrar_evento(
-            TipoEvento.ESCANEO_INICIADO,
-            f"Escaneo de directorio iniciado: {ruta_directorio}",
-            {
-                'tipo_escaneo': 'directorio',
-                'ruta': ruta_directorio,
-                'recursivo': recursivo,
-                'extensiones_filtro': extensiones_filtro
-            },
-            "MEDIO"
-        )
-        
-        resultados = []
-        
+    def _calcular_hash_completo(self, ruta_archivo: str) -> str:
+        """Calcula el hash SHA256 completo del archivo."""
         try:
-            if recursivo:
-                archivos = listar_archivos_recursivo(ruta_directorio, extensiones_filtro)
-            else:
-                directorio_path = Path(ruta_directorio)
-                archivos = [f for f in directorio_path.iterdir() if f.is_file()]
-                
-                if extensiones_filtro:
-                    archivos = [f for f in archivos if f.suffix.lower() in 
-                              [ext.lower() for ext in extensiones_filtro]]
-            
-            total_archivos = len(archivos)
-            self.logger.info(f"Escaneando {total_archivos} archivos en {ruta_directorio}")
-            
-            for i, archivo in enumerate(archivos, 1):
-                try:
-                    resultado = self.escanear_archivo(str(archivo))
-                    resultados.append(resultado)
-                    
-                    # Log de progreso cada 100 archivos
-                    if i % 100 == 0:
-                        self.logger.info(f"Progreso: {i}/{total_archivos} archivos escaneados")
-                
-                except Exception as e:
-                    self.logger.error(f"Error escaneando archivo {archivo}: {e}")
-                    resultado_error = ResultadoEscaneo(
-                        str(archivo),
-                        es_limpio=True,
-                        detalles_adicionales={'error': f"Error durante escaneo: {e}"}
-                    )
-                    resultados.append(resultado_error)
-        
-        except Exception as e:
-            self.logger.error(f"Error durante escaneo de directorio {ruta_directorio}: {e}")
-            self.siem.registrar_evento(
-                TipoEvento.ERROR_SISTEMA,
-                f"Error escaneando directorio: {ruta_directorio}",
-                {'error': str(e)},
-                "ALTO"
-            )
-        
-        # Registrar finalización
-        amenazas_totales = sum(len(r.amenazas_detectadas) for r in resultados if not r.es_limpio)
-        archivos_infectados = len([r for r in resultados if not r.es_limpio])
-        
-        self.siem.registrar_evento(
-            TipoEvento.ESCANEO_FINALIZADO,
-            f"Escaneo de directorio completado: {ruta_directorio}",
-            {
-                'archivos_escaneados': len(resultados),
-                'archivos_infectados': archivos_infectados,
-                'amenazas_detectadas': amenazas_totales
-            },
-            "MEDIO" if amenazas_totales == 0 else "ALTO"
-        )
-        
-        self.logger.info(f"Escaneo de directorio completado: {len(resultados)} archivos, "
-                        f"{archivos_infectados} infectados, {amenazas_totales} amenazas")
-        
-        return resultados
-    
-    def escaneo_completo_sistema(self) -> Dict[str, Any]:
-        """
-        Realiza un escaneo completo del sistema.
-        
-        Returns:
-            Dict[str, Any]: Resumen del escaneo completo
-        """
-        self.logger.info("Iniciando escaneo completo del sistema")
-        self.siem.registrar_evento(
-            TipoEvento.ESCANEO_INICIADO,
-            "Escaneo completo del sistema iniciado",
-            {'tipo_escaneo': 'sistema_completo'},
-            "ALTO"
-        )
-        
-        inicio_tiempo = time.time()
-        
-        # Directorios críticos a escanear
-        directorios_criticos = [
-            '/home',
-            '/tmp',
-            '/var/tmp',
-            '/usr/local',
-            '/opt'
-        ]
-        
-        # Extensiones de archivos sospechosos
-        extensiones_sospechosas = [
-            '.php', '.jsp', '.asp', '.py', '.sh', '.pl', '.rb',
-            '.exe', '.bat', '.cmd', '.scr', '.pif', '.jar'
-        ]
-        
-        resultados_por_directorio = {}
-        resumen_global = {
-            'total_archivos_escaneados': 0,
-            'total_amenazas_detectadas': 0,
-            'archivos_infectados': 0,
-            'directorios_escaneados': 0,
-            'tiempo_total': 0,
-            'directorios_con_problemas': []
-        }
-        
-        for directorio in directorios_criticos:
-            if os.path.exists(directorio) and os.access(directorio, os.R_OK):
-                try:
-                    self.logger.info(f"Escaneando directorio crítico: {directorio}")
-                    resultados = self.escanear_directorio(directorio, True, extensiones_sospechosas)
-                    
-                    resultados_por_directorio[directorio] = resultados
-                    resumen_global['total_archivos_escaneados'] += len(resultados)
-                    resumen_global['directorios_escaneados'] += 1
-                    
-                    archivos_infectados_dir = [r for r in resultados if not r.es_limpio]
-                    resumen_global['archivos_infectados'] += len(archivos_infectados_dir)
-                    
-                    amenazas_dir = sum(len(r.amenazas_detectadas) for r in archivos_infectados_dir)
-                    resumen_global['total_amenazas_detectadas'] += amenazas_dir
-                    
-                except Exception as e:
-                    self.logger.error(f"Error escaneando directorio {directorio}: {e}")
-                    resumen_global['directorios_con_problemas'].append(directorio)
-            else:
-                self.logger.warning(f"Directorio no accesible: {directorio}")
-                resumen_global['directorios_con_problemas'].append(directorio)
-        
-        tiempo_total = time.time() - inicio_tiempo
-        resumen_global['tiempo_total'] = tiempo_total
-        
-        # Registrar finalización
-        self.siem.registrar_evento(
-            TipoEvento.ESCANEO_FINALIZADO,
-            "Escaneo completo del sistema finalizado",
-            resumen_global,
-            "ALTO" if resumen_global['total_amenazas_detectadas'] > 0 else "MEDIO"
-        )
-        
-        self.logger.info(f"Escaneo completo finalizado: {resumen_global['total_archivos_escaneados']} archivos, "
-                        f"{resumen_global['total_amenazas_detectadas']} amenazas en {tiempo_total:.2f}s")
-        
-        return {
-            'resumen_global': resumen_global,
-            'resultados_por_directorio': resultados_por_directorio,
-            'estadisticas_escaneador': self.estadisticas.copy()
-        }
+            hash_sha256 = hashlib.sha256()
+            with open(ruta_archivo, 'rb') as archivo:
+                for chunk in iter(lambda: archivo.read(4096), b""):
+                    hash_sha256.update(chunk)
+            return hash_sha256.hexdigest()
+        except Exception:
+            return ""
     
     def obtener_estadisticas(self) -> Dict[str, Any]:
-        """
-        Obtiene las estadísticas del escaneador.
-        
-        Returns:
-            Dict[str, Any]: Estadísticas del escaneador
-        """
-        return self.estadisticas.copy()
-    
-    def generar_reporte_markdown(self, resultados: List[ResultadoEscaneo]) -> str:
-        """
-        Genera un reporte en formato Markdown de los resultados de escaneo.
-        
-        Args:
-            resultados: Lista de resultados de escaneo
-            
-        Returns:
-            str: Reporte en formato Markdown
-        """
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        
-        md = f"# Reporte de Escaneo - Ares Aegis\n\n"
-        md += f"**Fecha:** {timestamp}\n\n"
-        
-        # Resumen general
-        total_archivos = len(resultados)
-        archivos_infectados = len([r for r in resultados if not r.es_limpio])
-        total_amenazas = sum(len(r.amenazas_detectadas) for r in resultados if not r.es_limpio)
-        
-        md += "## Resumen General\n\n"
-        md += f"- **Total de archivos escaneados:** {total_archivos}\n"
-        md += f"- **Archivos infectados:** {archivos_infectados}\n"
-        md += f"- **Total de amenazas detectadas:** {total_amenazas}\n"
-        md += f"- **Porcentaje de archivos limpios:** {((total_archivos - archivos_infectados) / total_archivos * 100):.2f}%\n\n"
-        
-        # Archivos infectados
-        if archivos_infectados > 0:
-            md += "## 🚨 Archivos Infectados\n\n"
-            for resultado in resultados:
-                if not resultado.es_limpio:
-                    md += f"### {resultado.ruta}\n\n"
-                    md += f"**Amenazas detectadas:**\n"
-                    for amenaza in resultado.amenazas_detectadas:
-                        md += f"- {amenaza}\n"
-                    md += f"\n**Hash SHA256:** `{resultado.hash_sha256}`\n\n"
-                    md += "---\n\n"
-        else:
-            md += "## ✅ Resultado Limpio\n\n"
-            md += "No se detectaron amenazas en ningún archivo escaneado.\n\n"
-        
-        return md
-    
-    def escanear_multiples_rutas(self, rutas: List[str], 
-                                recursivo: bool = True) -> Dict[str, Any]:
-        """
-        Escanea múltiples rutas y devuelve estadísticas consolidadas.
-        
-        Args:
-            rutas: Lista de rutas a escanear
-            recursivo: Si debe escanear subdirectorios
-            
-        Returns:
-            Dict[str, Any]: Estadísticas consolidadas del escaneo
-        """
-        resultados_totales = []
-        archivos_escaneados = 0
-        amenazas_detectadas = 0
-        tiempo_inicio = time.time()
-        
-        for ruta in rutas:
-            try:
-                if Path(ruta).exists():
-                    self.logger.info(f"Escaneando ruta: {ruta}")
-                    resultados_ruta = self.escanear_directorio(ruta, recursivo)
-                    resultados_totales.extend(resultados_ruta)
-                    
-                    # Contar estadísticas
-                    archivos_escaneados += len(resultados_ruta)
-                    amenazas_ruta = sum(len(r.amenazas_detectadas) for r in resultados_ruta)
-                    amenazas_detectadas += amenazas_ruta
-                    
-                    self.logger.info(f"Ruta {ruta}: {len(resultados_ruta)} archivos, {amenazas_ruta} amenazas")
-                else:
-                    self.logger.warning(f"Ruta no existe: {ruta}")
-            
-            except Exception as e:
-                self.logger.error(f"Error escaneando ruta {ruta}: {e}")
-        
-        tiempo_total = time.time() - tiempo_inicio
-        
-        # Actualizar estadísticas del escaneador
-        self.total_archivos_escaneados += archivos_escaneados
-        self.total_amenazas_detectadas += amenazas_detectadas
-        self.ultimo_escaneo = datetime.now()
-        
-        # Registrar archivos infectados (la cuarentena se maneja desde el controlador)
-        archivos_infectados = [r for r in resultados_totales if not r.es_limpio]
-        
-        # Registrar en SIEM
-        self.siem.registrar_evento(
-            TipoEvento.ESCANEO_FINALIZADO,
-            f"Escaneo múltiple completado: {archivos_escaneados} archivos, {amenazas_detectadas} amenazas",
-            {
-                'rutas_escaneadas': rutas,
-                'archivos_escaneados': archivos_escaneados,
-                'amenazas_detectadas': amenazas_detectadas,
-                'archivos_infectados': len(archivos_infectados),
-                'tiempo_escaneo': tiempo_total
-            },
-            "ALTO" if amenazas_detectadas > 0 else "MEDIO"
-        )
-        
+        """Obtiene estadísticas completas del escaneador."""
         return {
-            'archivos_escaneados': archivos_escaneados,
-            'amenazas_detectadas': amenazas_detectadas,
-            'archivos_infectados': len(archivos_infectados),
-            'tiempo_escaneo': tiempo_total,
-            'rutas_escaneadas': rutas,
-            'resultados_detallados': resultados_totales
+            **self.estadisticas,
+            'firmas_cargadas': len(self.firmas_deteccion),
+            'tipos_amenaza_conocidos': len(self.firmas_por_tipo),
+            'cache_size': len(self.cache_escaneos),
+            'configuracion': self.configuracion.copy()
         }
+    
+    def limpiar_cache(self):
+        """Limpia el cache de escaneos."""
+        self.cache_escaneos.clear()
+        self.logger.info("Cache de escaneos limpiado")
+    
+    def actualizar_configuracion(self, nueva_config: Dict[str, Any]):
+        """Actualiza la configuración del escaneador."""
+        self.configuracion.update(nueva_config)
+        self.logger.info("Configuración del escaneador actualizada")

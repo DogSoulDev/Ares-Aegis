@@ -17,10 +17,10 @@ from typing import Dict, Any, List, Optional
 from pathlib import Path
 
 from ..modelos.siem import SIEM, TipoEvento
-from ..modelos.escaneador import Escaneador
-from ..modelos.fim import FIM
+from ..modelos.escaneador import EscaneadorMalware
+from ..modelos.fim import FIMAvanzado
 from ..modelos.monitor_red import MonitorRed
-from ..modelos.gestor_cuarentena import Cuarentena
+from ..modelos.gestor_cuarentena import GestorCuarentenaAvanzado
 from ..modelos.monitor_procesos import MonitorProcesos
 from ..modelos.analizador_dinamico import AnalizadorDinamico
 from ..modelos.analizador_archivos import AnalizadorArchivos
@@ -29,8 +29,8 @@ from ..modelos.analizador_comportamiento_procesos import AnalizadorComportamient
 from ..modelos.analizador_comportamiento_red import AnalizadorComportamientoRed
 from ..modelos.escaneador_vulnerabilidades_red import EscaneadorVulnerabilidadesRed
 from ..modelos.escaneador_vulnerabilidades_sistema import EscaneadorVulnerabilidadesSistema
+from ..modelos.analizadores_especializados import GestorAnalizadoresEspecializados
 from ..modelos.integracion_externa import IntegracionExterna
-from ..modelos.sistema_reportes_notificaciones import SistemaReportesNotificaciones
 from ..modelos.respuesta_automatizada import RespuestaAutomatizada
 from ..modelos.analizador_registros import AnalizadorRegistros
 from ..modelos.respondedor_incidentes import RespondedorIncidentes
@@ -53,10 +53,10 @@ class ControladorPrincipal:
         
         # Componentes principales
         self.siem: Optional[SIEM] = None
-        self.escaneador: Optional[Escaneador] = None
-        self.fim: Optional[FIM] = None
+        self.escaneador: Optional[EscaneadorMalware] = None
+        self.fim: Optional[FIMAvanzado] = None
         self.monitor_red: Optional[MonitorRed] = None
-        self.cuarentena: Optional[Cuarentena] = None
+        self.gestor_cuarentena: Optional[GestorCuarentenaAvanzado] = None
         
         # Componentes de análisis avanzado
         self.monitor_procesos: Optional[MonitorProcesos] = None
@@ -65,6 +65,8 @@ class ControladorPrincipal:
         self.analizador_cadenas: Optional[AnalizadorCadenas] = None
         self.analizador_comportamiento_procesos: Optional[AnalizadorComportamientoProcesos] = None
         self.analizador_comportamiento_red: Optional[AnalizadorComportamientoRed] = None
+        self.analizadores_especializados: Optional[GestorAnalizadoresEspecializados] = None
+        # self.sistema_reportes: Optional[SistemaReportesNotificaciones] = None  # Por implementar
         
         # Componentes de vulnerabilidades
         self.escaneador_vuln_red: Optional[EscaneadorVulnerabilidadesRed] = None
@@ -73,7 +75,6 @@ class ControladorPrincipal:
         
         # Componentes de gestión y respuesta
         self.integracion_externa: Optional[IntegracionExterna] = None
-        self.sistema_reportes: Optional[SistemaReportesNotificaciones] = None
         self.respuesta_automatizada: Optional[RespuestaAutomatizada] = None
         self.analizador_registros: Optional[AnalizadorRegistros] = None
         self.respondedor_incidentes: Optional[RespondedorIncidentes] = None
@@ -100,13 +101,13 @@ class ControladorPrincipal:
             self.logger.info("SIEM inicializado - Los Ojos de Argos despiertan")
             
             # 2. Inicializar componentes principales que dependen del SIEM
-            self.escaneador = Escaneador(self.siem)
+            self.escaneador = EscaneadorMalware(self.siem)
             self.logger.info("Escaneador inicializado - Los Cazadores de Artemisa listos")
             
-            self.cuarentena = Cuarentena(self.siem)
+            self.gestor_cuarentena = GestorCuarentenaAvanzado(self.siem)
             self.logger.info("Cuarentena inicializada - Las Celdas de Hades preparadas")
             
-            self.fim = FIM(self.siem)
+            self.fim = FIMAvanzado(self.siem)
             self.logger.info("FIM inicializado - Los Vigilantes de Heimdall en guardia")
             
             self.monitor_red = MonitorRed(self.siem)
@@ -131,6 +132,14 @@ class ControladorPrincipal:
             self.analizador_comportamiento_red = AnalizadorComportamientoRed(self.siem)
             self.logger.info("Análisis de comportamiento de red - Los Estrategas de Ares planifican")
             
+            # Inicializar analizadores especializados
+            self.analizadores_especializados = GestorAnalizadoresEspecializados(self.siem)
+            self.logger.info("Analizadores especializados inicializados - Los Sabios de Thoth analizan")
+            
+            # Inicializar sistema de reportes  
+            # self.sistema_reportes = SistemaReportesNotificaciones(self.siem)  # Por implementar
+            # self.logger.info("Sistema de reportes inicializado - Los Heraldos de Iris comunican")
+            
             # 4. Inicializar componentes de vulnerabilidades
             self.escaneador_vuln_red = EscaneadorVulnerabilidadesRed()
             self.logger.info("Escaneador de vulnerabilidades de red - Los Exploradores de Odín buscan")
@@ -144,9 +153,6 @@ class ControladorPrincipal:
             # 5. Inicializar componentes de gestión y respuesta
             self.integracion_externa = IntegracionExterna(self.siem)
             self.logger.info("Integración externa - Los Embajadores de Iris conectan")
-            
-            self.sistema_reportes = SistemaReportesNotificaciones(self.siem)
-            self.logger.info("Sistema de reportes - Los Heraldos de Hermes informan")
             
             self.respuesta_automatizada = RespuestaAutomatizada()
             self.logger.info("Respuesta automatizada - Los Autómatas de Hefesto responden")
@@ -164,7 +170,7 @@ class ControladorPrincipal:
             self.visor_hex = VisorHex(self.siem)
             self.logger.info("Visor hexadecimal - Los Decifradores de Thot revelan")
             
-            self.descontaminacion = DescontaminacionInteligente(self.siem, self.cuarentena)
+            self.descontaminacion = DescontaminacionInteligente(self.siem, self.gestor_cuarentena)
             self.logger.info("Descontaminación inteligente - Los Purificadores de Asclepio sanan")
             
             # Registrar inicialización exitosa
@@ -212,7 +218,7 @@ class ControladorPrincipal:
                 'escaneador': self.escaneador is not None,
                 'fim': self.fim is not None,
                 'monitor_red': self.monitor_red is not None,
-                'cuarentena': self.cuarentena is not None
+                'cuarentena': self.gestor_cuarentena is not None
             },
             'servicios_activos': {
                 'monitor_red': self.monitor_red.monitoreando if self.monitor_red else False
@@ -251,8 +257,8 @@ class ControladorPrincipal:
                 })
             
             # Estadísticas de cuarentena
-            if self.cuarentena:
-                stats_cuarentena = self.cuarentena.obtener_estadisticas()
+            if self.gestor_cuarentena:
+                stats_cuarentena = self.gestor_cuarentena.obtener_estadisticas()
                 estadisticas['archivos_cuarentena'] = stats_cuarentena.get('total_archivos', 0)
             else:
                 estadisticas['archivos_cuarentena'] = 0
@@ -281,7 +287,7 @@ class ControladorPrincipal:
             
             # Estadísticas del SIEM
             if self.siem:
-                eventos_recientes = self.siem.buscar_eventos(limite=100)
+                eventos_recientes = self.siem.obtener_eventos(limite=100)
                 estadisticas['total_eventos'] = len(eventos_recientes)
             else:
                 estadisticas['total_eventos'] = 0
@@ -405,17 +411,6 @@ class ControladorPrincipal:
             Dict[str, Any]: Resultados del escaneo
         """
         return self.escaneo_rapido_con_progreso()
-        
-        if self.siem:
-            self.siem.registrar_evento(
-                TipoEvento.ESCANEO_FINALIZADO,
-                "Escaneo rápido finalizado",
-                resultado,
-                "MEDIO"
-            )
-        
-        self.logger.info(f"Escaneo rápido completado en {tiempo_total:.2f}s")
-        return resultado
     
     def escaneo_completo_con_progreso(self, callback_progreso=None) -> Dict[str, Any]:
         """
@@ -554,14 +549,41 @@ class ControladorPrincipal:
             )
         
         inicio_tiempo = time.time()
-        resultado_escaneo = self.escaneador.escanear_multiples_rutas([ruta])
+        
+        # Escanear directorio archivo por archivo
+        archivos_escaneados = 0
+        amenazas_detectadas = 0
+        archivos_infectados = 0
+        
+        try:
+            path_obj = Path(ruta)
+            if path_obj.is_file():
+                resultado_archivo = self.escaneador.escanear_archivo(str(path_obj))
+                archivos_escaneados = 1
+                if resultado_archivo and resultado_archivo.tiene_amenazas():
+                    amenazas_detectadas = 1
+                    archivos_infectados = 1
+            elif path_obj.is_dir():
+                for archivo in path_obj.rglob('*'):
+                    if archivo.is_file() and archivo.stat().st_size < 50 * 1024 * 1024:  # < 50MB
+                        try:
+                            resultado_archivo = self.escaneador.escanear_archivo(str(archivo))
+                            archivos_escaneados += 1
+                            if resultado_archivo and resultado_archivo.tiene_amenazas():
+                                amenazas_detectadas += 1
+                                archivos_infectados += 1
+                        except Exception as e:
+                            self.logger.warning(f"Error escaneando {archivo}: {e}")
+        except Exception as e:
+            self.logger.warning(f"Error accediendo a {ruta}: {e}")
+        
         tiempo_total = time.time() - inicio_tiempo
         
         # Construir resultado como diccionario
         resultado = {
-            'archivos_escaneados': resultado_escaneo.get('archivos_escaneados', 0),
-            'amenazas_detectadas': resultado_escaneo.get('amenazas_detectadas', 0),
-            'archivos_infectados': resultado_escaneo.get('archivos_infectados', 0),
+            'archivos_escaneados': archivos_escaneados,
+            'amenazas_detectadas': amenazas_detectadas,
+            'archivos_infectados': archivos_infectados,
             'tiempo_escaneo': tiempo_total,
             'tipo_escaneo': 'directorio',
             'ruta_escaneada': ruta
@@ -591,7 +613,7 @@ class ControladorPrincipal:
         self.logger.info("Iniciando verificación de integridad")
         
         inicio_tiempo = time.time()
-        cambios = self.fim.verificar_integridad()
+        cambios = self.fim.verificar_integridad_completa()
         tiempo_total = time.time() - inicio_tiempo
         
         resultado = {
@@ -618,7 +640,7 @@ class ControladorPrincipal:
             raise RuntimeError("FIM no inicializado")
         
         self.logger.info("Creando línea base de integridad")
-        return self.fim.crear_baseline()
+        return self.fim.crear_baseline_avanzada()
     
     def iniciar_monitor_red(self):
         """Inicia el monitoreo de red."""
@@ -649,7 +671,7 @@ class ControladorPrincipal:
         if not self.siem:
             return []
         
-        eventos = self.siem.buscar_eventos(limite=limite)
+        eventos = self.siem.obtener_eventos(limite=limite)
         return [evento.to_dict() for evento in eventos]
     
     def generar_reporte_completo(self) -> str:
@@ -686,13 +708,16 @@ class ControladorPrincipal:
         # Reportes específicos de componentes
         try:
             # Reporte de cuarentena
-            if self.cuarentena:
-                md += self.cuarentena.generar_reporte_markdown()
-                md += "\n"
+            if self.gestor_cuarentena:
+                stats_cuarentena = self.gestor_cuarentena.obtener_estadisticas()
+                md += f"## 🔒 Estado de Cuarentena\\n"
+                md += f"- Archivos en cuarentena: {stats_cuarentena.get('archivos_cuarentena', 0)}\\n"
+                md += f"- Análisis forenses completados: {stats_cuarentena.get('analisis_completados', 0)}\\n"
+                md += "\\n"
             
             # Reporte de red
             if self.monitor_red:
-                md += self.monitor_red.generar_reporte_markdown()
+                md += self.monitor_red.generar_reporte_avanzado()
                 md += "\n"
             
         except Exception as e:
@@ -710,16 +735,14 @@ class ControladorPrincipal:
         Este es el método principal que inicia la interfaz de usuario.
         """
         try:
-            self.logger.info("Iniciando interfaz gráfica de Ares Aegis")
+            self.logger.info("Iniciando interfaz de línea de comandos de Ares Aegis")
             
-            # Importar la interfaz gráfica
-            from ..vista.interfaz_principal_gui import InterfazPrincipalGUI
-            
-            # Crear y ejecutar la interfaz
-            interfaz = InterfazPrincipalGUI()
-            # Asignar el controlador a la interfaz
-            interfaz.controlador = self
-            interfaz.ejecutar_egida()
+            # Mostrar resumen del sistema
+            print("🛡️  ARES AEGIS - SISTEMA DE CIBERSEGURIDAD ACTIVADO")
+            print("=" * 60)
+            print("Sistema iniciado correctamente. Todos los componentes operativos.")
+            print("Para más opciones, ejecute el menú principal desde main.py")
+            print("=" * 60)
             
         except ImportError as e:
             self.logger.error(f"Error importando interfaz gráfica: {e}")
@@ -878,7 +901,7 @@ class ControladorPrincipal:
             actividades = []
             
             if self.siem:
-                eventos = self.siem.buscar_eventos(limite=limite)
+                eventos = self.siem.obtener_eventos(limite=limite)
                 for evento in eventos:
                     actividades.append({
                         'timestamp': evento.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
@@ -898,7 +921,7 @@ class ControladorPrincipal:
             alertas = []
             
             if self.siem:
-                eventos = self.siem.buscar_eventos(limite=limite)
+                eventos = self.siem.obtener_eventos(limite=limite)
                 for evento in eventos:
                     if evento.nivel_criticidad in ['ALTO', 'CRITICO']:
                         alertas.append({

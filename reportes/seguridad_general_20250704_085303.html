@@ -1,0 +1,544 @@
+
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Reporte de Seguridad General - Ares Aegis</title>
+            
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '🛡️';
+            font-size: 48px;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #28a745;
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .metric-card.warning {
+            border-left-color: #ffc107;
+        }
+        
+        .metric-card.danger {
+            border-left-color: #dc3545;
+        }
+        
+        .metric-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+        
+        .metric-card .label {
+            color: #6c757d;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table th {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .table tr:hover {
+            background: #e9ecef;
+        }
+        
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .badge.critico { background: #dc3545; color: white; }
+        .badge.alto { background: #fd7e14; color: white; }
+        .badge.medio { background: #ffc107; color: #212529; }
+        .badge.bajo { background: #20c997; color: white; }
+        .badge.info { background: #17a2b8; color: white; }
+        
+        .footer {
+            background: #343a40;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .alert.warning {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+        
+        .alert.danger {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        @media (max-width: 768px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+        </style>
+        
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>ARES AEGIS</h1>
+                    <div class="subtitle">Reporte de Seguridad General</div>
+                    <div class="subtitle">Generado: 04/07/2025 08:53:03</div>
+                </div>
+                
+                <div class="content">
+                    <!-- Resumen Ejecutivo -->
+                    <div class="section">
+                        <h2>📊 Resumen Ejecutivo</h2>
+                        <div class="metrics-grid">
+                            <div class="metric-card danger">
+                                <div class="value">50</div>
+                                <div class="label">Total de Eventos</div>
+                            </div>
+                            <div class="metric-card danger">
+                                <div class="value">9</div>
+                                <div class="label">Amenazas Críticas</div>
+                            </div>
+                            <div class="metric-card ">
+                                <div class="value">0</div>
+                                <div class="label">Archivos en Cuarentena</div>
+                            </div>
+                            <div class="metric-card ">
+                                <div class="value">8</div>
+                                <div class="label">Eventos (24h)</div>
+                            </div>
+                        </div>
+                        
+                        
+            <div class="alert danger">
+                🚨 <strong>ATENCIÓN:</strong> Se han detectado 9 amenazas críticas que requieren acción inmediata.
+            </div>
+            
+                    </div>
+                    
+                    <!-- Distribución de Eventos -->
+                    <div class="section">
+                        <h2>📈 Distribución de Eventos por Nivel</h2>
+                        <div class='chart-container'>
+            <div style="margin: 15px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span><strong>INFO</strong></span>
+                    <span>13 eventos (26.0%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 26.0%; background: #17a2b8;"></div>
+                </div>
+            </div>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span><strong>ALTO</strong></span>
+                    <span>12 eventos (24.0%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 24.0%; background: #fd7e14;"></div>
+                </div>
+            </div>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span><strong>MEDIO</strong></span>
+                    <span>11 eventos (22.0%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 22.0%; background: #ffc107;"></div>
+                </div>
+            </div>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span><strong>CRITICO</strong></span>
+                    <span>9 eventos (18.0%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 18.0%; background: #dc3545;"></div>
+                </div>
+            </div>
+            
+            <div style="margin: 15px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <span><strong>BAJO</strong></span>
+                    <span>5 eventos (10.0%)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 10.0%; background: #20c997;"></div>
+                </div>
+            </div>
+            </div>
+                    </div>
+                    
+                    <!-- Eventos por Tipo -->
+                    <div class="section">
+                        <h2>🔍 Eventos por Tipo</h2>
+                        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tipo de Evento</th>
+                    <th>Cantidad</th>
+                    <th>Porcentaje</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+            <tr>
+                <td>Usuario Suspendido</td>
+                <td>11</td>
+                <td>22.0%</td>
+            </tr>
+            
+            <tr>
+                <td>Conexion Sospechosa</td>
+                <td>10</td>
+                <td>20.0%</td>
+            </tr>
+            
+            <tr>
+                <td>Malware Detectado</td>
+                <td>10</td>
+                <td>20.0%</td>
+            </tr>
+            
+            <tr>
+                <td>Integridad Archivo</td>
+                <td>7</td>
+                <td>14.0%</td>
+            </tr>
+            
+            <tr>
+                <td>Acceso Denegado</td>
+                <td>6</td>
+                <td>12.0%</td>
+            </tr>
+            
+            <tr>
+                <td>Proceso Anomalo</td>
+                <td>6</td>
+                <td>12.0%</td>
+            </tr>
+            </tbody></table>
+                    </div>
+                    
+                    <!-- Eventos Recientes -->
+                    <div class="section">
+                        <h2>⏰ Eventos Críticos Recientes</h2>
+                        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Tipo</th>
+                    <th>Nivel</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+            <tr>
+                <td>04/07/2025 06:05:14</td>
+                <td>USUARIO_SUSPENDIDO</td>
+                <td><span class="badge medio">MEDIO</span></td>
+                <td>Evento de seguridad 13: conexion sospechosa...</td>
+            </tr>
+            
+            <tr>
+                <td>04/07/2025 02:01:20</td>
+                <td>CONEXION_SOSPECHOSA</td>
+                <td><span class="badge medio">MEDIO</span></td>
+                <td>Evento de seguridad 48: proceso anomalo...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 23:44:01</td>
+                <td>MALWARE_DETECTADO</td>
+                <td><span class="badge info">INFO</span></td>
+                <td>Evento de seguridad 2: integridad archivo...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 23:36:35</td>
+                <td>INTEGRIDAD_ARCHIVO</td>
+                <td><span class="badge alto">ALTO</span></td>
+                <td>Evento de seguridad 4: integridad archivo...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 21:05:19</td>
+                <td>INTEGRIDAD_ARCHIVO</td>
+                <td><span class="badge alto">ALTO</span></td>
+                <td>Evento de seguridad 33: integridad archivo...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 19:21:39</td>
+                <td>MALWARE_DETECTADO</td>
+                <td><span class="badge info">INFO</span></td>
+                <td>Evento de seguridad 21: proceso anomalo...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 12:47:59</td>
+                <td>MALWARE_DETECTADO</td>
+                <td><span class="badge alto">ALTO</span></td>
+                <td>Evento de seguridad 40: malware detectado...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 12:04:46</td>
+                <td>ACCESO_DENEGADO</td>
+                <td><span class="badge critico">CRITICO</span></td>
+                <td>Evento de seguridad 3: acceso denegado...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 06:26:20</td>
+                <td>MALWARE_DETECTADO</td>
+                <td><span class="badge info">INFO</span></td>
+                <td>Evento de seguridad 23: conexion sospechosa...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 06:16:16</td>
+                <td>CONEXION_SOSPECHOSA</td>
+                <td><span class="badge info">INFO</span></td>
+                <td>Evento de seguridad 29: conexion sospechosa...</td>
+            </tr>
+            
+            <tr>
+                <td>03/07/2025 02:38:51</td>
+                <td>INTEGRIDAD_ARCHIVO</td>
+                <td><span class="badge alto">ALTO</span></td>
+                <td>Evento de seguridad 30: malware detectado...</td>
+            </tr>
+            
+            <tr>
+                <td>02/07/2025 23:31:37</td>
+                <td>INTEGRIDAD_ARCHIVO</td>
+                <td><span class="badge medio">MEDIO</span></td>
+                <td>Evento de seguridad 11: usuario suspendido...</td>
+            </tr>
+            
+            <tr>
+                <td>02/07/2025 22:42:04</td>
+                <td>ACCESO_DENEGADO</td>
+                <td><span class="badge critico">CRITICO</span></td>
+                <td>Evento de seguridad 7: integridad archivo...</td>
+            </tr>
+            
+            <tr>
+                <td>02/07/2025 22:03:37</td>
+                <td>PROCESO_ANOMALO</td>
+                <td><span class="badge critico">CRITICO</span></td>
+                <td>Evento de seguridad 44: malware detectado...</td>
+            </tr>
+            
+            <tr>
+                <td>02/07/2025 12:15:37</td>
+                <td>INTEGRIDAD_ARCHIVO</td>
+                <td><span class="badge bajo">BAJO</span></td>
+                <td>Evento de seguridad 31: usuario suspendido...</td>
+            </tr>
+            </tbody></table>
+                    </div>
+                    
+                    <!-- Estadísticas del Sistema -->
+                    <div class="section">
+                        <h2>⚙️ Estadísticas del Sistema</h2>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="value">8</div>
+                                <div class="label">Conexiones Sospechosas</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="value">6</div>
+                                <div class="label">Procesos Anómalos</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="value">7</div>
+                                <div class="label">Cambios de Integridad</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="value">0.00s</div>
+                                <div class="label">Tiempo de Generación</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recomendaciones -->
+                    <div class="section">
+                        <h2>💡 Recomendaciones</h2>
+                        <ul><li style='margin: 10px 0; font-size: 1.1em;'>🚨 Investigar inmediatamente las amenazas críticas detectadas</li><li style='margin: 10px 0; font-size: 1.1em;'>🔒 Revisar y fortalecer las medidas de seguridad</li><li style='margin: 10px 0; font-size: 1.1em;'>🌐 Analizar patrones de tráfico de red sospechoso</li></ul>
+                    </div>
+                </div>
+                
+                <div class="footer">
+                    <div>© 2025 DogSoulDev - Ares Aegis Sistema de Ciberseguridad</div>
+                    <div>Reporte generado automáticamente - Período: 27/06/2025 - 04/07/2025</div>
+                </div>
+            </div>
+        </body>
+        </html>
+        

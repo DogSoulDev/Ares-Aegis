@@ -1,0 +1,194 @@
+{
+    "reglas_activas": {
+        "malware_detectado": {
+            "enabled": true,
+            "eventos_trigger": ["MALWARE_DETECTADO", "VIRUS_ENCONTRADO", "TROJAN_DETECTADO"],
+            "accion": "cuarentena_inmediata",
+            "severidad": "critica",
+            "descripcion": "Cuarentena inmediata de archivos con malware detectado",
+            "notificar": true,
+            "timeout": 0
+        },
+        "ransomware_detectado": {
+            "enabled": true,
+            "eventos_trigger": ["RANSOMWARE_DETECTADO"],
+            "accion": "aislar_sistema",
+            "severidad": "critica",
+            "descripcion": "Aislamiento del sistema ante detección de ransomware",
+            "notificar": true,
+            "timeout": 0
+        },
+        "rootkit_detectado": {
+            "enabled": true,
+            "eventos_trigger": ["ROOTKIT_DETECTADO"],
+            "accion": "analisis_profundo",
+            "severidad": "critica",
+            "descripcion": "Análisis profundo del sistema ante rootkit detectado",
+            "notificar": true,
+            "timeout": 5
+        },
+        "conexion_sospechosa": {
+            "enabled": true,
+            "eventos_trigger": ["CONEXION_SOSPECHOSA", "TRAFICO_MALICIOSO"],
+            "accion": "bloquear_ip",
+            "severidad": "alta",
+            "descripcion": "Bloquear IPs con conexiones sospechosas",
+            "notificar": true,
+            "timeout": 0
+        },
+        "proceso_malicioso": {
+            "enabled": true,
+            "eventos_trigger": ["PROCESO_MALICIOSO", "PROCESO_INYECCION_CODIGO"],
+            "accion": "terminar_proceso",
+            "severidad": "alta",
+            "descripcion": "Terminar procesos maliciosos inmediatamente",
+            "notificar": true,
+            "timeout": 0
+        },
+        "integridad_violada": {
+            "enabled": true,
+            "eventos_trigger": ["INTEGRIDAD_VIOLADA", "ARCHIVO_MODIFICADO"],
+            "accion": "backup_restaurar",
+            "severidad": "media",
+            "descripcion": "Crear backup y restaurar archivos con integridad comprometida",
+            "notificar": true,
+            "timeout": 30
+        },
+        "vulnerabilidad_critica": {
+            "enabled": true,
+            "eventos_trigger": ["VULNERABILIDAD_CRITICA", "EXPLOIT_DETECTADO"],
+            "accion": "parche_urgente",
+            "severidad": "critica",
+            "descripcion": "Aplicar parches urgentes para vulnerabilidades críticas",
+            "notificar": true,
+            "timeout": 60
+        },
+        "acceso_no_autorizado": {
+            "enabled": true,
+            "eventos_trigger": ["ACCESO_DENEGADO", "LOGIN_FALLIDO"],
+            "accion": "bloquear_usuario",
+            "severidad": "media",
+            "descripcion": "Bloquear temporalmente usuarios con accesos fallidos",
+            "notificar": false,
+            "timeout": 300
+        },
+        "elevacion_privilegios": {
+            "enabled": true,
+            "eventos_trigger": ["PROCESO_ELEVACION_PRIVILEGIOS", "PRIVILEGIOS_ELEVADOS"],
+            "accion": "revisar_permisos",
+            "severidad": "alta",
+            "descripcion": "Revisar y validar elevaciones de privilegios",
+            "notificar": true,
+            "timeout": 10
+        },
+        "ataque_dos": {
+            "enabled": true,
+            "eventos_trigger": ["ATAQUE_DENEGACION_SERVICIO"],
+            "accion": "activar_proteccion_dos",
+            "severidad": "alta",
+            "descripcion": "Activar protecciones contra ataques de denegación de servicio",
+            "notificar": true,
+            "timeout": 0
+        },
+        "puerto_escaneado": {
+            "enabled": true,
+            "eventos_trigger": ["PUERTO_ESCANEADO"],
+            "accion": "alertar_escaneo",
+            "severidad": "baja",
+            "descripcion": "Alertar sobre escaneos de puertos detectados",
+            "notificar": false,
+            "timeout": 60
+        },
+        "archivo_sistema_modificado": {
+            "enabled": true,
+            "eventos_trigger": ["PERMISOS_MODIFICADOS", "CONFIGURACION_MODIFICADA"],
+            "accion": "verificar_integridad",
+            "severidad": "media",
+            "descripcion": "Verificar integridad del sistema tras modificaciones",
+            "notificar": true,
+            "timeout": 15
+        }
+    },
+    "configuracion_general": {
+        "tiempo_espera_respuesta_defecto": 30,
+        "max_intentos_automaticos": 3,
+        "notificar_administrador": true,
+        "log_todas_acciones": true,
+        "reintentos_fallo": 2,
+        "escalacion_automatica": true,
+        "modo_debug": false
+    },
+    "acciones_disponibles": {
+        "cuarentena_inmediata": {
+            "descripcion": "Mover archivo a cuarentena inmediatamente",
+            "requiere_confirmacion": false,
+            "reversible": true
+        },
+        "aislar_sistema": {
+            "descripcion": "Aislar el sistema de la red",
+            "requiere_confirmacion": true,
+            "reversible": true
+        },
+        "bloquear_ip": {
+            "descripcion": "Bloquear dirección IP en firewall",
+            "requiere_confirmacion": false,
+            "reversible": true
+        },
+        "terminar_proceso": {
+            "descripcion": "Terminar proceso malicioso",
+            "requiere_confirmacion": false,
+            "reversible": false
+        },
+        "backup_restaurar": {
+            "descripcion": "Crear backup y restaurar desde versión limpia",
+            "requiere_confirmacion": false,
+            "reversible": true
+        },
+        "analisis_profundo": {
+            "descripcion": "Ejecutar análisis profundo del sistema",
+            "requiere_confirmacion": false,
+            "reversible": false
+        },
+        "parche_urgente": {
+            "descripcion": "Aplicar parches de seguridad urgentes",
+            "requiere_confirmacion": true,
+            "reversible": false
+        },
+        "bloquear_usuario": {
+            "descripcion": "Bloquear temporalmente cuenta de usuario",
+            "requiere_confirmacion": false,
+            "reversible": true
+        },
+        "revisar_permisos": {
+            "descripcion": "Revisar y validar permisos del sistema",
+            "requiere_confirmacion": false,
+            "reversible": false
+        },
+        "activar_proteccion_dos": {
+            "descripcion": "Activar protecciones contra DoS",
+            "requiere_confirmacion": false,
+            "reversible": true
+        },
+        "alertar_escaneo": {
+            "descripcion": "Generar alerta de escaneo de puertos",
+            "requiere_confirmacion": false,
+            "reversible": false
+        },
+        "verificar_integridad": {
+            "descripcion": "Verificar integridad de archivos del sistema",
+            "requiere_confirmacion": false,
+            "reversible": false
+        }
+    },
+    "escalacion": {
+        "tiempo_escalacion": 300,
+        "niveles": ["baja", "media", "alta", "critica"],
+        "contactos_emergencia": [],
+        "acciones_escalacion": {
+            "critica": ["notificar_administrador", "generar_reporte_urgente"],
+            "alta": ["notificar_administrador"],
+            "media": ["log_detallado"],
+            "baja": ["log_basico"]
+        }
+    }
+}

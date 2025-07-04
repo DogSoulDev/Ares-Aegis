@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
 Ares Aegis - Sistema Avanzado de Ciberseguridad
-Punto de entrada principal de la aplicación
+Punto de entrada con INTERFAZ MODERNA
 
 Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
 Todos los derechos reservados. Este código es propietario y confidencial.
-La copia, distribución o modificación no autorizada está estrictamente prohibida.
 
-Versión: 3.0.0
+Versión: 3.0.0 - Interfaz Moderna
 """
 
 import sys
@@ -22,16 +21,18 @@ from ares_aegis.utilidades.ayuda_logging import configurar_logging_completo
 
 
 def main():
-    """Función principal de entrada."""
+    """Función principal de entrada con interfaz moderna."""
     try:
         logger = configurar_logging_completo()
         
         logger.info("=" * 60)
-        logger.info("Iniciando Ares Aegis - Sistema de Ciberseguridad")
+        logger.info("Iniciando Ares Aegis - INTERFAZ MODERNA")
         logger.info("=" * 60)
         
         app = InterfazModerna()
-        return app.ejecutar()
+        app.ejecutar()
+        
+        return True
         
     except KeyboardInterrupt:
         print("\nInterrumpido por el usuario")
@@ -40,7 +41,7 @@ def main():
         
     except Exception as e:
         print(f"Error crítico: {e}")
-        logging.error(f"Error crítico en main: {e}", exc_info=True)
+        logging.error(f"Error crítico en main moderno: {e}", exc_info=True)
         return False
 
 

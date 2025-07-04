@@ -11,26 +11,61 @@
 
 ## 📋 Descripción
 
-**Ares Aegis** es un sistema avanzado de ciberseguridad desarrollado en Python que proporciona protección integral contra amenazas digitales. Combina múltiples capas de seguridad con una interfaz moderna e intuitiva para ofrecer una solución completa de protección empresarial.
+**Ares Aegis** es un sistema avanzado de ciberseguridad desarrollado en Python que proporciona protección integral contra amenazas digitales. Implementa una **arquitectura de 8 componentes especializados** con una interfaz moderna e intuitiva para ofrecer una solución completa de protección empresarial.
 
 ### 🎯 Características Principales
 
-- **🔍 Escaneo en Tiempo Real** - Análisis completo con progreso en vivo
-- **🌐 Monitoreo de Red** - Supervisión continua del tráfico de red
-- **⚙️ Análisis de Procesos** - Detección de procesos sospechosos
-- **🗂️ Sistema de Cuarentena** - Aislamiento seguro de amenazas
+- **🔍 Escaneador de Malware Avanzado** - Análisis multicapa con detección heurística
+- **🌐 Monitor de Red Mejorado** - Supervisión continua con análisis de tráfico
+- **⚙️ Monitor de Procesos** - Detección de comportamiento anómalo
+- **🗂️ Sistema de Cuarentena Avanzado** - Aislamiento forense inteligente
 - **📊 SIEM Integrado** - Sistema de información y gestión de eventos
-- **🛡️ Protección Multicapa** - Análisis estático y dinámico
-- **📈 Reportes Detallados** - Informes completos en múltiples formatos
+- **🛡️ FIM Avanzado** - Monitoreo de integridad de archivos con baseline
+- **🔬 Analizadores Especializados** - Módulos de análisis dedicados
+- **📈 Sistema de Reportes y Notificaciones** - Informes automatizados completos
+
+### 🏗️ Arquitectura de 8 Componentes
+
+1. **🧠 SIEM (Sistema Central)** - Núcleo de eventos y correlación
+2. **� Escaneador de Malware** - Motor de detección avanzado
+3. **🌐 Monitor de Red Avanzado** - Análisis de tráfico en tiempo real
+4. **⚙️ Monitor de Procesos** - Supervisión de comportamiento
+5. **🛡️ FIM Avanzado** - Integridad de archivos con Kali Linux
+6. **🗂️ Cuarentena Avanzada** - Sistema forense inteligente
+7. **🔬 Analizadores Especializados** - Módulos de análisis dedicados
+8. **📊 Reportes y Notificaciones** - Sistema de comunicación automatizado
 
 ## 🚀 Tecnologías
 
-- **Lenguaje:** Python 3.8+
-- **Interfaz:** Tkinter con componentes modernos
-- **Arquitectura:** MVC (Modelo-Vista-Controlador)
-- **Base de Datos:** JSON para configuración y logs
-- **Análisis:** Múltiples motores de detección
-- **Monitoreo:** Tiempo real con threading
+- **Lenguaje:** Python 3.8+ (Solo librerías estándar)
+- **Interfaz:** Tkinter con componentes modernos personalizados
+- **Arquitectura:** MVC (Modelo-Vista-Controlador) estricta
+- **Base de Datos:** JSON para configuración y persistencia
+- **Análisis:** Múltiples motores de detección especializados
+- **Monitoreo:** Tiempo real con threading y análisis forense
+- **Principios:** Código limpio, DRY, SOLID, documentación en español
+
+### 🎨 Arquitectura MVC Limpia
+
+```
+ares_aegis/
+├── 📁 modelos/                  # Lógica de negocio (24 componentes)
+│   ├── siem.py                  # Sistema central de eventos
+│   ├── escaneador.py            # Motor de malware avanzado
+│   ├── monitor_red_mejorado.py  # Análisis de red en tiempo real
+│   ├── fim_avanzado.py          # Integridad de archivos
+│   ├── gestor_cuarentena_avanzado.py # Sistema forense
+│   └── ...                      # 19 componentes especializados más
+├── 📁 controladores/            # Coordinación del sistema
+│   └── controlador_principal.py # Orquestador de 8 componentes
+├── 📁 vista/                    # Interfaz de usuario
+│   ├── interfaz_principal_gui.py # GUI moderna
+│   └── interfaz_principal.py    # CLI interactiva
+└── 📁 utilidades/               # Herramientas auxiliares
+    ├── ayuda_logging.py         # Sistema de logs
+    ├── validaciones.py          # Validación de datos
+    └── temas_modernos.py        # Estilos visuales
+```
 
 ## 📁 Estructura del Proyecto
 
@@ -133,23 +168,55 @@ python3 verificar_proyecto.py
 
 ## 🔐 Características de Seguridad
 
-### Análisis Multicapa
-- **Análisis Estático** - Detección de patrones conocidos
+### 🎯 Los 8 Componentes Especializados
+
+#### 1. 🧠 SIEM (Sistema Central)
+- **Gestión de Eventos** - Registro y correlación centralizada
+- **Análisis de Patrones** - Detección de comportamientos anómalos
+- **Alertas Inteligentes** - Sistema de notificaciones prioritarias
+- **Auditoría Completa** - Trazabilidad total de eventos
+
+#### 2. 🔍 Escaneador de Malware Avanzado
+- **Análisis Estático** - Detección de patrones conocidos y heurísticos
 - **Análisis Dinámico** - Comportamiento en tiempo real
-- **Análisis Heurístico** - Detección de amenazas desconocidas
-- **Base de Datos CVE** - Vulnerabilidades conocidas
+- **Motor Multicapa** - Firmas, heurística y análisis de comportamiento
+- **Base de Datos CVE** - Vulnerabilidades conocidas actualizadas
 
-### Protección en Tiempo Real
-- **Monitor de Archivos (FIM)** - Integridad de archivos críticos
-- **Monitor de Red** - Tráfico y conexiones sospechosas
-- **Monitor de Procesos** - Comportamiento anómalo
-- **Sistema de Cuarentena** - Aislamiento automático
+#### 3. 🌐 Monitor de Red Avanzado
+- **Análisis de Tráfico** - Inspección profunda de paquetes
+- **Detección de Intrusiones** - Patrones de ataque conocidos
+- **Conexiones Sospechosas** - Monitoreo de comunicaciones anómalas
+- **Geolocalización** - Análisis de origen de conexiones
 
-### SIEM Integrado
-- **Registro de Eventos** - Auditoría completa
-- **Correlación** - Análisis de patrones
-- **Alertas** - Notificaciones inmediatas
-- **Reportes** - Informes detallados
+#### 4. ⚙️ Monitor de Procesos
+- **Comportamiento Anómalo** - Detección de procesos sospechosos
+- **Análisis de Recursos** - Uso anormal de CPU y memoria
+- **Jerarquía de Procesos** - Análisis de relaciones padre-hijo
+- **Inyección de Código** - Detección de técnicas avanzadas
+
+#### 5. 🛡️ FIM Avanzado (File Integrity Monitoring)
+- **Baseline Inteligente** - Línea base automática del sistema
+- **Monitoreo Kali Linux** - Rutas críticas especializadas
+- **Detección de Cambios** - Modificaciones no autorizadas
+- **Restauración** - Capacidad de rollback de archivos
+
+#### 6. 🗂️ Sistema de Cuarentena Avanzado
+- **Aislamiento Forense** - Preservación de evidencia
+- **Análisis Profundo** - Descompilación y análisis de malware
+- **Descontaminación Inteligente** - Limpieza automatizada
+- **Gestión de Backups** - Respaldo antes de acciones
+
+#### 7. 🔬 Analizadores Especializados
+- **Analizador de Archivos** - Tipos de archivo y contenido
+- **Analizador de Cadenas** - Extracción de strings sospechosos
+- **Analizador de Comportamiento** - Patrones de ejecución
+- **Visor Hexadecimal** - Análisis a nivel de bytes
+
+#### 8. 📊 Sistema de Reportes y Notificaciones
+- **Reportes Automatizados** - Generación programada
+- **Múltiples Formatos** - HTML, JSON, Markdown
+- **Notificaciones en Tiempo Real** - Alertas inmediatas
+- **Dashboard Integral** - Métricas y estadísticas
 
 ## 📊 Tipos de Escaneo
 
@@ -187,6 +254,37 @@ El sistema permite personalizar:
 - **HTML** - Reportes web interactivos
 - **JSON** - Datos estructurados
 - **TXT** - Texto plano para análisis
+
+## 💻 Calidad del Código
+
+### 🎯 Principios Implementados
+
+**Ares Aegis** sigue estrictamente los principios de desarrollo de software moderno:
+
+#### 📐 Código Limpio (Clean Code)
+- **Nombres Descriptivos** - Variables y funciones autoexplicativas
+- **Funciones Pequeñas** - Una responsabilidad por función
+- **Comentarios Significativos** - Documentación en español
+- **Sin Código Muerto** - Eliminación sistemática de código obsoleto
+
+#### 🔄 DRY (Don't Repeat Yourself)
+- **Eliminación de Duplicación** - Código reutilizable
+- **Funciones Auxiliares** - Utilidades comunes centralizadas
+- **Herencia Inteligente** - Aprovechamiento de POO
+- **Configuración Centralizada** - Un solo punto de configuración
+
+#### 🏗️ Principios SOLID
+- **S** - Responsabilidad Única: Cada clase tiene un propósito específico
+- **O** - Abierto/Cerrado: Extensible sin modificar código existente
+- **L** - Sustitución de Liskov: Herencia apropiada
+- **I** - Segregación de Interfaces: Interfaces específicas
+- **D** - Inversión de Dependencias: Abstracciones, no concreciones
+
+#### 🐍 Estándares Python
+- **PEP 8** - Estilo de código Python oficial
+- **Type Hints** - Tipado estático para mejor mantenimiento
+- **Docstrings** - Documentación estándar en español
+- **Solo Librerías Estándar** - Sin dependencias externas
 
 ## 🔍 Solución de Problemas
 
