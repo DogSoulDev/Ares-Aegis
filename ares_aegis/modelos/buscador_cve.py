@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Buscador de CVE - Ares Aegis
-Módulo para búsqueda y análisis de vulnerabilidades CVE
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo permite buscar vulnerabilidades conocidas por CVE,
-analizar software instalado y correlacionar con bases de datos offline.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "Los Oráculos de Delfos"
+Buscador de CVE
 """
 
 import os
@@ -23,7 +19,6 @@ from ..utilidades.ayuda_logging import configurar_logger_modulo
 
 @dataclass
 class CVEInfo:
-    """Información de una vulnerabilidad CVE."""
     cve_id: str
     description: str
     cvss_score: float
@@ -40,18 +35,16 @@ class CVEInfo:
 
 @dataclass
 class SoftwareInfo:
-    """Información de software instalado."""
     nombre: str
     version: str
     vendor: str
-    tipo: str  # system, package, service
-    origen: str  # dpkg, rpm, snap, etc.
+    tipo: str
+    origen: str
     instalacion_fecha: Optional[datetime]
     metadatos: Dict[str, Any]
 
 
 class ResultadoBusquedaCVE(NamedTuple):
-    """Resultado de búsqueda de CVEs."""
     software: SoftwareInfo
     cves_encontrados: List[CVEInfo]
     nivel_riesgo: str
@@ -59,7 +52,6 @@ class ResultadoBusquedaCVE(NamedTuple):
 
 
 class BuscadorCVE:
-    """Buscador principal de vulnerabilidades CVE."""
     
     def __init__(self, siem=None):
         """

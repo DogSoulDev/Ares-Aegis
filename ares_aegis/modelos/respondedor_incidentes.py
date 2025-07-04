@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Respondedor de Incidentes - Ares Aegis
-Módulo para respuesta automatizada y manual a incidentes de seguridad
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo coordina las respuestas a incidentes detectados,
-desde bloqueo automático hasta notificaciones y generación de reportes.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "Los Guardianes de Némesis"
+Respondedor de Incidentes
 """
 
 import os

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Utilidades de Validación - Ares Aegis
-Funciones para validación de entradas de usuario
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Utilidades de Validación
 """
 
 import os
@@ -15,15 +14,6 @@ from typing import Union, Optional, List
 
 
 def validar_ruta_archivo(ruta: Union[str, Path]) -> bool:
-    """
-    Valida que una ruta sea un archivo válido y existente.
-    
-    Args:
-        ruta: Ruta del archivo a validar
-        
-    Returns:
-        bool: True si es válida, False si no
-    """
     try:
         ruta_path = Path(ruta)
         return ruta_path.exists() and ruta_path.is_file()

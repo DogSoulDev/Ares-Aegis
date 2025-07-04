@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Analizador Dinámico - Ares Aegis
-Mini-sandbox para análisis de comportamiento de archivos sospechosos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo proporciona un entorno básico y aislado para ejecutar y observar
-el comportamiento de archivos sospechosos usando solo librerías estándar de Python.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "El Laboratorio de Dédalo"
+Analizador Dinámico
 """
 
 import os

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Monitor de Red
-Sistema de monitoreo de red para Ares Aegis
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Monitor de Red
 """
 
 import socket
@@ -25,7 +24,6 @@ from ..utilidades.ayuda_logging import configurar_logger_modulo
 
 @dataclass
 class ConexionRed:
-    """Representa una conexión de red."""
     direccion_local: str
     puerto_local: int
     direccion_remota: str

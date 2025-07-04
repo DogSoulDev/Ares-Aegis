@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Monitor de Procesos - Ares Aegis
-Módulo para monitoreo y análisis de procesos en ejecución
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo recopila información detallada sobre los procesos activos
-en el sistema para análisis de seguridad y detección de anomalías.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "Los Ojos de Argos"
+Monitor de Procesos
 """
 
 import os
@@ -22,7 +18,6 @@ from ..utilidades.ayuda_logging import configurar_logger_modulo
 
 
 class ProcesoInfo(NamedTuple):
-    """Información detallada de un proceso."""
     pid: int
     nombre: str
     comando: str
@@ -522,6 +517,15 @@ class MonitorProcesos:
         
         for pid in pids_a_limpiar:
             del self.estadisticas_procesos[pid]
+    
+    def obtener_procesos(self) -> List[ProcesoInfo]:
+        """
+        Obtiene la lista actual de procesos monitoreados.
+        
+        Returns:
+            Lista de procesos activos
+        """
+        return list(self.procesos_actuales.values())
     
     def obtener_proceso_por_pid(self, pid: int) -> Optional[ProcesoInfo]:
         """

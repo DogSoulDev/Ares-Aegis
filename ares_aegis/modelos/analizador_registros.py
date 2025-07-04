@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Analizador de Registros - Ares Aegis
-Módulo para análisis de archivos de log del sistema en busca de patrones de ataque
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo lee y analiza logs del sistema para detectar actividad sospechosa,
-patrones de ataque y eventos de seguridad relevantes.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "Los Escribas de Temis"
+Analizador de Registros
 """
 
 import os

@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-Analizador de Cadenas - Ares Aegis
-Módulo para extracción y análisis de cadenas de texto en archivos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Los mensajes de este módulo siguen el estilo mitológico inspirado en Ares y la Égida.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - El Descifrador de Runas Ocultas
+Analizador de Cadenas
 """
 
 import re
@@ -17,7 +14,6 @@ from ..utilidades.validaciones import validar_ruta_archivo
 
 
 class ExtractorCadenas:
-    """El Descifrador de Runas - Revela las palabras ocultas en los pergaminos binarios."""
     
     def __init__(self):
         """Inicializa el descifrador de runas ancestrales."""

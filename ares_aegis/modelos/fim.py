@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-FIM - Monitoreo de Integridad de Archivos
-Sistema de monitoreo de integridad para Ares Aegis
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+FIM - Monitoreo de Integridad de Archivos
 """
 
 import os
@@ -25,15 +24,7 @@ from ..utilidades.ayuda_logging import configurar_logger_modulo
 
 
 class RegistroArchivoFIM:
-    """Representa el registro de un archivo en el sistema FIM."""
-    
     def __init__(self, ruta: str):
-        """
-        Inicializa un registro de archivo FIM.
-        
-        Args:
-            ruta: Ruta del archivo
-        """
         self.ruta = ruta
         self.hash_md5 = ""
         self.hash_sha256 = ""
@@ -49,22 +40,18 @@ class RegistroArchivoFIM:
         self._calcular_atributos()
     
     def _calcular_atributos(self):
-        """Calcula todos los atributos del archivo."""
         try:
             stat_info = os.stat(self.ruta)
             
-            # Información básica
             self.tamaño = stat_info.st_size
             self.permisos = filemode(stat_info.st_mode)
             self.propietario = str(stat_info.st_uid)
             self.grupo = str(stat_info.st_gid)
             
-            # Fechas
             self.fecha_modificacion = datetime.fromtimestamp(stat_info.st_mtime).isoformat()
             self.fecha_acceso = datetime.fromtimestamp(stat_info.st_atime).isoformat()
             self.fecha_creacion = datetime.fromtimestamp(stat_info.st_ctime).isoformat()
             
-            # Calcular hashes si es un archivo regular
             if os.path.isfile(self.ruta):
                 with open(self.ruta, 'rb') as archivo:
                     contenido = archivo.read()
@@ -72,7 +59,6 @@ class RegistroArchivoFIM:
                     self.hash_sha256 = hashlib.sha256(contenido).hexdigest()
             
         except Exception:
-            # Si hay error, mantener valores por defecto
             pass
     
     def to_dict(self) -> Dict[str, Any]:

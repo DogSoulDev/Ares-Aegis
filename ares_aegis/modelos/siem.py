@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-SIEM - Sistema de Información y Gestión de Eventos
-Centralización de eventos de seguridad para Ares Aegis
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+SIEM - Sistema de Información y Gestión de Eventos
 """
 
 import json

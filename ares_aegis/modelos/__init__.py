@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Modelos de Ares Aegis
-Contiene toda la lógica de negocio y manejo de datos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
+Modelos MVC
 """

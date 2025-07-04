@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Escaneador Principal - Ares Aegis
-Módulo principal de escaneo con lógica para escaneos completos y personalizados
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Escaneador Principal - Ares Aegis
 """
 
 import os

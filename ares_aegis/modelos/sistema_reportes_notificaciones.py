@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-Sistema de Reportes y Notificaciones - Ares Aegis
-Módulo para generar reportes épicos y notificar eventos divinos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Los mensajes de este módulo siguen el estilo mitológico inspirado en Ares y la Égida.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - Los Heraldos del Égida
+Sistema de Reportes y Notificaciones
 """
 
 import json

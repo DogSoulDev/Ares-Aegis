@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-Integración Externa - Ares Aegis
-Módulo para integración con herramientas externas como ClamAV
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Los mensajes de este módulo siguen el estilo mitológico inspirado en Ares y la Égida.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - La Alianza de los Oráculos
+Integración Externa
 """
 
 import subprocess

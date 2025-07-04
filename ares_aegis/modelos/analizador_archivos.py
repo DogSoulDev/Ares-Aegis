@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-Analizador de Archivos - Ares Aegis
-Módulo para análisis de metadatos y hashes de archivos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Los mensajes de este módulo siguen el estilo mitológico inspirado en Ares y la Égida.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - El Escrutinio de los Pergaminos
+Analizador de Archivos
 """
 
 import os

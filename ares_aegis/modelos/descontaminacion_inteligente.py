@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Descontaminación Inteligente - Ares Aegis
-Módulo para limpieza automática y desinfección de archivos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo implementa técnicas de descontaminación automática,
-limpieza de archivos infectados y restauración de datos cuando es posible.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "Los Purificadores de Asclepio"
+Descontaminación Inteligente
 """
 
 import os

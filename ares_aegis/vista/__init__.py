@@ -1,7 +1,6 @@
 """
-Vista - Ares Aegis
-Módulo de interfaz gráfica de usuario
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Vista MVC
 """

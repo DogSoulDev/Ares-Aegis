@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Gestor de Cheatsheets - Ares Aegis
-Módulo para gestión de hojas de referencia de seguridad y comandos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo proporciona acceso rápido a comandos, técnicas y referencias
-de seguridad organizadas por categorías temáticas.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "Los Escribanos de Hermes"
+Gestor de Cheatsheets
 """
 
 import os

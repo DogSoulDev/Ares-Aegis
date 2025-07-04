@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Cuarentena
-Sistema de cuarentena para archivos maliciosos de Ares Aegis
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Gestor de Cuarentena
 """
 
 import os
@@ -26,7 +25,6 @@ from ..utilidades.ayuda_logging import configurar_logger_modulo
 
 @dataclass
 class ArchivoEnCuarentena:
-    """Representa un archivo en cuarentena."""
     ruta_original: str
     ruta_cuarentena: str
     hash_md5: str

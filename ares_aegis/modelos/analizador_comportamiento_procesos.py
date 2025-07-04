@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Analizador de Comportamiento de Procesos - Ares Aegis
-Módulo para análisis heurístico y detección de patrones sospechosos en procesos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo analiza el comportamiento de los procesos en busca de anomalías
-y patrones que puedan indicar actividad maliciosa o comprometida.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "El Oráculo de los Patrones"
+Analizador de Comportamiento de Procesos
 """
 
 import os

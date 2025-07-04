@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 """
-Respuesta Automatizada - Ares Aegis
-Módulo para respuesta automatizada a amenazas simples
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo implementa la funcionalidad de "botón mágico" y asistente guiado
-para la autodefensa proactiva del endpoint. Los mensajes siguen el estilo 
-mitológico inspirado en Ares y la Égida.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - El Escudo Autónomo del Égida
+Respuesta Automatizada
 """
 
 import os

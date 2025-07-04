@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 """
-Visor Hexadecimal - Ares Aegis
-Módulo para visualización y análisis hexadecimal de archivos
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Este módulo proporciona funcionalidades de visor hexadecimal para análisis
-de archivos binarios, detección de patrones y análisis forense básico.
-
-Autor: DogSoulDev
-Versión: 2.0.0 - "Los Decifradores de Thot"
+Visor Hexadecimal
 """
 
 import os

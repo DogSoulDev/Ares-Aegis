@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Utilidades de Manejo de Rutas - Ares Aegis
-Funciones para manejo seguro de rutas y directorios
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Utilidades de Manejo de Rutas
 """
 
 import os
@@ -14,18 +13,6 @@ from typing import Union, List, Optional
 
 
 def crear_ruta_segura(ruta: Union[str, Path]) -> Path:
-    """
-    Crea una ruta de forma segura, creando directorios padre si es necesario.
-    
-    Args:
-        ruta: Ruta a crear
-        
-    Returns:
-        Path: Objeto Path de la ruta creada
-        
-    Raises:
-        OSError: Si no se puede crear la ruta
-    """
     ruta_path = Path(ruta)
     ruta_path.parent.mkdir(parents=True, exist_ok=True)
     return ruta_path

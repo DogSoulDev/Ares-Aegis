@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Utilidades de Logging - Ares Aegis
-Configuración centralizada del sistema de logging
+Copyright (c) 2025 DogSoulDev (https://github.com/DogSoulDev)
+Todos los derechos reservados. Este código es propietario y confidencial.
 
-Autor: DogSoulDev
-Versión: 2.0.0
+Utilidades de Logging
 """
 
 import logging
