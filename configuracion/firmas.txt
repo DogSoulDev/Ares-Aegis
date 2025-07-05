@@ -120,3 +120,313 @@ TROJAN|LockBit|Ransomware LockBit|ALTA
 MALWARE|Qbot|Trojan bancario|ALTA
 MALWARE|Emotet|Trojan modular|ALTA
 BACKDOOR|Cobalt Strike|Herramienta de post-explotación|ALTA
+
+# === AMPLIACIÓN MASIVA DE FIRMAS 2025 ===
+
+# Amenazas de IA y Machine Learning
+AI_THREAT|tensorflow/models|Modelo IA malicioso|ALTA
+AI_THREAT|pytorch.load|Carga de modelo no confiable|ALTA
+AI_THREAT|pickle.loads|Deserialización peligrosa|ALTA
+AI_THREAT|deepfake|Contenido multimedia falso|MEDIA
+AI_THREAT|GPT-injection|Inyección en modelos de lenguaje|ALTA
+AI_THREAT|prompt-injection|Manipulación de prompts|MEDIA
+AI_THREAT|model-poisoning|Envenenamiento de modelo|ALTA
+AI_THREAT|adversarial-example|Ejemplo adversarial|MEDIA
+
+# Ataques a Containers y Docker
+CONTAINER|docker exec|Ejecución en contenedor|MEDIA
+CONTAINER|kubectl exec|Ejecución Kubernetes|MEDIA
+CONTAINER|/var/run/docker.sock|Socket Docker expuesto|ALTA
+CONTAINER|--privileged|Contenedor privilegiado|ALTA
+CONTAINER|breakout|Escape de contenedor|ALTA
+CONTAINER|runtime-escape|Escape de runtime|ALTA
+CONTAINER|/proc/1/root|Acceso al host desde contenedor|ALTA
+CONTAINER|nsenter|Entrada a namespace|MEDIA
+CONTAINER|runc exploit|Exploit de runtime|ALTA
+
+# Amenazas Cloud-Native
+CLOUD|aws s3api|Manipulación S3|MEDIA
+CLOUD|kubectl get secrets|Extracción de secretos K8s|ALTA
+CLOUD|azure-cli|Herramienta Azure CLI|BAJA
+CLOUD|gcloud auth|Autenticación Google Cloud|MEDIA
+CLOUD|terraform destroy|Destrucción de infraestructura|ALTA
+CLOUD|serverless invoke|Invocación de función|MEDIA
+CLOUD|lambda-backdoor|Backdoor en función Lambda|ALTA
+CLOUD|iam-privilege-escalation|Escalación de privilegios IAM|ALTA
+CLOUD|cloud-metadata|Acceso a metadatos de instancia|MEDIA
+
+# JavaScript Malicioso Moderno
+JS_MALWARE|document.write|Escritura dinámica de documento|MEDIA
+JS_MALWARE|innerHTML =|Inyección HTML|MEDIA
+JS_MALWARE|localStorage.setItem|Almacenamiento local sospechoso|BAJA
+JS_MALWARE|crypto.subtle|Criptografía en navegador|MEDIA
+JS_MALWARE|navigator.geolocation|Acceso a ubicación|BAJA
+JS_MALWARE|window.crypto|API criptográfica|MEDIA
+JS_MALWARE|fetch('data:|Esquema data sospechoso|MEDIA
+JS_MALWARE|atob(|Decodificación Base64|MEDIA
+JS_MALWARE|btoa(|Codificación Base64|BAJA
+JS_MALWARE|webassembly|WebAssembly|MEDIA
+JS_MALWARE|Worker(|Web Worker|BAJA
+JS_MALWARE|ServiceWorker|Service Worker|MEDIA
+
+# WebAssembly Malicioso
+WASM|WebAssembly.instantiate|Instanciación WASM|MEDIA
+WASM|wasm-bindgen|Binding WASM|BAJA
+WASM|emscripten|Compilador a WASM|BAJA
+WASM|.wasm|Archivo WebAssembly|MEDIA
+WASM|Memory.grow|Crecimiento de memoria WASM|MEDIA
+
+# Ataques XSS/CSRF Modernos
+XSS|<script src=data:|Script con esquema data|ALTA
+XSS|javascript:|Esquema javascript|ALTA
+XSS|on[a-z]+\s*=|Manejadores de eventos|ALTA
+XSS|String.fromCharCode|Ofuscación de caracteres|MEDIA
+XSS|unescape(|Decodificación URL|MEDIA
+XSS|decodeURIComponent|Decodificación URI|MEDIA
+CSRF|XMLHttpRequest|Petición AJAX|BAJA
+CSRF|fetch(|API Fetch|BAJA
+CSRF|withCredentials|Credenciales cross-origin|MEDIA
+
+# API Poisoning y Ataques
+API_ATTACK|../../../|Path traversal|ALTA
+API_ATTACK|sqlmap|Herramienta de SQL injection|ALTA
+API_ATTACK|union select|SQL injection|ALTA
+API_ATTACK|' or 1=1|SQL injection básico|ALTA
+API_ATTACK|<script>|XSS en API|ALTA
+API_ATTACK|${jndi:|Log4j injection|ALTA
+API_ATTACK|{{7*7}}|Template injection|ALTA
+API_ATTACK|__proto__|Prototype pollution|ALTA
+
+# Amenazas Móviles Android
+ANDROID|android.permission.CAMERA|Permiso cámara|BAJA
+ANDROID|android.permission.RECORD_AUDIO|Permiso micrófono|MEDIA
+ANDROID|android.permission.ACCESS_FINE_LOCATION|Permiso ubicación|BAJA
+ANDROID|android.permission.READ_SMS|Permiso leer SMS|ALTA
+ANDROID|android.permission.SEND_SMS|Permiso enviar SMS|ALTA
+ANDROID|TelephonyManager|Gestión telefonía|MEDIA
+ANDROID|SmsManager|Gestión SMS|MEDIA
+ANDROID|DeviceAdminReceiver|Administrador dispositivo|ALTA
+ANDROID|.apk|Archivo de aplicación Android|BAJA
+ANDROID|classes.dex|Código ejecutable Android|MEDIA
+
+# Amenazas iOS
+IOS|UIApplication.openURL|Apertura URL iOS|BAJA
+IOS|NSLocationManager|Gestión ubicación iOS|BAJA
+IOS|AVAudioRecorder|Grabación audio iOS|MEDIA
+IOS|UIImagePickerController|Acceso galería iOS|BAJA
+IOS|CoreLocation|Framework ubicación|BAJA
+IOS|AddressBook|Acceso contactos iOS|MEDIA
+IOS|.ipa|Archivo aplicación iOS|BAJA
+IOS|jailbreak|Dispositivo liberado|ALTA
+
+# Ataques Cross-Platform
+CROSSPLAT|electron|Framework Electron|BAJA
+CROSSPLAT|cordova|Framework Cordova|BAJA
+CROSSPLAT|react-native|Framework React Native|BAJA
+CROSSPLAT|flutter|Framework Flutter|BAJA
+CROSSPLAT|xamarin|Framework Xamarin|BAJA
+
+# Criptografía y Blockchain
+CRYPTO|web3|Librería Web3|BAJA
+CRYPTO|metamask|Wallet MetaMask|BAJA
+CRYPTO|private_key|Clave privada|ALTA
+CRYPTO|mnemonic|Frase mnemónica|ALTA
+CRYPTO|seed_phrase|Frase semilla|ALTA
+CRYPTO|wallet.dat|Archivo wallet|ALTA
+CRYPTO|bitcoin-core|Cliente Bitcoin|BAJA
+CRYPTO|geth|Cliente Ethereum|BAJA
+CRYPTO|solidity|Lenguaje contratos inteligentes|BAJA
+
+# NFT y DeFi Scams
+NFT_SCAM|opensea.io-|Dominio falso OpenSea|ALTA
+NFT_SCAM|mint_nft|Acuñación NFT sospechosa|MEDIA
+NFT_SCAM|free_nft|NFT gratuito sospechoso|MEDIA
+DEFI_SCAM|uniswap.org-|Dominio falso Uniswap|ALTA
+DEFI_SCAM|pancakeswap.finance-|Dominio falso PancakeSwap|ALTA
+DEFI_SCAM|yield_farming|Farming sospechoso|MEDIA
+DEFI_SCAM|rug_pull|Estafa rug pull|ALTA
+
+# Smart Contract Exploits
+SMART_CONTRACT|selfdestruct|Autodestrucción contrato|ALTA
+SMART_CONTRACT|delegatecall|Llamada delegada|MEDIA
+SMART_CONTRACT|tx.origin|Origen transacción|MEDIA
+SMART_CONTRACT|block.timestamp|Timestamp de bloque|MEDIA
+SMART_CONTRACT|reentrancy|Ataque de reentrada|ALTA
+
+# IoT y Sistemas Embebidos
+IOT|telnet|Protocolo Telnet inseguro|ALTA
+IOT|default_password|Contraseña por defecto|ALTA
+IOT|admin:admin|Credenciales por defecto|ALTA
+IOT|root:|Usuario root sin contraseña|ALTA
+IOT|mirai|Botnet Mirai|ALTA
+IOT|upnp|Protocolo UPnP|MEDIA
+IOT|mqtt|Protocolo MQTT|BAJA
+IOT|coap|Protocolo CoAP|BAJA
+IOT|/cgi-bin/|Directorio CGI|MEDIA
+IOT|firmware.bin|Archivo firmware|MEDIA
+
+# Botnets IoT
+BOTNET|ddos|Ataque DDoS|ALTA
+BOTNET|c2_server|Servidor comando y control|ALTA
+BOTNET|bot_command|Comando de bot|ALTA
+BOTNET|zombie|Dispositivo zombi|ALTA
+BOTNET|infection_vector|Vector de infección|ALTA
+
+# Supply Chain Attacks
+SUPPLY_CHAIN|npm install|Instalación paquete npm|BAJA
+SUPPLY_CHAIN|pip install|Instalación paquete Python|BAJA
+SUPPLY_CHAIN|composer install|Instalación paquete PHP|BAJA
+SUPPLY_CHAIN|gem install|Instalación paquete Ruby|BAJA
+SUPPLY_CHAIN|cargo install|Instalación paquete Rust|BAJA
+SUPPLY_CHAIN|typosquatting|Suplantación de nombre|ALTA
+SUPPLY_CHAIN|dependency_confusion|Confusión de dependencias|ALTA
+SUPPLY_CHAIN|malicious_package|Paquete malicioso|ALTA
+
+# Living-off-the-Land Binaries (LOLBins)
+LOLBIN|powershell.exe|PowerShell ejecutable|MEDIA
+LOLBIN|cmd.exe|Símbolo sistema|MEDIA
+LOLBIN|wmic.exe|WMI Command-line|MEDIA
+LOLBIN|regsvr32.exe|Registro DLL|MEDIA
+LOLBIN|rundll32.exe|Ejecutor DLL|MEDIA
+LOLBIN|mshta.exe|Microsoft HTML Application|ALTA
+LOLBIN|cscript.exe|Windows Script Host|MEDIA
+LOLBIN|wscript.exe|Windows Script Host|MEDIA
+LOLBIN|certutil.exe|Utilidad certificados|MEDIA
+LOLBIN|bitsadmin.exe|Background Transfer|MEDIA
+LOLBIN|schtasks.exe|Programador tareas|MEDIA
+
+# APT (Advanced Persistent Threats)
+APT|lazarus|Grupo Lazarus|ALTA
+APT|apt29|APT29 Cozy Bear|ALTA
+APT|apt28|APT28 Fancy Bear|ALTA
+APT|carbanak|Grupo Carbanak|ALTA
+APT|equation_group|Equation Group|ALTA
+APT|shadow_brokers|Shadow Brokers|ALTA
+APT|darkhydrus|DarkHydrus|ALTA
+APT|turla|Grupo Turla|ALTA
+APT|comment_crew|Comment Crew|ALTA
+
+# Técnicas MITRE ATT&CK
+MITRE|T1055|Process Injection|ALTA
+MITRE|T1059|Command and Scripting|MEDIA
+MITRE|T1105|Ingress Tool Transfer|MEDIA
+MITRE|T1071|Application Layer Protocol|MEDIA
+MITRE|T1083|File and Directory Discovery|BAJA
+MITRE|T1090|Proxy|MEDIA
+MITRE|T1027|Obfuscated Files|MEDIA
+MITRE|T1566|Phishing|ALTA
+
+# Fileless Malware
+FILELESS|powershell -enc|PowerShell codificado|ALTA
+FILELESS|wmiprvse.exe|Proceso WMI|MEDIA
+FILELESS|in-memory|Ejecución en memoria|ALTA
+FILELESS|reflective_loading|Carga reflexiva|ALTA
+FILELESS|process_hollowing|Vaciado de proceso|ALTA
+
+# Lenguajes de Programación Específicos
+PYTHON|__import__('os')|Importación OS|MEDIA
+PYTHON|exec(compile(|Compilación y ejecución|ALTA
+PYTHON|subprocess.call|Llamada subproceso|MEDIA
+PYTHON|pickle.loads|Deserialización pickle|ALTA
+PYTHON|eval(input(|Evaluación entrada usuario|ALTA
+GO|exec.Command|Comando Go|MEDIA
+GO|os/exec|Paquete exec Go|MEDIA
+RUST|std::process::Command|Comando Rust|MEDIA
+JAVA|Runtime.getRuntime().exec|Ejecución Java|ALTA
+JAVA|ProcessBuilder|Constructor procesos Java|MEDIA
+PHP|system(|Función system PHP|ALTA
+PHP|passthru(|Función passthru PHP|ALTA
+PHP|proc_open|Apertura proceso PHP|ALTA
+CSHARP|Process.Start|Inicio proceso C#|MEDIA
+CSHARP|System.Diagnostics|Diagnósticos sistema|MEDIA
+
+# Evasión de Sandboxes
+SANDBOX_EVASION|VirtualBox|Detección VirtualBox|MEDIA
+SANDBOX_EVASION|VMware|Detección VMware|MEDIA
+SANDBOX_EVASION|QEMU|Detección QEMU|MEDIA
+SANDBOX_EVASION|GetTickCount|Contador ticks|MEDIA
+SANDBOX_EVASION|cpuid|Instrucción CPUID|MEDIA
+SANDBOX_EVASION|rdtsc|Contador tiempo|MEDIA
+SANDBOX_EVASION|mouse_movement|Movimiento ratón|MEDIA
+SANDBOX_EVASION|user_interaction|Interacción usuario|MEDIA
+
+# Técnicas de Ofuscación
+OBFUSCATION|base64|Codificación Base64|MEDIA
+OBFUSCATION|rot13|Codificación ROT13|MEDIA
+OBFUSCATION|xor|Cifrado XOR|MEDIA
+OBFUSCATION|hex_encoding|Codificación hexadecimal|MEDIA
+OBFUSCATION|unicode_escape|Escape Unicode|MEDIA
+OBFUSCATION|string_concat|Concatenación strings|MEDIA
+OBFUSCATION|char_substitution|Sustitución caracteres|MEDIA
+
+# Ataques de Memoria
+MEMORY_ATTACK|heap_overflow|Desbordamiento heap|ALTA
+MEMORY_ATTACK|stack_overflow|Desbordamiento stack|ALTA
+MEMORY_ATTACK|use_after_free|Uso después liberación|ALTA
+MEMORY_ATTACK|double_free|Doble liberación|ALTA
+MEMORY_ATTACK|format_string|Cadena formato|ALTA
+MEMORY_ATTACK|integer_overflow|Desbordamiento entero|ALTA
+
+# Amenazas de Red Avanzadas
+NETWORK_ADVANCED|dns_tunneling|Túnel DNS|ALTA
+NETWORK_ADVANCED|icmp_tunneling|Túnel ICMP|ALTA
+NETWORK_ADVANCED|http_tunneling|Túnel HTTP|MEDIA
+NETWORK_ADVANCED|ssl_pinning_bypass|Bypass SSL pinning|ALTA
+NETWORK_ADVANCED|certificate_pinning|Anclaje certificados|MEDIA
+NETWORK_ADVANCED|man_in_the_middle|Ataque MITM|ALTA
+NETWORK_ADVANCED|arp_poisoning|Envenenamiento ARP|ALTA
+NETWORK_ADVANCED|dhcp_spoofing|Suplantación DHCP|ALTA
+
+# Persistencia Avanzada
+PERSISTENCE_ADV|WMI_event|Evento WMI|ALTA
+PERSISTENCE_ADV|COM_hijacking|Secuestro COM|ALTA
+PERSISTENCE_ADV|DLL_hijacking|Secuestro DLL|ALTA
+PERSISTENCE_ADV|service_creation|Creación servicio|ALTA
+PERSISTENCE_ADV|driver_loading|Carga controlador|ALTA
+PERSISTENCE_ADV|bootkit|Kit arranque|ALTA
+PERSISTENCE_ADV|uefi_persistence|Persistencia UEFI|ALTA
+
+# Robo de Credenciales
+CREDENTIAL_THEFT|mimikatz|Herramienta Mimikatz|ALTA
+CREDENTIAL_THEFT|lsass.exe|Proceso LSASS|ALTA
+CREDENTIAL_THEFT|sam_database|Base datos SAM|ALTA
+CREDENTIAL_THEFT|ntds.dit|Base datos NTDS|ALTA
+CREDENTIAL_THEFT|password_spraying|Rociado contraseñas|ALTA
+CREDENTIAL_THEFT|credential_dumping|Volcado credenciales|ALTA
+CREDENTIAL_THEFT|kerberoasting|Ataque Kerberos|ALTA
+CREDENTIAL_THEFT|golden_ticket|Ticket dorado|ALTA
+CREDENTIAL_THEFT|silver_ticket|Ticket plateado|ALTA
+
+# Movimiento Lateral
+LATERAL_MOVEMENT|psexec|Herramienta PsExec|ALTA
+LATERAL_MOVEMENT|wmiexec|Ejecución WMI|ALTA
+LATERAL_MOVEMENT|smbexec|Ejecución SMB|ALTA
+LATERAL_MOVEMENT|rdp_hijacking|Secuestro RDP|ALTA
+LATERAL_MOVEMENT|pass_the_hash|Paso de hash|ALTA
+LATERAL_MOVEMENT|pass_the_ticket|Paso de ticket|ALTA
+
+# Exfiltración de Datos
+EXFILTRATION|dns_exfiltration|Exfiltración DNS|ALTA
+EXFILTRATION|http_exfiltration|Exfiltración HTTP|MEDIA
+EXFILTRATION|ftp_exfiltration|Exfiltración FTP|MEDIA
+EXFILTRATION|email_exfiltration|Exfiltración email|MEDIA
+EXFILTRATION|cloud_exfiltration|Exfiltración cloud|MEDIA
+EXFILTRATION|steganography|Esteganografía|MEDIA
+
+# Amenazas Emergentes 2025
+EMERGING_2025|quantum_resistance|Resistencia cuántica|BAJA
+EMERGING_2025|post_quantum_crypto|Criptografía post-cuántica|BAJA
+EMERGING_2025|5g_security|Seguridad 5G|MEDIA
+EMERGING_2025|edge_computing|Computación edge|BAJA
+EMERGING_2025|neuromorphic_attack|Ataque neuromórfico|ALTA
+EMERGING_2025|quantum_supremacy|Supremacía cuántica|ALTA
+
+# Indicadores de Compromiso (IoCs) Actualizados
+IOC|suspicious_registry|Registro sospechoso|MEDIA
+IOC|unusual_network|Tráfico red inusual|MEDIA
+IOC|file_modification|Modificación archivo|MEDIA
+IOC|process_creation|Creación proceso|BAJA
+IOC|network_connection|Conexión red|BAJA
+IOC|privilege_escalation|Escalación privilegios|ALTA
+IOC|data_staging|Preparación datos|MEDIA
+IOC|command_execution|Ejecución comandos|MEDIA

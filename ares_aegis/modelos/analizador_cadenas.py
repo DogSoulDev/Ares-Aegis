@@ -247,7 +247,7 @@ class AnalizadorCadenas:
         """
         self.logger.info(f"Iniciando análisis completo de runas en: {ruta_archivo}")
         
-        resultado = {
+        resultado: Dict[str, Any] = {
             'archivo': ruta_archivo,
             'estado': 'iniciado',
             'timestamp': self._obtener_timestamp()

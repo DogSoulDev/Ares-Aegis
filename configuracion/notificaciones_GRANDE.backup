@@ -1,0 +1,357 @@
+{
+  "version": "2.0",
+  "metadata": {
+    "nombre_sistema": "Ares Aegis",
+    "version_config": "2.0.0",
+    "fecha_actualizacion": "2025-01-05",
+    "descripcion": "Configuración avanzada de notificaciones para sistema de ciberseguridad Ares Aegis"
+  },
+  "configuracion_global": {
+    "habilitado": true,
+    "modo_silencioso": false,
+    "limite_velocidad": {
+      "max_notificaciones_por_minuto": 10,
+      "max_notificaciones_por_hora": 100,
+      "periodo_enfriamiento_segundos": 30
+    },
+    "filtros_globales": {
+      "ignorar_duplicados": true,
+      "tiempo_duplicado_minutos": 5,
+      "filtrar_por_horario": false,
+      "horas_activas": {
+        "inicio": "08:00",
+        "fin": "22:00"
+      }
+    }
+  },
+  "canales_notificacion": {
+    "email": {
+      "habilitado": false,
+      "prioridad": 1,
+      "configuracion": {
+        "smtp_servidor": "smtp.gmail.com",
+        "smtp_puerto": 587,
+        "smtp_seguridad": "TLS",
+        "email_origen": "",
+        "email_password": "",
+        "email_nombre_origen": "Ares Aegis Security System",
+        "timeout_conexion": 30,
+        "reintentos": 3
+      },
+      "destinatarios": {
+        "principales": [],
+        "copia": [],
+        "copia_oculta": []
+      },
+      "plantillas": {
+        "asunto_critico": "[CRÍTICO] Ares Aegis: {tipo_amenaza} detectada",
+        "asunto_alto": "[ALTO] Ares Aegis: {tipo_amenaza}",
+        "asunto_medio": "[MEDIO] Ares Aegis: {tipo_amenaza}",
+        "asunto_bajo": "[INFO] Ares Aegis: {tipo_amenaza}",
+        "incluir_html": true,
+        "incluir_adjuntos": true,
+        "firma_email": "\n\n--\nAres Aegis Security System\nGenerado automáticamente"
+      }
+    },
+    "telegram": {
+      "habilitado": false,
+      "prioridad": 2,
+      "configuracion": {
+        "token": "",
+        "timeout_api": 30,
+        "modo_parseado": "HTML",
+        "desactivar_preview": false
+      },
+      "destinatarios": {
+        "chat_individual": "",
+        "grupos": [],
+        "canales": []
+      },
+      "plantillas": {
+        "emoji_critico": "🚨",
+        "emoji_alto": "⚠️",
+        "emoji_medio": "🔶",
+        "emoji_bajo": "ℹ️",
+        "incluir_botones": true,
+        "formato_mensaje": "{emoji} *{nivel}* - {tipo_amenaza}\n\n{descripcion}\n\nFecha: {timestamp}"
+      }
+    },
+    "discord": {
+      "habilitado": false,
+      "prioridad": 3,
+      "configuracion": {
+        "webhook_url": "",
+        "timeout": 30,
+        "avatar_url": "",
+        "username": "Ares Aegis"
+      },
+      "formato": {
+        "usar_embeds": true,
+        "color_critico": 16711680,
+        "color_alto": 16753920,
+        "color_medio": 16776960,
+        "color_bajo": 3447003,
+        "incluir_thumbnail": true,
+        "incluir_campos": true
+      }
+    },
+    "slack": {
+      "habilitado": false,
+      "prioridad": 4,
+      "configuracion": {
+        "webhook_url": "",
+        "canal": "#seguridad",
+        "username": "Ares Aegis",
+        "icon_emoji": ":shield:",
+        "timeout": 30
+      },
+      "formato": {
+        "usar_attachments": true,
+        "color_critico": "danger",
+        "color_alto": "warning",
+        "color_medio": "good",
+        "incluir_acciones": true
+      }
+    },
+    "microsoft_teams": {
+      "habilitado": false,
+      "prioridad": 5,
+      "configuracion": {
+        "webhook_url": "",
+        "timeout": 30
+      },
+      "formato": {
+        "tipo_mensaje": "MessageCard",
+        "tema_color_critico": "FF0000",
+        "tema_color_alto": "FFA500",
+        "tema_color_medio": "FFFF00",
+        "incluir_acciones": true
+      }
+    },
+    "sms": {
+      "habilitado": false,
+      "prioridad": 6,
+      "configuracion": {
+        "proveedor": "twilio",
+        "api_key": "",
+        "api_secret": "",
+        "numero_origen": "",
+        "solo_criticos": true
+      },
+      "destinatarios": []
+    },
+    "webhook_personalizado": {
+      "habilitado": false,
+      "prioridad": 7,
+      "configuracion": {
+        "url": "",
+        "metodo": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "User-Agent": "Ares-Aegis/2.0"
+        },
+        "timeout": 30,
+        "reintentos": 3,
+        "verificar_ssl": true
+      },
+      "autenticacion": {
+        "tipo": "none",
+        "api_key": "",
+        "bearer_token": "",
+        "basic_auth": {
+          "usuario": "",
+          "password": ""
+        }
+      }
+    },
+    "desktop": {
+      "habilitado": true,
+      "prioridad": 8,
+      "configuracion": {
+        "duracion_ms": 5000,
+        "incluir_sonido": true,
+        "posicion": "top-right",
+        "icono_personalizado": true
+      }
+    },
+    "syslog": {
+      "habilitado": false,
+      "prioridad": 9,
+      "configuracion": {
+        "servidor": "localhost",
+        "puerto": 514,
+        "protocolo": "UDP",
+        "facility": 16,
+        "formato": "RFC3164"
+      }
+    },
+    "archivo_log": {
+      "habilitado": true,
+      "prioridad": 10,
+      "configuracion": {
+        "ruta_archivo": "logs/notificaciones.log",
+        "rotar_archivo": true,
+        "tamaño_maximo_mb": 100,
+        "archivos_backup": 5,
+        "formato_timestamp": "ISO8601"
+      }
+    }
+  },
+  "niveles_severidad": {
+    "CRITICO": {
+      "valor_numerico": 4,
+      "descripcion": "Amenaza inmediata que requiere acción urgente",
+      "canales_activos": ["email", "telegram", "discord", "sms", "desktop", "archivo_log"],
+      "requiere_confirmacion": true,
+      "escalamiento_automatico": true,
+      "tiempo_escalamiento_minutos": 15
+    },
+    "ALTO": {
+      "valor_numerico": 3,
+      "descripcion": "Amenaza significativa que requiere atención prioritaria",
+      "canales_activos": ["email", "telegram", "slack", "desktop", "archivo_log"],
+      "requiere_confirmacion": false,
+      "escalamiento_automatico": true,
+      "tiempo_escalamiento_minutos": 30
+    },
+    "MEDIO": {
+      "valor_numerico": 2,
+      "descripcion": "Posible amenaza que requiere investigación",
+      "canales_activos": ["email", "desktop", "archivo_log"],
+      "requiere_confirmacion": false,
+      "escalamiento_automatico": false
+    },
+    "BAJO": {
+      "valor_numerico": 1,
+      "descripcion": "Información de seguridad para conocimiento general",
+      "canales_activos": ["desktop", "archivo_log"],
+      "requiere_confirmacion": false,
+      "escalamiento_automatico": false
+    },
+    "INFO": {
+      "valor_numerico": 0,
+      "descripcion": "Información del sistema y eventos de rutina",
+      "canales_activos": ["archivo_log"],
+      "requiere_confirmacion": false,
+      "escalamiento_automatico": false
+    }
+  },
+  "tipos_amenaza": {
+    "MALWARE": {
+      "descripcion": "Software malicioso detectado",
+      "icono": "🦠",
+      "color": "#FF0000",
+      "nivel_minimo": "ALTO"
+    },
+    "PHISHING": {
+      "descripcion": "Intento de phishing detectado",
+      "icono": "🎣",
+      "color": "#FF6600",
+      "nivel_minimo": "ALTO"
+    },
+    "INTRUSION": {
+      "descripcion": "Intento de intrusión detectado",
+      "icono": "🚪",
+      "color": "#FF0000",
+      "nivel_minimo": "CRITICO"
+    },
+    "VULNERABILIDAD": {
+      "descripcion": "Vulnerabilidad encontrada en el sistema",
+      "icono": "🔓",
+      "color": "#FF9900",
+      "nivel_minimo": "MEDIO"
+    },
+    "COMPORTAMIENTO_ANOMALO": {
+      "descripcion": "Comportamiento inusual detectado",
+      "icono": "📊",
+      "color": "#FFCC00",
+      "nivel_minimo": "MEDIO"
+    },
+    "ACTUALIZACION_FIRMAS": {
+      "descripcion": "Actualización de firmas de seguridad",
+      "icono": "🔄",
+      "color": "#00CC00",
+      "nivel_minimo": "INFO"
+    },
+    "SISTEMA": {
+      "descripcion": "Evento del sistema",
+      "icono": "⚙️",
+      "color": "#0066CC",
+      "nivel_minimo": "INFO"
+    }
+  },
+  "reglas_personalizadas": {
+    "por_horario": {
+      "horario_laboral": {
+        "activo": false,
+        "horas": "08:00-18:00",
+        "dias": ["lunes", "martes", "miercoles", "jueves", "viernes"],
+        "canales_preferidos": ["email", "slack", "desktop"]
+      },
+      "fuera_horario": {
+        "activo": false,
+        "canales_preferidos": ["telegram", "sms"]
+      }
+    },
+    "por_ubicacion": {
+      "red_interna": {
+        "activo": false,
+        "rangos_ip": ["192.168.0.0/16", "10.0.0.0/8"],
+        "nivel_reducido": true
+      },
+      "acceso_remoto": {
+        "activo": false,
+        "aumentar_severidad": true
+      }
+    },
+    "agregacion": {
+      "eventos_similares": {
+        "activo": true,
+        "ventana_tiempo_minutos": 10,
+        "maximo_eventos": 5,
+        "mensaje_agregado": "Se detectaron {cantidad} eventos similares del tipo {tipo}"
+      }
+    }
+  },
+  "integraciones": {
+    "siem": {
+      "habilitado": false,
+      "endpoint": "",
+      "formato": "CEF",
+      "autenticacion": ""
+    },
+    "soar": {
+      "habilitado": false,
+      "endpoint": "",
+      "crear_tickets": true,
+      "categoria_ticket": "security-incident"
+    },
+    "api_externa": {
+      "habilitado": false,
+      "endpoints": []
+    }
+  },
+  "configuracion_avanzada": {
+    "cifrado": {
+      "cifrar_contenido_sensible": true,
+      "algoritmo": "AES-256",
+      "rotar_claves": true
+    },
+    "auditoria": {
+      "registrar_envios": true,
+      "registrar_fallos": true,
+      "archivo_auditoria": "logs/notificaciones_audit.log"
+    },
+    "rendimiento": {
+      "pool_hilos": 5,
+      "timeout_global": 60,
+      "buffer_mensajes": 1000
+    },
+    "recuperacion": {
+      "reintentos_automaticos": true,
+      "cola_offline": true,
+      "persistir_cola": true,
+      "archivo_cola": "temp/notification_queue.json"
+    }
+  }
+}

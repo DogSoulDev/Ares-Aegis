@@ -354,7 +354,7 @@ class AnalizadorComportamientoRed:
         
         inicio_tiempo = time.time()
         
-        resultado = {
+        resultado: Dict[str, Any] = {
             'timestamp': datetime.now().isoformat(),
             'tipo_analisis': 'instantaneo',
             'estado': 'iniciado'

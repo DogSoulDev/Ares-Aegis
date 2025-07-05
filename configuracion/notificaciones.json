@@ -1,18 +1,262 @@
 {
-  "email_habilitado": false,
-  "smtp_servidor": "smtp.gmail.com",
-  "smtp_puerto": 587,
-  "email_origen": "",
-  "email_password": "",
-  "emails_destino": [],
-  "telegram_habilitado": false,
-  "telegram_token": "",
-  "telegram_chat_id": "",
-  "notificaciones_desktop": true,
-  "webhook_url": "",
-  "niveles_notificacion": [
-    "CRITICO",
-    "ALTO",
-    "MEDIO"
-  ]
+  "metadata": {
+    "version": "3.0.0",
+    "sistema": "Ares Aegis Notificaciones",
+    "fecha_actualizacion": "2025-01-05T12:00:00Z",
+    "plataforma": "Linux/Debian/Kali",
+    "descripcion": "Sistema de notificaciones para Ares Aegis en entornos Linux",
+    "idioma": "español",
+    "compatibilidad": "Ares Aegis 3.0+"
+  },
+  "configuracion_global": {
+    "habilitado": true,
+    "modo_silencioso": false,
+    "zona_horaria": "Europe/Madrid",
+    "formato_fecha": "DD/MM/YYYY HH:mm:ss",
+    "limite_velocidad": {
+      "max_notificaciones_minuto": 15,
+      "max_notificaciones_hora": 120,
+      "periodo_enfriamiento_segundos": 60
+    },
+    "filtros": {
+      "ignorar_duplicados": true,
+      "ventana_duplicados_minutos": 10,
+      "horario_activo": {
+        "habilitado": false,
+        "inicio": "08:00",
+        "fin": "20:00",
+        "dias_laborales": true
+      }
+    }
+  },
+  "canales_activos": {
+    "syslog": {
+      "habilitado": true,
+      "prioridad": 1,
+      "facility": "local0",
+      "servidor": "localhost",
+      "puerto": 514,
+      "protocolo": "udp",
+      "formato": "RFC3164",
+      "severidades": ["critico", "alto", "medio", "bajo", "info"]
+    },
+    "archivo_log": {
+      "habilitado": true,
+      "prioridad": 2,
+      "ruta": "/var/log/ares-aegis/notificaciones.log",
+      "rotacion": {
+        "habilitada": true,
+        "tamaño_max_mb": 50,
+        "archivos_historicos": 7,
+        "compresion": true
+      },
+      "formato": "json",
+      "severidades": ["critico", "alto", "medio", "bajo", "info"]
+    },
+    "email": {
+      "habilitado": false,
+      "prioridad": 3,
+      "servidor_smtp": {
+        "host": "smtp.empresa.com",
+        "puerto": 587,
+        "seguridad": "starttls",
+        "autenticacion": true,
+        "usuario": "ares-aegis@empresa.com",
+        "timeout_segundos": 30
+      },
+      "configuracion": {
+        "remitente": "Ares Aegis <ares-aegis@empresa.com>",
+        "formato": "html",
+        "adjuntar_logs": false,
+        "firma_automatica": true
+      },
+      "severidades": ["critico", "alto"]
+    },
+    "webhook": {
+      "habilitado": false,
+      "prioridad": 4,
+      "endpoints": {
+        "slack": {
+          "url": "https://hooks.slack.com/services/...",
+          "canal": "#seguridad",
+          "usuario": "Ares Aegis",
+          "timeout_segundos": 15
+        },
+        "teams": {
+          "url": "https://empresa.webhook.office.com/...",
+          "timeout_segundos": 15
+        }
+      },
+      "formato": "json",
+      "severidades": ["critico", "alto"]
+    }
+  },
+  "plantillas_mensajes": {
+    "critico": {
+      "asunto": "[CRÍTICO] {sistema} - {evento} en {hostname}",
+      "mensaje": "ALERTA CRÍTICA DETECTADA\n\nSistema: {sistema}\nEvento: {evento}\nHost: {hostname}\nFecha: {timestamp}\nDescripción: {descripcion}\nAcciones realizadas: {acciones}\n\nRequiere atención inmediata.",
+      "color": "#FF0000",
+      "icono": "🚨"
+    },
+    "alto": {
+      "asunto": "[ALTO] {sistema} - {evento} en {hostname}",
+      "mensaje": "Alerta de alta prioridad\n\nSistema: {sistema}\nEvento: {evento}\nHost: {hostname}\nFecha: {timestamp}\nDescripción: {descripcion}\nAcciones realizadas: {acciones}",
+      "color": "#FF8C00",
+      "icono": "⚠️"
+    },
+    "medio": {
+      "asunto": "[MEDIO] {sistema} - {evento} en {hostname}",
+      "mensaje": "Alerta de prioridad media\n\nSistema: {sistema}\nEvento: {evento}\nHost: {hostname}\nFecha: {timestamp}\nDescripción: {descripcion}",
+      "color": "#FFD700",
+      "icono": "⚡"
+    },
+    "bajo": {
+      "asunto": "[BAJO] {sistema} - {evento} en {hostname}",
+      "mensaje": "Información de seguridad\n\nSistema: {sistema}\nEvento: {evento}\nHost: {hostname}\nFecha: {timestamp}\nDescripción: {descripcion}",
+      "color": "#32CD32",
+      "icono": "ℹ️"
+    },
+    "info": {
+      "asunto": "[INFO] {sistema} - {evento}",
+      "mensaje": "Información del sistema\n\nSistema: {sistema}\nEvento: {evento}\nFecha: {timestamp}\nDescripción: {descripcion}",
+      "color": "#87CEEB",
+      "icono": "📋"
+    }
+  },
+  "destinatarios": {
+    "administradores": {
+      "emails": [
+        "admin@empresa.com",
+        "seguridad@empresa.com"
+      ],
+      "severidades": ["critico", "alto"],
+      "horario_disponibilidad": "24/7"
+    },
+    "operadores": {
+      "emails": [
+        "ops@empresa.com"
+      ],
+      "severidades": ["critico", "alto", "medio"],
+      "horario_disponibilidad": "08:00-20:00"
+    },
+    "auditores": {
+      "emails": [
+        "audit@empresa.com"
+      ],
+      "severidades": ["critico", "alto", "medio", "bajo"],
+      "horario_disponibilidad": "09:00-18:00"
+    }
+  },
+  "reglas_escalamiento": {
+    "critico_sin_respuesta": {
+      "habilitado": true,
+      "tiempo_espera_minutos": 15,
+      "accion": "escalar_a_administradores",
+      "repetir_cada_minutos": 30,
+      "max_repeticiones": 3
+    },
+    "alto_sin_respuesta": {
+      "habilitado": true,
+      "tiempo_espera_minutos": 60,
+      "accion": "escalar_a_supervisor",
+      "repetir_cada_minutos": 120,
+      "max_repeticiones": 2
+    }
+  },
+  "integraciones_sistema": {
+    "systemd": {
+      "habilitado": true,
+      "servicio": "ares-aegis-notifications",
+      "reinicio_automatico": true,
+      "logs_journald": true
+    },
+    "fail2ban": {
+      "habilitado": true,
+      "filtro_personalizado": "/etc/fail2ban/filter.d/ares-aegis.conf",
+      "accion_bloqueo": "iptables"
+    },
+    "logrotate": {
+      "habilitado": true,
+      "configuracion": "/etc/logrotate.d/ares-aegis",
+      "rotacion_diaria": true,
+      "compresion": true
+    }
+  },
+  "eventos_monitoreados": {
+    "seguridad": {
+      "malware_detectado": {
+        "severidad": "critico",
+        "canales": ["syslog", "archivo_log", "email"],
+        "escalamiento": true
+      },
+      "intrusion_detectada": {
+        "severidad": "critico",
+        "canales": ["syslog", "archivo_log", "email"],
+        "escalamiento": true
+      },
+      "acceso_no_autorizado": {
+        "severidad": "alto",
+        "canales": ["syslog", "archivo_log"],
+        "escalamiento": false
+      },
+      "vulnerabilidad_critica": {
+        "severidad": "alto",
+        "canales": ["syslog", "archivo_log", "email"],
+        "escalamiento": false
+      }
+    },
+    "sistema": {
+      "servicio_caido": {
+        "severidad": "alto",
+        "canales": ["syslog", "archivo_log"],
+        "escalamiento": true
+      },
+      "disco_lleno": {
+        "severidad": "medio",
+        "canales": ["syslog", "archivo_log"],
+        "escalamiento": false
+      },
+      "cpu_alta": {
+        "severidad": "medio",
+        "canales": ["syslog"],
+        "escalamiento": false
+      },
+      "memoria_baja": {
+        "severidad": "bajo",
+        "canales": ["syslog"],
+        "escalamiento": false
+      }
+    },
+    "red": {
+      "conexion_sospechosa": {
+        "severidad": "medio",
+        "canales": ["syslog", "archivo_log"],
+        "escalamiento": false
+      },
+      "trafico_anomalo": {
+        "severidad": "medio",
+        "canales": ["syslog"],
+        "escalamiento": false
+      },
+      "puerto_escaneo": {
+        "severidad": "bajo",
+        "canales": ["syslog"],
+        "escalamiento": false
+      }
+    }
+  },
+  "configuracion_testing": {
+    "modo_prueba": false,
+    "email_prueba": "test@empresa.com",
+    "webhook_prueba": "https://webhook.site/test",
+    "intervalo_heartbeat_minutos": 60,
+    "log_debug": false
+  },
+  "estadisticas": {
+    "canales_activos": 2,
+    "eventos_configurados": 11,
+    "destinatarios_total": 6,
+    "reglas_escalamiento": 2,
+    "integraciones_habilitadas": 3
+  }
 }

@@ -937,16 +937,25 @@ class RespuestaAutomatizada:
             
             if accion == 'bloquear_ip_iptables':
                 ip = datos_evento.get('ip')
+                if ip is None:
+                    self.logger.error("No se pudo obtener la IP del evento para bloquear")
+                    return
                 duracion = config.get('duracion_destierro', 60)
                 resultado = self.ejecutor_acciones.bloquear_ip_iptables(ip, duracion)
             
             elif accion == 'terminar_proceso':
                 pid = datos_evento.get('pid')
+                if pid is None:
+                    self.logger.error("No se pudo obtener el PID del evento para terminar proceso")
+                    return
                 nombre = datos_evento.get('nombre', 'proceso_desconocido')
                 resultado = self.ejecutor_acciones.terminar_proceso(pid, nombre)
             
             elif accion == 'terminar_proceso_y_cuarentena':
                 pid = datos_evento.get('pid')
+                if pid is None:
+                    self.logger.error("No se pudo obtener el PID del evento para terminar proceso y cuarentena")
+                    return
                 comando = datos_evento.get('comando', '')
                 ruta_ejecutable = comando.split()[0] if comando else ''
                 nombre = datos_evento.get('nombre', 'proceso_temporal')
@@ -954,6 +963,9 @@ class RespuestaAutomatizada:
             
             elif accion == 'restaurar_desde_backup':
                 archivo = datos_evento.get('archivo')
+                if archivo is None:
+                    self.logger.error("No se pudo obtener la ruta del archivo del evento para restaurar")
+                    return
                 resultado = self.ejecutor_acciones.restaurar_desde_backup(archivo)
             
             # Registrar acción en historial

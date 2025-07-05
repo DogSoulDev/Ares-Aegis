@@ -520,7 +520,7 @@ class EscaneadorVulnerabilidadesRed:
         
         self.logger.info("El orquestador de vulnerabilidades de red ha despertado en el templo digital")
     
-    def escaneo_completo_red(self, targets: List[str] = None) -> Dict[str, Any]:
+    def escaneo_completo_red(self, targets: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Realiza un escaneo completo de vulnerabilidades de red.
         

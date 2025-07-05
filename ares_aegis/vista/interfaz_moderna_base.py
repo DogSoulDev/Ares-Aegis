@@ -379,10 +379,10 @@ class InterfazModernaBase:
             btn.bind("<Leave>", on_leave)
         
         # Guardar referencias
-        btn_container.button = btn
-        btn_container.indicator = indicator
-        btn_container.color = color
-        btn_container.is_active = False
+        setattr(btn_container, 'button', btn)
+        setattr(btn_container, 'indicator', indicator)
+        setattr(btn_container, 'color', color)
+        setattr(btn_container, 'is_active', False)
         
         return btn_container
     

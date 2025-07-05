@@ -372,7 +372,7 @@ class AnalizadorArchivos:
         
         inicio_tiempo = time.time()
         
-        resultado = {
+        resultado: Dict[str, Any] = {
             'ruta_archivo': ruta_archivo,
             'timestamp_analisis': datetime.now().isoformat(),
             'estado_analisis': 'iniciado'
