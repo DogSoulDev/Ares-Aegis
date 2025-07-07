@@ -12,15 +12,39 @@ import logging
 import os
 import threading
 import time
+from datetime import datetime
 from typing import Optional
 
 # Importar controladores y modelos
 from ..controladores.controlador_principal import ControladorPrincipal
 from ..utilidades.temas_modernos import TemaClaro, TemaOscuro
 from .interfaz_moderna_componentes import ComponentesModernos, TemasModernos
+from .interfaz_moderna_herramientas import InterfazModernaHerramientas
 
 
 class InterfazModernaBase:
+    def parar_escaneo(self):
+        """Detener cualquier escaneo en curso y limpiar la caché de escaneos."""
+        if not self.controlador:
+            messagebox.showwarning("Error", "Controlador no disponible")
+            return
+        exito_cancelar = False
+        exito_cache = False
+        try:
+            if hasattr(self.controlador, 'cancelar_escaneo_en_curso'):
+                exito_cancelar = self.controlador.cancelar_escaneo_en_curso()
+            if hasattr(self.controlador, 'limpiar_cache_escaneos'):
+                exito_cache = self.controlador.limpiar_cache_escaneos()
+            if exito_cancelar:
+                messagebox.showinfo("Escaneo detenido", "El escaneo en curso ha sido detenido correctamente.")
+            else:
+                messagebox.showwarning("Sin escaneo activo", "No hay escaneo en curso o no se pudo cancelar.")
+            if exito_cache:
+                messagebox.showinfo("Caché limpiada", "La caché de escaneos ha sido limpiada correctamente.")
+            else:
+                messagebox.showwarning("Caché no limpiada", "No se pudo limpiar la caché de escaneos.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al detener escaneo o limpiar caché:\n{str(e)}")
     """Interfaz principal moderna de Ares Aegis con UX profesional"""
     
     def __init__(self):
@@ -29,22 +53,19 @@ class InterfazModernaBase:
         self.root: Optional[tk.Tk] = None  # Typing hint para evitar errores
         self.tema = TemaClaro()  # Tema por defecto
         self.controlador = None
-        
+        self.controlador_listo = False
         # Estados de la aplicación
         self.panel_actual = "dashboard"
         self.escaneo_activo = False
         self.monitoreo_activo = False
-        
         # Widgets principales
         self.header_frame = None
         self.navbar_frame = None
         self.content_frame = None
         self.sidebar_frame = None
-        
         # Navegación
         self.nav_buttons = {}
         self.current_nav_button = None
-        
         # Variables de datos
         self.stats_data = {
             "amenazas_detectadas": 0,
@@ -52,43 +73,60 @@ class InterfazModernaBase:
             "sistema_protegido": "98.5%",
             "ultima_actualizacion": "Hoy"
         }
-        
-        self.logger.info("Interfaz Moderna Base inicializada")
+        # Widgets de estadísticas para actualización
+        self.stats_widgets = {}
+        # Inicializar módulo de herramientas
+        self.herramientas = None
+        # Referencias a botones de escaneo
+        self.boton_escaneo_rapido = None
+        self.boton_escaneo_completo = None
+        self.boton_escaneo_personalizado = None
+        self.logger.info("Interfaz Moderna Base inicializada correctamente")
     
-    def inicializar(self):
-        """Inicializar la aplicación completa"""
+    def eliminar_archivo(self):
+        """Eliminar archivo de cuarentena (real y robusto)."""
+        if not hasattr(self, 'listbox_cuarentena') or self.listbox_cuarentena is None:
+            messagebox.showwarning("Error", "Lista de cuarentena no disponible")
+            return
         try:
-            self.crear_ventana_principal()
-            self.inicializar_controlador()
-            self.configurar_interfaz()
-            self.mostrar_dashboard()
-            
-            self.logger.info("Interfaz Moderna configurada exitosamente")
-            return True
-            
+            selection = self.listbox_cuarentena.curselection()
+            if not selection:
+                messagebox.showwarning("Selección", "Por favor seleccione un archivo para eliminar")
+                return
+            indice = selection[0]
+            if hasattr(self, 'archivos_cuarentena_data') and self.archivos_cuarentena_data:
+                if indice < len(self.archivos_cuarentena_data):
+                    archivo_data = self.archivos_cuarentena_data[indice]
+                    archivo_id = archivo_data.get("id", archivo_data.get("archivo_id", None))
+                    nombre_archivo = archivo_data.get("nombre", archivo_data.get("nombre_archivo", "Archivo desconocido"))
+                    respuesta = messagebox.askyesno(
+                        "Eliminar archivo",
+                        f"¿Está seguro que desea eliminar permanentemente:\n{nombre_archivo}?\n\nEsta acción NO se puede deshacer."
+                    )
+                    cuarentena_ctrl = getattr(self.controlador, 'controlador_cuarentena', None) if hasattr(self, 'controlador') and self.controlador else None
+                    if respuesta and cuarentena_ctrl and hasattr(cuarentena_ctrl, 'eliminar_archivo_cuarentena'):
+                        try:
+                            resultado = cuarentena_ctrl.eliminar_archivo_cuarentena(archivo_id, confirmar=True)
+                            if isinstance(resultado, dict) and resultado.get('exitoso'):
+                                messagebox.showinfo("Eliminado", f"Archivo eliminado correctamente: {nombre_archivo}")
+                                self.actualizar_cuarentena()
+                            else:
+                                error_msg = resultado.get('error', 'No se pudo eliminar el archivo') if isinstance(resultado, dict) else 'No se pudo eliminar el archivo'
+                                messagebox.showerror("Error", f"No se pudo eliminar el archivo: {error_msg}")
+                        except Exception as e:
+                            if hasattr(self, 'logger'):
+                                self.logger.error(f"Error eliminando archivo: {e}")
+                            messagebox.showerror("Error", f"Error eliminando archivo: {str(e)}")
+                    elif respuesta:
+                        messagebox.showwarning("Error", "Controlador de cuarentena no disponible")
+                else:
+                    messagebox.showwarning("Error", "Índice de archivo fuera de rango")
+            else:
+                messagebox.showwarning("Error", "No hay datos de archivos disponibles")
         except Exception as e:
-            self.logger.error(f"Error inicializando interfaz moderna: {e}")
-            messagebox.showerror("Error", f"No se pudo inicializar la aplicación:\n{str(e)}")
-            return False
-    
-    def crear_ventana_principal(self):
-        """Crear y configurar la ventana principal"""
-        self.root = tk.Tk()
-        self.root.title("🛡️ ARES AEGIS - Advanced Cybersecurity Command Center")
-        self.root.geometry("1400x900")
-        self.root.minsize(1200, 800)
-        self.root.configure(bg=ComponentesModernos.COLORES["bg_principal"])
-        
-        # Centrar ventana
-        self.centrar_ventana()
-        
-        # Configurar icono
-        self.configurar_icono()
-        
-        # Configurar cierre
-        self.root.protocol("WM_DELETE_WINDOW", self.cerrar_aplicacion)
-        
-        # Configurar transparencia moderna
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error eliminando archivo: {e}")
+            messagebox.showerror("Error", f"Error eliminando archivo: {str(e)}")
         try:
             self.root.attributes('-alpha', 0.98)
         except:
@@ -96,6 +134,26 @@ class InterfazModernaBase:
         
         # Configurar estilos TTK
         TemasModernos.obtener_configuracion_ttk_style()
+
+        # Agregar botón Parar Escaneo en el header (después de crear header_frame)
+        # Se agrega aquí para asegurar que header_frame existe
+        self.root.after(0, self._agregar_boton_parar_escaneo)
+
+    def _agregar_boton_parar_escaneo(self):
+        """Agregar el botón Parar Escaneo en el header derecho."""
+        if not self.header_frame:
+            return
+        # Buscar el right_frame dentro del header
+        for child in self.header_frame.winfo_children():
+            if isinstance(child, tk.Frame):
+                for subchild in child.winfo_children():
+                    if isinstance(subchild, tk.Frame) and subchild.pack_info().get('side') == 'right':
+                        # Insertar el botón en el right_frame
+                        btn = ComponentesModernos.crear_boton_moderno(
+                            subchild, "⏹️ Parar Escaneo", self.parar_escaneo, "peligro"
+                        )
+                        btn.pack(side="right", padx=(0, 10))
+                        return
     
     def centrar_ventana(self):
         """Centrar la ventana en la pantalla"""
@@ -133,30 +191,31 @@ class InterfazModernaBase:
         """Inicializar el controlador principal de forma optimizada"""
         if not self.root:
             return
-            
         try:
             # Mostrar mensaje de carga
             if hasattr(self, 'status_label'):
                 self.status_label.config(text="INICIALIZANDO...", fg=ComponentesModernos.COLORES["advertencia"])
                 self.root.update()
-            
-            # Inicializar controlador en segundo plano
-            def init_worker():
-                try:
-                    self.controlador = ControladorPrincipal()
-                    # Actualizar UI en hilo principal
-                    if self.root:
-                        self.root.after(0, self._controlador_iniciado)
-                except Exception as e:
-                    if self.root:
-                        self.root.after(0, lambda: self._error_controlador(e))
-            
-            # Inicializar en hilo separado para no bloquear UI
-            threading.Thread(target=init_worker, daemon=True).start()
-            
+            # Inicializar controlador de forma síncrona
+            self.controlador = ControladorPrincipal()
+            self.controlador_listo = True
+            self.logger.info("Controlador inicializado correctamente")
+            # Actualizar estado
+            self._controlador_iniciado()
+            # Habilitar botones de escaneo si existen
+            self._actualizar_estado_botones_escaneo(True)
         except Exception as e:
+            self.controlador_listo = False
             self.logger.error(f"Error inicializando controlador: {e}")
+            self._error_controlador(e)
+            self._actualizar_estado_botones_escaneo(False)
             raise
+    def _actualizar_estado_botones_escaneo(self, habilitar: bool):
+        """Habilitar o deshabilitar los botones de escaneo según el estado del controlador."""
+        estado = tk.NORMAL if habilitar else tk.DISABLED
+        for boton in [self.boton_escaneo_rapido, self.boton_escaneo_completo, self.boton_escaneo_personalizado]:
+            if boton is not None:
+                boton.config(state=estado)
     
     def _controlador_iniciado(self):
         """Callback cuando el controlador está listo"""
@@ -316,9 +375,9 @@ class InterfazModernaBase:
             ("📊", "Dashboard", self.mostrar_dashboard, ComponentesModernos.COLORES["primario"]),
             ("🔍", "Scan", self.mostrar_escaneo, "#ff6b35"),
             ("🛡️", "Quarantine", self.mostrar_cuarentena, "#dc3545"),
-            ("📡", "Monitor", None, "#7b68ee"),  # Se define en herramientas
-            ("🛡️", "Protection", None, ComponentesModernos.COLORES["exito"]),  # Se define en herramientas
-            ("🔧", "Tools", None, ComponentesModernos.COLORES["advertencia"]),  # Se define en herramientas
+            ("📡", "Monitor", self.mostrar_monitoreo, "#7b68ee"),  # Activado
+            ("🛡️", "Protection", self.mostrar_proteccion, ComponentesModernos.COLORES["exito"]),  # Activado
+            ("🔧", "Tools", self.mostrar_herramientas, ComponentesModernos.COLORES["advertencia"]),  # Activado
             ("📋", "Reports", self.mostrar_reportes, ComponentesModernos.COLORES["peligro"]),
             ("⚙️", "Settings", self.mostrar_configuracion, ComponentesModernos.COLORES["secundario"])
         ]
@@ -447,7 +506,8 @@ class InterfazModernaBase:
     def ejecutar(self):
         """Ejecutar la aplicación"""
         try:
-            if self.inicializar() and self.root:
+            self.inicializar_controlador()
+            if self.root:
                 self.root.mainloop()
         except Exception as e:
             self.logger.error(f"Error ejecutando aplicación: {e}")
@@ -947,15 +1007,35 @@ class InterfazModernaBase:
     
     def actualizar_dashboard(self):
         """Actualizar datos del dashboard"""
-        self.actualizar_dashboard_datos()
-        messagebox.showinfo("Actualizado", "Dashboard actualizado correctamente")
-    
     def actualizar_dashboard_datos(self):
         """Actualizar datos del dashboard automáticamente"""
         try:
             if self.controlador:
-                # Obtener estadísticas reales
-                pass
+                # Obtener datos reales del controlador
+                datos_dashboard = self.controlador.obtener_datos_dashboard()
+                
+                # Actualizar estadísticas en la interfaz
+                if self.stats_widgets:
+                    # Actualizar contadores principales
+                    componentes_activos = sum(datos_dashboard.get("componentes_activos", {}).values())
+                    alertas_criticas = datos_dashboard.get("alertas_criticas", 0)
+                    
+                    # Simular otros datos para el dashboard
+                    archivos_escaneados = datos_dashboard.get("estadisticas", {}).get("archivos_procesados", 0)
+                    amenazas_detectadas = datos_dashboard.get("estadisticas", {}).get("amenazas_detectadas", 0)
+                    
+                    # Actualizar widgets si existen
+                    for widget_name, widget in self.stats_widgets.items():
+                        if widget_name == "componentes" and hasattr(widget, 'config'):
+                            widget.config(text=str(componentes_activos))
+                        elif widget_name == "alertas" and hasattr(widget, 'config'):
+                            widget.config(text=str(alertas_criticas))
+                        elif widget_name == "archivos" and hasattr(widget, 'config'):
+                            widget.config(text=str(archivos_escaneados))
+                        elif widget_name == "amenazas" and hasattr(widget, 'config'):
+                            widget.config(text=str(amenazas_detectadas))
+                
+                self.logger.debug("Dashboard actualizado con datos reales")
             
             # Programar siguiente actualización
             if self.root:
@@ -963,6 +1043,9 @@ class InterfazModernaBase:
                 
         except Exception as e:
             self.logger.error(f"Error actualizando dashboard: {e}")
+            # Programar siguiente actualización incluso si hay error
+            if self.root:
+                self.root.after(30000, self.actualizar_dashboard_datos)
     
     def actualizar_firmas(self):
         """Actualizar base de datos de firmas"""
@@ -982,29 +1065,527 @@ class InterfazModernaBase:
             if self.root:
                 self.root.after(0, lambda: messagebox.showinfo("Éxito", "Base de datos actualizada correctamente"))
         except Exception as e:
+            error_msg = str(e)
             if self.root:
-                self.root.after(0, lambda: messagebox.showerror("Error", f"Error actualizando firmas:\n{str(e)}"))
+                self.root.after(0, lambda error_msg=error_msg: messagebox.showerror("Error", f"Error actualizando firmas:\n{error_msg}"))
     
     def mostrar_reportes(self):
         """Mostrar interfaz de reportes"""
-        messagebox.showinfo("Reportes", "Interfaz de reportes en desarrollo")
+        self.limpiar_contenido()
+        
+        # Container principal
+        reportes_container = tk.Frame(self.content_frame, bg=ComponentesModernos.COLORES["bg_principal"])
+        reportes_container.pack(fill="both", expand=True, padx=30, pady=20)
+        
+        # Header
+        header_frame = tk.Frame(reportes_container, bg=ComponentesModernos.COLORES["bg_principal"])
+        header_frame.pack(fill="x", pady=(0, 25))
+        
+        title_label = tk.Label(
+            header_frame,
+            text="📋 Centro de Reportes",
+            font=("Segoe UI", 24, "bold"),
+            bg=ComponentesModernos.COLORES["bg_principal"],
+            fg=ComponentesModernos.COLORES["texto_primario"]
+        )
+        title_label.pack(side="left")
+        
+        # Botón para generar reporte
+        ComponentesModernos.crear_boton_moderno(
+            header_frame, "📊 Generar Reporte", self.generar_reporte_completo, "primario"
+        ).pack(side="right")
+        
+        # Grid de tipos de reportes
+        reportes_frame = tk.Frame(reportes_container, bg=ComponentesModernos.COLORES["bg_principal"])
+        reportes_frame.pack(fill="x", pady=(0, 25))
+        
+        for i in range(2):
+            reportes_frame.columnconfigure(i, weight=1, uniform="reportes")
+        
+        # Tipos de reportes disponibles
+        tipos_reportes = [
+            {
+                "titulo": "📊 Reporte de Seguridad",
+                "descripcion": "Resumen completo del estado de seguridad",
+                "comando": self.generar_reporte_seguridad,
+                "columna": 0
+            },
+            {
+                "titulo": "🔍 Reporte de Escaneos",
+                "descripcion": "Historial y resultados de escaneos",
+                "comando": self.generar_reporte_escaneos,
+                "columna": 1
+            },
+            {
+                "titulo": "📡 Reporte de Monitoreo",
+                "descripcion": "Actividad de red y procesos",
+                "comando": self.generar_reporte_monitoreo,
+                "columna": 0
+            },
+            {
+                "titulo": "🔒 Reporte de Cuarentena",
+                "descripcion": "Estado de archivos en cuarentena",
+                "comando": self.generar_reporte_cuarentena,
+                "columna": 1
+            }
+        ]
+        
+        for i, reporte in enumerate(tipos_reportes):
+            row = i // 2
+            col = reporte["columna"]
+            
+            # Asegurar que tengamos suficientes filas
+            reportes_frame.rowconfigure(row, weight=1, uniform="reportes")
+            
+            card_container, card_content = ComponentesModernos.crear_card_moderna(
+                reportes_frame, reporte["titulo"], reporte["descripcion"]
+            )
+            card_container.grid(row=row, column=col, sticky="nsew", padx=8, pady=8)
+            
+            ComponentesModernos.crear_boton_moderno(
+                card_content, "Generar", reporte["comando"], "outline"
+            ).pack(pady=10)
+        
+        # Área de vista previa del último reporte
+        preview_container, preview_content = ComponentesModernos.crear_card_moderna(
+            reportes_container, "📄 Vista Previa del Último Reporte", "Contenido del reporte"
+        )
+        preview_container.pack(fill="both", expand=True)
+        
+        # Text widget para mostrar contenido
+        text_frame = tk.Frame(preview_content, bg=preview_content.cget('bg'))
+        text_frame.pack(fill="both", expand=True, pady=10)
+        
+        self.report_text = tk.Text(
+            text_frame,
+            wrap=tk.WORD,
+            font=("Consolas", 10),
+            bg=ComponentesModernos.COLORES["bg_secundario"],
+            fg=ComponentesModernos.COLORES["texto_secundario"],
+            relief="flat",
+            padx=15,
+            pady=15
+        )
+        
+        scrollbar = tk.Scrollbar(text_frame)
+        scrollbar.pack(side="right", fill="y")
+        self.report_text.pack(side="left", fill="both", expand=True)
+        self.report_text.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.report_text.yview)
+        
+        # Mostrar reporte inicial si hay controlador
+        if self.controlador:
+            try:
+                reporte_inicial = "=== REPORTE INICIAL DE ARES AEGIS ===\n\n"
+                datos_dashboard = self.controlador.obtener_datos_dashboard()
+                
+                reporte_inicial += f"Estado del Sistema: {'OPERATIVO' if datos_dashboard.get('estado_sistema', {}).get('sistema_iniciado') else 'NO OPERATIVO'}\n"
+                reporte_inicial += f"Componentes Activos: {sum(datos_dashboard.get('componentes_activos', {}).values())}/6\n"
+                reporte_inicial += f"Alertas Críticas: {datos_dashboard.get('alertas_criticas', 0)}\n"
+                reporte_inicial += f"Timestamp: {datos_dashboard.get('timestamp', 'N/A')}\n\n"
+                
+                reporte_inicial += "=== ESTADÍSTICAS GENERALES ===\n"
+                stats = datos_dashboard.get('estadisticas', {})
+                reporte_inicial += f"Archivos Escaneados: {stats.get('archivos_escaneados', 0)}\n"
+                reporte_inicial += f"Amenazas Detectadas: {stats.get('amenazas_detectadas', 0)}\n"
+                reporte_inicial += f"Total de Eventos: {stats.get('total_eventos', 0)}\n\n"
+                
+                reporte_inicial += "Utilice los botones superiores para generar reportes específicos."
+                
+                self.report_text.insert(tk.END, reporte_inicial)
+            except Exception as e:
+                self.report_text.insert(tk.END, f"Error cargando reporte inicial: {str(e)}")
+        else:
+            self.report_text.insert(tk.END, "Controlador no disponible. No se pueden generar reportes.")
+    
+    def generar_reporte_completo(self):
+        """Generar reporte completo del sistema"""
+        try:
+            if not self.controlador:
+                messagebox.showwarning("Error", "Controlador no disponible")
+                return
+            
+            # Usar el método del controlador si existe
+            if hasattr(self.controlador, 'generar_reporte_completo'):
+                reporte = self.controlador.generar_reporte_completo()
+            else:
+                # Generar reporte básico
+                datos = self.controlador.obtener_datos_dashboard()
+                reporte = f"# REPORTE COMPLETO - ARES AEGIS\n\n"
+                reporte += f"**Generado:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+                reporte += f"## Estado del Sistema\n"
+                reporte += f"- Sistema Iniciado: {datos.get('estado_sistema', {}).get('sistema_iniciado', False)}\n"
+                reporte += f"- Componentes Activos: {sum(datos.get('componentes_activos', {}).values())}\n"
+                reporte += f"- Alertas Críticas: {datos.get('alertas_criticas', 0)}\n\n"
+            
+            # Mostrar en la interfaz
+            if hasattr(self, 'report_text'):
+                self.report_text.delete(1.0, tk.END)
+                self.report_text.insert(tk.END, reporte)
+            
+            messagebox.showinfo("Completado", "Reporte completo generado correctamente")
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Error generando reporte: {str(e)}")
+    
+    def generar_reporte_seguridad(self):
+        """Generar reporte específico de seguridad"""
+        try:
+            if not self.controlador:
+                messagebox.showwarning("Error", "Controlador no disponible")
+                return
+            
+            datos = self.controlador.obtener_datos_dashboard()
+            estado_monitores = self.controlador.obtener_estado_monitores()
+            
+            reporte = "=== REPORTE DE SEGURIDAD ===\n\n"
+            reporte += f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+            
+            reporte += "ESTADO DE COMPONENTES:\n"
+            componentes = datos.get('componentes_activos', {})
+            if componentes and isinstance(componentes, dict):
+                for comp, activo in componentes.items():
+                    estado = "✅ ACTIVO" if activo else "❌ INACTIVO"
+                    reporte += f"- {comp.upper()}: {estado}\n"
+            
+            reporte += f"\nESTADO DE MONITORES:\n"
+            if estado_monitores and isinstance(estado_monitores, dict):
+                for monitor, info in estado_monitores.items():
+                    if isinstance(info, dict):
+                        estado = "🟢 ACTIVO" if info.get('activo') else "🔴 INACTIVO"
+                        reporte += f"- {monitor.replace('_', ' ').upper()}: {estado}\n"
+            
+            reporte += f"\nALERTAS CRÍTICAS: {datos.get('alertas_criticas', 0)}\n"
+            reporte += f"TOTAL EVENTOS: {datos.get('estadisticas', {}).get('total_eventos', 0)}\n"
+            
+            if hasattr(self, 'report_text'):
+                self.report_text.delete(1.0, tk.END)
+                self.report_text.insert(tk.END, reporte)
+            
+            messagebox.showinfo("Completado", "Reporte de seguridad generado")
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Error generando reporte de seguridad: {str(e)}")
+    
+    def generar_reporte_escaneos(self):
+        """Generar reporte de escaneos"""
+        try:
+            if not self.controlador:
+                messagebox.showwarning("Error", "Controlador no disponible")
+                return
+            # Usar método del controlador si existe
+            if hasattr(self.controlador, 'generar_reporte_escaneos'):
+                reporte = self.controlador.generar_reporte_escaneos()
+            else:
+                # Generar reporte básico de escaneos
+                datos = self.controlador.obtener_datos_dashboard()
+                historial = datos.get('historial_escaneos', [])
+                reporte = "=== REPORTE DE ESCANEOS ===\n\n"
+                reporte += f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+                reporte += f"TOTAL DE ESCANEOS: {len(historial)}\n\n"
+                if historial:
+                    reporte += "DETALLES DE ESCANEOS:\n"
+                    for i, escaneo in enumerate(historial[:10]):
+                        if isinstance(escaneo, dict):
+                            reporte += f"- {escaneo.get('tipo', 'N/A')} en {escaneo.get('ruta', 'N/A')}\n"
+                            reporte += f"  Resultado: {escaneo.get('resultado', 'N/A')}\n"
+                            reporte += f"  Fecha: {escaneo.get('fecha', 'N/A')}\n\n"
+                    if len(historial) > 10:
+                        reporte += f"... y {len(historial) - 10} escaneos más.\n"
+                else:
+                    reporte += "No hay escaneos registrados.\n"
+            if hasattr(self, 'report_text'):
+                self.report_text.delete(1.0, tk.END)
+                self.report_text.insert(tk.END, reporte)
+            messagebox.showinfo("Completado", "Reporte de escaneos generado")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error generando reporte de escaneos: {str(e)}")
+    
+    def generar_reporte_monitoreo(self):
+        """Generar reporte de monitoreo"""
+        try:
+            if not self.controlador:
+                messagebox.showwarning("Error", "Controlador no disponible")
+                return
+            # Usar método del controlador si existe
+            if hasattr(self.controlador, 'generar_reporte_monitoreo'):
+                reporte = self.controlador.generar_reporte_monitoreo()
+            else:
+                # Generar reporte básico de monitoreo
+                estado_monitores = self.controlador.obtener_estado_monitores()
+                reporte = "=== REPORTE DE MONITOREO ===\n\n"
+                reporte += f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+                if estado_monitores and isinstance(estado_monitores, dict):
+                    reporte += "ESTADO DE MONITORES:\n"
+                    for monitor, info in estado_monitores.items():
+                        if isinstance(info, dict):
+                            estado = "🟢 ACTIVO" if info.get('activo') else "🔴 INACTIVO"
+                            reporte += f"- {monitor.replace('_', ' ').upper()}: {estado}\n"
+                            reporte += f"  Última actividad: {info.get('ultima_actividad', 'N/A')}\n"
+                            reporte += f"  Eventos recientes: {info.get('eventos_recientes', 0)}\n\n"
+                else:
+                    reporte += "No hay información de monitores disponible.\n"
+            if hasattr(self, 'report_text'):
+                self.report_text.delete(1.0, tk.END)
+                self.report_text.insert(tk.END, reporte)
+            messagebox.showinfo("Completado", "Reporte de monitoreo generado")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error generando reporte de monitoreo: {str(e)}")
+    
+    def generar_reporte_cuarentena(self):
+        """Generar reporte de cuarentena"""
+        try:
+            if not self.controlador:
+                messagebox.showwarning("Error", "Controlador no disponible")
+                return
+            
+            lista_cuarentena = self.controlador.obtener_lista_cuarentena()
+            
+            reporte = "=== REPORTE DE CUARENTENA ===\n\n"
+            reporte += f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+            reporte += f"TOTAL DE ARCHIVOS EN CUARENTENA: {len(lista_cuarentena)}\n\n"
+            
+            if lista_cuarentena:
+                reporte += "DETALLES DE ARCHIVOS:\n"
+                # Convertir a lista si no lo es y procesar
+                archivos_lista = lista_cuarentena if isinstance(lista_cuarentena, list) else []
+                for i, archivo in enumerate(archivos_lista[:10]):  # Primeros 10
+                    if isinstance(archivo, dict):
+                        reporte += f"- {archivo.get('nombre', 'N/A')} ({archivo.get('nivel_riesgo', 'N/A')})\n"
+                        reporte += f"  Origen: {archivo.get('ruta_original', 'N/A')}\n"
+                        reporte += f"  Fecha: {archivo.get('fecha_cuarentena', 'N/A')}\n\n"
+                
+                if len(archivos_lista) > 10:
+                    reporte += f"... y {len(archivos_lista) - 10} archivos más.\n"
+            else:
+                reporte += "No hay archivos en cuarentena.\n"
+            
+            if hasattr(self, 'report_text'):
+                self.report_text.delete(1.0, tk.END)
+                self.report_text.insert(tk.END, reporte)
+            
+            messagebox.showinfo("Completado", "Reporte de cuarentena generado")
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Error generando reporte de cuarentena: {str(e)}")
     
     def mostrar_configuracion(self):
         """Mostrar interfaz de configuración"""
-        messagebox.showinfo("Configuración", "Interfaz de configuración en desarrollo")
+        self.limpiar_contenido()
+        
+        # Container principal
+        config_container = tk.Frame(self.content_frame, bg=ComponentesModernos.COLORES["bg_principal"])
+        config_container.pack(fill="both", expand=True, padx=30, pady=20)
+        
+        # Header
+        header_frame = tk.Frame(config_container, bg=ComponentesModernos.COLORES["bg_principal"])
+        header_frame.pack(fill="x", pady=(0, 25))
+        
+        title_label = tk.Label(
+            header_frame,
+            text="⚙️ Configuración del Sistema",
+            font=("Segoe UI", 24, "bold"),
+            bg=ComponentesModernos.COLORES["bg_principal"],
+            fg=ComponentesModernos.COLORES["texto_primario"]
+        )
+        title_label.pack(side="left")
+        
+        # Botones de acción
+        btn_frame = tk.Frame(header_frame, bg=ComponentesModernos.COLORES["bg_principal"])
+        btn_frame.pack(side="right")
+        
+        ComponentesModernos.crear_boton_moderno(
+            btn_frame, "💾 Guardar", self.guardar_configuracion, "primario"
+        ).pack(side="right", padx=(0, 10))
+        
+        ComponentesModernos.crear_boton_moderno(
+            btn_frame, "🔄 Recargar", self.recargar_configuracion, "outline"
+        ).pack(side="right", padx=(0, 10))
+        
+        # Notebook para diferentes secciones de configuración
+        from tkinter import ttk
+        
+        notebook = ttk.Notebook(config_container)
+        notebook.pack(fill="both", expand=True)
+        
+        # Tab 1: Configuración General
+        general_frame = tk.Frame(notebook, bg=ComponentesModernos.COLORES["bg_principal"])
+        notebook.add(general_frame, text="General")
+        
+        self.crear_seccion_config_general(general_frame)
+        
+        # Tab 2: Configuración de Escaneo
+        escaneo_frame = tk.Frame(notebook, bg=ComponentesModernos.COLORES["bg_principal"])
+        notebook.add(escaneo_frame, text="Escaneo")
+        
+        self.crear_seccion_config_escaneo(escaneo_frame)
+        
+        # Tab 3: Configuración de Monitoreo
+        monitor_frame = tk.Frame(notebook, bg=ComponentesModernos.COLORES["bg_principal"])
+        notebook.add(monitor_frame, text="Monitoreo")
+        
+        self.crear_seccion_config_monitoreo(monitor_frame)
+    
+    def crear_seccion_config_general(self, parent):
+        """Crear sección de configuración general"""
+        # Estado del sistema
+        estado_card, estado_content = ComponentesModernos.crear_card_moderna(
+            parent, "📊 Estado del Sistema", "Información general"
+        )
+        estado_card.pack(fill="x", padx=20, pady=10)
+        
+        if self.controlador:
+            try:
+                datos = self.controlador.obtener_datos_dashboard()
+                estado_texto = f"Sistema: {'OPERATIVO' if datos.get('estado_sistema', {}).get('sistema_iniciado') else 'NO OPERATIVO'}\n"
+                estado_texto += f"Uptime: {datos.get('estado_sistema', {}).get('uptime_segundos', 0)} segundos\n"
+                estado_texto += f"Componentes activos: {sum(datos.get('componentes_activos', {}).values())}/6"
+            except:
+                estado_texto = "Error obteniendo estado del sistema"
+        else:
+            estado_texto = "Controlador no disponible"
+        
+        estado_label = tk.Label(
+            estado_content,
+            text=estado_texto,
+            font=("Segoe UI", 10),
+            bg=estado_content.cget('bg'),
+            fg=ComponentesModernos.COLORES["texto_secundario"],
+            justify="left"
+        )
+        estado_label.pack(pady=10)
+    
+    def crear_seccion_config_escaneo(self, parent):
+        """Crear sección de configuración de escaneo"""
+        config_card, config_content = ComponentesModernos.crear_card_moderna(
+            parent, "🔍 Configuración de Escaneo", "Opciones del escaneador"
+        )
+        config_card.pack(fill="x", padx=20, pady=10)
+        
+        # Información de configuración actual
+        if self.controlador:
+            try:
+                config = self.controlador.obtener_configuracion_sistema()
+                rutas = config.get('rutas_escaneadas', [])
+                exclusiones = config.get('exclusiones', [])
+                
+                info_text = f"Rutas configuradas: {len(rutas)}\n"
+                info_text += f"Exclusiones: {len(exclusiones)}\n"
+                info_text += "Estado: Configurado"
+            except:
+                info_text = "Error obteniendo configuración"
+        else:
+            info_text = "Controlador no disponible"
+        
+        config_label = tk.Label(
+            config_content,
+            text=info_text,
+            font=("Segoe UI", 10),
+            bg=config_content.cget('bg'),
+            fg=ComponentesModernos.COLORES["texto_secundario"],
+            justify="left"
+        )
+        config_label.pack(pady=10)
+    
+    def crear_seccion_config_monitoreo(self, parent):
+        """Crear sección de configuración de monitoreo"""
+        monitor_card, monitor_content = ComponentesModernos.crear_card_moderna(
+            parent, "📡 Configuración de Monitoreo", "Estado de los monitores"
+        )
+        monitor_card.pack(fill="x", padx=20, pady=10)
+        
+        if self.controlador:
+            try:
+                estado_monitores = self.controlador.obtener_estado_monitores()
+                monitor_text = ""
+                if estado_monitores:
+                    # Usar getattr para evitar problemas de typing
+                    monitores_dict = dict(estado_monitores) if hasattr(estado_monitores, 'items') else {}
+                    for monitor in ['monitor_red', 'monitor_procesos', 'fim', 'analisis_dinamico']:
+                        if monitor in monitores_dict:
+                            info = monitores_dict[monitor]
+                            if isinstance(info, dict):
+                                estado = "🟢 ACTIVO" if info.get('activo') else "🔴 INACTIVO"
+                                monitor_text += f"{monitor.replace('_', ' ').title()}: {estado}\n"
+                else:
+                    monitor_text = "No hay datos de monitores disponibles"
+            except Exception as e:
+                monitor_text = f"Error obteniendo estado de monitores: {str(e)}"
+        else:
+            monitor_text = "Controlador no disponible"
+        
+        monitor_label = tk.Label(
+            monitor_content,
+            text=monitor_text,
+            font=("Segoe UI", 10),
+            bg=monitor_content.cget('bg'),
+            fg=ComponentesModernos.COLORES["texto_secundario"],
+            justify="left"
+        )
+        monitor_label.pack(pady=10)
+    
+    def guardar_configuracion(self):
+        """Guardar configuración actual usando el controlador"""
+        try:
+            if self.controlador and hasattr(self.controlador, 'guardar_configuracion'):
+                exito = self.controlador.guardar_configuracion()
+                if exito:
+                    messagebox.showinfo("Guardado", "Configuración guardada correctamente")
+                else:
+                    messagebox.showerror("Error", "No se pudo guardar la configuración")
+            else:
+                messagebox.showwarning("Advertencia", "No hay controlador disponible para guardar configuración")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error guardando configuración: {str(e)}")
+    
+    def recargar_configuracion(self):
+        """Recargar configuración desde archivo usando el controlador"""
+        try:
+            if self.controlador and hasattr(self.controlador, 'recargar_configuracion'):
+                exito = self.controlador.recargar_configuracion()
+                if exito:
+                    messagebox.showinfo("Recargado", "Configuración recargada correctamente")
+                else:
+                    messagebox.showerror("Error", "No se pudo recargar la configuración")
+            else:
+                messagebox.showwarning("Advertencia", "No hay controlador disponible para recargar configuración")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error recargando configuración: {str(e)}")
+        self.mostrar_configuracion()  # Refrescar la interfaz
     
     # Métodos placeholder para módulos avanzados (se sobrescriben en integración)
     def mostrar_monitoreo(self):
-        """Mostrar interfaz de monitoreo - Placeholder"""
-        messagebox.showinfo("Monitoreo", "Módulo de monitoreo no cargado")
+        """Mostrar interfaz de monitoreo completo"""
+        try:
+            if self.herramientas:
+                self.herramientas.mostrar_monitoreo()
+            else:
+                messagebox.showwarning("Error", "Módulo de herramientas no inicializado")
+        except Exception as e:
+            self.logger.error(f"Error mostrando monitoreo: {e}")
+            messagebox.showerror("Error", f"Error al abrir monitoreo: {str(e)}")
     
     def mostrar_proteccion(self):
-        """Mostrar interfaz de protección - Placeholder"""
-        messagebox.showinfo("Protección", "Módulo de protección no cargado")
+        """Mostrar interfaz de protección proactiva"""
+        try:
+            if self.herramientas:
+                self.herramientas.mostrar_proteccion()
+            else:
+                messagebox.showwarning("Error", "Módulo de herramientas no inicializado")
+        except Exception as e:
+            self.logger.error(f"Error mostrando protección: {e}")
+            messagebox.showerror("Error", f"Error al abrir protección: {str(e)}")
     
     def mostrar_herramientas(self):
-        """Mostrar interfaz de herramientas - Placeholder"""
-        messagebox.showinfo("Herramientas", "Módulo de herramientas no cargado")
+        """Mostrar interfaz de herramientas especializadas"""
+        try:
+            if self.herramientas:
+                self.herramientas.mostrar_herramientas()
+            else:
+                messagebox.showwarning("Error", "Módulo de herramientas no inicializado")
+        except Exception as e:
+            self.logger.error(f"Error mostrando herramientas: {e}")
+            messagebox.showerror("Error", f"Error al abrir herramientas: {str(e)}")
     
     # ============================================================================
     # INTERFACES ESPECÍFICAS (CONTINUACIÓN EN ARCHIVOS SEPARADOS)
@@ -1013,15 +1594,12 @@ class InterfazModernaBase:
     def mostrar_escaneo(self):
         """Mostrar interfaz de escaneo - Definida completamente aquí"""
         self.limpiar_contenido()
-        
         # Container principal
         escaneo_container = tk.Frame(self.content_frame, bg=ComponentesModernos.COLORES["bg_principal"])
         escaneo_container.pack(fill="both", expand=True, padx=30, pady=20)
-        
         # Header
         header_frame = tk.Frame(escaneo_container, bg=ComponentesModernos.COLORES["bg_principal"])
         header_frame.pack(fill="x", pady=(0, 25))
-        
         title_label = tk.Label(
             header_frame,
             text="🔍 Centro de Análisis y Escaneo",
@@ -1030,18 +1608,14 @@ class InterfazModernaBase:
             fg=ComponentesModernos.COLORES["texto_primario"]
         )
         title_label.pack(side="left")
-        
         ComponentesModernos.crear_boton_moderno(
             header_frame, "⚙️ Configurar", self.configurar_escaneo, "outline"
         ).pack(side="right")
-        
         # Grid de opciones
         options_frame = tk.Frame(escaneo_container, bg=ComponentesModernos.COLORES["bg_principal"])
         options_frame.pack(fill="x", pady=(0, 25))
-        
         for i in range(3):
             options_frame.columnconfigure(i, weight=1, uniform="scan")
-        
         # Opciones de escaneo
         opciones = [
             {
@@ -1063,17 +1637,27 @@ class InterfazModernaBase:
                 "columna": 2
             }
         ]
-        
+        # Crear y guardar referencia a los botones para habilitar/deshabilitar
+        self.boton_escaneo_rapido = None
+        self.boton_escaneo_completo = None
+        self.boton_escaneo_personalizado = None
         for opcion in opciones:
             card_container, content = ComponentesModernos.crear_card_moderna(
                 options_frame, opcion["titulo"], opcion["descripcion"]
             )
             card_container.grid(row=0, column=opcion["columna"], sticky="nsew", padx=8)
-            
-            ComponentesModernos.crear_boton_moderno(
+            boton = ComponentesModernos.crear_boton_moderno(
                 content, "Iniciar Escaneo", opcion["comando"], "primario"
-            ).pack(pady=10)
-        
+            )
+            boton.pack(pady=10)
+            if opcion["columna"] == 0:
+                self.boton_escaneo_rapido = boton
+            elif opcion["columna"] == 1:
+                self.boton_escaneo_completo = boton
+            elif opcion["columna"] == 2:
+                self.boton_escaneo_personalizado = boton
+        # Estado inicial de los botones según el controlador
+        self._actualizar_estado_botones_escaneo(self.controlador_listo)
         # Área de progreso
         self.crear_area_progreso_escaneo(escaneo_container)
     
@@ -1146,12 +1730,94 @@ class InterfazModernaBase:
         )
         list_container.pack(fill="both", expand=True)
         
+        # Obtener lista real de archivos en cuarentena
+        archivos_nombres = []
+        archivos_data = []  # Para almacenar los datos completos
+        
+        if self.controlador:
+            try:
+                # Obtener lista real del controlador de cuarentena
+                if hasattr(self.controlador, 'controlador_cuarentena') and self.controlador.controlador_cuarentena:
+                    archivos = self.controlador.controlador_cuarentena.obtener_lista_cuarentena()
+                    if archivos:
+                        archivos_data = archivos  # Guardar datos completos
+                        
+                        for archivo in archivos:
+                            if isinstance(archivo, dict):
+                                nombre = archivo.get("nombre_archivo", archivo.get("nombre", "Archivo desconocido"))
+                                amenaza = archivo.get("razon_cuarentena", archivo.get("razon", "Desconocido"))
+                                fecha = archivo.get("fecha_cuarentena", "")[:10] if archivo.get("fecha_cuarentena") else "Sin fecha"
+                                estado = archivo.get("estado", "ACTIVO")
+                                if not isinstance(estado, str) and hasattr(estado, 'value'):
+                                    estado = estado.value.upper()
+                                else:
+                                    estado = str(estado).upper()
+                            else:
+                                nombre = getattr(archivo, "nombre_original", "Archivo desconocido")
+                                amenaza = getattr(archivo, "razon_cuarentena", "Desconocido")
+                                fecha = getattr(archivo, "timestamp_cuarentena", None)
+                                if fecha:
+                                    fecha = str(fecha)[:10]
+                                else:
+                                    fecha = "Sin fecha"
+                                estado = getattr(archivo, "estado", "ACTIVO")
+                                if not isinstance(estado, str) and hasattr(estado, 'value'):
+                                    estado = estado.value.upper()
+                                else:
+                                    estado = str(estado).upper()
+                            archivos_nombres.append(f"{nombre} | {amenaza} | {fecha} | {estado}")
+                    else:
+                        archivos_nombres = ["No hay archivos en cuarentena"]
+                        
+                elif hasattr(self.controlador, 'gestor_cuarentena') and self.controlador.gestor_cuarentena:
+                    # Usar gestor directamente si no hay controlador específico
+                    archivos = self.controlador.gestor_cuarentena.obtener_lista_cuarentena()
+                    if isinstance(archivos, list) and archivos:
+                        archivos_data = archivos
+                        
+                        for archivo in archivos:
+                            if isinstance(archivo, dict):
+                                nombre = archivo.get("nombre_archivo", archivo.get("nombre", "Archivo desconocido"))
+                                amenaza = archivo.get("razon_cuarentena", archivo.get("razon", "Desconocido"))
+                                fecha = archivo.get("fecha_cuarentena", "")[:10] if archivo.get("fecha_cuarentena") else "Sin fecha"
+                                estado = archivo.get("estado", "ACTIVO")
+                                if not isinstance(estado, str) and hasattr(estado, 'value'):
+                                    estado = estado.value.upper()
+                                else:
+                                    estado = str(estado).upper()
+                            else:
+                                nombre = getattr(archivo, "nombre_original", "Archivo desconocido")
+                                amenaza = getattr(archivo, "razon_cuarentena", "Desconocido")
+                                fecha = getattr(archivo, "timestamp_cuarentena", None)
+                                if fecha:
+                                    fecha = str(fecha)[:10]
+                                else:
+                                    fecha = "Sin fecha"
+                                estado = getattr(archivo, "estado", "ACTIVO")
+                                if not isinstance(estado, str) and hasattr(estado, 'value'):
+                                    estado = estado.value.upper()
+                                else:
+                                    estado = str(estado).upper()
+                            archivos_nombres.append(f"{nombre} | {amenaza} | {fecha} | {estado}")
+                    else:
+                        archivos_nombres = ["No hay archivos en cuarentena"]
+                else:
+                    archivos_nombres = ["Módulo de cuarentena no disponible"]
+            except Exception as e:
+                archivos_nombres = [f"Error cargando archivos: {str(e)}"]
+        else:
+            archivos_nombres = ["Controlador no disponible"]
+        
         # Lista con scrollbar
         list_frame, listbox = ComponentesModernos.crear_lista_moderna(
             list_content, 
-            ["archivo_sospechoso.exe", "malware_detected.dll", "virus_trojan.bin"]
+            archivos_nombres
         )
         list_frame.pack(fill="both", expand=True, pady=10)
+        
+        # Guardar referencias para acciones
+        self.listbox_cuarentena = listbox
+        self.archivos_cuarentena_data = archivos_data  # Datos completos para operaciones
         
         # Botones de acción
         btn_frame = tk.Frame(list_content, bg=list_content.cget('bg'))
@@ -1170,40 +1836,125 @@ class InterfazModernaBase:
     # ============================================================================
     
     def ejecutar_escaneo_rapido(self):
-        """Ejecutar escaneo rápido"""
-        if not self.controlador:
+        """Ejecutar escaneo rápido real y robusto, con soporte de cancelación y cuarentena."""
+        if not hasattr(self, 'controlador') or self.controlador is None:
             messagebox.showwarning("Error", "Controlador no inicializado")
             return
-        
-        def realizar_escaneo():
+        self._cancelar_escaneo = False
+        def actualizar_progreso(msg, prog, *args, **kwargs):
             try:
-                self.actualizar_progreso_escaneo("Iniciando escaneo rápido...", 10)
-                time.sleep(1)
-                self.actualizar_progreso_escaneo("Escaneando archivos críticos...", 50)
-                time.sleep(1)
-                self.actualizar_progreso_escaneo("Finalizando análisis...", 90)
-                time.sleep(1)
-                self.actualizar_progreso_escaneo("Escaneo completado", 100)
-                
-                if self.root:
-                    self.root.after(0, lambda: messagebox.showinfo("Completado", "Escaneo rápido finalizado correctamente"))
-                
+                if hasattr(self, 'actualizar_progreso_escaneo'):
+                    self.actualizar_progreso_escaneo(msg, prog)
             except Exception as e:
-                if self.root:
+                if hasattr(self, 'logger'):
+                    self.logger.error(f"Error en callback de progreso: {e}")
+        def run_escaneo():
+            try:
+                resultado = None
+                if self.controlador and hasattr(self.controlador, 'ejecutar_escaneo_rapido'):
+                    resultado = self.controlador.ejecutar_escaneo_rapido(callback_progreso=actualizar_progreso)
+                else:
+                    if hasattr(self, 'logger'):
+                        self.logger.error("El controlador no implementa ejecutar_escaneo_rapido o es None")
+                    return
+                # Cancelación: si se solicitó cancelar, no continuar
+                if getattr(self, '_cancelar_escaneo', False):
+                    if hasattr(self, 'actualizar_progreso_escaneo'):
+                        self.actualizar_progreso_escaneo("Escaneo cancelado", 0)
+                    return
+                # Mover archivos infectados a cuarentena
+                infectados = resultado.get('archivos_infectados_lista', []) if resultado else []
+                cuarentena_ctrl = getattr(self.controlador, 'controlador_cuarentena', None)
+                if cuarentena_ctrl:
+                    for archivo in infectados:
+                        try:
+                            cuarentena_ctrl.cuarentenar_archivo(archivo, razon="Detectado en escaneo rápido", origen_deteccion="Escaneo rápido")
+                        except Exception as e:
+                            if hasattr(self, 'logger'):
+                                self.logger.error(f"Error moviendo a cuarentena: {e}")
+                if hasattr(self, 'actualizar_progreso_escaneo'):
+                    self.actualizar_progreso_escaneo("Escaneo completado", 100)
+                if hasattr(self, 'root') and self.root:
+                    amenazas = resultado.get('amenazas_detectadas', 0) if resultado else 0
+                    tiempo = resultado.get('tiempo_escaneo', 0) if resultado else 0
+                    archivos = resultado.get('archivos_escaneados', 0) if resultado else 0
+                    mensaje = f"Escaneo rápido completado:\n\n"
+                    mensaje += f"• Archivos escaneados: {archivos}\n"
+                    mensaje += f"• Amenazas detectadas: {amenazas}\n"
+                    mensaje += f"• Tiempo transcurrido: {tiempo:.2f} segundos"
+                    self.root.after(0, lambda: messagebox.showinfo("Completado", mensaje))
+            except Exception as e:
+                if hasattr(self, 'root') and self.root:
                     self.root.after(0, lambda: messagebox.showerror("Error", f"Error en escaneo: {str(e)}"))
-        
-        threading.Thread(target=realizar_escaneo, daemon=True).start()
-    
+                if hasattr(self, 'logger'):
+                    self.logger.error(f"Error en escaneo rápido: {e}")
+        try:
+            if hasattr(self, 'actualizar_progreso_escaneo'):
+                self.actualizar_progreso_escaneo("Escaneo rápido en curso...", 5)
+            self._cancelar_escaneo = False
+            self._hilo_escaneo = threading.Thread(
+                target=run_escaneo,
+                daemon=True
+            )
+            self._hilo_escaneo.start()
+        except Exception as e:
+            error_msg = str(e)
+            if hasattr(self, 'root') and self.root:
+                self.root.after(0, lambda error_msg=error_msg: messagebox.showerror("Error", f"Error en escaneo: {error_msg}"))
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error lanzando hilo de escaneo: {e}")
+
     def ejecutar_escaneo_completo(self):
-        """Ejecutar escaneo completo"""
-        respuesta = messagebox.askyesno(
-            "Escaneo Completo",
-            "El escaneo completo puede tardar 15-45 minutos.\n¿Desea continuar?"
-        )
-        
-        if respuesta:
-            messagebox.showinfo("Iniciado", "Escaneo completo iniciado en segundo plano")
-    
+        """Ejecutar escaneo completo real y robusto"""
+        if not hasattr(self, 'controlador') or self.controlador is None:
+            messagebox.showwarning("Error", "Controlador no inicializado")
+            return
+        def actualizar_progreso(msg, prog, *args, **kwargs):
+            try:
+                if hasattr(self, 'actualizar_progreso_escaneo'):
+                    self.actualizar_progreso_escaneo(msg, prog)
+            except Exception as e:
+                if hasattr(self, 'logger'):
+                    self.logger.error(f"Error en callback de progreso: {e}")
+        def run_escaneo():
+            try:
+                resultado = None
+                if self.controlador and hasattr(self.controlador, 'ejecutar_escaneo_completo'):
+                    resultado = self.controlador.ejecutar_escaneo_completo(callback_progreso=actualizar_progreso)
+                else:
+                    if hasattr(self, 'logger'):
+                        self.logger.error("El controlador no implementa ejecutar_escaneo_completo o es None")
+                    return
+                if hasattr(self, 'actualizar_progreso_escaneo'):
+                    self.actualizar_progreso_escaneo("Escaneo completo finalizado", 100)
+                if hasattr(self, 'root') and self.root:
+                    amenazas = resultado.get('amenazas_encontradas', 0) if resultado else 0
+                    tiempo = resultado.get('tiempo_transcurrido', 0) if resultado else 0
+                    archivos = resultado.get('archivos_escaneados', 0) if resultado else 0
+                    mensaje = f"Escaneo completo finalizado:\n\n"
+                    mensaje += f"• Archivos escaneados: {archivos}\n"
+                    mensaje += f"• Amenazas detectadas: {amenazas}\n"
+                    mensaje += f"• Tiempo transcurrido: {tiempo:.2f} segundos"
+                    self.root.after(0, lambda: messagebox.showinfo("Completado", mensaje))
+            except Exception as e:
+                if hasattr(self, 'root') and self.root:
+                    self.root.after(0, lambda: messagebox.showerror("Error", f"Error en escaneo completo: {str(e)}"))
+                if hasattr(self, 'logger'):
+                    self.logger.error(f"Error en escaneo completo: {e}")
+        try:
+            if hasattr(self, 'actualizar_progreso_escaneo'):
+                self.actualizar_progreso_escaneo("Escaneo completo en curso...", 5)
+            threading.Thread(
+                target=run_escaneo,
+                daemon=True
+            ).start()
+        except Exception as e:
+            error_msg = str(e)
+            if hasattr(self, 'root') and self.root:
+                self.root.after(0, lambda error_msg=error_msg: messagebox.showerror("Error", f"Error en escaneo completo: {error_msg}"))
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error lanzando hilo de escaneo completo: {e}")
+
     def ejecutar_escaneo_personalizado(self):
         """Ejecutar escaneo personalizado"""
         directorio = filedialog.askdirectory(title="Seleccionar directorio a escanear")
@@ -1211,18 +1962,18 @@ class InterfazModernaBase:
             messagebox.showinfo("Iniciado", f"Escaneando directorio: {directorio}")
     
     def crear_area_progreso_escaneo(self, parent):
-        """Crear área de progreso"""
+        """Crear área de progreso visual y robusta para escaneo"""
         progress_container, progress_content = ComponentesModernos.crear_card_moderna(
             parent, "📊 Progreso del Escaneo", "Estado actual"
         )
         progress_container.pack(fill="x", pady=(0, 20))
-        
+
         # Barra de progreso usando componentes modernos
         self.progress_frame, self.actualizar_progreso_func = ComponentesModernos.crear_progress_moderna(
             progress_content, 0, 100, "Listo para escanear"
         )
         self.progress_frame.pack(fill="x", pady=10)
-        
+
         # Label de estado
         self.status_escaneo_label = tk.Label(
             progress_content,
@@ -1234,16 +1985,29 @@ class InterfazModernaBase:
         self.status_escaneo_label.pack(pady=5)
     
     def actualizar_progreso_escaneo(self, mensaje, progreso):
-        """Actualizar progreso del escaneo"""
+        """Actualizar progreso del escaneo en la interfaz gráfica de forma robusta"""
         try:
+            # Permitir argumentos variables para robustez
             if hasattr(self, 'actualizar_progreso_func'):
-                self.actualizar_progreso_func(progreso, mensaje)
+                try:
+                    self.actualizar_progreso_func(progreso, mensaje)
+                except Exception as e1:
+                    try:
+                        self.actualizar_progreso_func(mensaje, progreso)
+                    except Exception as e2:
+                        if hasattr(self, 'logger'):
+                            self.logger.error(f"Error en callback de progreso: {e1} | {e2}")
+                        else:
+                            print(f"[ERROR] Error en callback de progreso: {e1} | {e2}")
             if hasattr(self, 'status_escaneo_label'):
                 self.status_escaneo_label.config(text=mensaje)
-            if self.root:
+            if hasattr(self, 'root') and self.root:
                 self.root.update_idletasks()
         except Exception as e:
-            self.logger.error(f"Error actualizando progreso: {e}")
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error actualizando progreso: {e}")
+            else:
+                print(f"[ERROR] Error actualizando progreso: {e}")
     
     def configurar_escaneo(self):
         """Configurar escaneo"""
@@ -1255,26 +2019,84 @@ class InterfazModernaBase:
         messagebox.showinfo("Actualizado", "Vista de cuarentena actualizada")
     
     def limpiar_cuarentena(self):
-        """Limpiar cuarentena"""
+        """Limpiar cuarentena (real, usando el controlador)"""
         respuesta = messagebox.askyesno(
             "Limpiar Cuarentena",
             "¿Está seguro que desea limpiar toda la cuarentena?\n\nEsta acción NO se puede deshacer."
         )
-        
-        if respuesta:
-            messagebox.showinfo("Limpiado", "Cuarentena limpiada correctamente")
-            self.actualizar_cuarentena()
+        if not respuesta:
+            return
+        cuarentena_ctrl = getattr(self.controlador, 'controlador_cuarentena', None) if hasattr(self, 'controlador') and self.controlador else None
+        if cuarentena_ctrl and hasattr(cuarentena_ctrl, 'limpiar_cuarentena'):
+            try:
+                resultado = cuarentena_ctrl.limpiar_cuarentena(confirmar=True)
+                if isinstance(resultado, dict):
+                    if resultado.get('exitoso'):
+                        messagebox.showinfo("Limpiado", "Cuarentena limpiada correctamente")
+                        self.actualizar_cuarentena()
+                    else:
+                        error_msg = resultado.get('error', 'No se pudo limpiar la cuarentena')
+                        messagebox.showerror("Error", f"No se pudo limpiar la cuarentena: {error_msg}")
+                elif resultado is True:
+                    messagebox.showinfo("Limpiado", "Cuarentena limpiada correctamente")
+                    self.actualizar_cuarentena()
+                else:
+                    messagebox.showerror("Error", "No se pudo limpiar la cuarentena (resultado inesperado)")
+            except Exception as e:
+                if hasattr(self, 'logger'):
+                    self.logger.error(f"Error limpiando cuarentena: {e}")
+                messagebox.showerror("Error", f"Error limpiando cuarentena: {str(e)}")
+        else:
+            messagebox.showwarning("Error", "Controlador de cuarentena no disponible")
     
     def restaurar_archivo(self):
-        """Restaurar archivo de cuarentena"""
-        messagebox.showinfo("Restaurar", "Archivo restaurado correctamente")
+        """Restaurar archivo de cuarentena (real)."""
+        if not hasattr(self, 'listbox_cuarentena') or self.listbox_cuarentena is None:
+            messagebox.showwarning("Error", "Lista de cuarentena no disponible")
+            return
+        try:
+            selection = self.listbox_cuarentena.curselection()
+            if not selection:
+                messagebox.showwarning("Selección", "Por favor seleccione un archivo para restaurar")
+                return
+            indice = selection[0]
+            if hasattr(self, 'archivos_cuarentena_data') and self.archivos_cuarentena_data:
+                if indice < len(self.archivos_cuarentena_data):
+                    archivo_data = self.archivos_cuarentena_data[indice]
+                    archivo_id = archivo_data.get("id", archivo_data.get("archivo_id", None))
+                    nombre_archivo = archivo_data.get("nombre", archivo_data.get("nombre_archivo", "Archivo desconocido"))
+                    respuesta = messagebox.askyesno(
+                        "Restaurar archivo",
+                        f"¿Está seguro que desea restaurar:\n{nombre_archivo}?\n\nEl archivo será devuelto a su ubicación original."
+                    )
+                    cuarentena_ctrl = getattr(self.controlador, 'controlador_cuarentena', None) if hasattr(self, 'controlador') and self.controlador else None
+                    if respuesta and cuarentena_ctrl and hasattr(cuarentena_ctrl, 'restaurar_archivo'):
+                        try:
+                            resultado = cuarentena_ctrl.restaurar_archivo(archivo_id)
+                            if isinstance(resultado, dict):
+                                if resultado.get('exitoso'):
+                                    messagebox.showinfo("Restaurado", f"Archivo restaurado correctamente: {nombre_archivo}")
+                                    self.actualizar_cuarentena()
+                                else:
+                                    error_msg = resultado.get('error', 'No se pudo restaurar el archivo')
+                                    messagebox.showerror("Error", f"No se pudo restaurar el archivo: {error_msg}")
+                            elif resultado is True:
+                                messagebox.showinfo("Restaurado", f"Archivo restaurado correctamente: {nombre_archivo}")
+                                self.actualizar_cuarentena()
+                            else:
+                                messagebox.showerror("Error", "No se pudo restaurar el archivo (resultado inesperado)")
+                        except Exception as e:
+                            if hasattr(self, 'logger'):
+                                self.logger.error(f"Error restaurando archivo: {e}")
+                            messagebox.showerror("Error", f"Error restaurando archivo: {str(e)}")
+                    elif respuesta:
+                        messagebox.showwarning("Error", "Controlador de cuarentena no disponible")
+                else:
+                    messagebox.showwarning("Error", "Índice de archivo fuera de rango")
+            else:
+                messagebox.showwarning("Error", "No hay datos de archivos disponibles")
+        except Exception as e:
+            if hasattr(self, 'logger'):
+                self.logger.error(f"Error restaurando archivo: {e}")
+            messagebox.showerror("Error", f"Error restaurando archivo: {str(e)}")
     
-    def eliminar_archivo(self):
-        """Eliminar archivo de cuarentena"""
-        respuesta = messagebox.askyesno(
-            "Eliminar",
-            "¿Está seguro que desea eliminar permanentemente el archivo?"
-        )
-        
-        if respuesta:
-            messagebox.showinfo("Eliminado", "Archivo eliminado permanentemente")

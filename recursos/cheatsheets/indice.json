@@ -12,7 +12,7 @@
   },
   "categorias": [
     "reconocimiento",
-    "escaneo_vulnerabilidades", 
+    "escaneo_vulnerabilidades",
     "explotacion",
     "post_explotacion",
     "analisis_forense",

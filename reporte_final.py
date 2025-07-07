@@ -81,9 +81,14 @@ def generar_reporte_final():
         "README.md", 
         "requirements.txt",
         "ares_aegis/controladores/controlador_principal.py",
+        "ares_aegis/controladores/controlador_respuesta_automatizada.py",
+        "ares_aegis/controladores/controlador_incidentes.py",
         "ares_aegis/modelos/siem.py",
         "ares_aegis/modelos/escaneador.py",
-        "ares_aegis/vista/interfaz_principal_gui.py"
+        "ares_aegis/modelos/respuesta_automatizada.py",
+        "ares_aegis/modelos/respondedor_incidentes.py",
+        "ares_aegis/vista/interfaz_moderna_base.py",
+        "ares_aegis/vista/interfaz_moderna_nueva.py"
     ]
     
     archivos_ok = 0
@@ -138,7 +143,7 @@ def generar_reporte_final():
         try:
             controller = ControladorPrincipal()
             print("  ✅ Sistema: Inicialización exitosa")
-            print(f"  ✅ Componentes: {len(controller.sistema_reportes.__dict__ if controller.sistema_reportes else {})} módulos cargados")
+            print(f"  ✅ Componentes: Sistema iniciado correctamente")
             controller.finalizar()
             print("  ✅ Finalización: Exitosa")
         except Exception as e:

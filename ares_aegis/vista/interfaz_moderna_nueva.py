@@ -27,7 +27,7 @@ class InterfazModerna:
         # Integrar navegación avanzada
         self._integrar_navegacion_avanzada()
         
-        self.logger.info("Interfaz Moderna completa inicializada")
+        self.logger.info("Interfaz Moderna completa inicializada correctamente")
     
     def _integrar_navegacion_avanzada(self):
         """Integrar navegación con módulos avanzados"""
@@ -66,7 +66,7 @@ def crear_y_ejecutar_interfaz():
         interfaz.ejecutar()
     except Exception as e:
         import tkinter.messagebox as messagebox
-        messagebox.showerror("Error Fatal", f"Error ejecutando Ares Aegis:\n{str(e)}")
+        messagebox.showerror("Error fatal", f"Error al ejecutar Ares Aegis:\n{str(e)}")
 
 
 if __name__ == "__main__":

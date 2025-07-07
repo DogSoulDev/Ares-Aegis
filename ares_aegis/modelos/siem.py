@@ -521,87 +521,117 @@ class SIEM:
         return str(ruta_local)
     
     def _cargar_eventos(self):
-        """Carga eventos existentes del archivo."""
+        """Carga eventos existentes del archivo, robusto ante entradas mal formadas o no dict. Limpia el archivo si es necesario."""
         try:
             if os.path.exists(self.archivo_eventos):
                 with open(self.archivo_eventos, 'r', encoding='utf-8') as archivo:
-                    datos_eventos = json.load(archivo)
-                    
-                    # Cargar solo los últimos eventos para no sobrecargar memoria
-                    eventos_recientes = datos_eventos[-self.max_eventos_memoria:]
-                    
-                    for datos_evento in eventos_recientes:
-                        try:
-                            # Intentar usar el método from_dict si está disponible
-                            if hasattr(EventoSIEM, 'from_dict'):
-                                evento = EventoSIEM.from_dict(datos_evento)
-                            else:
-                                # Crear evento manualmente con compatibilidad
-                                evento = EventoSIEM(
-                                    tipo=datos_evento['tipo'],
-                                    mensaje=datos_evento['mensaje'],
-                                    detalles=datos_evento.get('detalles', {}),
-                                    nivel_criticidad=datos_evento.get('nivel_criticidad', NivelCriticidad.MEDIO),
-                                    origen=datos_evento.get('origen', 'Sistema')
-                                )
-                                # Restaurar timestamp e ID originales
-                                evento.id_evento = datos_evento.get('id', evento.id_evento)
-                                if 'timestamp' in datos_evento:
-                                    evento.timestamp = datetime.fromisoformat(datos_evento['timestamp'])
-                            
-                            self.eventos.append(evento)
-                            self.estadisticas['eventos_totales'] += 1
-                            
-                            # Actualizar estadísticas por criticidad
-                            if evento.nivel_criticidad == NivelCriticidad.CRITICO:
-                                self.estadisticas['eventos_criticos'] += 1
-                            elif evento.nivel_criticidad == NivelCriticidad.ALTO:
-                                self.estadisticas['eventos_altos'] += 1
-                                
-                        except Exception as e:
-                            self.logger.warning(f"Error al cargar evento: {e}")
-                            continue
-                        evento.timestamp = datetime.fromisoformat(datos_evento['timestamp'])
-                        evento.id_evento = datos_evento['id']
+                    datos_archivo = json.load(archivo)
+
+                # Detectar si el archivo tiene estructura de dict (nuevo formato) o lista (antiguo)
+                if isinstance(datos_archivo, dict) and 'eventos' in datos_archivo:
+                    eventos_lista = datos_archivo['eventos']
+                    otros_campos = {k: v for k, v in datos_archivo.items() if k != 'eventos'}
+                elif isinstance(datos_archivo, list):
+                    eventos_lista = datos_archivo
+                    otros_campos = {}
+                else:
+                    eventos_lista = []
+                    otros_campos = {}
+
+                # Filtrar solo eventos válidos (dict)
+                eventos_validos = []
+                for datos_evento in eventos_lista[-self.max_eventos_memoria:]:
+                    if not isinstance(datos_evento, dict):
+                        self.logger.warning(f"Evento omitido por no ser un diccionario: {datos_evento}")
+                        continue
+                    try:
+                        if hasattr(EventoSIEM, 'from_dict'):
+                            evento = EventoSIEM.from_dict(datos_evento)
+                        else:
+                            evento = EventoSIEM(
+                                tipo=datos_evento['tipo'],
+                                mensaje=datos_evento['mensaje'],
+                                detalles=datos_evento.get('detalles', {}),
+                                nivel_criticidad=datos_evento.get('nivel_criticidad', NivelCriticidad.MEDIO),
+                                origen=datos_evento.get('origen', 'Sistema')
+                            )
+                            evento.id_evento = datos_evento.get('id', evento.id_evento)
+                            if 'timestamp' in datos_evento:
+                                evento.timestamp = datetime.fromisoformat(datos_evento['timestamp'])
                         self.eventos.append(evento)
-                        
-                self.logger.info(f"Cargados {len(self.eventos)} eventos del archivo")
-        
+                        eventos_validos.append(datos_evento)
+                        self.estadisticas['eventos_totales'] += 1
+                        if evento.nivel_criticidad == NivelCriticidad.CRITICO:
+                            self.estadisticas['eventos_criticos'] += 1
+                        elif evento.nivel_criticidad == NivelCriticidad.ALTO:
+                            self.estadisticas['eventos_altos'] += 1
+                    except Exception as e:
+                        self.logger.warning(f"Error al cargar evento: {e}")
+                        continue
+
+                # Si hay eventos inválidos, limpiar el archivo en disco
+                if len(eventos_validos) < len(eventos_lista):
+                    self.logger.warning("Se detectaron eventos inválidos en el archivo, limpiando archivo en disco...")
+                    try:
+                        if otros_campos:
+                            datos_archivo_limpio = dict(otros_campos)
+                            datos_archivo_limpio['eventos'] = eventos_validos
+                        else:
+                            datos_archivo_limpio = eventos_validos
+                        with open(self.archivo_eventos, 'w', encoding='utf-8') as archivo:
+                            json.dump(datos_archivo_limpio, archivo, ensure_ascii=False, indent=2)
+                        self.logger.info("Archivo de eventos SIEM limpiado correctamente.")
+                    except Exception as e:
+                        self.logger.error(f"Error limpiando archivo de eventos: {e}")
+
+                self.logger.info(f"Cargados {len(self.eventos)} eventos válidos del archivo")
         except Exception as e:
             self.logger.warning(f"Error cargando eventos: {e}")
     
     def _guardar_eventos(self):
-        """Guarda eventos en el archivo."""
+        """Guarda eventos en el archivo, robusto ante entradas no dict y preservando estructura si existe."""
         try:
-            # Crear directorio si no existe
             crear_ruta_segura(self.archivo_eventos)
-            
-            # Guardar todos los eventos (no solo los de memoria)
+
+            # Leer archivo existente para preservar estructura (dict con 'eventos' o lista)
             eventos_existentes = []
-            
-            # Leer eventos existentes del archivo
+            otros_campos = {}
             if os.path.exists(self.archivo_eventos):
                 try:
                     with open(self.archivo_eventos, 'r', encoding='utf-8') as archivo:
-                        eventos_existentes = json.load(archivo)
+                        datos_archivo = json.load(archivo)
+                    if isinstance(datos_archivo, dict) and 'eventos' in datos_archivo:
+                        eventos_existentes = datos_archivo['eventos']
+                        otros_campos = {k: v for k, v in datos_archivo.items() if k != 'eventos'}
+                    elif isinstance(datos_archivo, list):
+                        eventos_existentes = datos_archivo
                 except Exception:
                     eventos_existentes = []
-            
-            # Agregar nuevos eventos (solo los que no están ya en el archivo)
+                    otros_campos = {}
+
+            # Filtrar solo eventos válidos (dict)
+            eventos_existentes = [e for e in eventos_existentes if isinstance(e, dict)]
             ids_existentes = {evento.get('id') for evento in eventos_existentes}
-            
+
+            # Agregar nuevos eventos (solo los que no están ya en el archivo)
             for evento in self.eventos:
                 if evento.id_evento not in ids_existentes:
                     eventos_existentes.append(evento.to_dict())
-            
-            # Mantener solo los últimos 10000 eventos en el archivo
+
+            # Mantener solo los últimos 10000 eventos
             if len(eventos_existentes) > 10000:
                 eventos_existentes = eventos_existentes[-10000:]
-            
-            # Guardar al archivo
+
+            # Guardar con la estructura original
+            if otros_campos:
+                datos_archivo_limpio = dict(otros_campos)
+                datos_archivo_limpio['eventos'] = eventos_existentes
+            else:
+                datos_archivo_limpio = eventos_existentes
+
             with open(self.archivo_eventos, 'w', encoding='utf-8') as archivo:
-                json.dump(eventos_existentes, archivo, ensure_ascii=False, indent=2)
-                
+                json.dump(datos_archivo_limpio, archivo, ensure_ascii=False, indent=2)
+
         except Exception as e:
             self.logger.error(f"Error guardando eventos: {e}")
     

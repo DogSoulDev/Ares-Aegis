@@ -75,7 +75,7 @@ class DescontaminacionInteligente:
         
         # Configuración
         self.directorio_trabajo = Path("/tmp/ares_aegis_limpieza")
-        self.directorio_backups = Path("/home/dogsoul/Ares-Aegis/cuarentena/backups")
+        self.directorio_backups = Path("/home/dogsoul/Ares-Aegis/cuarentena_avanzada/backups")
         self.max_tamaño_archivo = 50 * 1024 * 1024  # 50MB
         
         # Crear directorios necesarios

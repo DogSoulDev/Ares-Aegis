@@ -296,31 +296,41 @@ class RespondedorIncidentes:
             'telegram_chat_id': ''
         }
         
-        # Callbacks personalizados
+        # NOTA: Callbacks y threading han sido movidos al ControladorIncidentes
+        # Mantenido para compatibilidad pero delegado al controlador
         self.callbacks_personalizados: Dict[TipoIncidente, List[Callable]] = {}
         
         # Límites de seguridad
         self.limite_acciones_por_minuto = 10
         self.acciones_recientes: List[datetime] = []
         
-        # Hilo para procesamiento de incidentes
-        self.hilo_procesamiento: Optional[threading.Thread] = None
-        self.cola_incidentes: List[Incidente] = []
-        self.lock_cola = threading.Lock()
+        # Control delegado al controlador
+        self._controlador_externo: Optional[Any] = None
         
         self.logger.info("Los Guardianes de Némesis han tomado posición en los bastiones")
     
+    def establecer_controlador(self, controlador):
+        """Establece el controlador externo para delegación."""
+        self._controlador_externo = controlador
+        self.logger.info("Controlador externo establecido para delegación")
+    
     def activar(self):
-        """Activa el respondedor de incidentes."""
+        """
+        Activa el respondedor de incidentes.
+        NOTA: El control de hilos ahora se delega al ControladorIncidentes.
+        """
         if self.activo:
             self.logger.warning("Los Guardianes ya vigilan el reino")
             return
         
         self.activo = True
         
-        # Iniciar hilo de procesamiento
-        self.hilo_procesamiento = threading.Thread(target=self._procesar_cola_incidentes, daemon=True)
-        self.hilo_procesamiento.start()
+        # Delegar al controlador si está disponible
+        if self._controlador_externo:
+            try:
+                self._controlador_externo.iniciar_procesamiento()
+            except Exception as e:
+                self.logger.warning(f"Error delegando al controlador: {e}")
         
         if self.siem:
             from .siem import TipoEvento
@@ -334,15 +344,21 @@ class RespondedorIncidentes:
         self.logger.info("Los Guardianes de Némesis han activado la respuesta divina")
     
     def desactivar(self):
-        """Desactiva el respondedor de incidentes."""
+        """
+        Desactiva el respondedor de incidentes.
+        NOTA: El control de hilos ahora se delega al ControladorIncidentes.
+        """
         if not self.activo:
             return
         
         self.activo = False
         
-        # Esperar que termine el hilo de procesamiento
-        if self.hilo_procesamiento:
-            self.hilo_procesamiento.join(timeout=10)
+        # Delegar al controlador si está disponible
+        if self._controlador_externo:
+            try:
+                self._controlador_externo.detener_procesamiento()
+            except Exception as e:
+                self.logger.warning(f"Error delegando al controlador: {e}")
         
         if self.siem:
             from .siem import TipoEvento
@@ -380,36 +396,24 @@ class RespondedorIncidentes:
         # Crear incidente
         incidente = Incidente(tipo, descripcion, gravedad, metadatos, fuente)
         
-        # Agregar a la cola para procesamiento asíncrono
-        with self.lock_cola:
-            self.cola_incidentes.append(incidente)
+        # Procesar inmediatamente o delegar al controlador
+        if self._controlador_externo:
+            try:
+                self._controlador_externo.procesar_incidente_coordinado(incidente)
+            except Exception as e:
+                self.logger.error(f"Error delegando al controlador: {e}")
+                # Fallback: procesar directamente
+                self._procesar_incidente_individual(incidente)
+        else:
+            # Procesamiento directo (modo legacy)
+            self._procesar_incidente_individual(incidente)
         
         self.logger.info(f"Nuevo incidente detectado: {incidente.id} - {descripcion}")
         
         return incidente.id
     
-    def _procesar_cola_incidentes(self):
-        """Procesa la cola de incidentes de forma asíncrona."""
-        self.logger.info("Iniciando procesamiento asíncrono de incidentes")
-        
-        while self.activo:
-            try:
-                # Obtener incidentes de la cola
-                incidentes_a_procesar = []
-                with self.lock_cola:
-                    if self.cola_incidentes:
-                        incidentes_a_procesar = self.cola_incidentes[:]
-                        self.cola_incidentes.clear()
-                
-                # Procesar cada incidente
-                for incidente in incidentes_a_procesar:
-                    self._procesar_incidente_individual(incidente)
-                
-                time.sleep(1)  # Pausa breve para evitar uso excesivo de CPU
-                
-            except Exception as e:
-                self.logger.error(f"Error en procesamiento de cola de incidentes: {e}")
-                time.sleep(5)
+    # NOTA: El método _procesar_cola_incidentes fue movido al ControladorIncidentes
+    # para manejar el threading y coordinación de manera centralizada
     
     def _procesar_incidente_individual(self, incidente: Incidente):
         """Procesa un incidente individual."""
@@ -918,7 +922,7 @@ Metadatos:
             'modo_automatico': self.modo_automatico,
             'total_incidentes': total_incidentes,
             'incidentes_resueltos': incidentes_resueltos,
-            'incidentes_pendientes': len(self.cola_incidentes),
+            'incidentes_pendientes': 0,  # Ahora manejado por el controlador
             'conteo_por_tipo': conteo_tipos,
             'conteo_por_gravedad': conteo_gravedad,
             'callbacks_registrados': len(self.callbacks_personalizados),

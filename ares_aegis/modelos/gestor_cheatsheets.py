@@ -605,8 +605,8 @@ class GestorCheatsheets:
             Comando(
                 nombre="Aislar Archivo Sospechoso",
                 descripcion="Mover archivo a cuarentena",
-                comando="mv {file} /tmp/cuarentena/",
-                ejemplo="sudo mv /home/user/suspicious.bin /tmp/cuarentena/",
+                comando="mv {file} /home/dogsoul/Ares-Aegis/cuarentena_avanzada/activos/",
+                ejemplo="sudo mv /home/user/suspicious.bin /home/dogsoul/Ares-Aegis/cuarentena_avanzada/activos/",
                 categoria="respuesta",
                 tags=["cuarentena", "archivo", "aislamiento"],
                 plataforma=["linux"],
@@ -667,44 +667,56 @@ class GestorCheatsheets:
         self.cheatsheets["respuesta-incidentes"] = cheatsheet
     
     def _cargar_indice(self):
-        """Carga el índice de cheatsheets desde archivo."""
+        """Carga el índice de cheatsheets desde archivo, robusto ante entradas mal formadas."""
         try:
             with open(self.archivo_indice, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-            
+
             for sheet_id, sheet_data in data.get('cheatsheets', {}).items():
+                # Validar que la cheatsheet tenga los campos mínimos requeridos
+                if 'categoria' not in sheet_data:
+                    self.logger.warning(f"Cheatsheet '{sheet_id}' omitida: falta campo 'categoria'.")
+                    continue
                 comandos = []
                 for cmd_data in sheet_data.get('comandos', []):
-                    comando = Comando(
-                        nombre=cmd_data['nombre'],
-                        descripcion=cmd_data['descripcion'],
-                        comando=cmd_data['comando'],
-                        ejemplo=cmd_data['ejemplo'],
-                        categoria=cmd_data['categoria'],
-                        tags=cmd_data['tags'],
-                        plataforma=cmd_data['plataforma'],
-                        nivel=cmd_data['nivel'],
-                        peligrosidad=cmd_data['peligrosidad'],
-                        referencias=cmd_data['referencias']
+                    # Validar campos mínimos en cada comando
+                    try:
+                        comando = Comando(
+                            nombre=cmd_data.get('nombre', ''),
+                            descripcion=cmd_data.get('descripcion', ''),
+                            comando=cmd_data.get('comando', ''),
+                            ejemplo=cmd_data.get('ejemplo', ''),
+                            categoria=cmd_data.get('categoria', sheet_data['categoria']),
+                            tags=cmd_data.get('tags', []),
+                            plataforma=cmd_data.get('plataforma', []),
+                            nivel=cmd_data.get('nivel', 'basico'),
+                            peligrosidad=cmd_data.get('peligrosidad', 'seguro'),
+                            referencias=cmd_data.get('referencias', [])
+                        )
+                        comandos.append(comando)
+                    except Exception as e:
+                        self.logger.warning(f"Comando omitido en cheatsheet '{sheet_id}': {e}")
+                        continue
+
+                try:
+                    cheatsheet = Cheatsheet(
+                        nombre=sheet_data.get('nombre', sheet_id),
+                        descripcion=sheet_data.get('descripcion', ''),
+                        categoria=sheet_data['categoria'],
+                        autor=sheet_data.get('autor', 'Desconocido'),
+                        version=sheet_data.get('version', '1.0'),
+                        fecha_creacion=datetime.fromisoformat(sheet_data.get('fecha_creacion', datetime.now().isoformat())),
+                        fecha_modificacion=datetime.fromisoformat(sheet_data.get('fecha_modificacion', datetime.now().isoformat())),
+                        comandos=comandos,
+                        metadatos=sheet_data.get('metadatos', {})
                     )
-                    comandos.append(comando)
-                
-                cheatsheet = Cheatsheet(
-                    nombre=sheet_data['nombre'],
-                    descripcion=sheet_data['descripcion'],
-                    categoria=sheet_data['categoria'],
-                    autor=sheet_data['autor'],
-                    version=sheet_data['version'],
-                    fecha_creacion=datetime.fromisoformat(sheet_data['fecha_creacion']),
-                    fecha_modificacion=datetime.fromisoformat(sheet_data['fecha_modificacion']),
-                    comandos=comandos,
-                    metadatos=sheet_data.get('metadatos', {})
-                )
-                
-                self.cheatsheets[sheet_id] = cheatsheet
-            
+                    self.cheatsheets[sheet_id] = cheatsheet
+                except Exception as e:
+                    self.logger.warning(f"Cheatsheet '{sheet_id}' omitida por error de formato: {e}")
+                    continue
+
             self._construir_indice_comandos()
-            
+
         except Exception as e:
             self.logger.error(f"Error cargando índice: {e}")
     

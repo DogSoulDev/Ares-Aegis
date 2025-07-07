@@ -39,21 +39,32 @@ def verificar_estructura_proyecto():
             "ares_aegis/__init__.py",
             "ares_aegis/controladores/__init__.py",
             "ares_aegis/controladores/controlador_principal.py",
+            "ares_aegis/controladores/controlador_escaneador.py",
+            "ares_aegis/controladores/controlador_siem.py",
+            "ares_aegis/controladores/controlador_monitor_red.py",
+            "ares_aegis/controladores/controlador_fim.py",
+            "ares_aegis/controladores/controlador_cuarentena.py",
+            "ares_aegis/controladores/controlador_reportes.py",
+            "ares_aegis/controladores/controlador_vulnerabilidades.py",
+            "ares_aegis/controladores/controlador_analisis.py",
+            "ares_aegis/controladores/controlador_respuesta_automatizada.py",
+            "ares_aegis/controladores/controlador_incidentes.py",
             "ares_aegis/modelos/__init__.py",
             "ares_aegis/utilidades/__init__.py",
             "ares_aegis/vista/__init__.py",
             "ares_aegis/vista/interfaz_principal.py",
-            "ares_aegis/vista/interfaz_principal_gui.py"
+            "ares_aegis/vista/interfaz_moderna_base.py",
+            "ares_aegis/vista/interfaz_moderna_nueva.py"
         ],
         "componentes_especializados": [
             "ares_aegis/modelos/siem.py",
             "ares_aegis/modelos/escaneador.py",
-            "ares_aegis/modelos/monitor_red_mejorado.py",
+            "ares_aegis/modelos/monitor_red.py",
+            "ares_aegis/modelos/fim.py",
+            "ares_aegis/modelos/gestor_cuarentena.py",
             "ares_aegis/modelos/monitor_procesos.py",
-            "ares_aegis/modelos/fim_avanzado.py",
-            "ares_aegis/modelos/gestor_cuarentena_avanzado.py",
             "ares_aegis/modelos/respondedor_incidentes.py",
-            "ares_aegis/modelos/sistema_reportes_notificaciones_avanzado.py"
+            "ares_aegis/modelos/respuesta_automatizada.py"
         ]
     }
     
@@ -97,12 +108,18 @@ def verificar_importaciones():
     modulos_verificar = [
         "ares_aegis",
         "ares_aegis.controladores.controlador_principal",
+        "ares_aegis.controladores.controlador_escaneador",
+        "ares_aegis.controladores.controlador_respuesta_automatizada",
+        "ares_aegis.controladores.controlador_incidentes",
         "ares_aegis.vista.interfaz_principal",
-        "ares_aegis.vista.interfaz_principal_gui",
+        "ares_aegis.vista.interfaz_moderna_base",
+        "ares_aegis.vista.interfaz_moderna_nueva",
         "ares_aegis.modelos.siem",
         "ares_aegis.modelos.escaneador",
-        "ares_aegis.modelos.monitor_red_mejorado",
-        "ares_aegis.modelos.fim_avanzado"
+        "ares_aegis.modelos.monitor_red",
+        "ares_aegis.modelos.fim",
+        "ares_aegis.modelos.respuesta_automatizada",
+        "ares_aegis.modelos.respondedor_incidentes"
     ]
     
     errores = []

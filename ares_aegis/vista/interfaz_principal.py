@@ -55,7 +55,7 @@ class InterfazPrincipal:
         self.monitoreo_activo = False
         self.auto_actualizacion = False
         
-        self.logger.info("Interfaz Principal inicializada")
+        self.logger.info("Interfaz Principal inicializada correctamente")
     
     def inicializar(self):
         """Inicializar la aplicación completa."""
@@ -68,17 +68,15 @@ class InterfazPrincipal:
             
             self.logger.info("Sistema Ares Aegis inicializado correctamente")
             return True
-            
         except Exception as e:
             self.logger.error(f"Error al inicializar la aplicación: {e}")
-            messagebox.showerror("Error de Inicialización", 
-                               f"No se pudo inicializar Ares Aegis:\n{str(e)}")
+            messagebox.showerror("Error de inicialización", f"No se pudo iniciar la aplicación de Ares Aegis:\n{str(e)}")
             return False
     
     def crear_ventana_principal(self):
         """Crear la ventana principal de la aplicación."""
         self.root = tk.Tk()
-        self.root.title("🛡️ Ares Aegis - Sistema de Ciberseguridad Avanzado")
+        self.root.title("🛡️ ARES AEGIS - Centro de Comando de Ciberseguridad Avanzada")
         self.root.geometry("1500x1000")
         self.root.minsize(1300, 900)
         
@@ -452,7 +450,7 @@ class InterfazPrincipal:
         for i, (icon, text, command, color) in enumerate(nav_configs):
             tab = self.crear_tab_moderno(nav_container, icon, text, command, color, i)
             self.nav_tabs.append(tab)
-            tab.grid(row=0, column=i, sticky="ew", padx=2)
+            tab['container'].grid(row=0, column=i, sticky="ew", padx=2)
         
         # === SEPARADOR VISUAL ===
         separator = tk.Frame(self.root, bg="#2c3e50", height=2)
@@ -462,10 +460,8 @@ class InterfazPrincipal:
         """Crear tab de navegación moderno inspirado en patrones de Bootstrap y Sniffnet"""
         # Container principal del tab
         tab_container = tk.Frame(parent, bg="#16213e")
-        
         # Estado activo del tab
         is_active = index == 0  # Dashboard activo por defecto
-        
         # Colores según estado
         if is_active:
             bg_color = accent_color
@@ -475,11 +471,10 @@ class InterfazPrincipal:
             bg_color = "#16213e"
             fg_color = "#8a92b2"
             border_color = "#16213e"  # Cambiar de "transparent" a color sólido
-        
         # Botón principal del tab con diseño moderno
         tab_button = tk.Button(
             tab_container,
-            text=f"{icon}\n{text}",  # Corregir el escape - cambiar \\n por \n
+            text=f"{icon}\n{text}",
             command=lambda: self.activar_tab(index, command),
             bg=bg_color,
             fg=fg_color,
@@ -493,60 +488,48 @@ class InterfazPrincipal:
             activeforeground="#ffffff"
         )
         tab_button.pack(fill="both", expand=True)
-        
         # Indicador inferior del tab activo
         indicator = tk.Frame(tab_container, bg=border_color, height=3)
         indicator.pack(fill="x", side="bottom")
-        
         # Efectos hover modernos
         def on_enter(e):
-            if not is_active:
+            if not tab_data['is_active']:
                 tab_button.config(bg="#2a3b52", fg="#ffffff")
                 indicator.config(bg=accent_color)
-        
         def on_leave(e):
-            if not is_active:
+            if not tab_data['is_active']:
                 tab_button.config(bg="#16213e", fg="#8a92b2")
-                indicator.config(bg="#16213e")  # Cambiar de "transparent" a color sólido
-        
+                indicator.config(bg="#16213e")
+        # Diccionario para guardar referencias y estado
+        tab_data = {
+            'container': tab_container,
+            'button': tab_button,
+            'indicator': indicator,
+            'is_active': is_active,
+            'accent_color': accent_color,
+            'index': index
+        }
         tab_button.bind("<Enter>", on_enter)
         tab_button.bind("<Leave>", on_leave)
-        
-        # Guardar referencias para control de estado
-        tab_container.button = tab_button
-        tab_container.indicator = indicator
-        tab_container.is_active = is_active
-        tab_container.accent_color = accent_color
-        tab_container.index = index
-        
-        return tab_container
+        return tab_data
     
     def activar_tab(self, index, command):
         """Activar tab seleccionado con efectos visuales modernos"""
         try:
             # Desactivar todos los tabs
-            for tab in self.nav_tabs:
-                tab.is_active = False
-                tab.button.config(
-                    bg="#16213e",
-                    fg="#8a92b2"
-                )
-                tab.indicator.config(bg="#16213e")  # Cambiar de "transparent" a color sólido
-            
+            for tab_data in self.nav_tabs:
+                tab_data['is_active'] = False
+                tab_data['button'].config(bg="#16213e", fg="#8a92b2")
+                tab_data['indicator'].config(bg="#16213e")
             # Activar tab seleccionado
             if index < len(self.nav_tabs):
                 active_tab = self.nav_tabs[index]
-                active_tab.is_active = True
-                active_tab.button.config(
-                    bg=active_tab.accent_color,
-                    fg="#ffffff"
-                )
-                active_tab.indicator.config(bg=active_tab.accent_color)
-            
+                active_tab['is_active'] = True
+                active_tab['button'].config(bg=active_tab['accent_color'], fg="#ffffff")
+                active_tab['indicator'].config(bg=active_tab['accent_color'])
             # Ejecutar comando asociado
             if command:
                 command()
-                
         except Exception as e:
             self.logger.error(f"Error activando tab: {e}")
     
@@ -1063,7 +1046,6 @@ class InterfazPrincipal:
                 btn.config(bg=self.adjust_color_brightness(original_color, 0.8))
             
             def on_leave(e, btn=btn, original_color=color):
-                btn.config(bg=original_color)
                 btn.config(bg=original_color)
             
             btn.bind("<Enter>", on_enter)
@@ -5856,7 +5838,7 @@ class InterfazPrincipal:
         """Cargar y mostrar archivos en cuarentena."""
         try:
             if hasattr(self.controlador, 'cuarentena'):
-                archivos = self.controlador.cuarentena.listar_archivos_cuarentena()
+                archivos = self.controlador.gestor_cuarentena.obtener_lista_cuarentena() if self.controlador and self.controlador.gestor_cuarentena else []
                 
                 # Actualizar estadísticas
                 self.label_total_cuarentena.config(text=str(len(archivos)))
@@ -5922,7 +5904,8 @@ class InterfazPrincipal:
                 
                 if motivo:
                     if hasattr(self.controlador, 'cuarentena'):
-                        exito = self.controlador.cuarentena.poner_en_cuarentena(
+                        if self.controlador and self.controlador.gestor_cuarentena:
+                            exito = self.controlador.gestor_cuarentena.poner_en_cuarentena(
                             archivo, motivo, "Detección manual"
                         )
                         
@@ -5950,7 +5933,7 @@ class InterfazPrincipal:
             if hash_archivo:
                 if hasattr(self.controlador, 'cuarentena'):
                     # Buscar archivo por hash
-                    archivos = self.controlador.cuarentena.listar_archivos_cuarentena()
+                    archivos = self.controlador.gestor_cuarentena.obtener_lista_cuarentena() if self.controlador and self.controlador.gestor_cuarentena else []
                     archivo_encontrado = None
                     
                     for archivo in archivos:
@@ -5959,7 +5942,8 @@ class InterfazPrincipal:
                             break
                     
                     if archivo_encontrado:
-                        exito = self.controlador.cuarentena.restaurar_archivo(archivo_encontrado.hash_sha256)
+                        if self.controlador and self.controlador.gestor_cuarentena:
+                            exito = self.controlador.gestor_cuarentena.restaurar_archivo(archivo_encontrado.hash_sha256)
                         
                         if exito:
                             messagebox.showinfo("Restauración", f"Archivo restaurado exitosamente:\\n{os.path.basename(archivo_encontrado.ruta_original)}")
@@ -5992,7 +5976,7 @@ class InterfazPrincipal:
                 if respuesta:
                     if hasattr(self.controlador, 'cuarentena'):
                         # Buscar y eliminar archivo
-                        archivos = self.controlador.cuarentena.listar_archivos_cuarentena()
+                        archivos = self.controlador.gestor_cuarentena.obtener_lista_cuarentena() if self.controlador and self.controlador.gestor_cuarentena else []
                         archivo_encontrado = None
                         
                         for archivo in archivos:
@@ -6001,7 +5985,8 @@ class InterfazPrincipal:
                                 break
                         
                         if archivo_encontrado:
-                            exito = self.controlador.cuarentena.eliminar_archivo(archivo_encontrado.hash_sha256)
+                            if self.controlador and self.controlador.gestor_cuarentena:
+                                exito = self.controlador.gestor_cuarentena.eliminar_archivo(archivo_encontrado.hash_sha256)
                             
                             if exito:
                                 messagebox.showinfo("Eliminación", f"Archivo eliminado permanentemente:\\n{os.path.basename(archivo_encontrado.ruta_original)}")
@@ -6027,11 +6012,11 @@ class InterfazPrincipal:
             
             if respuesta:
                 if hasattr(self.controlador, 'cuarentena'):
-                    archivos = self.controlador.cuarentena.listar_archivos_cuarentena()
+                    archivos = self.controlador.gestor_cuarentena.obtener_lista_cuarentena() if self.controlador and self.controlador.gestor_cuarentena else []
                     eliminados = 0
                     
                     for archivo in archivos:
-                        if self.controlador.cuarentena.eliminar_archivo(archivo.hash_sha256):
+                        if self.controlador and self.controlador.gestor_cuarentena and self.controlador.gestor_cuarentena.eliminar_archivo(archivo.hash_sha256):
                             eliminados += 1
                     
                     messagebox.showinfo("Limpieza completada", f"Se eliminaron {eliminados} archivos de cuarentena.")
@@ -6059,7 +6044,7 @@ class InterfazPrincipal:
             
             if archivo_destino:
                 if hasattr(self.controlador, 'cuarentena'):
-                    archivos = self.controlador.cuarentena.listar_archivos_cuarentena()
+                    archivos = self.controlador.gestor_cuarentena.obtener_lista_cuarentena() if self.controlador and self.controlador.gestor_cuarentena else []
                     
                     if archivo_destino.endswith('.json'):
                         import json

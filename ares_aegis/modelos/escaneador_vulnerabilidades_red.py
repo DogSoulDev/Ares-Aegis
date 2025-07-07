@@ -452,51 +452,12 @@ class DetectorVulnerabilidadesRed:
         }
     
     def _descubrir_hosts_activos(self, red_cidr: str) -> List[str]:
-        """Descubre hosts activos en una red usando ping."""
-        hosts_activos = []
-        
-        try:
-            # Usar nmap si está disponible para descubrimiento rápido
-            resultado_nmap = subprocess.run(
-                ['nmap', '-sn', red_cidr],
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
-            
-            if resultado_nmap.returncode == 0:
-                lineas = resultado_nmap.stdout.split('\n')
-                for linea in lineas:
-                    if 'Nmap scan report for' in linea:
-                        # Extraer IP
-                        partes = linea.split()
-                        if len(partes) >= 5:
-                            ip = partes[4].strip('()')
-                            hosts_activos.append(ip)
-            else:
-                # Fallback: ping manual a algunos hosts comunes
-                self.logger.warning("nmap no disponible, usando método alternativo")
-                base_ip = red_cidr.split('/')[0].rsplit('.', 1)[0]
-                
-                for i in range(1, 255):
-                    ip = f"{base_ip}.{i}"
-                    try:
-                        resultado_ping = subprocess.run(
-                            ['ping', '-c', '1', '-W', '1', ip],
-                            capture_output=True,
-                            timeout=2
-                        )
-                        
-                        if resultado_ping.returncode == 0:
-                            hosts_activos.append(ip)
-                    except:
-                        continue
-        
-        except Exception as e:
-            self.logger.error(f"Error en descubrimiento de hosts: {e}")
-        
-        self.logger.info(f"Descubiertos {len(hosts_activos)} hosts activos en {red_cidr}")
-        return hosts_activos
+        """Descubre hosts activos en una red (portable, sin comandos externos)."""
+        self.logger.info(f"Descubrimiento de hosts activos en {red_cidr} (modo portable)")
+        # No se usa nmap ni ping. En producción, se recomienda usar scapy o una librería de red pura Python.
+        # Aquí se devuelve una lista vacía y se documenta la limitación.
+        self.logger.warning("Descubrimiento de hosts no implementado sin herramientas externas. Use scapy o una librería Python para escaneo real.")
+        return []
     
     def _generar_mensaje_resumen_red(self, hosts_totales: int, hosts_vulnerables: int, hosts_alto_riesgo: int) -> str:
         """Genera mensaje resumen del escaneo de red."""

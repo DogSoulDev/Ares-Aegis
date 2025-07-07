@@ -630,6 +630,49 @@ class AnalizadorForenseCuarentena:
 
 
 class GestorCuarentenaAvanzado:
+    def obtener_lista_cuarentena(self):
+        """Devuelve una lista de metadatos de archivos en cuarentena (activos)."""
+        return [m for m in self.base_datos.values() if getattr(m, 'estado', None) and getattr(m.estado, 'value', None) == 'ACTIVO']
+
+    def restaurar_archivo(self, hash_sha256: str) -> bool:
+        """Restaura un archivo de la cuarentena a su ubicación original usando el hash."""
+        for metadatos in self.base_datos.values():
+            if getattr(metadatos, 'hash_sha256', None) == hash_sha256 and getattr(metadatos, 'estado', None) and getattr(metadatos.estado, 'value', None) == 'ACTIVO':
+                try:
+                    ruta_backup = getattr(metadatos, 'ruta_backup', None)
+                    ruta_original = getattr(metadatos, 'ruta_original', None)
+                    if ruta_backup and ruta_original and os.path.exists(ruta_backup):
+                        import shutil
+                        shutil.copy2(ruta_backup, ruta_original)
+                        metadatos.estado = type(metadatos.estado)("RESTAURADO")
+                        self._guardar_base_datos()
+                        self.archivos_restaurados += 1
+                        self.logger.info(f"Archivo restaurado: {ruta_original}")
+                        return True
+                except Exception as e:
+                    self.logger.error(f"Error restaurando archivo: {e}")
+                    return False
+        return False
+
+    def eliminar_archivo(self, hash_sha256: str) -> bool:
+        """Elimina un archivo de la cuarentena y su backup usando el hash."""
+        for metadatos in self.base_datos.values():
+            if getattr(metadatos, 'hash_sha256', None) == hash_sha256 and getattr(metadatos, 'estado', None) and getattr(metadatos.estado, 'value', None) == 'ACTIVO':
+                try:
+                    ruta_cuarentena = getattr(metadatos, 'ruta_cuarentena', None)
+                    ruta_backup = getattr(metadatos, 'ruta_backup', None)
+                    if ruta_cuarentena and os.path.exists(ruta_cuarentena):
+                        os.remove(ruta_cuarentena)
+                    if ruta_backup and os.path.exists(ruta_backup):
+                        os.remove(ruta_backup)
+                    metadatos.estado = type(metadatos.estado)("ELIMINADO")
+                    self._guardar_base_datos()
+                    self.logger.info(f"Archivo eliminado: {hash_sha256}")
+                    return True
+                except Exception as e:
+                    self.logger.error(f"Error eliminando archivo: {e}")
+                    return False
+        return False
     """Sistema avanzado de gestión de cuarentena."""
     
     def __init__(self, siem: SIEM):
@@ -672,10 +715,10 @@ class GestorCuarentenaAvanzado:
         self._crear_estructura_directorios()
         self._cargar_base_datos()
         
-        self.logger.info("Gestor de cuarentena avanzado inicializado")
+        self.logger.info("Gestor de Cuarentena Avanzado inicializado correctamente")
         self.siem.registrar_evento(
             TipoEvento.SISTEMA_INICIADO,
-            "Sistema de cuarentena avanzado inicializado",
+            "Sistema de Cuarentena Avanzado inicializado correctamente",
             {
                 'directorio_cuarentena': self.directorio_cuarentena,
                 'archivos_en_cuarentena': len(self.base_datos),
@@ -685,13 +728,20 @@ class GestorCuarentenaAvanzado:
         )
     
     def _configurar_directorio_cuarentena(self) -> str:
-        """Configura y retorna el directorio de cuarentena."""
+        """Configura y retorna el directorio de cuarentena unificado (solo cuarentena_avanzada)."""
         try:
             rutas_sistema = obtener_rutas_sistema()
             directorio = os.path.join(rutas_sistema['directorio_datos'], "cuarentena_avanzada")
         except Exception:
             directorio = str(Path.cwd() / "cuarentena_avanzada")
-        
+        # Eliminar carpeta antigua si existe (limpieza)
+        carpeta_antigua = Path.cwd() / "cuarentena"
+        if carpeta_antigua.exists() and carpeta_antigua.is_dir():
+            try:
+                import shutil
+                shutil.rmtree(carpeta_antigua)
+            except Exception:
+                pass
         return directorio
     
     def _crear_estructura_directorios(self):
@@ -798,21 +848,21 @@ class GestorCuarentenaAvanzado:
             Optional[str]: ID del archivo en cuarentena o None si falló
         """
         try:
-            self.logger.info(f"Poniendo en cuarentena: {ruta_archivo}")
+            self.logger.info(f"Iniciando proceso de cuarentena para: {ruta_archivo}")
             
             # Validaciones
             if not os.path.exists(ruta_archivo):
-                self.logger.error(f"Archivo no existe: {ruta_archivo}")
+                self.logger.error(f"El archivo no existe: {ruta_archivo}")
                 return None
             
             if not validar_permisos_lectura(ruta_archivo):
-                self.logger.error(f"Sin permisos de lectura: {ruta_archivo}")
+                self.logger.error(f"Permisos de lectura insuficientes para: {ruta_archivo}")
                 return None
             
             # Verificar tamaño
             tamaño_archivo = os.path.getsize(ruta_archivo)
             if tamaño_archivo > self.tamaño_maximo_archivo:
-                self.logger.warning(f"Archivo muy grande para cuarentena: {tamaño_archivo} bytes")
+                self.logger.warning(f"El archivo excede el tamaño máximo permitido para cuarentena: {tamaño_archivo} bytes")
                 return None
             
             # Generar metadatos
@@ -868,12 +918,12 @@ class GestorCuarentenaAvanzado:
                 ).start()
             
             self.archivos_procesados += 1
-            self.logger.info(f"Archivo puesto en cuarentena exitosamente: {metadatos.archivo_id}")
+            self.logger.info(f"Archivo puesto en cuarentena correctamente: {metadatos.archivo_id}")
             
             return metadatos.archivo_id
         
         except Exception as e:
-            self.logger.error(f"Error poniendo archivo en cuarentena: {e}")
+            self.logger.error(f"Error al poner archivo en cuarentena: {e}")
             return None
     
     def _generar_metadatos_archivo(self, ruta_archivo: str, origen_deteccion: str, razon: str,

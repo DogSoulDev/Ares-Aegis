@@ -233,28 +233,80 @@ class VigiaGrietasRealm:
                 'servicios_riesgosos': 0,
                 'mensaje': 'El oráculo de los puertos permanece en silencio - tiempo de consulta excedido'
             }
-        
+        except subprocess.TimeoutExpired:
+            self.logger.warning("El oráculo netstat no respondió en tiempo divino")
+            return {
+                'servicios_detectados': 0,
+                'servicios_riesgosos': 0,
+                'mensaje': 'El oráculo de los puertos permanece en silencio - tiempo de consulta excedido'
+            }
         except Exception as e:
             self.logger.error(f"Error verificando servicios: {e}")
             return {
                 'servicios_detectados': 0,
                 'servicios_riesgosos': 0,
-                'mensaje': f'Una tormenta impide consultar a los guardianes de los puertos: {e}'
+                'mensaje': f'Error verificando servicios: {e}'
             }
-        
         return {
             'servicios_detectados': len(servicios_detectados),
             'servicios_riesgosos': len(servicios_riesgosos),
-            'servicios': servicios_detectados,
-            'servicios_alto_riesgo': servicios_riesgosos,
-            'mensaje_general': self._generar_mensaje_servicios(len(servicios_riesgosos))
+            'detalles': servicios_detectados,
+            'riesgosos': servicios_riesgosos
         }
-    
-    def _identificar_servicio_por_puerto(self, puerto: str) -> Optional[str]:
-        """Identifica el servicio basándose en el puerto."""
+    def verificar_servicios_escuchando(self) -> Dict[str, Any]:
+        """
+        Examina los servicios que escuchan en las puertas del reino.
+        Returns:
+            Dict con información sobre servicios detectados y riesgosos
+        """
+        self.logger.info("Inspeccionando servicios que escuchan en las puertas del reino (modo portable)")
+        # No se usa netstat ni comandos externos. Simulación/documentación para clean code y portabilidad.
+        # En producción, se recomienda usar una librería como psutil para obtener puertos abiertos.
+        try:
+            import psutil
+            conexiones = psutil.net_connections(kind='inet')
+            servicios_detectados = []
+            servicios_riesgosos = []
+            for conn in conexiones:
+                if conn.status == 'LISTEN':
+                    puerto = conn.laddr.port
+                    servicio_info = {
+                        'puerto': puerto,
+                        'direccion': str(conn.laddr),
+                        'protocolo': 'tcp' if conn.type == 1 else 'udp'
+                    }
+                    nombre_servicio = self._identificar_servicio_por_puerto(str(puerto))
+                    if nombre_servicio:
+                        servicio_info['servicio'] = nombre_servicio
+                        riesgo = self._evaluar_riesgo_servicio(nombre_servicio, puerto)
+                        servicio_info['nivel_riesgo'] = riesgo
+                        servicio_info['mensaje'] = self._generar_mensaje_servicio(nombre_servicio, riesgo)
+                        if riesgo in ['ALTO', 'CRITICO']:
+                            servicios_riesgosos.append(servicio_info)
+                    servicios_detectados.append(servicio_info)
+            return {
+                'servicios_detectados': len(servicios_detectados),
+                'servicios_riesgosos': len(servicios_riesgosos),
+                'detalles': servicios_detectados,
+                'riesgosos': servicios_riesgosos
+            }
+        except ImportError:
+            self.logger.warning("psutil no está instalado. No se puede obtener información de puertos de forma portable.")
+            return {
+                'servicios_detectados': 0,
+                'servicios_riesgosos': 0,
+                'mensaje': 'psutil no disponible. Instale psutil para obtener información de puertos de forma portable.'
+            }
+        except Exception as e:
+            self.logger.error(f"Error verificando servicios: {e}")
+            return {
+                'servicios_detectados': 0,
+                'servicios_riesgosos': 0,
+                'mensaje': f'Error verificando servicios: {e}'
+            }
+
+    def _identificar_servicio_por_puerto(self, puerto: str) -> str:
         puertos_conocidos = {
-            '22': 'ssh',
-            '23': 'telnet',
             '21': 'ftp',
             '80': 'http',
             '443': 'https',
@@ -271,8 +323,7 @@ class VigiaGrietasRealm:
             '993': 'imaps',
             '995': 'pop3s'
         }
-        
-        return puertos_conocidos.get(puerto)
+        return puertos_conocidos.get(puerto, 'desconocido')
     
     def _evaluar_riesgo_servicio(self, servicio: str, puerto: str) -> str:
         """Evalúa el riesgo de un servicio específico."""

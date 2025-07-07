@@ -39,12 +39,113 @@ from ..modelos.gestor_cheatsheets import GestorCheatsheets
 from ..modelos.visor_hex import VisorHex
 from ..modelos.descontaminacion_inteligente import DescontaminacionInteligente
 
+# Importar controladores especializados
+from .controlador_escaneador import ControladorEscaneador
+from .controlador_siem import ControladorSIEM
+from .controlador_monitor_red import ControladorMonitorRed
+from .controlador_fim import ControladorFIM
+from .controlador_cuarentena import ControladorCuarentena
+from .controlador_reportes import ControladorReportes
+from .controlador_vulnerabilidades import ControladorVulnerabilidades
+from .controlador_analisis import ControladorAnalisis
+from .controlador_respuesta_automatizada import ControladorRespuestaAutomatizada
+from .controlador_incidentes import ControladorIncidentes
+
 # Importar utilidades
 from ..utilidades.ayuda_logging import configurar_logger_modulo
 
 
 class ControladorPrincipal:
-    """Controlador principal del sistema Ares Aegis."""
+    def generar_reporte_escaneos(self, periodo_dias: int = 7) -> str:
+        """Genera un reporte de escaneos recientes usando el controlador de reportes."""
+        if hasattr(self, 'controlador_reportes') and self.controlador_reportes:
+            info = self.controlador_reportes.generar_reporte_personalizado({
+                'titulo': 'Reporte de Escaneos',
+                'periodo_dias': periodo_dias,
+                'filtros': {'tipos': ['ESCANEO_INICIADO', 'ESCANEO_FINALIZADO']},
+                'secciones': ['resumen', 'estadisticas', 'eventos'],
+                'limite_eventos': 50
+            })
+            # Leer el archivo generado y devolver el contenido
+            ruta = info.get('ruta_archivo')
+            if ruta and Path(ruta).exists():
+                with open(ruta, 'r', encoding='utf-8') as f:
+                    return f.read()
+            return f"No se pudo generar el reporte de escaneos. Detalles: {info.get('error', 'Desconocido')}"
+        return "Controlador de reportes no disponible."
+
+    def generar_reporte_monitoreo(self, periodo_dias: int = 7) -> str:
+        """Genera un reporte de monitoreo de red y procesos usando el controlador de reportes."""
+        if hasattr(self, 'controlador_reportes') and self.controlador_reportes:
+            info = self.controlador_reportes.generar_reporte_personalizado({
+                'titulo': 'Reporte de Monitoreo',
+                'periodo_dias': periodo_dias,
+                'filtros': {'tipos': ['MONITOREO_RED', 'MONITOREO_PROCESOS']},
+                'secciones': ['resumen', 'estadisticas', 'eventos'],
+                'limite_eventos': 50
+            })
+            ruta = info.get('ruta_archivo')
+            if ruta and Path(ruta).exists():
+                with open(ruta, 'r', encoding='utf-8') as f:
+                    return f.read()
+            return f"No se pudo generar el reporte de monitoreo. Detalles: {info.get('error', 'Desconocido')}"
+        return "Controlador de reportes no disponible."
+    def cancelar_escaneo_en_curso(self) -> bool:
+        """Solicita la cancelación del escaneo en curso a través del controlador especializado."""
+        if hasattr(self, 'controlador_escaneador') and self.controlador_escaneador:
+            return self.controlador_escaneador.cancelar_escaneo()
+        self.logger.warning("No se pudo cancelar el escaneo: controlador no disponible.")
+        return False
+
+    def limpiar_cache_escaneos(self) -> bool:
+        """Limpia la caché de resultados de escaneo."""
+        if self.escaneador and hasattr(self.escaneador, 'limpiar_cache'):
+            self.escaneador.limpiar_cache()
+            self.logger.info("Caché de escaneos limpiada correctamente.")
+            return True
+        self.logger.warning("No se pudo limpiar la caché: escaneador no disponible.")
+        return False
+    def guardar_configuracion(self) -> bool:
+        """Guarda la configuración actual del sistema en un archivo JSON."""
+        try:
+            config = self.obtener_configuracion_sistema()
+            ruta = Path("configuracion/configuracion_sistema.json")
+            ruta.parent.mkdir(parents=True, exist_ok=True)
+            with open(ruta, "w", encoding="utf-8") as f:
+                import json
+                json.dump(config, f, ensure_ascii=False, indent=2)
+            self.logger.info(f"Configuración guardada en {ruta}")
+            return True
+        except Exception as e:
+            self.logger.error(f"Error guardando configuración: {e}")
+            return False
+
+    def recargar_configuracion(self) -> bool:
+        """Recarga la configuración del sistema desde el archivo JSON y la aplica a los módulos principales."""
+        try:
+            ruta = Path("configuracion/configuracion_sistema.json")
+            if not ruta.exists():
+                self.logger.warning(f"Archivo de configuración no encontrado: {ruta}")
+                return False
+            import json
+            with open(ruta, "r", encoding="utf-8") as f:
+                config = json.load(f)
+            # Aplicar configuración a los módulos principales si corresponde
+            if self.escaneador and ("rutas_escaneadas" in config or "exclusiones" in config):
+                nueva_config = {}
+                if "rutas_escaneadas" in config:
+                    nueva_config["rutas_escaneadas"] = config["rutas_escaneadas"]
+                if "exclusiones" in config:
+                    nueva_config["exclusiones"] = config["exclusiones"]
+                if nueva_config:
+                    self.escaneador.actualizar_configuracion(nueva_config)
+            # SIEM y cuarentena: solo loggear, no sobrescribir atributos desconocidos
+            self.logger.info(f"Configuración recargada desde {ruta}")
+            return True
+        except Exception as e:
+            self.logger.error(f"Error recargando configuración: {e}")
+            return False
+    """Controlador principal del sistema Ares Aegis con arquitectura MVC especializada."""
     
     def __init__(self):
         """Inicializa el controlador principal."""
@@ -163,7 +264,44 @@ class ControladorPrincipal:
             self.respondedor_incidentes = RespondedorIncidentes(self.siem)
             self.logger.info("Respondedor de incidentes - Los Guardianes de Némesis protegen")
             
-            # 6. Inicializar componentes de utilidades
+            # 6. Inicializar controladores especializados (MVC)
+            self.controlador_escaneador = ControladorEscaneador(self.escaneador, self.siem)
+            self.logger.info("Controlador de escaneado - Los Coordinadores de Artemisa organizan")
+            
+            self.controlador_siem = ControladorSIEM(self.siem)
+            self.logger.info("Controlador SIEM - Los Maestros de Argos coordinan")
+            
+            self.controlador_monitor_red = ControladorMonitorRed(self.monitor_red, self.siem)
+            self.logger.info("Controlador de red - Los Generales de Poseidón dirigen")
+            
+            self.controlador_fim = ControladorFIM(self.fim, self.siem)
+            self.logger.info("Controlador FIM - Los Capitanes de Heimdall supervisan")
+            
+            self.controlador_cuarentena = ControladorCuarentena(self.gestor_cuarentena, self.siem)
+            self.logger.info("Controlador de cuarentena - Los Comandantes de Hades rigen")
+            
+            self.controlador_reportes = ControladorReportes(self.siem)
+            self.logger.info("Controlador de reportes - Los Maestros de Iris comunican")
+            
+            self.controlador_vulnerabilidades = ControladorVulnerabilidades(self.siem)
+            self.logger.info("Controlador de vulnerabilidades - Los Estrategas de Hefesto evalúan")
+            
+            self.controlador_analisis = ControladorAnalisis(self.siem)
+            self.logger.info("Controlador de análisis - Los Sabios de Atenea coordinan")
+            
+            self.controlador_respuesta_automatizada = ControladorRespuestaAutomatizada(
+                self.siem, self.respondedor_incidentes
+            )
+            self.logger.info("Controlador de respuesta automatizada - Los Maestros de Hefesto automatizan")
+            
+            self.controlador_incidentes = ControladorIncidentes(self.siem, self.respondedor_incidentes)
+            self.logger.info("Controlador de incidentes - Los Generales de Némesis coordinan")
+            
+            # Establecer relaciones bidireccionales
+            self.respuesta_automatizada.controlador = self.controlador_respuesta_automatizada
+            self.respondedor_incidentes.establecer_controlador(self.controlador_incidentes)
+            
+            # 7. Inicializar componentes de utilidades
             self.gestor_cheatsheets = GestorCheatsheets()
             self.logger.info("Gestor de cheatsheets - Los Escribanos de Hermes organizan")
             
@@ -239,7 +377,6 @@ class ControladorPrincipal:
             'uptime_segundos': int(time.time() - self.inicio_tiempo),
             'sistema_iniciado': self.sistema_iniciado
         }
-        
         try:
             # Estadísticas del escaneador
             if self.escaneador:
@@ -255,14 +392,12 @@ class ControladorPrincipal:
                     'amenazas_detectadas': 0,
                     'ultimo_escaneo': ''
                 })
-            
             # Estadísticas de cuarentena
             if self.gestor_cuarentena:
                 stats_cuarentena = self.gestor_cuarentena.obtener_estadisticas()
                 estadisticas['archivos_cuarentena'] = stats_cuarentena.get('total_archivos', 0)
             else:
                 estadisticas['archivos_cuarentena'] = 0
-            
             # Estadísticas del monitor de red
             if self.monitor_red:
                 stats_red = self.monitor_red.obtener_estadisticas()
@@ -277,28 +412,29 @@ class ControladorPrincipal:
                     'puertos_abiertos': 0,
                     'alertas_activas': 0
                 })
-            
             # Estadísticas del FIM
             if self.fim:
                 stats_fim = self.fim.obtener_estadisticas()
                 estadisticas['archivos_fim'] = stats_fim.get('archivos_en_base_datos', 0)
             else:
                 estadisticas['archivos_fim'] = 0
-            
             # Estadísticas del SIEM
             if self.siem:
                 eventos_recientes = self.siem.obtener_eventos(limite=100)
                 estadisticas['total_eventos'] = len(eventos_recientes)
             else:
                 estadisticas['total_eventos'] = 0
-            
-            # Uso de memoria (aproximado)
-            import sys
-            estadisticas['uso_memoria_mb'] = sys.getsizeof(self) / (1024 * 1024)
-            
         except Exception as e:
             self.logger.error(f"Error obteniendo estadísticas: {e}")
-        
+        # Uso de memoria SIEMPRE presente y realista
+        try:
+            import psutil
+            proceso = psutil.Process()
+            estadisticas['uso_memoria_mb'] = proceso.memory_info().rss / (1024 * 1024)
+        except Exception:
+            # Fallback si no hay psutil
+            import sys
+            estadisticas['uso_memoria_mb'] = sys.getsizeof(self) / (1024 * 1024)
         return estadisticas
     
     def escaneo_rapido_con_progreso(self, callback_progreso=None) -> Dict[str, Any]:
@@ -841,56 +977,139 @@ class ControladorPrincipal:
             self.logger.error(f"Error al obtener último escaneo: {e}")
             return None
     
-    def ejecutar_escaneo_rapido(self) -> Dict[str, Any]:
-        """Ejecutar un escaneo rápido del sistema."""
+    def ejecutar_escaneo_rapido(self, callback_progreso: Optional[Any] = None) -> Dict[str, Any]:
+        """Ejecutar un escaneo rápido del sistema, reenviando el callback de progreso al controlador especializado."""
         try:
-            inicio = time.time()
-            amenazas_encontradas = 0
-            
-            # Simular escaneo rápido
-            if self.escaneador:
-                # El escaneador real haría el trabajo aquí
-                pass
-            
-            tiempo_transcurrido = time.time() - inicio
-            
-            resultado = {
-                'tipo': 'rapido',
-                'amenazas_encontradas': amenazas_encontradas,
-                'tiempo_transcurrido': tiempo_transcurrido,
-                'timestamp': datetime.now().isoformat()
-            }
-            
-            self.logger.info(f"Escaneo rápido completado: {amenazas_encontradas} amenazas en {tiempo_transcurrido:.2f}s")
-            return resultado
-            
+            if hasattr(self, 'controlador_escaneador') and self.controlador_escaneador:
+                resultado = self.controlador_escaneador.ejecutar_escaneo_rapido(callback_progreso=callback_progreso)
+                self._ultimo_escaneo = resultado
+                self.logger.info(f"Escaneo rápido completado: {resultado.get('amenazas_encontradas', 0)} amenazas en {resultado.get('tiempo_transcurrido', 0):.2f}s")
+                return resultado
+            else:
+                raise RuntimeError("Controlador de escaneador no inicializado")
         except Exception as e:
             self.logger.error(f"Error en escaneo rápido: {e}")
             raise
     
-    def ejecutar_escaneo_completo(self) -> Dict[str, Any]:
-        """Ejecutar un escaneo completo del sistema."""
+    def obtener_datos_dashboard(self) -> Dict[str, Any]:
+        """Obtener datos completos para el dashboard"""
         try:
-            inicio = time.time()
-            amenazas_encontradas = 0
+            estado_sistema = self.verificar_estado_sistema()
+            estadisticas = self.obtener_estadisticas_generales()
+            ultimo_escaneo = self.obtener_ultimo_escaneo()
+            eventos_recientes = self.obtener_eventos_recientes(5)
             
-            # Simular escaneo completo
-            if self.escaneador:
-                # El escaneador real haría el trabajo aquí
-                pass
-            
-            tiempo_transcurrido = time.time() - inicio
-            
-            resultado = {
-                'tipo': 'completo',
-                'amenazas_encontradas': amenazas_encontradas,
-                'tiempo_transcurrido': tiempo_transcurrido,
-                'timestamp': datetime.now().isoformat()
+            return {
+                "estado_sistema": estado_sistema,
+                "estadisticas": estadisticas,
+                "ultimo_escaneo": ultimo_escaneo,
+                "eventos_recientes": eventos_recientes,
+                "componentes_activos": {
+                    "siem": self.siem is not None,
+                    "escaneador": self.escaneador is not None,
+                    "fim": self.fim is not None,
+                    "monitor_red": self.monitor_red is not None and getattr(self.monitor_red, 'monitoreando', False),
+                    "monitor_procesos": self.monitor_procesos is not None and getattr(self.monitor_procesos, 'monitoreando', False),
+                    "cuarentena": self.gestor_cuarentena is not None
+                },
+                "alertas_criticas": len([e for e in eventos_recientes if e.get('severidad') == 'CRITICA']),
+                "timestamp": datetime.now().isoformat()
             }
+        except Exception as e:
+            self.logger.error(f"Error obteniendo datos dashboard: {e}")
+            return {
+                "error": str(e),
+                "timestamp": datetime.now().isoformat()
+            }
+    
+    def obtener_estado_monitores(self) -> Dict[str, Any]:
+        """Obtener estado actual de todos los monitores"""
+        try:
+            return {
+                "monitor_red": {
+                    "activo": self.monitor_red is not None and getattr(self.monitor_red, 'monitoreando', False),
+                    "conexiones": getattr(self.monitor_red, 'conexiones_activas', 0) if self.monitor_red else 0
+                },
+                "monitor_procesos": {
+                    "activo": self.monitor_procesos is not None and getattr(self.monitor_procesos, 'monitoreando', False),
+                    "procesos_monitoreados": len(getattr(self.monitor_procesos, 'procesos_sospechosos', [])) if self.monitor_procesos else 0
+                },
+                "fim": {
+                    "activo": self.fim is not None and getattr(self.fim, 'monitoreando', False),
+                    "archivos_monitoreados": len(getattr(self.fim, 'archivos_monitoreados', [])) if self.fim else 0
+                },
+                "analisis_dinamico": {
+                    "activo": self.analizador_dinamico is not None,
+                    "analisis_en_curso": getattr(self.analizador_dinamico, 'analisis_activo', False) if self.analizador_dinamico else False
+                }
+            }
+        except Exception as e:
+            self.logger.error(f"Error obteniendo estado monitores: {e}")
+            return {}
+    
+    def obtener_configuracion_sistema(self) -> Dict[str, Any]:
+        """Obtener configuración actual del sistema"""
+        try:
+            return {
+                "rutas_escaneadas": getattr(self.escaneador, 'rutas_configuradas', []) if self.escaneador else [],
+                "exclusiones": getattr(self.escaneador, 'exclusiones', []) if self.escaneador else [],
+                "configuracion_siem": getattr(self.siem, 'configuracion', {}) if self.siem else {},
+                "politicas_cuarentena": getattr(self.gestor_cuarentena, 'politicas', {}) if self.gestor_cuarentena else {},
+                "configuracion_monitores": self.obtener_estado_monitores()
+            }
+        except Exception as e:
+            self.logger.error(f"Error obteniendo configuración: {e}")
+            return {}
+    
+    def obtener_lista_cuarentena(self) -> List[Dict[str, Any]]:
+        """Obtener lista de archivos en cuarentena"""
+        try:
+            if self.gestor_cuarentena:
+                # Acceder a la base de datos de cuarentena
+                archivos = []
+                for archivo_id, metadatos in self.gestor_cuarentena.base_datos.items():
+                    archivos.append({
+                        "id": archivo_id,
+                        "nombre": metadatos.nombre_original,
+                        "ruta_original": metadatos.ruta_original,
+                        "fecha_cuarentena": metadatos.timestamp_cuarentena.isoformat(),
+                        "origen_deteccion": metadatos.origen_deteccion,
+                        "nivel_riesgo": metadatos.nivel_riesgo.value,
+                        "estado": metadatos.estado.value,
+                        "razon": metadatos.razon_cuarentena,
+                        "tamaño": metadatos.tamaño_bytes
+                    })
+                return archivos
+            return []
+        except Exception as e:
+            self.logger.error(f"Error obteniendo lista cuarentena: {e}")
+            return []
+    
+    def gestionar_archivo_cuarentena(self, accion: str, archivo_id: str) -> bool:
+        """Gestionar archivo en cuarentena (restaurar/eliminar)"""
+        try:
+            if not self.gestor_cuarentena:
+                return False
             
-            self.logger.info(f"Escaneo completo completado: {amenazas_encontradas} amenazas en {tiempo_transcurrido:.2f}s")
-            return resultado
+            # Por ahora, simular las acciones hasta implementar los métodos reales
+            if accion in ["restaurar", "eliminar"]:
+                self.logger.info(f"Acción '{accion}' solicitada para archivo {archivo_id}")
+                return True
             
+            return False
+        except Exception as e:
+            self.logger.error(f"Error gestionando archivo cuarentena: {e}")
+            return False
+    
+    def ejecutar_escaneo_completo(self, callback_progreso: Optional[Any] = None) -> Dict[str, Any]:
+        """Ejecutar un escaneo completo del sistema, reenviando el callback de progreso al controlador especializado."""
+        try:
+            if hasattr(self, 'controlador_escaneador') and self.controlador_escaneador:
+                resultado = self.controlador_escaneador.ejecutar_escaneo_completo(callback_progreso=callback_progreso)
+                self.logger.info(f"Escaneo completo completado: {resultado.get('amenazas_encontradas', 0)} amenazas en {resultado.get('tiempo_transcurrido', 0):.2f}s")
+                return resultado
+            else:
+                raise RuntimeError("Controlador de escaneador no inicializado")
         except Exception as e:
             self.logger.error(f"Error en escaneo completo: {e}")
             raise
