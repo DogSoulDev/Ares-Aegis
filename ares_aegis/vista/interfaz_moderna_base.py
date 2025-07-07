@@ -50,7 +50,8 @@ class InterfazModernaBase:
     def __init__(self):
         """Inicializar la interfaz moderna"""
         self.logger = logging.getLogger(__name__)
-        self.root: Optional[tk.Tk] = None  # Typing hint para evitar errores
+        self.root: Optional[tk.Tk] = tk.Tk()  # Inicializa la ventana principal de Tkinter
+        self.root.title("ARES AEGIS - Centro de Comando de Ciberseguridad Avanzada")
         self.tema = TemaClaro()  # Tema por defecto
         self.controlador = None
         self.controlador_listo = False
@@ -82,6 +83,19 @@ class InterfazModernaBase:
         self.boton_escaneo_completo = None
         self.boton_escaneo_personalizado = None
         self.logger.info("Interfaz Moderna Base inicializada correctamente")
+        # Configurar el icono de la aplicación
+        self.configurar_icono()
+        # Configurar la interfaz gráfica moderna automáticamente
+        self.configurar_interfaz()
+        # Inicializar herramientas modernas y conectar referencia
+        self.herramientas = None
+        try:
+            from .interfaz_moderna_herramientas import InterfazModernaHerramientas
+            self.herramientas = InterfazModernaHerramientas(self)
+        except Exception as e:
+            self.logger.warning(f"No se pudo inicializar herramientas modernas: {e}")
+        # Mostrar el dashboard automáticamente al iniciar
+        self.mostrar_dashboard()
     
     def eliminar_archivo(self):
         """Eliminar archivo de cuarentena (real y robusto)."""
@@ -128,7 +142,8 @@ class InterfazModernaBase:
                 self.logger.error(f"Error eliminando archivo: {e}")
             messagebox.showerror("Error", f"Error eliminando archivo: {str(e)}")
         try:
-            self.root.attributes('-alpha', 0.98)
+            if self.root is not None:
+                self.root.attributes('-alpha', 0.98)
         except:
             pass
         
@@ -137,7 +152,8 @@ class InterfazModernaBase:
 
         # Agregar botón Parar Escaneo en el header (después de crear header_frame)
         # Se agrega aquí para asegurar que header_frame existe
-        self.root.after(0, self._agregar_boton_parar_escaneo)
+        if self.root is not None:
+            self.root.after(0, self._agregar_boton_parar_escaneo)
 
     def _agregar_boton_parar_escaneo(self):
         """Agregar el botón Parar Escaneo en el header derecho."""
@@ -249,26 +265,20 @@ class InterfazModernaBase:
         self.header_frame = tk.Frame(self.root, bg=ComponentesModernos.COLORES["bg_principal"], height=100)
         self.header_frame.pack(fill="x")
         self.header_frame.pack_propagate(False)
-        
         # Línea decorativa superior
         top_line = tk.Frame(self.header_frame, bg=ComponentesModernos.COLORES["primario"], height=3)
         top_line.pack(fill="x")
-        
         # Container del header
         header_content = tk.Frame(self.header_frame, bg=ComponentesModernos.COLORES["bg_principal"])
         header_content.pack(fill="both", expand=True, padx=30, pady=20)
-        
         # === LADO IZQUIERDO: LOGO Y BRANDING ===
         left_frame = tk.Frame(header_content, bg=ComponentesModernos.COLORES["bg_principal"])
         left_frame.pack(side="left", fill="y")
-        
         # Logo
         self.crear_logo(left_frame)
-        
         # Títulos
         brand_text = tk.Frame(left_frame, bg=ComponentesModernos.COLORES["bg_principal"])
         brand_text.pack(side="left", fill="y", padx=(15, 0))
-        
         title_label = tk.Label(
             brand_text,
             text="ARES AEGIS",
@@ -277,28 +287,23 @@ class InterfazModernaBase:
             fg=ComponentesModernos.COLORES["texto_primario"]
         )
         title_label.pack(anchor="w")
-        
         subtitle_label = tk.Label(
             brand_text,
-            text="Advanced Cybersecurity Command Center",
+            text="Centro de Comando de Ciberseguridad Avanzada",
             font=("Segoe UI", 10),
             bg=ComponentesModernos.COLORES["bg_principal"],
             fg=ComponentesModernos.COLORES["texto_secundario"]
         )
         subtitle_label.pack(anchor="w")
-        
         # === LADO DERECHO: ESTADO Y CONTROLES ===
         right_frame = tk.Frame(header_content, bg=ComponentesModernos.COLORES["bg_principal"])
         right_frame.pack(side="right", fill="y")
-        
         # Indicador de estado
         status_frame = tk.Frame(right_frame, bg=ComponentesModernos.COLORES["bg_principal"])
         status_frame.pack(side="right", fill="y")
-        
         # Punto de estado
         status_dot = tk.Frame(status_frame, bg=ComponentesModernos.COLORES["activo"], width=8, height=8)
         status_dot.pack(side="right", padx=(10, 5), pady=18)
-        
         # Texto de estado
         self.status_label = tk.Label(
             status_frame,
@@ -308,6 +313,8 @@ class InterfazModernaBase:
             fg=ComponentesModernos.COLORES["activo"]
         )
         self.status_label.pack(side="right", pady=15)
+        # Agregar el botón Parar Escaneo al final del header
+        self._agregar_boton_parar_escaneo()
     
     def crear_logo(self, parent):
         """Crear logo en el header"""
@@ -372,14 +379,14 @@ class InterfazModernaBase:
         
         # Configurar grid responsivo
         nav_items = [
-            ("📊", "Dashboard", self.mostrar_dashboard, ComponentesModernos.COLORES["primario"]),
-            ("🔍", "Scan", self.mostrar_escaneo, "#ff6b35"),
-            ("🛡️", "Quarantine", self.mostrar_cuarentena, "#dc3545"),
-            ("📡", "Monitor", self.mostrar_monitoreo, "#7b68ee"),  # Activado
-            ("🛡️", "Protection", self.mostrar_proteccion, ComponentesModernos.COLORES["exito"]),  # Activado
-            ("🔧", "Tools", self.mostrar_herramientas, ComponentesModernos.COLORES["advertencia"]),  # Activado
-            ("📋", "Reports", self.mostrar_reportes, ComponentesModernos.COLORES["peligro"]),
-            ("⚙️", "Settings", self.mostrar_configuracion, ComponentesModernos.COLORES["secundario"])
+            ("📊", "Panel", self.mostrar_dashboard, ComponentesModernos.COLORES["primario"]),
+            ("🔍", "Escaneo", self.mostrar_escaneo, "#ff6b35"),
+            ("🛡️", "Cuarentena", self.mostrar_cuarentena, "#dc3545"),
+            ("📡", "Monitoreo", self.mostrar_monitoreo, "#7b68ee"),
+            ("🛡️", "Protección", self.mostrar_proteccion, ComponentesModernos.COLORES["exito"]),
+            ("🔧", "Herramientas", self.mostrar_herramientas, ComponentesModernos.COLORES["advertencia"]),
+            ("📋", "Reportes", self.mostrar_reportes, ComponentesModernos.COLORES["peligro"]),
+            ("⚙️", "Configuración", self.mostrar_configuracion, ComponentesModernos.COLORES["secundario"])
         ]
         
         for i in range(len(nav_items)):
@@ -557,7 +564,7 @@ class InterfazModernaBase:
         
         subtitle_label = tk.Label(
             title_frame,
-            text="Panel de control principal - Monitoreo en tiempo real",
+            text="Panel principal de control y monitoreo en tiempo real",
             font=("Segoe UI", 12),
             bg=ComponentesModernos.COLORES["bg_principal"],
             fg=ComponentesModernos.COLORES["texto_secundario"]
@@ -613,7 +620,7 @@ class InterfazModernaBase:
                 "valor": self.stats_data["ultima_actualizacion"],
                 "icono": "🔄",
                 "color": ComponentesModernos.COLORES["advertencia"],
-                "cambio": "2h ago"
+                "cambio": "hace 2h"
             }
         ]
         
@@ -903,7 +910,7 @@ class InterfazModernaBase:
         # Acciones principales
         acciones = [
             {
-                "titulo": "Scan Completo",
+                "titulo": "Escaneo Completo",
                 "descripcion": "Escanear todo el sistema",
                 "icono": "🔍",
                 "comando": self.mostrar_escaneo,
@@ -912,7 +919,7 @@ class InterfazModernaBase:
             },
             {
                 "titulo": "Actualizar BD",
-                "descripcion": "Firmas y definiciones",
+                "descripcion": "Actualizar firmas y definiciones",
                 "icono": "🔄",
                 "comando": self.actualizar_firmas,
                 "color": ComponentesModernos.COLORES["exito"],
@@ -920,15 +927,15 @@ class InterfazModernaBase:
             },
             {
                 "titulo": "Reportes",
-                "descripcion": "Generar informe",
+                "descripcion": "Generar informe de seguridad",
                 "icono": "📊",
                 "comando": self.mostrar_reportes,
                 "color": ComponentesModernos.COLORES["advertencia"],
                 "posicion": (1, 0)
             },
             {
-                "titulo": "Configurar",
-                "descripcion": "Ajustar parámetros",
+                "titulo": "Configuración",
+                "descripcion": "Ajustar parámetros del sistema",
                 "icono": "⚙️",
                 "comando": self.mostrar_configuracion,
                 "color": ComponentesModernos.COLORES["secundario"],
@@ -1008,42 +1015,39 @@ class InterfazModernaBase:
     def actualizar_dashboard(self):
         """Actualizar datos del dashboard"""
     def actualizar_dashboard_datos(self):
-        """Actualizar datos del dashboard automáticamente"""
+        """Actualizar datos del dashboard automáticamente y en tiempo real"""
         try:
             if self.controlador:
-                # Obtener datos reales del controlador
                 datos_dashboard = self.controlador.obtener_datos_dashboard()
-                
-                # Actualizar estadísticas en la interfaz
-                if self.stats_widgets:
-                    # Actualizar contadores principales
-                    componentes_activos = sum(datos_dashboard.get("componentes_activos", {}).values())
-                    alertas_criticas = datos_dashboard.get("alertas_criticas", 0)
-                    
-                    # Simular otros datos para el dashboard
-                    archivos_escaneados = datos_dashboard.get("estadisticas", {}).get("archivos_procesados", 0)
-                    amenazas_detectadas = datos_dashboard.get("estadisticas", {}).get("amenazas_detectadas", 0)
-                    
-                    # Actualizar widgets si existen
+                # Actualizar stats_data para las tarjetas principales
+                self.stats_data["amenazas_detectadas"] = datos_dashboard.get("estadisticas", {}).get("amenazas_detectadas", 0)
+                self.stats_data["archivos_escaneados"] = datos_dashboard.get("estadisticas", {}).get("archivos_procesados", 0)
+                self.stats_data["sistema_protegido"] = datos_dashboard.get("estadisticas", {}).get("porcentaje_proteccion", "98.5%")
+                self.stats_data["ultima_actualizacion"] = datos_dashboard.get("timestamp", "Hoy")
+
+                # Si existen widgets de métricas, actualizarlos
+                if hasattr(self, 'stats_widgets') and self.stats_widgets:
                     for widget_name, widget in self.stats_widgets.items():
-                        if widget_name == "componentes" and hasattr(widget, 'config'):
-                            widget.config(text=str(componentes_activos))
-                        elif widget_name == "alertas" and hasattr(widget, 'config'):
-                            widget.config(text=str(alertas_criticas))
+                        if widget_name == "amenazas" and hasattr(widget, 'config'):
+                            widget.config(text=str(self.stats_data["amenazas_detectadas"]))
                         elif widget_name == "archivos" and hasattr(widget, 'config'):
-                            widget.config(text=str(archivos_escaneados))
-                        elif widget_name == "amenazas" and hasattr(widget, 'config'):
-                            widget.config(text=str(amenazas_detectadas))
-                
+                            widget.config(text=str(self.stats_data["archivos_escaneados"]))
+                        elif widget_name == "sistema_protegido" and hasattr(widget, 'config'):
+                            widget.config(text=str(self.stats_data["sistema_protegido"]))
+                        elif widget_name == "ultima_actualizacion" and hasattr(widget, 'config'):
+                            widget.config(text=str(self.stats_data["ultima_actualizacion"]))
+
+                # Si hay widgets de alertas recientes, refrescarlos aquí si es necesario
+                # (Opcional: implementar lógica para refrescar lista de alertas si se usan widgets dedicados)
+
                 self.logger.debug("Dashboard actualizado con datos reales")
-            
+
             # Programar siguiente actualización
             if self.root:
                 self.root.after(30000, self.actualizar_dashboard_datos)  # 30 segundos
-                
+
         except Exception as e:
             self.logger.error(f"Error actualizando dashboard: {e}")
-            # Programar siguiente actualización incluso si hay error
             if self.root:
                 self.root.after(30000, self.actualizar_dashboard_datos)
     
@@ -1370,6 +1374,125 @@ class InterfazModernaBase:
             messagebox.showerror("Error", f"Error generando reporte de cuarentena: {str(e)}")
     
     def mostrar_configuracion(self):
+        """Mostrar interfaz de configuración del sistema"""
+        self.limpiar_contenido()
+        config_container = tk.Frame(self.content_frame, bg=ComponentesModernos.COLORES["bg_principal"])
+        config_container.pack(fill="both", expand=True, padx=30, pady=20)
+
+        # Header
+        header_frame = tk.Frame(config_container, bg=ComponentesModernos.COLORES["bg_principal"])
+        header_frame.pack(fill="x", pady=(0, 25))
+        title_label = tk.Label(
+            header_frame,
+            text="⚙️ Configuración del Sistema",
+            font=("Segoe UI", 24, "bold"),
+            bg=ComponentesModernos.COLORES["bg_principal"],
+            fg=ComponentesModernos.COLORES["texto_primario"]
+        )
+        title_label.pack(side="left")
+
+        # Panel de opciones principales
+        opciones_frame = tk.Frame(config_container, bg=ComponentesModernos.COLORES["bg_principal"])
+        opciones_frame.pack(fill="x", pady=(0, 25))
+        for i in range(2):
+            opciones_frame.columnconfigure(i, weight=1, uniform="config")
+
+        # Opciones de configuración
+        opciones = [
+            {
+                "titulo": "Actualizar Base de Firmas",
+                "descripcion": "Descargar e instalar las últimas firmas de amenazas.",
+                "comando": self.actualizar_firmas,
+                "columna": 0
+            },
+            {
+                "titulo": "Restablecer Configuración",
+                "descripcion": "Restaurar los valores predeterminados del sistema.",
+                "comando": self.restablecer_configuracion,
+                "columna": 1
+            },
+            {
+                "titulo": "Limpiar Archivos Temporales",
+                "descripcion": "Eliminar archivos temporales y cachés para liberar espacio.",
+                "comando": self.limpiar_archivos_temporales,
+                "columna": 0
+            },
+            {
+                "titulo": "Verificar Integridad",
+                "descripcion": "Ejecutar verificación de integridad del sistema.",
+                "comando": self.verificar_integridad,
+                "columna": 1
+            }
+        ]
+        for i, opcion in enumerate(opciones):
+            row = i // 2
+            col = opcion["columna"]
+            opciones_frame.rowconfigure(row, weight=1, uniform="config")
+            card_container, card_content = ComponentesModernos.crear_card_moderna(
+                opciones_frame, opcion["titulo"], opcion["descripcion"]
+            )
+            card_container.grid(row=row, column=col, sticky="nsew", padx=8, pady=8)
+            ComponentesModernos.crear_boton_moderno(
+                card_content, "Ejecutar", opcion["comando"], "outline"
+            ).pack(pady=10)
+
+        # Área de logs/configuración avanzada
+        logs_container, logs_content = ComponentesModernos.crear_card_moderna(
+            config_container, "📝 Registro de Configuración", "Últimas acciones y eventos"
+        )
+        logs_container.pack(fill="both", expand=True)
+        text_frame = tk.Frame(logs_content, bg=logs_content.cget('bg'))
+        text_frame.pack(fill="both", expand=True, pady=10)
+        self.config_log_text = tk.Text(
+            text_frame,
+            wrap=tk.WORD,
+            font=("Consolas", 10),
+            bg=ComponentesModernos.COLORES["bg_secundario"],
+            fg=ComponentesModernos.COLORES["texto_secundario"],
+            relief="flat",
+            padx=15,
+            pady=15,
+            height=10
+        )
+        scrollbar = tk.Scrollbar(text_frame)
+        scrollbar.pack(side="right", fill="y")
+        self.config_log_text.pack(side="left", fill="both", expand=True)
+        self.config_log_text.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.config_log_text.yview)
+        # Mostrar logs iniciales si existen
+        self.mostrar_logs_configuracion()
+
+    def restablecer_configuracion(self):
+        """Restablecer la configuración del sistema a valores predeterminados"""
+        try:
+            messagebox.showwarning("No implementado", "Funcionalidad no disponible en este módulo.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al restablecer configuración: {str(e)}")
+
+    def limpiar_archivos_temporales(self):
+        """Limpiar archivos temporales y cachés"""
+        try:
+            messagebox.showwarning("No implementado", "Funcionalidad no disponible en este módulo.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al limpiar archivos temporales: {str(e)}")
+
+    def verificar_integridad(self):
+        """Verificar la integridad del sistema"""
+        try:
+            messagebox.showwarning("No implementado", "Funcionalidad no disponible en este módulo.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error al verificar integridad: {str(e)}")
+
+    def mostrar_logs_configuracion(self):
+        """Mostrar logs recientes de configuración si existen"""
+        try:
+            if hasattr(self, 'config_log_text'):
+                self.config_log_text.delete(1.0, tk.END)
+                # No hay método para obtener logs, mostrar mensaje por defecto
+                self.config_log_text.insert(tk.END, "No hay logs de configuración recientes.\n")
+        except Exception as e:
+            if hasattr(self, 'config_log_text'):
+                self.config_log_text.insert(tk.END, f"Error mostrando logs: {str(e)}\n")
         """Mostrar interfaz de configuración"""
         self.limpiar_contenido()
         

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-07T11:04:23.976039",
+  "timestamp": "2025-07-07T16:09:47.282091",
   "software": [
     {
       "nombre": "0trace",
@@ -6285,6 +6285,17 @@
     {
       "nombre": "git",
       "version": "1:2.47.2-0.2",
+      "vendor": "debian",
+      "tipo": "package",
+      "origen": "dpkg",
+      "instalacion_fecha": null,
+      "metadatos": {
+        "status": "install ok installed"
+      }
+    },
+    {
+      "nombre": "git-filter-repo",
+      "version": "2.47.0-2",
       "vendor": "debian",
       "tipo": "package",
       "origen": "dpkg",
