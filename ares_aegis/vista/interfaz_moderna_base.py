@@ -7,8 +7,12 @@ Sistema Principal con Dashboard, Escaneo y Cuarentena
 """
 
 import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
+from tkinter import ttk, filedialog, messagebox
 import logging
+from ..controladores.controlador_alertas import ControladorAlertas
+from ..modelos.alerta import Alerta, SeveridadAlerta, TipoAlerta
+import platform
+import subprocess
 import os
 import threading
 import time
@@ -23,10 +27,50 @@ from .interfaz_moderna_herramientas import InterfazModernaHerramientas
 
 
 class InterfazModernaBase:
+    def mostrar_resumen_alertas(self):
+        """Muestra un resumen visual de alertas por severidad y tipo."""
+        resumen = "Resumen de Alertas:\n"
+        for sev in SeveridadAlerta:
+            total = self.controlador_alertas.total_por_severidad(sev)
+            resumen += f"- {sev.name.title()}: {total}\n"
+        resumen += "\nPor Tipo:\n"
+        for tipo in TipoAlerta:
+            total = self.controlador_alertas.total_por_tipo(tipo)
+            resumen += f"- {tipo.name.title()}: {total}\n"
+        # Aquí puedes mostrar el resumen en un panel, label o cuadro de texto de la interfaz
+        print(resumen)  # Sustituir por lógica de UI
+    def mostrar_confirmacion(self, mensaje, titulo="Confirmar acción"):
+        """Muestra un diálogo modal de confirmación (sí/no) y retorna True/False"""
+        respuesta = {'valor': False}
+        if self.root is None:
+            raise RuntimeError("La ventana principal (self.root) no está inicializada.")
+        win = tk.Toplevel(self.root)
+        win.title(titulo)
+        win.transient(self.root)
+        win.grab_set()
+        win.geometry("300x140")
+        win.resizable(False, False)
+        win.configure(bg="#23272e")
+        label = tk.Label(win, text=mensaje, bg="#23272e", fg="#fff", font=("Segoe UI", 10), wraplength=260)
+        label.pack(pady=18, padx=18)
+        frame = tk.Frame(win, bg="#23272e")
+        frame.pack(pady=8)
+        def aceptar():
+            respuesta['valor'] = True
+            win.destroy()
+        def cancelar():
+            respuesta['valor'] = False
+            win.destroy()
+        btn_si = tk.Button(frame, text="Sí", width=10, command=aceptar, bg="#69db7c", fg="#23272e", font=("Segoe UI", 9, "bold"))
+        btn_si.pack(side="left", padx=10)
+        btn_no = tk.Button(frame, text="No", width=10, command=cancelar, bg="#ff6b6b", fg="#23272e", font=("Segoe UI", 9, "bold"))
+        btn_no.pack(side="right", padx=10)
+        self.root.wait_window(win)
+        return respuesta['valor']
     def parar_escaneo(self):
         """Detener cualquier escaneo en curso y limpiar la caché de escaneos."""
         if not self.controlador:
-            messagebox.showwarning("Error", "Controlador no disponible")
+            self.mostrar_alerta("Controlador no disponible", tipo="advertencia")
             return
         exito_cancelar = False
         exito_cache = False
@@ -36,15 +80,15 @@ class InterfazModernaBase:
             if hasattr(self.controlador, 'limpiar_cache_escaneos'):
                 exito_cache = self.controlador.limpiar_cache_escaneos()
             if exito_cancelar:
-                messagebox.showinfo("Escaneo detenido", "El escaneo en curso ha sido detenido correctamente.")
+                self.mostrar_alerta("El escaneo en curso ha sido detenido correctamente.", tipo="info")
             else:
-                messagebox.showwarning("Sin escaneo activo", "No hay escaneo en curso o no se pudo cancelar.")
+                self.mostrar_alerta("No hay escaneo en curso o no se pudo cancelar.", tipo="advertencia")
             if exito_cache:
-                messagebox.showinfo("Caché limpiada", "La caché de escaneos ha sido limpiada correctamente.")
+                self.mostrar_alerta("La caché de escaneos ha sido limpiada correctamente.", tipo="info")
             else:
-                messagebox.showwarning("Caché no limpiada", "No se pudo limpiar la caché de escaneos.")
+                self.mostrar_alerta("No se pudo limpiar la caché de escaneos.", tipo="advertencia")
         except Exception as e:
-            messagebox.showerror("Error", f"Error al detener escaneo o limpiar caché:\n{str(e)}")
+            self.mostrar_alerta(f"Error al detener escaneo o limpiar caché:\n{str(e)}", tipo="critico")
     """Interfaz principal moderna de Ares Aegis con UX profesional"""
     
     def __init__(self):
@@ -82,6 +126,11 @@ class InterfazModernaBase:
         self.boton_escaneo_rapido = None
         self.boton_escaneo_completo = None
         self.boton_escaneo_personalizado = None
+        # Controlador de alertas centralizado (MVC)
+        self.controlador_alertas = ControladorAlertas()
+        # Bandeja de alertas flotantes
+        from .bandeja_alertas_flotantes import BandejaAlertasFlotantes
+        self.bandeja_alertas = BandejaAlertasFlotantes(self.root)
         self.logger.info("Interfaz Moderna Base inicializada correctamente")
         # Configurar el icono de la aplicación
         self.configurar_icono()
@@ -96,16 +145,41 @@ class InterfazModernaBase:
             self.logger.warning(f"No se pudo inicializar herramientas modernas: {e}")
         # Mostrar el dashboard automáticamente al iniciar
         self.mostrar_dashboard()
+
+    def mostrar_alerta(self, mensaje, tipo="info", duracion=5000, fuente="sistema", datos=None):
+        """Muestra una alerta flotante moderna y la registra en el controlador de alertas"""
+        # Mapear tipo a SeveridadAlerta
+        tipo_map = {
+            "critico": SeveridadAlerta.CRITICO,
+            "alto": SeveridadAlerta.ALTO,
+            "advertencia": SeveridadAlerta.ALTO,
+            "medio": SeveridadAlerta.MEDIO,
+            "bajo": SeveridadAlerta.BAJO,
+            "info": SeveridadAlerta.INFO
+        }
+        severidad = tipo_map.get(tipo, SeveridadAlerta.INFO)
+        # Determinar tipo lógico
+        tipo_alerta = TipoAlerta.OTRO
+        if datos and "tipo_alerta" in datos:
+            try:
+                tipo_alerta = TipoAlerta(datos["tipo_alerta"])
+            except Exception:
+                tipo_alerta = TipoAlerta.OTRO
+        alerta = self.controlador_alertas.crear_alerta(mensaje, tipo_alerta, severidad, fuente, datos)
+        if hasattr(self, 'bandeja_alertas'):
+            self.bandeja_alertas.mostrar_alerta(mensaje, tipo, duracion)
+        else:
+            print(f"ALERTA [{tipo}]: {mensaje}")
     
     def eliminar_archivo(self):
         """Eliminar archivo de cuarentena (real y robusto)."""
         if not hasattr(self, 'listbox_cuarentena') or self.listbox_cuarentena is None:
-            messagebox.showwarning("Error", "Lista de cuarentena no disponible")
+            self.mostrar_alerta("Lista de cuarentena no disponible", tipo="advertencia")
             return
         try:
             selection = self.listbox_cuarentena.curselection()
             if not selection:
-                messagebox.showwarning("Selección", "Por favor seleccione un archivo para eliminar")
+                self.mostrar_alerta("Por favor seleccione un archivo para eliminar", tipo="advertencia")
                 return
             indice = selection[0]
             if hasattr(self, 'archivos_cuarentena_data') and self.archivos_cuarentena_data:
@@ -113,34 +187,34 @@ class InterfazModernaBase:
                     archivo_data = self.archivos_cuarentena_data[indice]
                     archivo_id = archivo_data.get("id", archivo_data.get("archivo_id", None))
                     nombre_archivo = archivo_data.get("nombre", archivo_data.get("nombre_archivo", "Archivo desconocido"))
-                    respuesta = messagebox.askyesno(
-                        "Eliminar archivo",
-                        f"¿Está seguro que desea eliminar permanentemente:\n{nombre_archivo}?\n\nEsta acción NO se puede deshacer."
+                    respuesta = self.mostrar_confirmacion(
+                        f"¿Está seguro que desea eliminar permanentemente:\n{nombre_archivo}?\n\nEsta acción NO se puede deshacer.",
+                        "Eliminar archivo"
                     )
                     cuarentena_ctrl = getattr(self.controlador, 'controlador_cuarentena', None) if hasattr(self, 'controlador') and self.controlador else None
                     if respuesta and cuarentena_ctrl and hasattr(cuarentena_ctrl, 'eliminar_archivo_cuarentena'):
                         try:
                             resultado = cuarentena_ctrl.eliminar_archivo_cuarentena(archivo_id, confirmar=True)
                             if isinstance(resultado, dict) and resultado.get('exitoso'):
-                                messagebox.showinfo("Eliminado", f"Archivo eliminado correctamente: {nombre_archivo}")
+                                self.mostrar_alerta(f"Archivo eliminado correctamente: {nombre_archivo}", tipo="info")
                                 self.actualizar_cuarentena()
                             else:
                                 error_msg = resultado.get('error', 'No se pudo eliminar el archivo') if isinstance(resultado, dict) else 'No se pudo eliminar el archivo'
-                                messagebox.showerror("Error", f"No se pudo eliminar el archivo: {error_msg}")
+                                self.mostrar_alerta(f"No se pudo eliminar el archivo: {error_msg}", tipo="critico")
                         except Exception as e:
                             if hasattr(self, 'logger'):
                                 self.logger.error(f"Error eliminando archivo: {e}")
-                            messagebox.showerror("Error", f"Error eliminando archivo: {str(e)}")
+                            self.mostrar_alerta(f"Error eliminando archivo: {str(e)}", tipo="critico")
                     elif respuesta:
-                        messagebox.showwarning("Error", "Controlador de cuarentena no disponible")
+                        self.mostrar_alerta("Controlador de cuarentena no disponible", tipo="advertencia")
                 else:
-                    messagebox.showwarning("Error", "Índice de archivo fuera de rango")
+                    self.mostrar_alerta("Índice de archivo fuera de rango", tipo="advertencia")
             else:
-                messagebox.showwarning("Error", "No hay datos de archivos disponibles")
+                self.mostrar_alerta("No hay datos de archivos disponibles", tipo="advertencia")
         except Exception as e:
             if hasattr(self, 'logger'):
                 self.logger.error(f"Error eliminando archivo: {e}")
-            messagebox.showerror("Error", f"Error eliminando archivo: {str(e)}")
+            self.mostrar_alerta(f"Error eliminando archivo: {str(e)}", tipo="critico")
         try:
             if self.root is not None:
                 self.root.attributes('-alpha', 0.98)
@@ -244,7 +318,7 @@ class InterfazModernaBase:
         if hasattr(self, 'status_label'):
             self.status_label.config(text="ERROR SISTEMA", fg=ComponentesModernos.COLORES["inactivo"])
         self.logger.error(f"Error en controlador: {error}")
-        messagebox.showerror("Error", f"Error inicializando controlador:\n{str(error)}")
+        self.mostrar_alerta(f"Error inicializando controlador:\n{str(error)}", tipo="critico")
     
     def configurar_interfaz(self):
         """Configurar la estructura principal de la interfaz"""
@@ -518,7 +592,7 @@ class InterfazModernaBase:
                 self.root.mainloop()
         except Exception as e:
             self.logger.error(f"Error ejecutando aplicación: {e}")
-            messagebox.showerror("Error Fatal", f"Error ejecutando aplicación:\n{str(e)}")
+            self.mostrar_alerta(f"Error ejecutando aplicación:\n{str(e)}", tipo="critico")
     
     # ============================================================================
     # SECCIONES PRINCIPALES DE LA APLICACIÓN
@@ -724,109 +798,73 @@ class InterfazModernaBase:
             day_label.pack()
     
     def crear_alertas_recientes(self, parent):
-        """Crear panel de alertas recientes"""
+        """Crear panel de alertas recientes usando el controlador de alertas"""
         card_container, content = ComponentesModernos.crear_card_moderna(
             parent, "🚨 Centro de Alertas", "Monitoreo en tiempo real"
         )
         card_container.grid(row=0, column=1, sticky="nsew", padx=(10, 0), pady=(0, 10))
-        
+
         # Scrollable container
         canvas = tk.Canvas(content, bg=content.cget('bg'), highlightthickness=0)
         scrollbar = tk.Scrollbar(content, orient="vertical", command=canvas.yview)
         scrollable_frame = tk.Frame(canvas, bg=content.cget('bg'))
-        
-        # Configurar scroll
         scrollable_frame.bind(
             "<Configure>",
             lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
         )
-        
         canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
-        
-        # Pack scroll elements
         canvas.pack(side="left", fill="both", expand=True, padx=5, pady=5)
         scrollbar.pack(side="right", fill="y")
-        
-        # Lista de alertas
-        alertas = [
-            {
-                "tipo": "CRÍTICO",
-                "icono": "🔴",
-                "titulo": "Intrusión Detectada",
-                "descripcion": "Conexión SSH no autorizada desde 192.168.1.100",
-                "tiempo": "hace 2 min",
-                "severidad": "critico"
-            },
-            {
-                "tipo": "ALERTA",
-                "icono": "🟡",
-                "titulo": "Proceso Sospechoso",
-                "descripcion": "PowerShell ejecutando scripts en segundo plano",
-                "tiempo": "hace 8 min",
-                "severidad": "alto"
-            },
-            {
-                "tipo": "INFO",
-                "icono": "🟢",
-                "titulo": "Amenaza Bloqueada",
-                "descripcion": "Malware eliminado automáticamente",
-                "tiempo": "hace 15 min",
-                "severidad": "bajo"
-            }
-        ]
-        
-        # Colores por severidad
+
+        # Obtener alertas recientes del controlador
+        alertas = self.controlador_alertas.obtener_alertas(limite=10)
         colores_severidad = {
             "critico": {"bg": "#2d1b1b", "border": ComponentesModernos.COLORES["peligro"], "text": "#ff6b6b"},
             "alto": {"bg": "#2d251b", "border": ComponentesModernos.COLORES["advertencia"], "text": "#ffd93d"},
-            "bajo": {"bg": "#1b2d1f", "border": ComponentesModernos.COLORES["exito"], "text": "#69db7c"}
+            "medio": {"bg": "#2d2b1b", "border": "#ffd93d", "text": "#ffd93d"},
+            "bajo": {"bg": "#1b2d1f", "border": ComponentesModernos.COLORES["exito"], "text": "#69db7c"},
+            "info": {"bg": "#1b2330", "border": "#74b9ff", "text": "#74b9ff"}
         }
-        
+        iconos = {
+            "critico": "🔴", "alto": "🟡", "medio": "🟠", "bajo": "🟢", "info": "🔵"
+        }
         for alerta in alertas:
-            color_config = colores_severidad[alerta["severidad"]]
-            
-            # Container de la alerta
+            sev = alerta.severidad.value
+            color_config = colores_severidad.get(sev, colores_severidad["info"])
+            icono = iconos.get(sev, "🔵")
             alert_container = tk.Frame(scrollable_frame, bg=color_config["bg"], relief="solid", bd=1)
             alert_container.pack(fill="x", padx=3, pady=6)
-            
-            # Header
             header_frame = tk.Frame(alert_container, bg=color_config["bg"])
             header_frame.pack(fill="x", padx=12, pady=(10, 5))
-            
             type_label = tk.Label(
                 header_frame,
-                text=f"{alerta['icono']} {alerta['tipo']}",
+                text=f"{icono} {alerta.tipo.value.upper()}",
                 font=("Segoe UI", 9, "bold"),
                 bg=color_config["bg"],
                 fg=color_config["text"]
             )
             type_label.pack(side="left")
-            
             time_label = tk.Label(
                 header_frame,
-                text=alerta["tiempo"],
+                text=alerta.timestamp.strftime("%H:%M:%S"),
                 font=("Segoe UI", 8),
                 bg=color_config["bg"],
                 fg=ComponentesModernos.COLORES["texto_secundario"]
             )
             time_label.pack(side="right")
-            
-            # Título
             title_label = tk.Label(
                 alert_container,
-                text=alerta["titulo"],
+                text=alerta.mensaje,
                 font=("Segoe UI", 11, "bold"),
                 bg=color_config["bg"],
                 fg=ComponentesModernos.COLORES["texto_primario"],
                 anchor="w"
             )
             title_label.pack(fill="x", padx=12, pady=(0, 3))
-            
-            # Descripción
             desc_label = tk.Label(
                 alert_container,
-                text=alerta["descripcion"],
+                text=alerta.fuente,
                 font=("Segoe UI", 9),
                 bg=color_config["bg"],
                 fg="#c0c0c0",
@@ -836,59 +874,302 @@ class InterfazModernaBase:
             desc_label.pack(fill="x", padx=12, pady=(0, 10))
     
     def crear_estado_sistema(self, parent):
-        """Crear panel de estado del sistema"""
+        """Panel de estado del sistema con métricas avanzadas en tiempo real (solo librerías estándar)"""
         card_container, content = ComponentesModernos.crear_card_moderna(
             parent, "💻 Estado del Sistema", "Recursos en tiempo real"
         )
         card_container.grid(row=1, column=0, sticky="nsew", padx=(0, 10), pady=(10, 0))
-        
-        # Container principal centrado
-        system_container = tk.Frame(content, bg=content.cget('bg'))
-        system_container.pack(expand=True, fill="both", padx=20, pady=15)
-        
-        # Métricas del sistema
-        metricas = [("CPU", 45, ComponentesModernos.COLORES["primario"]), 
-                   ("RAM", 68, ComponentesModernos.COLORES["advertencia"]), 
-                   ("Disco", 82, ComponentesModernos.COLORES["peligro"])]
-        
-        for nombre, valor, color in metricas:
-            # Container de métrica
-            metric_container = tk.Frame(system_container, bg=content.cget('bg'))
-            metric_container.pack(fill="x", pady=12)
-            
-            # Header
+
+        self.system_container = tk.Frame(content, bg=content.cget('bg'))
+        self.system_container.pack(expand=True, fill="both", padx=20, pady=15)
+
+        # Widgets para actualizar
+        self.metricas_widgets = {}
+        metricas = [
+            ("CPU", ComponentesModernos.COLORES["primario"], True),
+            ("RAM", ComponentesModernos.COLORES["advertencia"], True),
+            ("Disco", ComponentesModernos.COLORES["peligro"], True),
+            ("Red (Subida)", "#00b894", False),
+            ("Red (Bajada)", "#0984e3", False),
+            ("Procesos Activos", "#fdcb6e", False),
+            ("Temperatura CPU", "#e17055", False),
+            ("Uptime", "#636e72", False),
+            ("Usuarios Conectados", "#6c5ce7", False)
+        ]
+        for nombre, color, es_barra in metricas:
+            metric_container = tk.Frame(self.system_container, bg=content.cget('bg'))
+            metric_container.pack(fill="x", pady=8)
             header_frame = tk.Frame(metric_container, bg=content.cget('bg'))
             header_frame.pack()
-            
             name_label = tk.Label(
-                header_frame, 
-                text=nombre, 
+                header_frame,
+                text=nombre,
                 font=("Segoe UI", 11, "bold"),
-                bg=content.cget('bg'), 
+                bg=content.cget('bg'),
                 fg=ComponentesModernos.COLORES["texto_primario"]
             )
             name_label.pack(side="left", padx=(0, 20))
-            
             value_label = tk.Label(
-                header_frame, 
-                text=f"{valor}%", 
+                header_frame,
+                text="-",
                 font=("Segoe UI", 11, "bold"),
-                bg=content.cget('bg'), 
+                bg=content.cget('bg'),
                 fg=color
             )
             value_label.pack(side="right")
-            
-            # Barra de progreso
-            progress_container = tk.Frame(metric_container, bg=content.cget('bg'))
-            progress_container.pack(fill="x", pady=(8, 0))
-            
-            progress_bg = tk.Frame(progress_container, bg=ComponentesModernos.COLORES["borde_principal"], height=12)
-            progress_bg.pack(fill="x")
-            
-            progress_width = int((valor / 100) * 200)
-            progress_bar = tk.Frame(progress_bg, bg=color, width=progress_width, height=12)
-            progress_bar.pack(side="left")
-            progress_bar.pack_propagate(False)
+            progress_bar = None
+            if es_barra:
+                progress_container = tk.Frame(metric_container, bg=content.cget('bg'))
+                progress_container.pack(fill="x", pady=(8, 0))
+                progress_bg = tk.Frame(progress_container, bg=ComponentesModernos.COLORES["borde_principal"], height=12)
+                progress_bg.pack(fill="x")
+                progress_bar = tk.Frame(progress_bg, bg=color, width=0, height=12)
+                progress_bar.pack(side="left")
+                progress_bar.pack_propagate(False)
+            self.metricas_widgets[nombre] = {
+                "value_label": value_label,
+                "progress_bar": progress_bar,
+                "color": color,
+                "es_barra": es_barra
+            }
+        # Estado previo de red para calcular velocidad
+        self._red_prev = self._obtener_red_bytes()
+        self._actualizar_metricas_sistema()
+
+    def _actualizar_metricas_sistema(self):
+        """Actualizar métricas avanzadas de sistema en tiempo real (solo librerías estándar)"""
+        cpu = self._obtener_cpu_percent()
+        ram = self._obtener_ram_percent()
+        disco = self._obtener_disco_percent()
+        red_actual = self._obtener_red_bytes()
+        procesos = self._obtener_procesos_activos()
+        temp = self._obtener_temperatura_cpu()
+        uptime = self._obtener_uptime()
+        usuarios = self._obtener_usuarios_conectados()
+
+        # Calcular velocidad de red
+        subida = bajada = 0
+        if self._red_prev and red_actual:
+            subida = max(0, int((red_actual[0] - self._red_prev[0]) / 2))  # bytes/s
+            bajada = max(0, int((red_actual[1] - self._red_prev[1]) / 2))
+        self._red_prev = red_actual
+
+        metricas = {
+            "CPU": f"{cpu}%",
+            "RAM": f"{ram}%",
+            "Disco": f"{disco}%",
+            "Red (Subida)": f"{self._formatear_bytes(subida)}/s",
+            "Red (Bajada)": f"{self._formatear_bytes(bajada)}/s",
+            "Procesos Activos": str(procesos),
+            "Temperatura CPU": temp,
+            "Uptime": uptime,
+            "Usuarios Conectados": str(usuarios)
+        }
+        barras = {
+            "CPU": cpu,
+            "RAM": ram,
+            "Disco": disco
+        }
+        for nombre, w in self.metricas_widgets.items():
+            valor = metricas.get(nombre, "-")
+            w["value_label"].config(text=valor)
+            if w["es_barra"] and nombre in barras:
+                width = int((barras[nombre] / 100) * 200)
+                w["progress_bar"].config(width=width)
+        # Actualizar cada 2 segundos
+        if hasattr(self, 'root') and self.root:
+            self.root.after(2000, self._actualizar_metricas_sistema)
+
+    def _obtener_red_bytes(self):
+        """Obtener bytes enviados y recibidos por la interfaz principal (Linux, solo estándar)"""
+        try:
+            if platform.system() == "Linux":
+                with open("/proc/net/dev", "r") as f:
+                    lines = f.readlines()[2:]
+                total_recv = total_sent = 0
+                for line in lines:
+                    if ":" in line:
+                        parts = line.split(":")[1].split()
+                        total_recv += int(parts[0])
+                        total_sent += int(parts[8])
+                return (total_sent, total_recv)
+            # Para Windows/Mac se puede implementar con netstat o similar si se requiere
+        except Exception:
+            pass
+        return (0, 0)
+
+    def _formatear_bytes(self, num):
+        """Formatear bytes a KB, MB, GB"""
+        for unidad in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if num < 1024:
+                return f"{num} {unidad}"
+            num = num / 1024
+        return f"{num:.1f} PB"
+
+    def _obtener_procesos_activos(self):
+        """Obtener número de procesos activos (solo estándar)"""
+        try:
+            if platform.system() == "Linux":
+                return len([d for d in os.listdir("/proc") if d.isdigit()])
+            elif platform.system() == "Windows":
+                result = subprocess.run(["tasklist"], capture_output=True, text=True)
+                return len([l for l in result.stdout.splitlines() if l and not l.startswith("Image")])
+            elif platform.system() == "Darwin":
+                result = subprocess.run(["ps", "-e"], capture_output=True, text=True)
+                return len(result.stdout.splitlines()) - 1
+        except Exception:
+            return 0
+
+    def _obtener_temperatura_cpu(self):
+        """Obtener temperatura de CPU si es posible (Linux, solo estándar)"""
+        try:
+            if platform.system() == "Linux":
+                # Intentar leer thermal_zone
+                for zone in os.listdir("/sys/class/thermal"):
+                    if zone.startswith("thermal_zone"):
+                        temp_path = f"/sys/class/thermal/{zone}/temp"
+                        if os.path.exists(temp_path):
+                            with open(temp_path) as f:
+                                temp = int(f.read().strip())
+                                if temp > 1000:
+                                    temp = temp / 1000.0
+                                return f"{temp:.1f}°C"
+            # Windows/Mac: no estándar sin librerías externas
+        except Exception:
+            pass
+        return "N/D"
+
+    def _obtener_uptime(self):
+        """Obtener uptime del sistema (solo estándar)"""
+        try:
+            if platform.system() == "Linux":
+                with open("/proc/uptime", "r") as f:
+                    segundos = float(f.readline().split()[0])
+                horas = int(segundos // 3600)
+                minutos = int((segundos % 3600) // 60)
+                return f"{horas}h {minutos}m"
+            elif platform.system() == "Windows":
+                result = subprocess.run(["net", "stats", "srv"], capture_output=True, text=True)
+                for line in result.stdout.splitlines():
+                    if "Statistics since" in line:
+                        # No es trivial calcular uptime exacto sin librerías externas
+                        return line.strip()
+            elif platform.system() == "Darwin":
+                result = subprocess.run(["sysctl", "-n", "kern.boottime"], capture_output=True, text=True)
+                # Se puede calcular con datetime si se requiere
+        except Exception:
+            pass
+        return "N/D"
+
+    def _obtener_usuarios_conectados(self):
+        """Obtener número de usuarios conectados (solo estándar)"""
+        try:
+            if platform.system() == "Linux":
+                result = subprocess.run(["who"], capture_output=True, text=True)
+                return len([l for l in result.stdout.splitlines() if l])
+            elif platform.system() == "Windows":
+                result = subprocess.run(["query", "user"], capture_output=True, text=True)
+                return len([l for l in result.stdout.splitlines() if l and not l.startswith("USERNAME")])
+            elif platform.system() == "Darwin":
+                result = subprocess.run(["who"], capture_output=True, text=True)
+                return len([l for l in result.stdout.splitlines() if l])
+        except Exception:
+            return 0
+
+    def _obtener_cpu_percent(self):
+        """Obtener uso de CPU en porcentaje (Linux, Mac, Windows, solo estándar)"""
+        try:
+            if platform.system() == "Linux":
+                # Leer /proc/stat dos veces y calcular diferencia
+                with open("/proc/stat", "r") as f:
+                    fields1 = f.readline().strip().split()[1:]
+                total1 = sum(map(int, fields1))
+                idle1 = int(fields1[3])
+                time.sleep(0.1)
+                with open("/proc/stat", "r") as f:
+                    fields2 = f.readline().strip().split()[1:]
+                total2 = sum(map(int, fields2))
+                idle2 = int(fields2[3])
+                total_diff = total2 - total1
+                idle_diff = idle2 - idle1
+                if total_diff == 0:
+                    return 0
+                cpu_percent = 100 - int(100 * idle_diff / total_diff)
+                return max(0, min(cpu_percent, 100))
+            elif platform.system() == "Windows":
+                # Usar wmic
+                result = subprocess.run(["wmic", "cpu", "get", "loadpercentage"], capture_output=True, text=True)
+                for line in result.stdout.splitlines():
+                    if line.strip().isdigit():
+                        return int(line.strip())
+                return 0
+            elif platform.system() == "Darwin":
+                # Usar top
+                result = subprocess.run(["top", "-l", "1", "-n", "0"], capture_output=True, text=True)
+                for line in result.stdout.splitlines():
+                    if "CPU usage" in line:
+                        parts = line.split(",")
+                        user = float(parts[0].split()[2].replace("%", ""))
+                        sys = float(parts[1].split()[0].replace("%", ""))
+                        return int(user + sys)
+                return 0
+        except Exception:
+            return 0
+
+    def _obtener_ram_percent(self):
+        """Obtener uso de RAM en porcentaje (Linux, Mac, Windows, solo estándar)"""
+        try:
+            if platform.system() == "Linux":
+                with open("/proc/meminfo", "r") as f:
+                    lines = f.readlines()
+                mem_total = int([l for l in lines if l.startswith("MemTotal")][0].split()[1])
+                mem_available = int([l for l in lines if l.startswith("MemAvailable")][0].split()[1])
+                used = mem_total - mem_available
+                percent = int(used * 100 / mem_total)
+                return max(0, min(percent, 100))
+            elif platform.system() == "Windows":
+                result = subprocess.run(["wmic", "OS", "get", "FreePhysicalMemory,TotalVisibleMemorySize", "/Value"], capture_output=True, text=True)
+                vals = {}
+                for line in result.stdout.splitlines():
+                    if "=" in line:
+                        k, v = line.split("=")
+                        vals[k.strip()] = int(v.strip())
+                total = vals.get("TotalVisibleMemorySize", 0)
+                free = vals.get("FreePhysicalMemory", 0)
+                used = total - free
+                percent = int(used * 100 / total) if total else 0
+                return max(0, min(percent, 100))
+            elif platform.system() == "Darwin":
+                result = subprocess.run(["vm_stat"], capture_output=True, text=True)
+                pages = {}
+                for line in result.stdout.splitlines():
+                    if ":" in line:
+                        k, v = line.split(":")
+                        pages[k.strip()] = int(v.strip().replace(".", ""))
+                page_size = 4096
+                free = pages.get("Pages free", 0) * page_size
+                active = pages.get("Pages active", 0) * page_size
+                inactive = pages.get("Pages inactive", 0) * page_size
+                speculative = pages.get("Pages speculative", 0) * page_size
+                wired = pages.get("Pages wired down", 0) * page_size
+                total = free + active + inactive + speculative + wired
+                used = active + inactive + wired
+                percent = int(used * 100 / total) if total else 0
+                return max(0, min(percent, 100))
+        except Exception:
+            return 0
+
+    def _obtener_disco_percent(self):
+        """Obtener uso de disco en porcentaje (solo estándar)"""
+        try:
+            st = os.statvfs("/")
+            total = st.f_blocks * st.f_frsize
+            free = st.f_bavail * st.f_frsize
+            used = total - free
+            percent = int(used * 100 / total) if total else 0
+            return max(0, min(percent, 100))
+        except Exception:
+            return 0
     
     def crear_acciones_recomendadas(self, parent):
         """Crear panel de acciones rápidas"""
@@ -1057,9 +1338,9 @@ class InterfazModernaBase:
             if self.controlador:
                 threading.Thread(target=self._actualizar_firmas_worker, daemon=True).start()
             else:
-                messagebox.showwarning("Error", "Controlador no inicializado")
+                self.mostrar_alerta("Controlador no inicializado", tipo="advertencia")
         except Exception as e:
-            messagebox.showerror("Error", f"Error actualizando firmas:\n{str(e)}")
+            self.mostrar_alerta(f"Error actualizando firmas:\n{str(e)}", tipo="critico")
     
     def _actualizar_firmas_worker(self):
         """Worker para actualizar firmas en segundo plano"""
@@ -1067,11 +1348,11 @@ class InterfazModernaBase:
             # Simular actualización
             time.sleep(2)
             if self.root:
-                self.root.after(0, lambda: messagebox.showinfo("Éxito", "Base de datos actualizada correctamente"))
+                self.root.after(0, lambda: self.mostrar_alerta("Base de datos actualizada correctamente", tipo="info"))
         except Exception as e:
             error_msg = str(e)
             if self.root:
-                self.root.after(0, lambda error_msg=error_msg: messagebox.showerror("Error", f"Error actualizando firmas:\n{error_msg}"))
+                self.root.after(0, lambda error_msg=error_msg: self.mostrar_alerta(f"Error actualizando firmas:\n{error_msg}", tipo="critico"))
     
     def mostrar_reportes(self):
         """Mostrar interfaz de reportes"""
@@ -1206,7 +1487,7 @@ class InterfazModernaBase:
         """Generar reporte completo del sistema"""
         try:
             if not self.controlador:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.mostrar_alerta("Controlador no disponible", tipo="advertencia")
                 return
             
             # Usar el método del controlador si existe
@@ -1227,16 +1508,16 @@ class InterfazModernaBase:
                 self.report_text.delete(1.0, tk.END)
                 self.report_text.insert(tk.END, reporte)
             
-            messagebox.showinfo("Completado", "Reporte completo generado correctamente")
+            self.mostrar_alerta("Reporte completo generado correctamente", tipo="info")
             
         except Exception as e:
-            messagebox.showerror("Error", f"Error generando reporte: {str(e)}")
+            self.mostrar_alerta(f"Error generando reporte: {str(e)}", tipo="critico")
     
     def generar_reporte_seguridad(self):
         """Generar reporte específico de seguridad"""
         try:
             if not self.controlador:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.mostrar_alerta("Controlador no disponible", tipo="advertencia")
                 return
             
             datos = self.controlador.obtener_datos_dashboard()
@@ -1266,16 +1547,16 @@ class InterfazModernaBase:
                 self.report_text.delete(1.0, tk.END)
                 self.report_text.insert(tk.END, reporte)
             
-            messagebox.showinfo("Completado", "Reporte de seguridad generado")
+            self.mostrar_alerta("Reporte de seguridad generado", tipo="info")
             
         except Exception as e:
-            messagebox.showerror("Error", f"Error generando reporte de seguridad: {str(e)}")
+            self.mostrar_alerta(f"Error generando reporte de seguridad: {str(e)}", tipo="critico")
     
     def generar_reporte_escaneos(self):
         """Generar reporte de escaneos"""
         try:
             if not self.controlador:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.mostrar_alerta("Controlador no disponible", tipo="advertencia")
                 return
             # Usar método del controlador si existe
             if hasattr(self.controlador, 'generar_reporte_escaneos'):
@@ -1301,15 +1582,15 @@ class InterfazModernaBase:
             if hasattr(self, 'report_text'):
                 self.report_text.delete(1.0, tk.END)
                 self.report_text.insert(tk.END, reporte)
-            messagebox.showinfo("Completado", "Reporte de escaneos generado")
+            self.mostrar_alerta("Reporte de escaneos generado", tipo="info")
         except Exception as e:
-            messagebox.showerror("Error", f"Error generando reporte de escaneos: {str(e)}")
+            self.mostrar_alerta(f"Error generando reporte de escaneos: {str(e)}", tipo="critico")
     
     def generar_reporte_monitoreo(self):
         """Generar reporte de monitoreo"""
         try:
             if not self.controlador:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.mostrar_alerta("Controlador no disponible", tipo="advertencia")
                 return
             # Usar método del controlador si existe
             if hasattr(self.controlador, 'generar_reporte_monitoreo'):
@@ -1332,15 +1613,15 @@ class InterfazModernaBase:
             if hasattr(self, 'report_text'):
                 self.report_text.delete(1.0, tk.END)
                 self.report_text.insert(tk.END, reporte)
-            messagebox.showinfo("Completado", "Reporte de monitoreo generado")
+            self.mostrar_alerta("Reporte de monitoreo generado", tipo="info")
         except Exception as e:
-            messagebox.showerror("Error", f"Error generando reporte de monitoreo: {str(e)}")
+            self.mostrar_alerta(f"Error generando reporte de monitoreo: {str(e)}", tipo="critico")
     
     def generar_reporte_cuarentena(self):
         """Generar reporte de cuarentena"""
         try:
             if not self.controlador:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.mostrar_alerta("Controlador no disponible", tipo="advertencia")
                 return
             
             lista_cuarentena = self.controlador.obtener_lista_cuarentena()
@@ -1368,10 +1649,10 @@ class InterfazModernaBase:
                 self.report_text.delete(1.0, tk.END)
                 self.report_text.insert(tk.END, reporte)
             
-            messagebox.showinfo("Completado", "Reporte de cuarentena generado")
+            self.mostrar_alerta("Reporte de cuarentena generado", tipo="info")
             
         except Exception as e:
-            messagebox.showerror("Error", f"Error generando reporte de cuarentena: {str(e)}")
+            self.mostrar_alerta(f"Error generando reporte de cuarentena: {str(e)}", tipo="critico")
     
     def mostrar_configuracion(self):
         """Mostrar interfaz de configuración del sistema"""
@@ -1465,23 +1746,23 @@ class InterfazModernaBase:
     def restablecer_configuracion(self):
         """Restablecer la configuración del sistema a valores predeterminados"""
         try:
-            messagebox.showwarning("No implementado", "Funcionalidad no disponible en este módulo.")
+            self.mostrar_alerta("Funcionalidad no disponible en este módulo.", tipo="advertencia")
         except Exception as e:
-            messagebox.showerror("Error", f"Error al restablecer configuración: {str(e)}")
+            self.mostrar_alerta(f"Error al restablecer configuración: {str(e)}", tipo="critico")
 
     def limpiar_archivos_temporales(self):
         """Limpiar archivos temporales y cachés"""
         try:
-            messagebox.showwarning("No implementado", "Funcionalidad no disponible en este módulo.")
+            self.mostrar_alerta("Funcionalidad no disponible en este módulo.", tipo="advertencia")
         except Exception as e:
-            messagebox.showerror("Error", f"Error al limpiar archivos temporales: {str(e)}")
+            self.mostrar_alerta(f"Error al limpiar archivos temporales: {str(e)}", tipo="critico")
 
     def verificar_integridad(self):
         """Verificar la integridad del sistema"""
         try:
-            messagebox.showwarning("No implementado", "Funcionalidad no disponible en este módulo.")
+            self.mostrar_alerta("Funcionalidad no disponible en este módulo.", tipo="advertencia")
         except Exception as e:
-            messagebox.showerror("Error", f"Error al verificar integridad: {str(e)}")
+            self.mostrar_alerta(f"Error al verificar integridad: {str(e)}", tipo="critico")
 
     def mostrar_logs_configuracion(self):
         """Mostrar logs recientes de configuración si existen"""
@@ -1653,13 +1934,13 @@ class InterfazModernaBase:
             if self.controlador and hasattr(self.controlador, 'guardar_configuracion'):
                 exito = self.controlador.guardar_configuracion()
                 if exito:
-                    messagebox.showinfo("Guardado", "Configuración guardada correctamente")
+                    self.mostrar_alerta("Configuración guardada correctamente", tipo="info")
                 else:
-                    messagebox.showerror("Error", "No se pudo guardar la configuración")
+                    self.mostrar_alerta("No se pudo guardar la configuración", tipo="critico")
             else:
-                messagebox.showwarning("Advertencia", "No hay controlador disponible para guardar configuración")
+                self.mostrar_alerta("No hay controlador disponible para guardar configuración", tipo="advertencia")
         except Exception as e:
-            messagebox.showerror("Error", f"Error guardando configuración: {str(e)}")
+            self.mostrar_alerta(f"Error guardando configuración: {str(e)}", tipo="critico")
     
     def recargar_configuracion(self):
         """Recargar configuración desde archivo usando el controlador"""
@@ -1667,13 +1948,13 @@ class InterfazModernaBase:
             if self.controlador and hasattr(self.controlador, 'recargar_configuracion'):
                 exito = self.controlador.recargar_configuracion()
                 if exito:
-                    messagebox.showinfo("Recargado", "Configuración recargada correctamente")
+                    self.mostrar_alerta("Configuración recargada correctamente", tipo="info")
                 else:
-                    messagebox.showerror("Error", "No se pudo recargar la configuración")
+                    self.mostrar_alerta("No se pudo recargar la configuración", tipo="critico")
             else:
-                messagebox.showwarning("Advertencia", "No hay controlador disponible para recargar configuración")
+                self.mostrar_alerta("No hay controlador disponible para recargar configuración", tipo="advertencia")
         except Exception as e:
-            messagebox.showerror("Error", f"Error recargando configuración: {str(e)}")
+            self.mostrar_alerta(f"Error recargando configuración: {str(e)}", tipo="critico")
         self.mostrar_configuracion()  # Refrescar la interfaz
     
     # Métodos placeholder para módulos avanzados (se sobrescriben en integración)
@@ -1683,10 +1964,10 @@ class InterfazModernaBase:
             if self.herramientas:
                 self.herramientas.mostrar_monitoreo()
             else:
-                messagebox.showwarning("Error", "Módulo de herramientas no inicializado")
+                self.mostrar_alerta("Módulo de herramientas no inicializado", tipo="advertencia")
         except Exception as e:
             self.logger.error(f"Error mostrando monitoreo: {e}")
-            messagebox.showerror("Error", f"Error al abrir monitoreo: {str(e)}")
+            self.mostrar_alerta(f"Error al abrir monitoreo: {str(e)}", tipo="critico")
     
     def mostrar_proteccion(self):
         """Mostrar interfaz de protección proactiva"""
@@ -1694,10 +1975,10 @@ class InterfazModernaBase:
             if self.herramientas:
                 self.herramientas.mostrar_proteccion()
             else:
-                messagebox.showwarning("Error", "Módulo de herramientas no inicializado")
+                self.mostrar_alerta("Módulo de herramientas no inicializado", tipo="advertencia")
         except Exception as e:
             self.logger.error(f"Error mostrando protección: {e}")
-            messagebox.showerror("Error", f"Error al abrir protección: {str(e)}")
+            self.mostrar_alerta(f"Error al abrir protección: {str(e)}", tipo="critico")
     
     def mostrar_herramientas(self):
         """Mostrar interfaz de herramientas especializadas"""
@@ -1705,10 +1986,10 @@ class InterfazModernaBase:
             if self.herramientas:
                 self.herramientas.mostrar_herramientas()
             else:
-                messagebox.showwarning("Error", "Módulo de herramientas no inicializado")
+                self.mostrar_alerta("Módulo de herramientas no inicializado", tipo="advertencia")
         except Exception as e:
             self.logger.error(f"Error mostrando herramientas: {e}")
-            messagebox.showerror("Error", f"Error al abrir herramientas: {str(e)}")
+            self.mostrar_alerta(f"Error al abrir herramientas: {str(e)}", tipo="critico")
     
     # ============================================================================
     # INTERFACES ESPECÍFICAS (CONTINUACIÓN EN ARCHIVOS SEPARADOS)
@@ -1961,7 +2242,7 @@ class InterfazModernaBase:
     def ejecutar_escaneo_rapido(self):
         """Ejecutar escaneo rápido real y robusto, con soporte de cancelación y cuarentena."""
         if not hasattr(self, 'controlador') or self.controlador is None:
-            messagebox.showwarning("Error", "Controlador no inicializado")
+            self.mostrar_alerta("Controlador no inicializado", tipo="advertencia")
             return
         self._cancelar_escaneo = False
         def actualizar_progreso(msg, prog, *args, **kwargs):
@@ -2005,10 +2286,10 @@ class InterfazModernaBase:
                     mensaje += f"• Archivos escaneados: {archivos}\n"
                     mensaje += f"• Amenazas detectadas: {amenazas}\n"
                     mensaje += f"• Tiempo transcurrido: {tiempo:.2f} segundos"
-                    self.root.after(0, lambda: messagebox.showinfo("Completado", mensaje))
+                    self.root.after(0, lambda: self.mostrar_alerta(mensaje, tipo="info"))
             except Exception as e:
                 if hasattr(self, 'root') and self.root:
-                    self.root.after(0, lambda: messagebox.showerror("Error", f"Error en escaneo: {str(e)}"))
+                    self.root.after(0, lambda: self.mostrar_alerta(f"Error en escaneo: {str(e)}", tipo="critico"))
                 if hasattr(self, 'logger'):
                     self.logger.error(f"Error en escaneo rápido: {e}")
         try:
@@ -2023,14 +2304,14 @@ class InterfazModernaBase:
         except Exception as e:
             error_msg = str(e)
             if hasattr(self, 'root') and self.root:
-                self.root.after(0, lambda error_msg=error_msg: messagebox.showerror("Error", f"Error en escaneo: {error_msg}"))
+                self.root.after(0, lambda error_msg=error_msg: self.mostrar_alerta(f"Error en escaneo: {error_msg}", tipo="critico"))
             if hasattr(self, 'logger'):
                 self.logger.error(f"Error lanzando hilo de escaneo: {e}")
 
     def ejecutar_escaneo_completo(self):
         """Ejecutar escaneo completo real y robusto"""
         if not hasattr(self, 'controlador') or self.controlador is None:
-            messagebox.showwarning("Error", "Controlador no inicializado")
+            self.mostrar_alerta("Controlador no inicializado", tipo="advertencia")
             return
         def actualizar_progreso(msg, prog, *args, **kwargs):
             try:
@@ -2058,7 +2339,7 @@ class InterfazModernaBase:
                     mensaje += f"• Archivos escaneados: {archivos}\n"
                     mensaje += f"• Amenazas detectadas: {amenazas}\n"
                     mensaje += f"• Tiempo transcurrido: {tiempo:.2f} segundos"
-                    self.root.after(0, lambda: messagebox.showinfo("Completado", mensaje))
+                    self.root.after(0, lambda: self.mostrar_alerta(mensaje, tipo="info"))
             except Exception as e:
                 if hasattr(self, 'root') and self.root:
                     self.root.after(0, lambda: messagebox.showerror("Error", f"Error en escaneo completo: {str(e)}"))
@@ -2134,18 +2415,18 @@ class InterfazModernaBase:
     
     def configurar_escaneo(self):
         """Configurar escaneo"""
-        messagebox.showinfo("Configuración", "Panel de configuración de escaneo en desarrollo")
+        self.mostrar_alerta("Panel de configuración de escaneo en desarrollo", tipo="info")
     
     def actualizar_cuarentena(self):
         """Actualizar cuarentena"""
         self.mostrar_cuarentena()
-        messagebox.showinfo("Actualizado", "Vista de cuarentena actualizada")
+        self.mostrar_alerta("Vista de cuarentena actualizada", tipo="info")
     
     def limpiar_cuarentena(self):
         """Limpiar cuarentena (real, usando el controlador)"""
-        respuesta = messagebox.askyesno(
-            "Limpiar Cuarentena",
-            "¿Está seguro que desea limpiar toda la cuarentena?\n\nEsta acción NO se puede deshacer."
+        respuesta = self.mostrar_confirmacion(
+            "¿Está seguro que desea limpiar toda la cuarentena?\n\nEsta acción NO se puede deshacer.",
+            "Limpiar Cuarentena"
         )
         if not respuesta:
             return
@@ -2155,32 +2436,32 @@ class InterfazModernaBase:
                 resultado = cuarentena_ctrl.limpiar_cuarentena(confirmar=True)
                 if isinstance(resultado, dict):
                     if resultado.get('exitoso'):
-                        messagebox.showinfo("Limpiado", "Cuarentena limpiada correctamente")
+                        self.mostrar_alerta("Cuarentena limpiada correctamente", tipo="info")
                         self.actualizar_cuarentena()
                     else:
                         error_msg = resultado.get('error', 'No se pudo limpiar la cuarentena')
-                        messagebox.showerror("Error", f"No se pudo limpiar la cuarentena: {error_msg}")
+                        self.mostrar_alerta(f"No se pudo limpiar la cuarentena: {error_msg}", tipo="critico")
                 elif resultado is True:
-                    messagebox.showinfo("Limpiado", "Cuarentena limpiada correctamente")
+                    self.mostrar_alerta("Cuarentena limpiada correctamente", tipo="info")
                     self.actualizar_cuarentena()
                 else:
-                    messagebox.showerror("Error", "No se pudo limpiar la cuarentena (resultado inesperado)")
+                    self.mostrar_alerta("No se pudo limpiar la cuarentena (resultado inesperado)", tipo="critico")
             except Exception as e:
                 if hasattr(self, 'logger'):
                     self.logger.error(f"Error limpiando cuarentena: {e}")
-                messagebox.showerror("Error", f"Error limpiando cuarentena: {str(e)}")
+                self.mostrar_alerta(f"Error limpiando cuarentena: {str(e)}", tipo="critico")
         else:
-            messagebox.showwarning("Error", "Controlador de cuarentena no disponible")
+            self.mostrar_alerta("Controlador de cuarentena no disponible", tipo="advertencia")
     
     def restaurar_archivo(self):
         """Restaurar archivo de cuarentena (real)."""
         if not hasattr(self, 'listbox_cuarentena') or self.listbox_cuarentena is None:
-            messagebox.showwarning("Error", "Lista de cuarentena no disponible")
+            self.mostrar_alerta("Lista de cuarentena no disponible", tipo="advertencia")
             return
         try:
             selection = self.listbox_cuarentena.curselection()
             if not selection:
-                messagebox.showwarning("Selección", "Por favor seleccione un archivo para restaurar")
+                self.mostrar_alerta("Por favor seleccione un archivo para restaurar", tipo="advertencia")
                 return
             indice = selection[0]
             if hasattr(self, 'archivos_cuarentena_data') and self.archivos_cuarentena_data:
@@ -2188,9 +2469,9 @@ class InterfazModernaBase:
                     archivo_data = self.archivos_cuarentena_data[indice]
                     archivo_id = archivo_data.get("id", archivo_data.get("archivo_id", None))
                     nombre_archivo = archivo_data.get("nombre", archivo_data.get("nombre_archivo", "Archivo desconocido"))
-                    respuesta = messagebox.askyesno(
-                        "Restaurar archivo",
-                        f"¿Está seguro que desea restaurar:\n{nombre_archivo}?\n\nEl archivo será devuelto a su ubicación original."
+                    respuesta = self.mostrar_confirmacion(
+                        f"¿Está seguro que desea restaurar:\n{nombre_archivo}?\n\nEl archivo será devuelto a su ubicación original.",
+                        "Restaurar archivo"
                     )
                     cuarentena_ctrl = getattr(self.controlador, 'controlador_cuarentena', None) if hasattr(self, 'controlador') and self.controlador else None
                     if respuesta and cuarentena_ctrl and hasattr(cuarentena_ctrl, 'restaurar_archivo'):
@@ -2198,28 +2479,28 @@ class InterfazModernaBase:
                             resultado = cuarentena_ctrl.restaurar_archivo(archivo_id)
                             if isinstance(resultado, dict):
                                 if resultado.get('exitoso'):
-                                    messagebox.showinfo("Restaurado", f"Archivo restaurado correctamente: {nombre_archivo}")
+                                    self.mostrar_alerta(f"Archivo restaurado correctamente: {nombre_archivo}", tipo="info")
                                     self.actualizar_cuarentena()
                                 else:
                                     error_msg = resultado.get('error', 'No se pudo restaurar el archivo')
-                                    messagebox.showerror("Error", f"No se pudo restaurar el archivo: {error_msg}")
+                                    self.mostrar_alerta(f"No se pudo restaurar el archivo: {error_msg}", tipo="critico")
                             elif resultado is True:
-                                messagebox.showinfo("Restaurado", f"Archivo restaurado correctamente: {nombre_archivo}")
+                                self.mostrar_alerta(f"Archivo restaurado correctamente: {nombre_archivo}", tipo="info")
                                 self.actualizar_cuarentena()
                             else:
-                                messagebox.showerror("Error", "No se pudo restaurar el archivo (resultado inesperado)")
+                                self.mostrar_alerta("No se pudo restaurar el archivo (resultado inesperado)", tipo="critico")
                         except Exception as e:
                             if hasattr(self, 'logger'):
                                 self.logger.error(f"Error restaurando archivo: {e}")
-                            messagebox.showerror("Error", f"Error restaurando archivo: {str(e)}")
+                            self.mostrar_alerta(f"Error restaurando archivo: {str(e)}", tipo="critico")
                     elif respuesta:
-                        messagebox.showwarning("Error", "Controlador de cuarentena no disponible")
+                        self.mostrar_alerta("Controlador de cuarentena no disponible", tipo="advertencia")
                 else:
-                    messagebox.showwarning("Error", "Índice de archivo fuera de rango")
+                    self.mostrar_alerta("Índice de archivo fuera de rango", tipo="advertencia")
             else:
-                messagebox.showwarning("Error", "No hay datos de archivos disponibles")
+                self.mostrar_alerta("No hay datos de archivos disponibles", tipo="advertencia")
         except Exception as e:
             if hasattr(self, 'logger'):
                 self.logger.error(f"Error restaurando archivo: {e}")
-            messagebox.showerror("Error", f"Error restaurando archivo: {str(e)}")
+            self.mostrar_alerta(f"Error restaurando archivo: {str(e)}", tipo="critico")
     

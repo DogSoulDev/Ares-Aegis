@@ -59,11 +59,11 @@ class InterfazModernaHerramientas:
             mensaje = "Monitoreo completo iniciado"
             if servicios_iniciados:
                 mensaje += f"\nServicios activos: {', '.join(servicios_iniciados)}"
-            messagebox.showinfo("Éxito", mensaje)
+            self.interfaz_base.mostrar_alerta(mensaje, tipo="info")
             self.mostrar_monitoreo()
         except Exception as e:
             self.logger.error(f"Error iniciando monitoreo: {e}")
-            messagebox.showerror("Error", f"Error iniciando monitoreo:\n{str(e)}")
+            self.interfaz_base.mostrar_alerta(f"Error iniciando monitoreo:\n{str(e)}", tipo="critico")
 
     def detener_monitoreo_completo(self):
         """Detener todos los módulos de monitoreo"""
@@ -105,11 +105,11 @@ class InterfazModernaHerramientas:
             mensaje = "Monitoreo completo detenido"
             if servicios_detenidos:
                 mensaje += f"\nServicios detenidos: {', '.join(servicios_detenidos)}"
-            messagebox.showinfo("Éxito", mensaje)
+            self.interfaz_base.mostrar_alerta(mensaje, tipo="info")
             self.mostrar_monitoreo()
         except Exception as e:
             self.logger.error(f"Error deteniendo monitoreo: {e}")
-            messagebox.showerror("Error", f"Error deteniendo monitoreo:\n{str(e)}")
+            self.interfaz_base.mostrar_alerta(f"Error deteniendo monitoreo:\n{str(e)}", tipo="critico")
     """Módulos avanzados de herramientas, monitoreo y protección"""
     
     def __init__(self, interfaz_base):
@@ -404,12 +404,12 @@ class InterfazModernaHerramientas:
                 
                 # Refrescar interfaz
                 self.mostrar_monitoreo()
-                messagebox.showinfo("Actualizado", "Datos de monitoreo actualizados")
+                self.interfaz_base.mostrar_alerta("Datos de monitoreo actualizados", tipo="info")
             else:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.interfaz_base.mostrar_alerta("Controlador no disponible", tipo="advertencia")
         except Exception as e:
             self.logger.error(f"Error actualizando monitoreo: {e}")
-            messagebox.showerror("Error", f"Error actualizando datos: {str(e)}")
+            self.interfaz_base.mostrar_alerta(f"Error actualizando datos: {str(e)}", tipo="critico")
     
     def obtener_eventos_red(self):
         """Obtener eventos de red"""
@@ -639,31 +639,31 @@ class InterfazModernaHerramientas:
                         resultado = self.controlador.detener_monitor_red()
                         if resultado.get("exito", True):
                             self.estados_monitor["monitor_red_activo"] = False
-                            messagebox.showinfo("Monitor de Red", "Monitor de red detenido exitosamente")
+                            self.interfaz_base.mostrar_alerta("Monitor de red detenido exitosamente", tipo="info")
                         else:
-                            messagebox.showerror("Error", f"Error deteniendo monitor: {resultado.get('error', 'Error desconocido')}")
+                            self.interfaz_base.mostrar_alerta(f"Error deteniendo monitor: {resultado.get('error', 'Error desconocido')}", tipo="critico")
                     else:
                         self.estados_monitor["monitor_red_activo"] = False
-                        messagebox.showinfo("Monitor de Red", "Monitor de red detenido")
+                        self.interfaz_base.mostrar_alerta("Monitor de red detenido", tipo="info")
                 else:
                     # Iniciar monitor
                     if hasattr(self.controlador, 'iniciar_monitor_red'):
                         resultado = self.controlador.iniciar_monitor_red()
                         if resultado.get("exito", True):
                             self.estados_monitor["monitor_red_activo"] = True
-                            messagebox.showinfo("Monitor de Red", "Monitor de red iniciado exitosamente")
+                            self.interfaz_base.mostrar_alerta("Monitor de red iniciado exitosamente", tipo="info")
                         else:
-                            messagebox.showerror("Error", f"Error iniciando monitor: {resultado.get('error', 'Error desconocido')}")
+                            self.interfaz_base.mostrar_alerta(f"Error iniciando monitor: {resultado.get('error', 'Error desconocido')}", tipo="critico")
                     else:
                         self.estados_monitor["monitor_red_activo"] = True
-                        messagebox.showinfo("Monitor de Red", "Monitor de red iniciado")
+                        self.interfaz_base.mostrar_alerta("Monitor de red iniciado", tipo="info")
                 # Refrescar interfaz y forzar actualización de datos
                 self.actualizar_datos_monitoreo()
             else:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.interfaz_base.mostrar_alerta("Controlador no disponible", tipo="advertencia")
         except Exception as e:
             self.logger.error(f"Error en toggle monitor de red: {e}")
-            messagebox.showerror("Error", f"Error en monitor de red: {str(e)}")
+            self.interfaz_base.mostrar_alerta(f"Error en monitor de red: {str(e)}", tipo="critico")
     
     def toggle_monitor_procesos(self):
         """Toggle monitor de procesos"""
@@ -675,31 +675,31 @@ class InterfazModernaHerramientas:
                         resultado = self.controlador.monitor_procesos.detener_monitoreo()
                         if resultado.get("exito", True):
                             self.estados_monitor["monitor_procesos_activo"] = False
-                            messagebox.showinfo("Monitor de Procesos", "Monitor de procesos detenido exitosamente")
+                            self.interfaz_base.mostrar_alerta("Monitor de procesos detenido exitosamente", tipo="info")
                         else:
-                            messagebox.showerror("Error", f"Error deteniendo monitor: {resultado.get('error', 'Error desconocido')}")
+                            self.interfaz_base.mostrar_alerta(f"Error deteniendo monitor: {resultado.get('error', 'Error desconocido')}", tipo="critico")
                     else:
                         self.estados_monitor["monitor_procesos_activo"] = False
-                        messagebox.showinfo("Monitor de Procesos", "Monitor de procesos detenido")
+                        self.interfaz_base.mostrar_alerta("Monitor de procesos detenido", tipo="info")
                 else:
                     # Iniciar monitor
                     if hasattr(self.controlador, 'monitor_procesos') and self.controlador.monitor_procesos:
                         resultado = self.controlador.monitor_procesos.iniciar_monitoreo()
                         if resultado.get("exito", True):
                             self.estados_monitor["monitor_procesos_activo"] = True
-                            messagebox.showinfo("Monitor de Procesos", "Monitor de procesos iniciado exitosamente")
+                            self.interfaz_base.mostrar_alerta("Monitor de procesos iniciado exitosamente", tipo="info")
                         else:
-                            messagebox.showerror("Error", f"Error iniciando monitor: {resultado.get('error', 'Error desconocido')}")
+                            self.interfaz_base.mostrar_alerta(f"Error iniciando monitor: {resultado.get('error', 'Error desconocido')}", tipo="critico")
                     else:
                         self.estados_monitor["monitor_procesos_activo"] = True
-                        messagebox.showinfo("Monitor de Procesos", "Monitor de procesos iniciado")
+                        self.interfaz_base.mostrar_alerta("Monitor de procesos iniciado", tipo="info")
                 # Refrescar interfaz y forzar actualización de datos
                 self.actualizar_datos_monitoreo()
             else:
-                messagebox.showwarning("Error", "Controlador no disponible")
+                self.interfaz_base.mostrar_alerta("Controlador no disponible", tipo="advertencia")
         except Exception as e:
             self.logger.error(f"Error en toggle monitor de procesos: {e}")
-            messagebox.showerror("Error", f"Error en monitor de procesos: {str(e)}")
+            self.interfaz_base.mostrar_alerta(f"Error en monitor de procesos: {str(e)}", tipo="critico")
     
     def toggle_fim(self):
         """Toggle FIM"""

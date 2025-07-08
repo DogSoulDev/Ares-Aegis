@@ -14006,5 +14006,2933 @@
     "eventos_relacionados": [],
     "hash_contexto": "70151974",
     "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161528-49984",
+    "timestamp": "2025-07-08T16:15:28.807154",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado con capacidades avanzadas",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json",
+      "motor_correlacion": true,
+      "max_eventos_memoria": 2000
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9b70a2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161528-92518",
+    "timestamp": "2025-07-08T16:15:28.855154",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de Cuarentena Avanzado inicializado correctamente",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena_avanzada",
+      "archivos_en_cuarentena": 0,
+      "analisis_automatico": true
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "42dcba03",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161528-96396",
+    "timestamp": "2025-07-08T16:15:28.882261",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM avanzado inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json",
+      "rutas_monitoreadas": 133,
+      "archivos_en_base_datos": 0
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7f7e7278",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161528-72649",
+    "timestamp": "2025-07-08T16:15:28.913794",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de analizadores especializados inicializado",
+    "detalles": {
+      "analizadores_disponibles": [
+        "cadenas"
+      ],
+      "analisis_simultaneos_maximos": 3
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "87134549",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-49984",
+    "timestamp": "2025-07-08T16:15:29.597433",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado con capacidades avanzadas",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json",
+      "motor_correlacion": true,
+      "max_eventos_memoria": 2000
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9b70a2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-03783",
+    "timestamp": "2025-07-08T16:15:29.621300",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de respuesta automatizada inicializado",
+    "detalles": {
+      "controlador": "respuesta_automatizada"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c9e40997",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-65547",
+    "timestamp": "2025-07-08T16:15:29.818673",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de incidentes inicializado",
+    "detalles": {
+      "controlador": "incidentes"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dace2361",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-38424",
+    "timestamp": "2025-07-08T16:15:29.851541",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Todos los componentes de Ares Aegis han despertado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed",
+        "MonitorProcesos",
+        "AnalizadorDinamico",
+        "AnalizadorArchivos",
+        "AnalizadorCadenas",
+        "AnalizadorComportamientoProcesos",
+        "AnalizadorComportamientoRed",
+        "EscaneadorVulnRed",
+        "EscaneadorVulnSistema",
+        "BuscadorCVE",
+        "IntegracionExterna",
+        "SistemaReportes",
+        "RespuestaAutomatizada",
+        "AnalizadorRegistros",
+        "RespondedorIncidentes",
+        "GestorCheatsheets",
+        "VisorHex",
+        "Descontaminacion"
+      ],
+      "total_componentes": 22,
+      "timestamp_inicio": "2025-07-08T16:15:29.851534"
+    },
+    "nivel_criticidad": "ALTO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "d9923e81",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-57311",
+    "timestamp": "2025-07-08T16:15:29.867317",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 1,
+      "timestamp_finalizacion": "2025-07-08T16:15:29.867316"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "1eb26805",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-92518",
+    "timestamp": "2025-07-08T16:15:29.942367",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de Cuarentena Avanzado inicializado correctamente",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena_avanzada",
+      "archivos_en_cuarentena": 0,
+      "analisis_automatico": true
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "42dcba03",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-96396",
+    "timestamp": "2025-07-08T16:15:29.963389",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM avanzado inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json",
+      "rutas_monitoreadas": 133,
+      "archivos_en_base_datos": 0
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7f7e7278",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161529-72649",
+    "timestamp": "2025-07-08T16:15:29.978491",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de analizadores especializados inicializado",
+    "detalles": {
+      "analizadores_disponibles": [
+        "cadenas"
+      ],
+      "analisis_simultaneos_maximos": 3
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "87134549",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-49984",
+    "timestamp": "2025-07-08T16:15:30.127639",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado con capacidades avanzadas",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json",
+      "motor_correlacion": true,
+      "max_eventos_memoria": 2000
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9b70a2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-03783",
+    "timestamp": "2025-07-08T16:15:30.143595",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de respuesta automatizada inicializado",
+    "detalles": {
+      "controlador": "respuesta_automatizada"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c9e40997",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-65547",
+    "timestamp": "2025-07-08T16:15:30.328034",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de incidentes inicializado",
+    "detalles": {
+      "controlador": "incidentes"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dace2361",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-38424",
+    "timestamp": "2025-07-08T16:15:30.360252",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Todos los componentes de Ares Aegis han despertado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed",
+        "MonitorProcesos",
+        "AnalizadorDinamico",
+        "AnalizadorArchivos",
+        "AnalizadorCadenas",
+        "AnalizadorComportamientoProcesos",
+        "AnalizadorComportamientoRed",
+        "EscaneadorVulnRed",
+        "EscaneadorVulnSistema",
+        "BuscadorCVE",
+        "IntegracionExterna",
+        "SistemaReportes",
+        "RespuestaAutomatizada",
+        "AnalizadorRegistros",
+        "RespondedorIncidentes",
+        "GestorCheatsheets",
+        "VisorHex",
+        "Descontaminacion"
+      ],
+      "total_componentes": 22,
+      "timestamp_inicio": "2025-07-08T16:15:30.360245"
+    },
+    "nivel_criticidad": "ALTO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "34532707",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-57311",
+    "timestamp": "2025-07-08T16:15:30.402997",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-08T16:15:30.402993"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ed901e11",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-92518",
+    "timestamp": "2025-07-08T16:15:30.461814",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de Cuarentena Avanzado inicializado correctamente",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena_avanzada",
+      "archivos_en_cuarentena": 0,
+      "analisis_automatico": true
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "42dcba03",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-96396",
+    "timestamp": "2025-07-08T16:15:30.499543",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM avanzado inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json",
+      "rutas_monitoreadas": 133,
+      "archivos_en_base_datos": 0
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7f7e7278",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-72649",
+    "timestamp": "2025-07-08T16:15:30.533481",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de analizadores especializados inicializado",
+    "detalles": {
+      "analizadores_disponibles": [
+        "cadenas"
+      ],
+      "analisis_simultaneos_maximos": 3
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "87134549",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-45261",
+    "timestamp": "2025-07-08T16:15:30.859749",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp/tmps9tfmwok",
+    "detalles": {
+      "tipo": "directorio",
+      "ruta": "/tmp/tmps9tfmwok"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c3741542",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-53280",
+    "timestamp": "2025-07-08T16:15:30.899425",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmps9tfmwok/test_file.txt",
+    "detalles": {
+      "ruta": "/tmp/tmps9tfmwok/test_file.txt",
+      "tamaño": 30
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "0fd4d417",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161530-52974",
+    "timestamp": "2025-07-08T16:15:30.928819",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio finalizado: /tmp/tmps9tfmwok",
+    "detalles": {
+      "archivos_escaneados": 1,
+      "amenazas_detectadas": 0,
+      "archivos_infectados": 0,
+      "tiempo_escaneo": 0.029561758041381836,
+      "tipo_escaneo": "directorio",
+      "ruta_escaneada": "/tmp/tmps9tfmwok"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "d8d618e3",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-92518",
+    "timestamp": "2025-07-08T16:15:31.037634",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de Cuarentena Avanzado inicializado correctamente",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena_avanzada",
+      "archivos_en_cuarentena": 0,
+      "analisis_automatico": true
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "42dcba03",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-96396",
+    "timestamp": "2025-07-08T16:15:31.081469",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM avanzado inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json",
+      "rutas_monitoreadas": 133,
+      "archivos_en_base_datos": 0
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7f7e7278",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-72649",
+    "timestamp": "2025-07-08T16:15:31.100803",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de analizadores especializados inicializado",
+    "detalles": {
+      "analizadores_disponibles": [
+        "cadenas"
+      ],
+      "analisis_simultaneos_maximos": 3
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "87134549",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-49984",
+    "timestamp": "2025-07-08T16:15:31.231813",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado con capacidades avanzadas",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json",
+      "motor_correlacion": true,
+      "max_eventos_memoria": 2000
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9b70a2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-03783",
+    "timestamp": "2025-07-08T16:15:31.255205",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de respuesta automatizada inicializado",
+    "detalles": {
+      "controlador": "respuesta_automatizada"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c9e40997",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-65547",
+    "timestamp": "2025-07-08T16:15:31.461293",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de incidentes inicializado",
+    "detalles": {
+      "controlador": "incidentes"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dace2361",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-38424",
+    "timestamp": "2025-07-08T16:15:31.478293",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Todos los componentes de Ares Aegis han despertado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed",
+        "MonitorProcesos",
+        "AnalizadorDinamico",
+        "AnalizadorArchivos",
+        "AnalizadorCadenas",
+        "AnalizadorComportamientoProcesos",
+        "AnalizadorComportamientoRed",
+        "EscaneadorVulnRed",
+        "EscaneadorVulnSistema",
+        "BuscadorCVE",
+        "IntegracionExterna",
+        "SistemaReportes",
+        "RespuestaAutomatizada",
+        "AnalizadorRegistros",
+        "RespondedorIncidentes",
+        "GestorCheatsheets",
+        "VisorHex",
+        "Descontaminacion"
+      ],
+      "total_componentes": 22,
+      "timestamp_inicio": "2025-07-08T16:15:31.478288"
+    },
+    "nivel_criticidad": "ALTO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "a9375dfa",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-78341",
+    "timestamp": "2025-07-08T16:15:31.495558",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp/tmpp602vj5p",
+    "detalles": {
+      "tipo": "directorio",
+      "ruta": "/tmp/tmpp602vj5p"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "8ebe4484",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-70966",
+    "timestamp": "2025-07-08T16:15:31.505283",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/archivo_4.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/archivo_4.txt",
+      "tamaño": 23
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c87aac14",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-83920",
+    "timestamp": "2025-07-08T16:15:31.513843",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/archivo_3.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/archivo_3.txt",
+      "tamaño": 23
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "57125856",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-56566",
+    "timestamp": "2025-07-08T16:15:31.537735",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/archivo_2.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/archivo_2.txt",
+      "tamaño": 23
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "e91d9e27",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-63278",
+    "timestamp": "2025-07-08T16:15:31.557712",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/archivo_1.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/archivo_1.txt",
+      "tamaño": 23
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "3a819ba3",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-30129",
+    "timestamp": "2025-07-08T16:15:31.571670",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/archivo_0.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/archivo_0.txt",
+      "tamaño": 23
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2506c141",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-76285",
+    "timestamp": "2025-07-08T16:15:31.581552",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/subdirectorio/sub_archivo_2.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/subdirectorio/sub_archivo_2.txt",
+      "tamaño": 27
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ad259e91",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-27440",
+    "timestamp": "2025-07-08T16:15:31.590938",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/subdirectorio/sub_archivo_1.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/subdirectorio/sub_archivo_1.txt",
+      "tamaño": 27
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "9ebd07f1",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-39704",
+    "timestamp": "2025-07-08T16:15:31.600274",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmpp602vj5p/subdirectorio/sub_archivo_0.txt",
+    "detalles": {
+      "ruta": "/tmp/tmpp602vj5p/subdirectorio/sub_archivo_0.txt",
+      "tamaño": 27
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "18ae5128",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-75905",
+    "timestamp": "2025-07-08T16:15:31.609617",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio finalizado: /tmp/tmpp602vj5p",
+    "detalles": {
+      "archivos_escaneados": 8,
+      "amenazas_detectadas": 0,
+      "archivos_infectados": 0,
+      "tiempo_escaneo": 0.10445380210876465,
+      "tipo_escaneo": "directorio",
+      "ruta_escaneada": "/tmp/tmpp602vj5p"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "62e4d6ce",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-57311",
+    "timestamp": "2025-07-08T16:15:31.619080",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-08T16:15:31.619077"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ce8e4ed6",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161531-87324",
+    "timestamp": "2025-07-08T16:15:31.990654",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp/tmp8j4eutnt",
+    "detalles": {
+      "tipo": "directorio",
+      "ruta": "/tmp/tmp8j4eutnt"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "53bc5525",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-26109",
+    "timestamp": "2025-07-08T16:15:32.003879",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmp8j4eutnt/test_siem.txt",
+    "detalles": {
+      "ruta": "/tmp/tmp8j4eutnt/test_siem.txt",
+      "tamaño": 22
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2d6af42f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-63892",
+    "timestamp": "2025-07-08T16:15:32.018366",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio finalizado: /tmp/tmp8j4eutnt",
+    "detalles": {
+      "archivos_escaneados": 1,
+      "amenazas_detectadas": 0,
+      "archivos_infectados": 0,
+      "tiempo_escaneo": 0.014602899551391602,
+      "tipo_escaneo": "directorio",
+      "ruta_escaneada": "/tmp/tmp8j4eutnt"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "0d074f39",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-57311",
+    "timestamp": "2025-07-08T16:15:32.032677",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 0,
+      "timestamp_finalizacion": "2025-07-08T16:15:32.032672"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c06a6ce9",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-49984",
+    "timestamp": "2025-07-08T16:15:32.056411",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado con capacidades avanzadas",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json",
+      "motor_correlacion": true,
+      "max_eventos_memoria": 2000
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9b70a2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-92518",
+    "timestamp": "2025-07-08T16:15:32.090447",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de Cuarentena Avanzado inicializado correctamente",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena_avanzada",
+      "archivos_en_cuarentena": 0,
+      "analisis_automatico": true
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "42dcba03",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-96396",
+    "timestamp": "2025-07-08T16:15:32.122419",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM avanzado inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json",
+      "rutas_monitoreadas": 133,
+      "archivos_en_base_datos": 0
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7f7e7278",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-72649",
+    "timestamp": "2025-07-08T16:15:32.137891",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de analizadores especializados inicializado",
+    "detalles": {
+      "analizadores_disponibles": [
+        "cadenas"
+      ],
+      "analisis_simultaneos_maximos": 3
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "87134549",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-03783",
+    "timestamp": "2025-07-08T16:15:32.255134",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de respuesta automatizada inicializado",
+    "detalles": {
+      "controlador": "respuesta_automatizada"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c9e40997",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-65547",
+    "timestamp": "2025-07-08T16:15:32.392522",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de incidentes inicializado",
+    "detalles": {
+      "controlador": "incidentes"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dace2361",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-38424",
+    "timestamp": "2025-07-08T16:15:32.416788",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Todos los componentes de Ares Aegis han despertado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed",
+        "MonitorProcesos",
+        "AnalizadorDinamico",
+        "AnalizadorArchivos",
+        "AnalizadorCadenas",
+        "AnalizadorComportamientoProcesos",
+        "AnalizadorComportamientoRed",
+        "EscaneadorVulnRed",
+        "EscaneadorVulnSistema",
+        "BuscadorCVE",
+        "IntegracionExterna",
+        "SistemaReportes",
+        "RespuestaAutomatizada",
+        "AnalizadorRegistros",
+        "RespondedorIncidentes",
+        "GestorCheatsheets",
+        "VisorHex",
+        "Descontaminacion"
+      ],
+      "total_componentes": 22,
+      "timestamp_inicio": "2025-07-08T16:15:32.416781"
+    },
+    "nivel_criticidad": "ALTO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2a654068",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-00447",
+    "timestamp": "2025-07-08T16:15:32.433721",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Escaneo de directorio iniciado: /tmp/tmppvlp95dn",
+    "detalles": {
+      "tipo": "directorio",
+      "ruta": "/tmp/tmppvlp95dn"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "211fb94e",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-81830",
+    "timestamp": "2025-07-08T16:15:32.451849",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_099.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_099.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "57877ca5",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-25031",
+    "timestamp": "2025-07-08T16:15:32.466910",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_098.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_098.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "5e6216cb",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-80349",
+    "timestamp": "2025-07-08T16:15:32.484413",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_097.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_097.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "1120c350",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-81400",
+    "timestamp": "2025-07-08T16:15:32.501143",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_096.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_096.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "0e1fe3b9",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-95581",
+    "timestamp": "2025-07-08T16:15:32.516047",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_095.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_095.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2a67661e",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-76745",
+    "timestamp": "2025-07-08T16:15:32.529543",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_094.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_094.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "93769f90",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-38401",
+    "timestamp": "2025-07-08T16:15:32.548208",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_093.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_093.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ace92e5f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-70698",
+    "timestamp": "2025-07-08T16:15:32.563210",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_092.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_092.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "73c13303",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-40319",
+    "timestamp": "2025-07-08T16:15:32.580253",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_091.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_091.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "06da7c61",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-80136",
+    "timestamp": "2025-07-08T16:15:32.592009",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_090.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_090.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "116d5c25",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-93642",
+    "timestamp": "2025-07-08T16:15:32.603301",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_089.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_089.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "75dac468",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-90433",
+    "timestamp": "2025-07-08T16:15:32.617825",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_088.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_088.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "95b1db73",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-11552",
+    "timestamp": "2025-07-08T16:15:32.631276",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_087.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_087.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "e4c19202",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-84038",
+    "timestamp": "2025-07-08T16:15:32.644075",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_086.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_086.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "270f6a7d",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-23149",
+    "timestamp": "2025-07-08T16:15:32.657756",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_085.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_085.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "d43f64bf",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-37347",
+    "timestamp": "2025-07-08T16:15:32.672072",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_084.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_084.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7f967fe2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-69097",
+    "timestamp": "2025-07-08T16:15:32.685129",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_083.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_083.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "29efb7f1",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-76620",
+    "timestamp": "2025-07-08T16:15:32.705473",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_082.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_082.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "29c1cdb6",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-13886",
+    "timestamp": "2025-07-08T16:15:32.718773",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_081.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_081.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "498270e3",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-06907",
+    "timestamp": "2025-07-08T16:15:32.735886",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_080.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_080.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "af196506",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-97790",
+    "timestamp": "2025-07-08T16:15:32.750728",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_079.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_079.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "8d3c977f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-11217",
+    "timestamp": "2025-07-08T16:15:32.765961",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_078.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_078.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "819e7e7d",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-51119",
+    "timestamp": "2025-07-08T16:15:32.778504",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_077.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_077.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "37e85fd3",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-13349",
+    "timestamp": "2025-07-08T16:15:32.793389",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_076.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_076.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2d0a88b7",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-46915",
+    "timestamp": "2025-07-08T16:15:32.802960",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_075.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_075.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "89bde38c",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-63398",
+    "timestamp": "2025-07-08T16:15:32.817406",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_074.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_074.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2158fd53",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-26655",
+    "timestamp": "2025-07-08T16:15:32.829821",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_073.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_073.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "693385a8",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-72070",
+    "timestamp": "2025-07-08T16:15:32.842476",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_072.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_072.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "e5499e8a",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-36822",
+    "timestamp": "2025-07-08T16:15:32.853423",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_071.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_071.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dee63456",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-08036",
+    "timestamp": "2025-07-08T16:15:32.866014",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_070.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_070.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ade14bec",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-71747",
+    "timestamp": "2025-07-08T16:15:32.881225",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_069.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_069.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "6992f222",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-37015",
+    "timestamp": "2025-07-08T16:15:32.895447",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_068.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_068.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "3bfa2eb0",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-79163",
+    "timestamp": "2025-07-08T16:15:32.912057",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_067.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_067.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "a8e51417",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-92812",
+    "timestamp": "2025-07-08T16:15:32.927257",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_066.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_066.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7583832f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-64283",
+    "timestamp": "2025-07-08T16:15:32.942657",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_065.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_065.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "e846843d",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-80847",
+    "timestamp": "2025-07-08T16:15:32.958555",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_064.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_064.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "e5d68fc1",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-42414",
+    "timestamp": "2025-07-08T16:15:32.972880",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_063.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_063.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "3839b907",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161532-78247",
+    "timestamp": "2025-07-08T16:15:32.988008",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_062.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_062.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "4443fe58",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-49584",
+    "timestamp": "2025-07-08T16:15:33.006694",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_061.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_061.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "1de9989e",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-35416",
+    "timestamp": "2025-07-08T16:15:33.022024",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_060.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_060.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7e3add62",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-20294",
+    "timestamp": "2025-07-08T16:15:33.035806",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_059.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_059.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7eeb13f8",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-59589",
+    "timestamp": "2025-07-08T16:15:33.050022",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_058.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_058.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "a0bd1a13",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-08188",
+    "timestamp": "2025-07-08T16:15:33.063723",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_057.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_057.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "f8628595",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-20519",
+    "timestamp": "2025-07-08T16:15:33.075855",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_056.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_056.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "59ca64c2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-91984",
+    "timestamp": "2025-07-08T16:15:33.089802",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_055.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_055.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "9191381f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-02553",
+    "timestamp": "2025-07-08T16:15:33.104152",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_054.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_054.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "52bec5e3",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-26309",
+    "timestamp": "2025-07-08T16:15:33.117927",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_053.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_053.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "935fae86",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-56639",
+    "timestamp": "2025-07-08T16:15:33.132100",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_052.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_052.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ecad2e98",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-12511",
+    "timestamp": "2025-07-08T16:15:33.147043",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_051.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_051.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "76886f3b",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-18908",
+    "timestamp": "2025-07-08T16:15:33.188321",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_050.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_050.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2ebc8c80",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-08052",
+    "timestamp": "2025-07-08T16:15:33.220431",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_049.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_049.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "608196fe",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-80603",
+    "timestamp": "2025-07-08T16:15:33.253936",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_048.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_048.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "b8cd1475",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-43205",
+    "timestamp": "2025-07-08T16:15:33.285389",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_047.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_047.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dd88c37f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-09584",
+    "timestamp": "2025-07-08T16:15:33.331276",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_046.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_046.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "8a0757d3",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-54761",
+    "timestamp": "2025-07-08T16:15:33.365166",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_045.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_045.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7d04e495",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-40645",
+    "timestamp": "2025-07-08T16:15:33.402181",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_044.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_044.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "a725b08f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-19155",
+    "timestamp": "2025-07-08T16:15:33.434270",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_043.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_043.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "6078d3ca",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-19509",
+    "timestamp": "2025-07-08T16:15:33.479111",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_042.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_042.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "8beb47f8",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-77476",
+    "timestamp": "2025-07-08T16:15:33.520769",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_041.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_041.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ee092585",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-02185",
+    "timestamp": "2025-07-08T16:15:33.571236",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_040.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_040.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "d913d091",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-14804",
+    "timestamp": "2025-07-08T16:15:33.614750",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_039.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_039.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ab411eb5",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-67181",
+    "timestamp": "2025-07-08T16:15:33.655373",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_038.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_038.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "8d72614c",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-75017",
+    "timestamp": "2025-07-08T16:15:33.669259",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_037.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_037.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "0969d122",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-38574",
+    "timestamp": "2025-07-08T16:15:33.693621",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_036.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_036.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "d31eacd3",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-70520",
+    "timestamp": "2025-07-08T16:15:33.737769",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_035.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_035.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "9a81f3d6",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-11656",
+    "timestamp": "2025-07-08T16:15:33.778435",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_034.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_034.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "e357721b",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-35620",
+    "timestamp": "2025-07-08T16:15:33.817501",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_033.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_033.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "5c702150",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-72930",
+    "timestamp": "2025-07-08T16:15:33.857194",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_032.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_032.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "ff973439",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-09561",
+    "timestamp": "2025-07-08T16:15:33.880395",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_031.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_031.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "f410f98b",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-22377",
+    "timestamp": "2025-07-08T16:15:33.917068",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_030.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_030.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "5fffd568",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-31583",
+    "timestamp": "2025-07-08T16:15:33.950250",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_029.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_029.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "488794cc",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-41952",
+    "timestamp": "2025-07-08T16:15:33.965490",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_028.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_028.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "1c9f780a",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161533-99446",
+    "timestamp": "2025-07-08T16:15:33.991359",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_027.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_027.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "98c71bbd",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-66964",
+    "timestamp": "2025-07-08T16:15:34.005679",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_026.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_026.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "1ec34c84",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-02770",
+    "timestamp": "2025-07-08T16:15:34.019070",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_025.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_025.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "d9d6a574",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-25219",
+    "timestamp": "2025-07-08T16:15:34.042262",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_024.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_024.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "fab53c05",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-99405",
+    "timestamp": "2025-07-08T16:15:34.077637",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_023.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_023.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "3220eaf5",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-14744",
+    "timestamp": "2025-07-08T16:15:34.101601",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_022.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_022.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "76224f88",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-85070",
+    "timestamp": "2025-07-08T16:15:34.127473",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_021.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_021.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "f5485bfd",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-24907",
+    "timestamp": "2025-07-08T16:15:34.153287",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_020.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_020.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "d8e85af5",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-33618",
+    "timestamp": "2025-07-08T16:15:34.182334",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_019.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_019.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "71275c19",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-97929",
+    "timestamp": "2025-07-08T16:15:34.227236",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_018.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_018.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dbe7c01a",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-92335",
+    "timestamp": "2025-07-08T16:15:34.267153",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_017.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_017.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "900ceb9f",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-39329",
+    "timestamp": "2025-07-08T16:15:34.307930",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_016.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_016.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c4f0e71e",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-39228",
+    "timestamp": "2025-07-08T16:15:34.355547",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_015.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_015.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "2b382d61",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-19105",
+    "timestamp": "2025-07-08T16:15:34.397413",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_014.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_014.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7db9b147",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-19296",
+    "timestamp": "2025-07-08T16:15:34.460455",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_013.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_013.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "46b91909",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-68072",
+    "timestamp": "2025-07-08T16:15:34.475261",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_012.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_012.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "3ebbc86c",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-46020",
+    "timestamp": "2025-07-08T16:15:34.489932",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_011.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_011.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "254d5053",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-43402",
+    "timestamp": "2025-07-08T16:15:34.502387",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_010.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_010.txt",
+      "tamaño": 250
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "0e205320",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-71533",
+    "timestamp": "2025-07-08T16:15:34.515584",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_009.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_009.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "57a3ace6",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-58847",
+    "timestamp": "2025-07-08T16:15:34.527566",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_008.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_008.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "8b67bfe7",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-12018",
+    "timestamp": "2025-07-08T16:15:34.538812",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_007.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_007.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "9f513ac6",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-43968",
+    "timestamp": "2025-07-08T16:15:34.550353",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_006.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_006.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "6e9b32fc",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-13119",
+    "timestamp": "2025-07-08T16:15:34.561632",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_005.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_005.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "897304c8",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-08141",
+    "timestamp": "2025-07-08T16:15:34.572877",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_004.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_004.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "fd31fbd6",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-90868",
+    "timestamp": "2025-07-08T16:15:34.584840",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_003.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_003.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "df16d192",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-82989",
+    "timestamp": "2025-07-08T16:15:34.598505",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_002.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_002.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "19d6e1ee",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-69746",
+    "timestamp": "2025-07-08T16:15:34.612128",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_001.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_001.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c51fc2e6",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-72152",
+    "timestamp": "2025-07-08T16:15:34.626165",
+    "tipo": "ESCANEO_INICIADO",
+    "mensaje": "Iniciando escaneo de malware: /tmp/tmppvlp95dn/perf_test_000.txt",
+    "detalles": {
+      "ruta": "/tmp/tmppvlp95dn/perf_test_000.txt",
+      "tamaño": 240
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9ae3ec",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-27798",
+    "timestamp": "2025-07-08T16:15:34.640649",
+    "tipo": "ESCANEO_FINALIZADO",
+    "mensaje": "Escaneo de directorio finalizado: /tmp/tmppvlp95dn",
+    "detalles": {
+      "archivos_escaneados": 100,
+      "amenazas_detectadas": 0,
+      "archivos_infectados": 0,
+      "tiempo_escaneo": 2.1889560222625732,
+      "tipo_escaneo": "directorio",
+      "ruta_escaneada": "/tmp/tmppvlp95dn"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "aa941aac",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161534-57311",
+    "timestamp": "2025-07-08T16:15:34.654084",
+    "tipo": "SISTEMA_DETENIDO",
+    "mensaje": "Controlador principal finalizado",
+    "detalles": {
+      "uptime_segundos": 2,
+      "timestamp_finalizacion": "2025-07-08T16:15:34.654079"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "f3e4e0cc",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161543-51368",
+    "timestamp": "2025-07-08T16:15:43.845886",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado con capacidades avanzadas",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json",
+      "motor_correlacion": true,
+      "max_eventos_memoria": 2000
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9b70a2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161543-41251",
+    "timestamp": "2025-07-08T16:15:43.897500",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de Cuarentena Avanzado inicializado correctamente",
+    "detalles": {
+      "directorio_cuarentena": "/home/dogsoul/Ares-Aegis/cuarentena_avanzada",
+      "archivos_en_cuarentena": 0,
+      "analisis_automatico": true
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "42dcba03",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161543-70320",
+    "timestamp": "2025-07-08T16:15:43.918943",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema FIM avanzado inicializado",
+    "detalles": {
+      "archivo_base_datos": "/home/dogsoul/Ares-Aegis/fim_base_datos.json",
+      "rutas_monitoreadas": 133,
+      "archivos_en_base_datos": 0
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "7f7e7278",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161543-91489",
+    "timestamp": "2025-07-08T16:15:43.955719",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Sistema de analizadores especializados inicializado",
+    "detalles": {
+      "analizadores_disponibles": [
+        "cadenas"
+      ],
+      "analisis_simultaneos_maximos": 3
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "87134549",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161544-51368",
+    "timestamp": "2025-07-08T16:15:44.439658",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "SIEM de Ares Aegis iniciado con capacidades avanzadas",
+    "detalles": {
+      "archivo_eventos": "/home/dogsoul/Ares-Aegis/eventos_siem.json",
+      "motor_correlacion": true,
+      "max_eventos_memoria": 2000
+    },
+    "nivel_criticidad": "INFORMATIVO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "bf9b70a2",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161544-39384",
+    "timestamp": "2025-07-08T16:15:44.464993",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de respuesta automatizada inicializado",
+    "detalles": {
+      "controlador": "respuesta_automatizada"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "c9e40997",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161544-75948",
+    "timestamp": "2025-07-08T16:15:44.658224",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Controlador de incidentes inicializado",
+    "detalles": {
+      "controlador": "incidentes"
+    },
+    "nivel_criticidad": "MEDIO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "dace2361",
+    "patron_detectado": null
+  },
+  {
+    "id": "EVT-20250708161544-75225",
+    "timestamp": "2025-07-08T16:15:44.697810",
+    "tipo": "SISTEMA_INICIADO",
+    "mensaje": "Todos los componentes de Ares Aegis han despertado exitosamente",
+    "detalles": {
+      "componentes_inicializados": [
+        "SIEM",
+        "Escaneador",
+        "Cuarentena",
+        "FIM",
+        "MonitorRed",
+        "MonitorProcesos",
+        "AnalizadorDinamico",
+        "AnalizadorArchivos",
+        "AnalizadorCadenas",
+        "AnalizadorComportamientoProcesos",
+        "AnalizadorComportamientoRed",
+        "EscaneadorVulnRed",
+        "EscaneadorVulnSistema",
+        "BuscadorCVE",
+        "IntegracionExterna",
+        "SistemaReportes",
+        "RespuestaAutomatizada",
+        "AnalizadorRegistros",
+        "RespondedorIncidentes",
+        "GestorCheatsheets",
+        "VisorHex",
+        "Descontaminacion"
+      ],
+      "total_componentes": 22,
+      "timestamp_inicio": "2025-07-08T16:15:44.697803"
+    },
+    "nivel_criticidad": "ALTO",
+    "origen": "Sistema",
+    "correlacionado": false,
+    "reglas_activadas": [],
+    "eventos_relacionados": [],
+    "hash_contexto": "57d18e24",
+    "patron_detectado": null
   }
 ]

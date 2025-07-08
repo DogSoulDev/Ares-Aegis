@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-07T16:09:47.282091",
+  "timestamp": "2025-07-08T16:15:44.582940",
   "software": [
     {
       "nombre": "0trace",
@@ -2225,7 +2225,7 @@
     },
     {
       "nombre": "code-insiders",
-      "version": "1.102.0-1751643228",
+      "version": "1.102.0-1751992743",
       "vendor": "debian",
       "tipo": "package",
       "origen": "dpkg",
@@ -2236,7 +2236,7 @@
     },
     {
       "nombre": "code-oss",
-      "version": "1.101.1+ds-0kali2",
+      "version": "1.101.1+ds+really1.99.3-0kali1",
       "vendor": "debian",
       "tipo": "package",
       "origen": "dpkg",

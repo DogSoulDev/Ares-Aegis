@@ -50,6 +50,12 @@ from .controlador_vulnerabilidades import ControladorVulnerabilidades
 from .controlador_analisis import ControladorAnalisis
 from .controlador_respuesta_automatizada import ControladorRespuestaAutomatizada
 from .controlador_incidentes import ControladorIncidentes
+from .controlador_alertas import ControladorAlertas
+from .controlador_alertas_fim import ControladorAlertasFIM
+from .controlador_alertas_procesos import ControladorAlertasProcesos
+from .controlador_alertas_red_comportamiento import ControladorAlertasRedComportamiento
+from .controlador_alertas_siem import ControladorAlertasSIEM
+from .orquestador_alertas import OrquestadorAlertas
 
 # Importar utilidades
 from ..utilidades.ayuda_logging import configurar_logger_modulo
@@ -191,6 +197,20 @@ class ControladorPrincipal:
         
         # Inicializar componentes
         self._inicializar_componentes()
+        # --- INTEGRACIÓN AUTOMÁTICA DE ALERTAS (robusta) ---
+        self.controlador_alertas = ControladorAlertas()
+        controladores_alerta = {}
+        if self.fim is not None:
+            controladores_alerta['fim'] = ControladorAlertasFIM(self.fim, self.controlador_alertas)
+        if self.analizador_comportamiento_procesos is not None:
+            controladores_alerta['procesos'] = ControladorAlertasProcesos(self.analizador_comportamiento_procesos, self.controlador_alertas)
+        if self.analizador_comportamiento_red is not None:
+            controladores_alerta['red'] = ControladorAlertasRedComportamiento(self.analizador_comportamiento_red, self.controlador_alertas)
+        if self.siem is not None:
+            controladores_alerta['siem'] = ControladorAlertasSIEM(self.siem, self.controlador_alertas)
+        if controladores_alerta:
+            self.orquestador_alertas = OrquestadorAlertas(controladores_alerta)
+            self.orquestador_alertas.ejecutar_todos()
         
         self.logger.info("Controlador principal inicializado exitosamente")
     
