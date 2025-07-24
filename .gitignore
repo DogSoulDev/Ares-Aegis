@@ -1,0 +1,53 @@
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Archivos de configuración del IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.cache
+
+# Archivos de base de datos
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos de backup
+*.backup
+*.bak
+*~
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos específicos de Ares Aegis
+reportes/*.html
+cuarentena/backups/*
+configuracion/cache/
+*.pid
+
+# Archivos de prueba y desarrollo
+test_*
+debug_*
+dev_*

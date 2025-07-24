@@ -1,0 +1,13 @@
+# Ares Aegis v4.0 - Solo Python Standard Library y herramientas de Kali Linux
+# 
+# Este proyecto ahora utiliza exclusivamente:
+# - Python Standard Library (json, os, subprocess, threading, etc.)
+# - Herramientas nativas de Kali Linux (netstat, ss, ps, free, uptime, etc.)
+# - Archivos /proc para métricas del sistema
+#
+# No se requieren dependencias externas para la funcionalidad completa
+#
+# Para desarrollo opcional (si se desea agregar funcionalidades externas):
+# tkinter  # Ya incluido en Python standard
+# 
+# NOTA: Todas las funcionalidades están implementadas sin dependencias externas

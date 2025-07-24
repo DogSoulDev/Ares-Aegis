@@ -1,0 +1,39 @@
+#!/bin/bash
+# postrm script para ares-aegis
+# Script de desinstalación para Kali Linux
+
+set -e
+
+case "$1" in
+    remove|purge)
+        echo "🗑️ Desinstalando Ares Aegis..."
+        
+        # Eliminar archivos de aplicación
+        rm -rf /opt/ares-aegis 2>/dev/null || true
+        
+        # Eliminar launcher
+        rm -f /usr/bin/ares-aegis 2>/dev/null || true
+        
+        # Eliminar entrada del menú
+        rm -f /usr/share/applications/ares-aegis.desktop 2>/dev/null || true
+        
+        # Eliminar iconos
+        rm -f /usr/share/pixmaps/ares-aegis.png 2>/dev/null || true
+        rm -f /usr/share/pixmaps/ares-aegis-icon.png 2>/dev/null || true
+        
+        # Actualizar base de datos de aplicaciones
+        update-desktop-database 2>/dev/null || true
+        
+        echo "✅ Ares Aegis desinstalado exitosamente"
+        ;;
+        
+    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        ;;
+        
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

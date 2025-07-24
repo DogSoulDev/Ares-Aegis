@@ -1,0 +1,22 @@
+Package: ares-aegis
+Version: 4.0.0
+Section: security
+Priority: optional
+Architecture: all
+Depends: python3 (>= 3.8), python3-tk, python3-pil, python3-psutil, sudo
+Maintainer: DogSoulDev https://github.com/DogSoulDev/Ares-Aegis
+Description: Ares Aegis - Sistema de Ciberseguridad Avanzado para Kali Linux
+ Ares Aegis es una suite completa de herramientas de ciberseguridad diseñada
+ específicamente para Kali Linux. Incluye capacidades de:
+ .
+ * Escaneo de vulnerabilidades del sistema
+ * Monitoreo de integridad de archivos (FIM)
+ * Sistema de eventos e incidentes (SIEM)
+ * Constructor de wordlists personalizadas
+ * Auditoría de autenticación PAM
+ * Monitor de red en tiempo real
+ * Sistema de cuarentena inteligente
+ * Generación de reportes detallados
+ .
+ Desarrollado con arquitectura MVC y optimizado para pentesting profesional.
+Homepage: https://github.com/DogSoulDev/Ares-Aegis
