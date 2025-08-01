@@ -35,7 +35,6 @@ from .vistas.vista_cuarentena import VistaCuarentena
 from .vistas.vista_reportes import VistaReportes
 from .vistas.vista_cheatsheets import VistaCheatsheets
 from .vistas.vista_constructor_wordlists import VistaConstructorWordlists
-from .vistas.vista_configuracion import VistaConfiguracion
 
 
 class InterfazPrincipalAresAegis:
@@ -89,7 +88,10 @@ class InterfazPrincipalAresAegis:
                 self.controlador = ControladorPrincipal()
                 
             # Establecer referencia bidireccional
-            self.controlador.interfaz = self
+            try:
+                setattr(self.controlador, 'interfaz', self)
+            except (AttributeError, TypeError):
+                pass  # El controlador no soporta interfaz
             
             if not self.controlador.inicializar_componentes():
                 self.logger.warning("⚠️ Algunos componentes del controlador no se inicializaron correctamente")
@@ -153,7 +155,7 @@ class InterfazPrincipalAresAegis:
             ]
             
             for path in icon_paths:
-                if os.path.exists(path):
+                if os.path.exists(path) and self.root:
                     self.root.iconphoto(False, tk.PhotoImage(file=path))
                     self.logger.info(f"🖼️ Icono cargado desde: {path}")
                     return
@@ -498,8 +500,7 @@ class InterfazPrincipalAresAegis:
         # Botones de acceso rápido
         accesos = [
             ("📚 GUÍAS", self._mostrar_cheatsheets),
-            ("🐙 GITHUB", self._abrir_github),
-            ("⚙ CONFIGURACIÓN", self._abrir_configuracion)
+            ("🐙 GITHUB", self._abrir_github)
         ]
         
         for texto, comando in accesos:
@@ -562,303 +563,7 @@ class InterfazPrincipalAresAegis:
         widget.bind('<Enter>', on_enter)
         widget.bind('<Leave>', on_leave)
     
-    def _accion_configuracion(self):
-        """Abrir configuración avanzada del sistema"""
-        self.logger.info("⚙️ Abriendo configuración avanzada")
-        self._abrir_ventana_configuracion()
-    
-    def _abrir_ventana_configuracion(self):
-        """Crear ventana de configuración avanzada"""
-        from tkinter import filedialog, messagebox
-        import json
-        import os
-        
-        # Crear ventana de configuración
-        config_window = tk.Toplevel(self.root)
-        config_window.title("⚙️ CONFIGURACIÓN AVANZADA • ARES AEGIS")
-        config_window.geometry("800x600")
-        config_window.configure(bg=self.colores.fondo_primario)
-        config_window.transient(self.root)
-        config_window.grab_set()
-        
-        # Configurar grid
-        config_window.grid_rowconfigure(0, weight=0)  # Header
-        config_window.grid_rowconfigure(1, weight=1)  # Contenido
-        config_window.grid_rowconfigure(2, weight=0)  # Botones
-        config_window.grid_columnconfigure(0, weight=1)
-        
-        # === HEADER ===
-        header_frame = tk.Frame(config_window, bg=self.colores.negro_carbono, height=60)
-        header_frame.grid(row=0, column=0, sticky="ew", padx=0, pady=0)
-        header_frame.grid_propagate(False)
-        
-        tk.Label(header_frame,
-                text="⚙️ CONFIGURACIÓN AVANZADA DEL SISTEMA",
-                font=('Consolas', 14, 'bold'),
-                fg=self.colores.naranja_fuego,
-                bg=self.colores.negro_carbono).pack(pady=20)
-        
-        # === NOTEBOOK PARA PESTAÑAS ===
-        from tkinter import ttk
-        notebook = ttk.Notebook(config_window)
-        notebook.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
-        
-        # === PESTAÑA: BASES DE DATOS ===
-        db_frame = tk.Frame(notebook, bg=self.colores.fondo_secundario)
-        notebook.add(db_frame, text="🗃️ Bases de Datos")
-        
-        self._crear_tab_bases_datos(db_frame, config_window)
-        
-        # === PESTAÑA: CONFIGURACIÓN GENERAL ===
-        general_frame = tk.Frame(notebook, bg=self.colores.fondo_secundario)
-        notebook.add(general_frame, text="⚙️ General")
-        
-        self._crear_tab_configuracion_general(general_frame)
-        
-        # === BOTÓN DE AYUDA ===
-        self.sistema_ayuda.agregar_ayuda_contextual(config_window, "configuracion", "bottom-left")
-        
-        # === BOTONES INFERIORES ===
-        botones_frame = tk.Frame(config_window, bg=self.colores.fondo_primario)
-        botones_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
-        
-        tk.Button(botones_frame,
-                 text="💾 GUARDAR CONFIGURACIÓN",
-                 command=lambda: self._guardar_configuracion(config_window),
-                 bg=self.colores.verde_esmeralda,
-                 fg='white',
-                 font=('Consolas', 10, 'bold'),
-                 padx=20, pady=8).pack(side='left', padx=(0, 10))
-        
-        tk.Button(botones_frame,
-                 text="❌ CERRAR",
-                 command=config_window.destroy,
-                 bg=self.colores.rojo_critico,
-                 fg='white',
-                 font=('Consolas', 10, 'bold'),
-                 padx=20, pady=8).pack(side='right')
-    
-    def _crear_tab_bases_datos(self, parent, config_window):
-        """Crear pestaña de gestión de bases de datos"""
-        from tkinter import filedialog, messagebox, ttk
-        import json
-        import os
-        import csv
-        
-        # === CARGAR BASES DE DATOS ===
-        cargar_frame = tk.LabelFrame(parent,
-                                   text="📤 CARGAR NUEVAS BASES DE DATOS",
-                                   bg=self.colores.fondo_secundario,
-                                   fg=self.colores.verde_terminal,
-                                   font=('Consolas', 12, 'bold'))
-        cargar_frame.pack(fill='x', padx=10, pady=10)
-        
-        # Botones de carga
-        botones_cargar = tk.Frame(cargar_frame, bg=self.colores.fondo_secundario)
-        botones_cargar.pack(pady=15)
-        
-        tk.Button(botones_cargar,
-                 text="🔍 CARGAR CVEs",
-                 command=lambda: self._cargar_base_datos('cve', config_window),
-                 bg=self.colores.azul_electrico,
-                 fg='white',
-                 font=('Consolas', 10, 'bold'),
-                 padx=15, pady=8).pack(side='left', padx=5)
-        
-        tk.Button(botones_cargar,
-                 text="🦠 CARGAR MALWARE",
-                 command=lambda: self._cargar_base_datos('malware', config_window),
-                 bg=self.colores.rojo_sangre,
-                 fg='white',
-                 font=('Consolas', 10, 'bold'),
-                 padx=15, pady=8).pack(side='left', padx=5)
-        
-        tk.Button(botones_cargar,
-                 text="⚠️ CARGAR VULNERABILIDADES",
-                 command=lambda: self._cargar_base_datos('vulnerabilidades', config_window),
-                 bg=self.colores.naranja_alto,
-                 fg='white',
-                 font=('Consolas', 10, 'bold'),
-                 padx=15, pady=8).pack(side='left', padx=5)
-        
-        # === BASES DE DATOS CARGADAS ===
-        listado_frame = tk.LabelFrame(parent,
-                                    text="📋 BASES DE DATOS CARGADAS",
-                                    bg=self.colores.fondo_secundario,
-                                    fg=self.colores.cyan_brillante,
-                                    font=('Consolas', 12, 'bold'))
-        listado_frame.pack(fill='both', expand=True, padx=10, pady=10)
-        
-        # Crear Treeview para mostrar bases de datos
-        columns = ('Tipo', 'Nombre', 'Registros', 'Fecha')
-        self.db_tree = ttk.Treeview(listado_frame, columns=columns, show='headings', height=10)
-        
-        # Configurar columnas
-        self.db_tree.heading('Tipo', text='Tipo')
-        self.db_tree.heading('Nombre', text='Nombre del Archivo')
-        self.db_tree.heading('Registros', text='Registros')
-        self.db_tree.heading('Fecha', text='Fecha de Carga')
-        
-        self.db_tree.column('Tipo', width=120)
-        self.db_tree.column('Nombre', width=250)
-        self.db_tree.column('Registros', width=100)
-        self.db_tree.column('Fecha', width=150)
-        
-        # Scrollbar para el treeview
-        scrollbar = ttk.Scrollbar(listado_frame, orient='vertical', command=self.db_tree.yview)
-        self.db_tree.configure(yscrollcommand=scrollbar.set)
-        
-        self.db_tree.pack(side='left', fill='both', expand=True, padx=(10, 0), pady=10)
-        scrollbar.pack(side='right', fill='y', pady=10, padx=(0, 10))
-        
-        # Cargar bases de datos existentes
-        self._actualizar_listado_bases_datos()
-        
-        # === BOTONES DE GESTIÓN ===
-        gestion_frame = tk.Frame(parent, bg=self.colores.fondo_secundario)
-        gestion_frame.pack(fill='x', padx=10, pady=5)
-        
-        tk.Button(gestion_frame,
-                 text="🔄 ACTUALIZAR LISTADO",
-                 command=self._actualizar_listado_bases_datos,
-                 bg=self.colores.cyan_brillante,
-                 fg='black',
-                 font=('Consolas', 9, 'bold'),
-                 padx=15, pady=5).pack(side='left', padx=5)
-        
-        tk.Button(gestion_frame,
-                 text="🗑️ ELIMINAR SELECCIONADA",
-                 command=self._eliminar_base_datos_seleccionada,
-                 bg=self.colores.rojo_critico,
-                 fg='white',
-                 font=('Consolas', 9, 'bold'),
-                 padx=15, pady=5).pack(side='left', padx=5)
-        
-        tk.Button(gestion_frame,
-                 text="🧹 LIMPIAR TODAS",
-                 command=self._limpiar_todas_bases_datos,
-                 bg=self.colores.gris_hierro,
-                 fg='white',
-                 font=('Consolas', 9, 'bold'),
-                 padx=15, pady=5).pack(side='right', padx=5)
-    
-    def _crear_tab_configuracion_general(self, parent):
-        """Crear pestaña de configuración general"""
-        # Información del sistema
-        info_frame = tk.LabelFrame(parent,
-                                 text="ℹ️ INFORMACIÓN DEL SISTEMA",
-                                 bg=self.colores.fondo_secundario,
-                                 fg=self.colores.gris_platino,
-                                 font=('Consolas', 12, 'bold'))
-        info_frame.pack(fill='x', padx=10, pady=10)
-        
-        info_text = f"""
-        🔐 Sistema: Ares Aegis v4.0
-        📂 Directorio: {os.path.dirname(os.path.abspath(__file__))}
-        💾 Bases de datos personalizadas: Habilitadas
-        🔄 Última actualización: Automática
-        """
-        
-        tk.Label(info_frame,
-                text=info_text,
-                font=('Consolas', 9),
-                fg=self.colores.texto_primario,
-                bg=self.colores.fondo_secundario,
-                justify='left').pack(padx=20, pady=15)
-    
-    def _cargar_base_datos(self, tipo, parent_window):
-        """Cargar base de datos de vulnerabilidades personalizada"""
-        from tkinter import filedialog, messagebox
-        import json
-        import csv
-        import os
-        from datetime import datetime
-        
-        # Definir tipos de archivo soportados
-        file_types = [
-            ("Archivos JSON", "*.json"),
-            ("Archivos CSV", "*.csv"),
-            ("Archivos de texto", "*.txt"),
-            ("Todos los archivos", "*.*")
-        ]
-        
-        # Abrir diálogo de archivo
-        archivo = filedialog.askopenfilename(
-            title=f"Seleccionar base de datos de {tipo.upper()}",
-            filetypes=file_types,
-            parent=parent_window
-        )
-        
-        if not archivo:
-            return
-        
-        try:
-            # Procesar archivo según su extensión
-            datos_procesados = self._procesar_archivo_base_datos(archivo, tipo)
-            
-            if not datos_procesados:
-                messagebox.showerror("Error", "No se pudieron extraer datos válidos del archivo")
-                return
-            
-            # Guardar en la base de datos personalizada
-            resultado = self._guardar_base_datos_personalizada(tipo, archivo, datos_procesados)
-            
-            if resultado:
-                messagebox.showinfo(
-                    "Éxito", 
-                    f"✅ Base de datos de {tipo.upper()} cargada exitosamente\n"
-                    f"📊 Registros procesados: {len(datos_procesados)}\n"
-                    f"🔄 El escáner se actualizará automáticamente"
-                )
-                
-                # Actualizar listado
-                self._actualizar_listado_bases_datos()
-                
-                # Notificar al controlador para actualizar escáner
-                if self.controlador:
-                    self.controlador.actualizar_bases_datos_personalizadas()
-                    
-                self.logger.info(f"Base de datos {tipo} cargada: {os.path.basename(archivo)} ({len(datos_procesados)} registros)")
-            else:
-                messagebox.showerror("Error", "Error guardando la base de datos")
-                
-        except Exception as e:
-            self.logger.error(f"Error cargando base de datos {tipo}: {e}")
-            messagebox.showerror("Error", f"Error procesando archivo:\n{str(e)}")
-    
-    def _procesar_archivo_base_datos(self, archivo, tipo):
-        """Procesar archivo de base de datos según su formato"""
-        import json
-        import csv
-        import os
-        
-        extension = os.path.splitext(archivo)[1].lower()
-        datos = []
-        
-        try:
-            if extension == '.json':
-                with open(archivo, 'r', encoding='utf-8') as f:
-                    contenido = json.load(f)
-                    datos = self._extraer_datos_json(contenido, tipo)
-                    
-            elif extension == '.csv':
-                with open(archivo, 'r', encoding='utf-8') as f:
-                    reader = csv.DictReader(f)
-                    for row in reader:
-                        dato_procesado = self._procesar_fila_csv(row, tipo)
-                        if dato_procesado:
-                            datos.append(dato_procesado)
-                            
-            elif extension == '.txt':
-                with open(archivo, 'r', encoding='utf-8') as f:
-                    lineas = f.readlines()
-                    datos = self._procesar_archivo_texto(lineas, tipo)
-                    
-            return datos
-            
-        except Exception as e:
-            self.logger.error(f"Error procesando archivo {archivo}: {e}")
-            return []
+
     
     def _extraer_datos_json(self, contenido, tipo):
         """Extraer datos de archivo JSON"""
@@ -952,224 +657,14 @@ class InterfazPrincipalAresAegis:
         
         return None
     
-    def _guardar_base_datos_personalizada(self, tipo, archivo_origen, datos):
-        """Guardar base de datos personalizada en el sistema"""
-        import json
-        import os
-        from datetime import datetime
-        
-        try:
-            # Crear directorio para bases de datos personalizadas
-            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            db_dir = os.path.join(base_dir, "recursos", "bases_datos_personalizadas")
-            os.makedirs(db_dir, exist_ok=True)
-            
-            # Crear archivo de metadatos
-            metadata = {
-                'tipo': tipo,
-                'archivo_origen': os.path.basename(archivo_origen),
-                'fecha_carga': datetime.now().isoformat(),
-                'registros': len(datos),
-                'datos': datos
-            }
-            
-            # Generar nombre único para el archivo
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"{tipo}_{timestamp}.json"
-            filepath = os.path.join(db_dir, filename)
-            
-            # Guardar archivo
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(metadata, f, indent=2, ensure_ascii=False)
-            
-            self.logger.info(f"Base de datos {tipo} guardada: {filepath}")
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Error guardando base de datos {tipo}: {e}")
-            return False
-    
-    def _actualizar_listado_bases_datos(self):
-        """Actualizar el listado de bases de datos cargadas"""
-        import json
-        import os
-        from datetime import datetime
-        
-        # Limpiar treeview
-        for item in self.db_tree.get_children():
-            self.db_tree.delete(item)
-        
-        try:
-            # Buscar bases de datos personalizadas
-            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            db_dir = os.path.join(base_dir, "recursos", "bases_datos_personalizadas")
-            
-            if not os.path.exists(db_dir):
-                return
-            
-            for filename in os.listdir(db_dir):
-                if filename.endswith('.json'):
-                    filepath = os.path.join(db_dir, filename)
-                    try:
-                        with open(filepath, 'r', encoding='utf-8') as f:
-                            metadata = json.load(f)
-                        
-                        # Agregar al treeview
-                        fecha_str = metadata.get('fecha_carga', '')
-                        if fecha_str:
-                            try:
-                                fecha_obj = datetime.fromisoformat(fecha_str)
-                                fecha_mostrar = fecha_obj.strftime("%Y-%m-%d %H:%M")
-                            except:
-                                fecha_mostrar = fecha_str
-                        else:
-                            fecha_mostrar = "Desconocida"
-                        
-                        self.db_tree.insert('', 'end', values=(
-                            metadata.get('tipo', 'Unknown').upper(),
-                            metadata.get('archivo_origen', filename),
-                            metadata.get('registros', 0),
-                            fecha_mostrar
-                        ), tags=(filename,))
-                        
-                    except Exception as e:
-                        self.logger.error(f"Error cargando metadata de {filename}: {e}")
-                        
-        except Exception as e:
-            self.logger.error(f"Error actualizando listado de bases de datos: {e}")
-    
-    def _eliminar_base_datos_seleccionada(self):
-        """Eliminar base de datos seleccionada"""
-        from tkinter import messagebox
-        import os
-        
-        selection = self.db_tree.selection()
-        if not selection:
-            messagebox.showwarning("Advertencia", "Selecciona una base de datos para eliminar")
-            return
-        
-        # Confirmar eliminación
-        respuesta = messagebox.askyesno(
-            "Confirmar Eliminación",
-            "¿Estás seguro de que quieres eliminar la base de datos seleccionada?\n"
-            "Esta acción no se puede deshacer."
-        )
-        
-        if not respuesta:
-            return
-        
-        try:
-            # Obtener filename de las tags
-            item = selection[0]
-            values = self.db_tree.item(item)['values']
-            tags = self.db_tree.item(item)['tags']
-            
-            if tags:
-                filename = tags[0]
-                
-                # Construir path del archivo
-                base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                db_dir = os.path.join(base_dir, "recursos", "bases_datos_personalizadas")
-                filepath = os.path.join(db_dir, filename)
-                
-                # Eliminar archivo
-                if os.path.exists(filepath):
-                    os.remove(filepath)
-                    messagebox.showinfo("Éxito", "Base de datos eliminada correctamente")
-                    
-                    # Actualizar listado
-                    self._actualizar_listado_bases_datos()
-                    
-                    # Notificar al controlador
-                    if self.controlador:
-                        self.controlador.actualizar_bases_datos_personalizadas()
-                    
-                    self.logger.info(f"Base de datos eliminada: {filename}")
-                else:
-                    messagebox.showerror("Error", "El archivo no existe")
-            
-        except Exception as e:
-            self.logger.error(f"Error eliminando base de datos: {e}")
-            messagebox.showerror("Error", f"Error eliminando base de datos:\n{str(e)}")
-    
-    def _limpiar_todas_bases_datos(self):
-        """Eliminar todas las bases de datos personalizadas"""
-        from tkinter import messagebox
-        import os
-        
-        # Confirmar eliminación
-        respuesta = messagebox.askyesno(
-            "Confirmar Eliminación Masiva",
-            "¿Estás seguro de que quieres eliminar TODAS las bases de datos personalizadas?\n"
-            "Esta acción no se puede deshacer y afectará el funcionamiento del escáner."
-        )
-        
-        if not respuesta:
-            return
-        
-        try:
-            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            db_dir = os.path.join(base_dir, "recursos", "bases_datos_personalizadas")
-            
-            if os.path.exists(db_dir):
-                # Eliminar todos los archivos JSON
-                eliminados = 0
-                for filename in os.listdir(db_dir):
-                    if filename.endswith('.json'):
-                        filepath = os.path.join(db_dir, filename)
-                        os.remove(filepath)
-                        eliminados += 1
-                
-                messagebox.showinfo("Éxito", f"Se eliminaron {eliminados} bases de datos personalizadas")
-                
-                # Actualizar listado
-                self._actualizar_listado_bases_datos()
-                
-                # Notificar al controlador
-                if self.controlador:
-                    self.controlador.actualizar_bases_datos_personalizadas()
-                
-                self.logger.info(f"Eliminadas {eliminados} bases de datos personalizadas")
-            
-        except Exception as e:
-            self.logger.error(f"Error eliminando todas las bases de datos: {e}")
-            messagebox.showerror("Error", f"Error eliminando bases de datos:\n{str(e)}")
-    
-    def _guardar_configuracion(self, config_window):
-        """Guardar configuración del sistema"""
-        from tkinter import messagebox
-        
-        try:
-            # Aquí se pueden agregar más configuraciones
-            messagebox.showinfo("Configuración", "Configuración guardada correctamente")
-            config_window.destroy()
-            
-        except Exception as e:
-            self.logger.error(f"Error guardando configuración: {e}")
-            messagebox.showerror("Error", f"Error guardando configuración:\n{str(e)}")
-    
-    def _abrir_configuracion(self):
-        """Abrir configuración del sistema usando la vista estandarizada"""
-        self.logger.info("⚙ Abriendo configuración del sistema")
-        try:
-            if 'configuracion' in self.vistas:
-                # Cambiar a la vista de configuración
-                self._cambiar_vista('configuracion')
-                self.logger.info("Vista de configuración cargada exitosamente")
-            else:
-                self.logger.error("Vista de configuración no encontrada")
-                messagebox.showerror("Error", "Vista de configuración no disponible")
-        except Exception as e:
-            self.logger.error(f"Error abriendo configuración: {e}")
-            messagebox.showerror("Error", f"Error abriendo configuración: {e}")
-    
     def _cambiar_vista(self, nombre_vista):
         """Cambiar a una vista específica"""
         try:
             if nombre_vista in self.vistas:
                 # Limpiar área de contenido
-                for widget in self.area_contenido.winfo_children():
-                    widget.destroy()
+                if self.area_contenido:
+                    for widget in self.area_contenido.winfo_children():
+                        widget.destroy()
                 
                 # Crear la nueva vista
                 vista = self.vistas[nombre_vista]
@@ -1195,8 +690,7 @@ class InterfazPrincipalAresAegis:
             'cuarentena': VistaCuarentena(self.area_contenido, self.controlador, self.colores),
             'constructor_wordlists': VistaConstructorWordlists(self.area_contenido, self.controlador, self.colores),
             'reportes': VistaReportes(self.area_contenido, self.controlador, self.colores),
-            'cheatsheets': VistaCheatsheets(self.area_contenido, self.controlador, self.colores),
-            'configuracion': VistaConfiguracion(self.area_contenido, self.controlador, self.colores)
+            'cheatsheets': VistaCheatsheets(self.area_contenido, self.controlador, self.colores)
         }
         
         # Registrar el dashboard con el controlador para estadísticas en tiempo real
@@ -1208,7 +702,8 @@ class InterfazPrincipalAresAegis:
         """Iniciar sistema de métricas en tiempo real"""
         def callback_metricas(metricas):
             # Actualizar vista dashboard si está activa
-            if self.vista_actual == 'dashboard' and 'dashboard' in self.vistas:
+            if (self.vista_actual == 'dashboard' and 'dashboard' in self.vistas and 
+                self.root and hasattr(self.root, 'after')):
                 self.root.after(0, lambda: self.vistas['dashboard'].actualizar_metricas(metricas))
         
         self.metricas_tiempo_real = MetricasTiempoReal(self.controlador, callback_metricas)
@@ -1238,8 +733,9 @@ class InterfazPrincipalAresAegis:
                         )
             
             # Limpiar área de contenido
-            for widget in self.area_contenido.winfo_children():
-                widget.destroy()
+            if self.area_contenido:
+                for widget in self.area_contenido.winfo_children():
+                    widget.destroy()
             
             # Mostrar la vista
             if vista_id == 'auditoria_pam':
@@ -1329,10 +825,17 @@ class InterfazPrincipalAresAegis:
             
             # Actualizar métricas
             if self.metricas_tiempo_real:
-                self.metricas_tiempo_real._actualizar_metricas()
+                try:
+                    # Intentar actualizar métricas usando getattr de forma segura
+                    actualizar_metricas = getattr(self.metricas_tiempo_real, 'actualizar_metricas', None)
+                    if actualizar_metricas and callable(actualizar_metricas):
+                        actualizar_metricas()
+                except Exception as e:
+                    self.logger.warning(f"No se pudieron actualizar métricas: {e}")
             
             # Actualizar estado de la fortaleza
-            self.estado_fortaleza.set("SISTEMA ACTUALIZADO • CONEXIÓN SEGURA VERIFICADA")
+            if self.estado_fortaleza and hasattr(self.estado_fortaleza, 'set'):
+                self.estado_fortaleza.set("SISTEMA ACTUALIZADO • CONEXIÓN SEGURA VERIFICADA")
             
             # Actualizar vista actual si existe
             if hasattr(self, 'vista_actual') and self.vista_actual:
@@ -1422,15 +925,6 @@ class InterfazPrincipalAresAegis:
                             self.logger.info(f"✅ Vista {vista_nombre} finalizada")
                         except Exception as e:
                             self.logger.error(f"Error finalizando {vista_nombre}: {e}")
-            
-            # También intentar finalizar vista activa actual
-            if hasattr(self, 'vista_activa') and self.vista_activa:
-                try:
-                    if hasattr(self.vista_activa, 'destruir_vista'):
-                        self.vista_activa.destruir_vista()
-                        self.logger.info("✅ Vista activa finalizada")
-                except Exception as e:
-                    self.logger.error(f"Error finalizando vista activa: {e}")
                     
         except Exception as e:
             self.logger.error(f"Error finalizando vistas: {e}")
@@ -1473,7 +967,10 @@ class InterfazPrincipalAresAegis:
         """Ejecutar la aplicación"""
         try:
             self.logger.info("🏛️ Iniciando Sistema de Ciberseguridad Ares Aegis")
-            self.root.mainloop()
+            if self.root and hasattr(self.root, 'mainloop'):
+                self.root.mainloop()
+            else:
+                self.logger.error("❌ No se puede ejecutar: ventana principal no inicializada")
         except Exception as e:
             self.logger.error(f"Error ejecutando aplicación: {e}")
 
