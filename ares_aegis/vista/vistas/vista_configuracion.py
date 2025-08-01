@@ -8,16 +8,17 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import json
 import os
-from ..utils.temas_kali import TEMAS_DISPONIBLES, obtener_tema, aplicar_tema_a_widget
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ...utils.temas_kali import TEMAS_DISPONIBLES, obtener_tema, aplicar_tema_a_widget
+from ...utils.ayuda_logging import configurar_logger_modulo
 
 
 class VistaConfiguracion:
     """Vista de configuración del sistema"""
     
-    def __init__(self, contenedor, controlador_principal=None):
+    def __init__(self, contenedor, controlador_principal=None, colores=None):
         self.contenedor = contenedor
         self.controlador = controlador_principal
+        self.colores = colores or {}
         self.logger = configurar_logger_modulo('vista_configuracion')
         self.ventana_config = None
         self.tema_actual = obtener_tema('kali_original')
@@ -571,8 +572,8 @@ class VistaConfiguracion:
             y = (self.ventana_config.winfo_screenheight() // 2) - (600 // 2)
             self.ventana_config.geometry(f"800x600+{x}+{y}")
             
-    def mostrar_informacion(self):
-        """Mostrar información de configuración"""
+    def mostrar_informacion_tema(self):
+        """Mostrar información de configuración de temas"""
         info_text = """⚙️ CONFIGURACIÓN DEL SISTEMA
 
 🎨 GESTIÓN DE TEMAS:

@@ -47,73 +47,16 @@ def verificar_permisos_root():
             return False
     else:
         # En Linux/Unix, verificar si es root (UID 0)
-        return os.geteuid() == 0
-
-
-def solicitar_permisos_root():
-    """
-    Solicita permisos de root al usuario si no los tiene.
-    Específicamente diseñado para Kali Linux.
-    """
-    if verificar_permisos_root():
-        return True
-    
-    if platform.system() == "Windows":
-        messagebox.showerror(
-            "Permisos Insuficientes",
-            "Ares Aegis requiere permisos de administrador.\n"
-            "Por favor, ejecuta el programa como administrador."
-        )
-        return False
-    else:
-        # En Kali Linux, usar pkexec o sudo para obtener permisos
-        respuesta = messagebox.askyesno(
-            "🔐 Permisos de Root Requeridos",
-            "🛡️ Ares Aegis es una suite de ciberseguridad profesional que requiere permisos de root para:\n\n"
-            "• 🔍 Escanear vulnerabilidades del sistema\n"
-            "• 📁 Monitorear integridad de archivos (FIM)\n" 
-            "• 🌐 Analizar tráfico de red\n"
-            "• 🔒 Auditar configuraciones PAM\n"
-            "• 🚨 Acceder a logs del sistema\n"
-            "• 🛡️ Implementar medidas de seguridad\n\n"
-            "¿Deseas continuar y proporcionar permisos de root?"
-        )
-        
-        if not respuesta:
-            return False
-        
         try:
-            # Intentar relanzar con sudo
-            script_path = os.path.abspath(__file__)
-            resultado = subprocess.run([
-                'pkexec', 'python3', script_path
-            ], capture_output=False)
-            
-            # Si pkexec no está disponible, intentar con sudo
-            if resultado.returncode != 0:
-                resultado = subprocess.run([
-                    'sudo', 'python3', script_path
-                ], capture_output=False)
-            
-            # Cerrar la instancia actual ya que se lanzó una nueva con permisos
-            sys.exit(0)
-            
-        except FileNotFoundError:
-            messagebox.showerror(
-                "Error de Permisos",
-                "No se pudo obtener permisos de root.\n"
-                "Por favor, ejecuta manualmente:\n\n"
-                f"sudo python3 {script_path}"
-            )
+            # Verificar si geteuid está disponible antes de usarlo
+            geteuid_func = getattr(os, 'geteuid', None)
+            if geteuid_func is not None:
+                return geteuid_func() == 0
+            else:
+                return False
+        except (AttributeError, OSError):
+            # geteuid no está disponible en Windows o hay un error
             return False
-        except Exception as e:
-            messagebox.showerror(
-                "Error",
-                f"Error al solicitar permisos de root:\n{e}"
-            )
-            return False
-    
-    return False
 
 
 def limpiar_recursos_aplicacion():
@@ -130,13 +73,20 @@ def limpiar_recursos_aplicacion():
                 if hasattr(interfaz_global, '_cerrar_aplicacion'):
                     interfaz_global._cerrar_aplicacion()
                 elif hasattr(interfaz_global, 'root') and interfaz_global.root:
-                    interfaz_global.root.quit()
-                    interfaz_global.root.destroy()
+                    try:
+                        interfaz_global.root.quit()
+                    except tk.TclError:
+                        pass  # Ventana ya cerrada
+                    try:
+                        interfaz_global.root.destroy()
+                    except tk.TclError:
+                        pass  # Ventana ya destruida
                 if logger_global:
                     logger_global.info("✅ Interfaz finalizada correctamente")
             except Exception as e:
                 if logger_global:
-                    logger_global.error(f"Error finalizando interfaz: {e}")
+                    logger_global.debug(f"Advertencia finalizando interfaz: {e}")
+                # No es crítico si la interfaz ya se cerró
         
         # Finalizar hilos restantes
         try:
@@ -195,7 +145,16 @@ def configurar_manejadores_senal():
         if platform.system() != "Windows":
             signal.signal(signal.SIGINT, manejador_senal_cierre)   # Ctrl+C
             signal.signal(signal.SIGTERM, manejador_senal_cierre)  # Terminación
-            signal.signal(signal.SIGHUP, manejador_senal_cierre)   # Hangup
+            try:
+                # Verificar si SIGHUP está disponible usando getattr
+                sighup_signal = getattr(signal, 'SIGHUP', None)
+                if sighup_signal is not None:
+                    signal.signal(sighup_signal, manejador_senal_cierre)   # Hangup
+            except (AttributeError, OSError):
+                pass  # SIGHUP no disponible en este sistema
+        else:
+            # En Windows, solo registrar SIGINT (Ctrl+C)
+            signal.signal(signal.SIGINT, manejador_senal_cierre)
         
         # Registrar función de limpieza para salida normal
         atexit.register(limpiar_recursos_aplicacion)
@@ -219,11 +178,11 @@ def solicitar_permisos_root():
         respuesta = messagebox.askyesno(
             "🛡️ Ares Aegis - Permisos Requeridos",
             "Ares Aegis requiere permisos de administrador para:\n\n"
-            "🔍 Acceder a archivos del sistema\n"
-            "📊 Monitorear procesos y servicios\n"
-            "🌐 Analizar tráfico de red\n"
-            "🔐 Auditar configuraciones de seguridad\n"
-            "🗂️ Gestionar cuarentena de archivos\n\n"
+            "[ACCESS] Acceder a archivos del sistema\n"
+            "[MONITOR] Monitorear procesos y servicios\n"
+            "[NETWORK] Analizar tráfico de red\n"
+            "[AUDIT] Auditar configuraciones de seguridad\n"
+            "[QUARANTINE] Gestionar cuarentena de archivos\n\n"
             "¿Deseas continuar con permisos elevados?\n"
             "(Se solicitará tu contraseña)",
             icon='question'
@@ -234,7 +193,7 @@ def solicitar_permisos_root():
         if respuesta:
             try:
                 # Intentar ejecutar con sudo
-                logger.info("🔑 Solicitando permisos de administrador...")
+                logger.info("[ADMIN] Solicitando permisos de administrador...")
                 
                 # Construir comando sudo
                 python_exec = sys.executable
@@ -278,14 +237,18 @@ def verificar_entorno_kali():
     
     try:
         # Verificar si es Kali Linux
-        if os.path.exists('/etc/os-release'):
+        if platform.system() == "Windows":
+            logger.warning("[WARNING] Ejecutándose en Windows - Ares Aegis está optimizado para Kali Linux")
+            logger.warning("[WARNING] Algunas funciones pueden no estar disponibles o funcionar de forma limitada")
+            return False
+        elif os.path.exists('/etc/os-release'):
             with open('/etc/os-release', 'r') as f:
                 contenido = f.read()
                 if 'kali' in contenido.lower():
-                    logger.info("✅ Kali Linux detectado - Optimizaciones activas")
+                    logger.info("[SUCCESS] Kali Linux detectado - Optimizaciones activas")
                     return True
                 else:
-                    logger.warning("⚠️ Sistema no es Kali Linux - Funciones limitadas")
+                    logger.warning("[WARNING] Sistema no es Kali Linux - Funciones limitadas")
                     return False
     except Exception as e:
         logger.debug(f"No se pudo verificar el sistema: {e}")
@@ -300,7 +263,11 @@ def mostrar_banner_inicio():
     print("\033[96m" + "="*70)
     print("🛡️  ARES AEGIS v4.0 - CYBERSECURITY SUITE 🛡️")
     print("="*70)
-    print("🎯 Optimizado para Kali Linux")
+    if platform.system() == "Windows":
+        print("⚠️  ADVERTENCIA: Ejecutándose en Windows")
+        print("🎯 Optimizado para Kali Linux - Funcionalidad limitada")
+    else:
+        print("🎯 Optimizado para Kali Linux")
     print("🔐 Suite de Seguridad Avanzada")
     print("⚡ Iniciando con permisos de administrador...")
     print("="*70 + "\033[0m")
@@ -318,7 +285,7 @@ def main():
         # Verificar y solicitar permisos de root ANTES de cualquier otra cosa
         if not solicitar_permisos_root():
             logger_global = configurar_logging_completo()
-            logger_global.warning("⚠️ Usuario decidió continuar sin permisos de administrador")
+            logger_global.warning("[WARNING] Usuario decidió continuar sin permisos de administrador")
             
             # Mostrar advertencia final
             respuesta = messagebox.askyesno(
@@ -353,18 +320,18 @@ def main():
         
         # Mostrar información de permisos actuales
         if verificar_permisos_root():
-            logger.info("🔑 Ejecutándose con permisos de administrador")
+            logger.info("[ADMIN] Ejecutándose con permisos de administrador")
             print("\033[92m✅ Permisos de administrador activos - Funcionalidad completa\033[0m")
         else:
-            logger.warning("⚠️ Ejecutándose sin permisos de administrador")
+            logger.warning("[WARNING] Ejecutándose sin permisos de administrador")
             print("\033[93m⚠️ Funcionalidad limitada - Algunas características no disponibles\033[0m")
         
         logger.info("🎯 Cargando interfaz Escudo Divino de Ciberseguridad 4.0...")
         
         try:
             # Usar la interfaz principal (Escudo Divino de Ciberseguridad 4.0)
-            from ares_aegis.vista.interfaz_principal import InterfazCybersecSimple
-            interfaz = InterfazCybersecSimple()
+            from ares_aegis.vista.interfaz_principal import InterfazPrincipalAresAegis
+            interfaz = InterfazPrincipalAresAegis()
             interfaz_global = interfaz  # Asignar a variable global para limpieza
             
             # Intentar cargar controlador principal
@@ -373,15 +340,15 @@ def main():
                 controlador = ControladorPrincipal()
                 # La interfaz simple maneja el controlador internamente
                 interfaz.inicializar(controlador)
-                logger.info("✅ Escudo Divino de Ciberseguridad 4.0 inicializado con controlador")
+                logger.info("[SUCCESS] Escudo Divino de Ciberseguridad 4.0 inicializado con controlador")
             except Exception as e:
                 logger.warning(f"Controlador no disponible: {e}")
                 interfaz.inicializar()
-                logger.info("✅ Escudo Divino de Ciberseguridad 4.0 inicializado sin controlador")
+                logger.info("[SUCCESS] Escudo Divino de Ciberseguridad 4.0 inicializado sin controlador")
             
             # Información adicional para Kali Linux
             if es_kali and verificar_permisos_root():
-                logger.info("🛡️ Todas las funciones de seguridad están disponibles")
+                logger.info("[SHIELD] Todas las funciones de seguridad están disponibles")
             
             # Configurar protocolo de cierre de ventana
             if hasattr(interfaz, 'root') and interfaz.root:

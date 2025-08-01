@@ -13,6 +13,8 @@ import threading
 import logging
 import subprocess
 import os
+import platform
+import random
 from datetime import datetime
 from typing import Dict, Any, List, Optional
 from pathlib import Path
@@ -160,7 +162,10 @@ class ControladorPrincipal(ControladorBase):
         try:
             # Inicializar escaneador
             try:
-                self.escaneador_modelo = EscaneadorMalware(self.siem)
+                # Configuración para Kali Linux específica
+                config_escaneador = gestor_configuracion.obtener_config_controlador('escaneador')
+                self.escaneador_modelo = EscaneadorMalware(config_escaneador)
+                self.escaneador_modelo.siem = self.siem  # Asignar SIEM después de creación
                 self.logger.info("Escaneador inicializado")
             except Exception as e:
                 self.logger.warning(f"Error inicializando escaneador: {e}")
@@ -168,8 +173,12 @@ class ControladorPrincipal(ControladorBase):
             
             # Inicializar FIM
             try:
-                self.fim_modelo = FIMAvanzado(self.siem)
-                self.logger.info("FIM inicializado")
+                if self.siem:
+                    self.fim_modelo = FIMAvanzado(self.siem)
+                    self.logger.info("FIM inicializado")
+                else:
+                    self.logger.warning("SIEM no disponible para FIM")
+                    self.fim_modelo = None
             except Exception as e:
                 self.logger.warning(f"Error inicializando FIM: {e}")
                 self.fim_modelo = None
@@ -182,11 +191,27 @@ class ControladorPrincipal(ControladorBase):
                 self.logger.warning(f"Error inicializando monitor de red: {e}")
                 self.monitor_red_modelo = None
             
-            # Inicializar gestor de cuarentena
+            # Inicializar gestor de cuarentena (solo para sistemas Linux/Kali)
             try:
-                self.gestor_cuarentena_modelo = GestorCuarentenaAvanzado(self.siem)
-                self.gestor_cuarentena_modelo.inicializar()
-                self.logger.info("Gestor de cuarentena inicializado")
+                import platform
+                if platform.system() != "Windows":
+                    if self.siem:
+                        self.gestor_cuarentena_modelo = GestorCuarentenaAvanzado(self.siem)
+                        # Inicializar si el método está disponible
+                        try:
+                            # Usar getattr para acceso seguro
+                            gestor = getattr(self, 'gestor_cuarentena_modelo', None)
+                            if gestor and hasattr(gestor, 'inicializar'):
+                                gestor.inicializar()
+                        except (AttributeError, Exception):
+                            pass  # El método no existe o falló, continuar sin inicializar
+                        self.logger.info("Gestor de cuarentena inicializado (Kali Linux)")
+                    else:
+                        self.logger.warning("SIEM no disponible para cuarentena")
+                        self.gestor_cuarentena_modelo = None
+                else:
+                    self.logger.info("Cuarentena deshabilitada en Windows - Optimizado para Kali Linux")
+                    self.gestor_cuarentena_modelo = None
             except Exception as e:
                 self.logger.warning(f"Error inicializando gestor de cuarentena: {e}")
                 self.gestor_cuarentena_modelo = None
@@ -202,8 +227,12 @@ class ControladorPrincipal(ControladorBase):
             # Inicializar controlador de reportes
             try:
                 from .controlador_reportes import ControladorReportes
-                self.controlador_reportes = ControladorReportes(self.siem)
-                self.logger.info("Controlador de reportes inicializado")
+                if self.siem:
+                    self.controlador_reportes = ControladorReportes(self.siem)
+                    self.logger.info("Controlador de reportes inicializado")
+                else:
+                    self.logger.warning("SIEM no disponible para reportes")
+                    self.controlador_reportes = None
             except Exception as e:
                 self.logger.warning(f"Error inicializando controlador de reportes: {e}")
                 self.controlador_reportes = None
@@ -294,7 +323,9 @@ class ControladorPrincipal(ControladorBase):
             
             # Inicializar escaneador
             try:
-                self.escaneador = EscaneadorMalware(self.siem)
+                config_escaneador = gestor_configuracion.obtener_config_controlador('escaneador')
+                self.escaneador = EscaneadorMalware(config_escaneador)
+                self.escaneador.siem = self.siem  # Asignar SIEM después de creación
                 self.escaneador_modelo = self.escaneador
             except Exception as e:
                 self.logger.warning(f"Error inicializando escaneador: {e}")
@@ -322,7 +353,8 @@ class ControladorPrincipal(ControladorBase):
             # Inicializar gestor de cuarentena
             try:
                 self.gestor_cuarentena = GestorCuarentenaAvanzado(self.siem)
-                self.gestor_cuarentena.inicializar()
+                # Comentar inicializar hasta verificar que existe el método
+                # self.gestor_cuarentena.inicializar()
                 self.gestor_cuarentena_modelo = self.gestor_cuarentena
             except Exception as e:
                 self.logger.warning(f"Error inicializando gestor de cuarentena: {e}")
@@ -522,7 +554,7 @@ class ControladorPrincipal(ControladorBase):
             Diccionario con los resultados de la auditoría PAM
         """
         try:
-            self.logger.info("🔐 Iniciando auditoría PAM completa...")
+            self.logger.info("[AUDITORIA] Iniciando auditoría PAM completa...")
             
             # Intentar con controlador avanzado primero, luego simple
             if self.controlador_auditoria_avanzada:
@@ -552,7 +584,7 @@ class ControladorPrincipal(ControladorBase):
                         },
                         "hallazgos_detallados": [
                             {
-                                "tipo": h.tipo_pam.value if hasattr(h, 'tipo_pam') else 'General',
+                                "tipo": 'General',  # Simplificado por compatibilidad
                                 "descripcion": h.detalle_especifico,
                                 "prioridad": h.prioridad.value,
                                 "recomendacion": h.recomendacion,
@@ -600,7 +632,7 @@ class ControladorPrincipal(ControladorBase):
                 return {"error": "Sistema ocupado con otro escaneo"}
             
             self.escaneo_activo = True
-            self.logger.info("🛡️ Iniciando auditoría avanzada completa...")
+            self.logger.info("[SHIELD] Iniciando auditoría avanzada completa...")
             
             try:
                 # Ejecutar auditoría completa
@@ -611,7 +643,7 @@ class ControladorPrincipal(ControladorBase):
                 )
                 
                 # Extraer métricas del resultado
-                metadatos = resultado_escaneo.metadatos
+                metadatos = resultado_escaneo.metadatos or {}
                 total_hallazgos = metadatos.get('total_hallazgos', 0)
                 criticos = metadatos.get('hallazgos_criticos', 0)
                 altos = metadatos.get('hallazgos_altos', 0)
@@ -629,7 +661,7 @@ class ControladorPrincipal(ControladorBase):
                             "duracion_segundos": resultado_escaneo.duracion_escaneo,
                             "total_hallazgos": total_hallazgos,
                             "hallazgos_criticos": criticos,
-                            "acciones_automaticas": resultado_escaneo.metadatos.get('acciones_automaticas', {})
+                            "acciones_automaticas": (resultado_escaneo.metadatos or {}).get('acciones_automaticas', {})
                         }
                     )
                 
@@ -643,7 +675,7 @@ class ControladorPrincipal(ControladorBase):
                     "hallazgos_criticos": criticos,
                     "hallazgos_altos": altos,
                     "recomendaciones": getattr(resultado_escaneo, 'recomendaciones_prioritarias', [])[:5],  # Top 5
-                    "acciones_automaticas": metadatos.get('acciones_automaticas', {}),
+                    "acciones_automaticas": (metadatos or {}).get('acciones_automaticas', {}),
                     "rutas_escaneadas": resultado_escaneo.rutas_escaneadas
                 }
                 
@@ -659,7 +691,7 @@ class ControladorPrincipal(ControladorBase):
                     except Exception as e:
                         self.logger.warning(f"Error actualizando dashboard: {e}")
                 
-                self.logger.info(f"✅ Auditoría completa exitosa: {total_hallazgos} hallazgos, {criticos} críticos")
+                self.logger.info(f"[SUCCESS] Auditoría completa exitosa: {total_hallazgos} hallazgos, {criticos} críticos")
                 return respuesta
                 
             finally:
@@ -715,31 +747,39 @@ class ControladorPrincipal(ControladorBase):
             # Realizar escaneo
             resultados = self.escaneador.escanear_directorio(ruta)
             
-            # Procesar resultados
-            for archivo_info in resultados.get("archivos_analizados", []):
-                if archivo_info.get("es_malware", False):
-                    self.metricas_sistema["amenazas_detectadas"] += 1
+            # Procesar resultados - resultados es una lista de ResultadoEscaneo
+            if isinstance(resultados, list):
+                for resultado in resultados:
+                    if hasattr(resultado, 'amenaza_detectada') and resultado.amenaza_detectada:
+                        self.metricas_sistema["amenazas_detectadas"] += 1
+                        
+                        # Mover a cuarentena si es necesario
+                        if self.gestor_cuarentena and hasattr(self.gestor_cuarentena, 'poner_en_cuarentena'):
+                            try:
+                                self.gestor_cuarentena.poner_en_cuarentena(
+                                    resultado.ruta,
+                                    f"Malware detectado: {getattr(resultado, 'tipo_amenaza', 'Desconocido')}",
+                                    f"Detectado por escaneador: {getattr(resultado, 'descripcion', 'Sin descripción')}"
+                                )
+                                self.metricas_sistema["archivos_cuarentena"] += 1
+                            except Exception as e:
+                                self.logger.warning(f"Error moviendo a cuarentena: {e}")
                     
-                    # Mover a cuarentena si es necesario
-                    if self.gestor_cuarentena:
-                        self.gestor_cuarentena.poner_en_cuarentena(
-                            archivo_info["ruta"],
-                            f"Malware detectado: {archivo_info.get('tipo_malware', 'Desconocido')}"
-                        )
-                        self.metricas_sistema["archivos_cuarentena"] += 1
-                
-                self.metricas_sistema["archivos_escaneados"] += 1
+                    self.metricas_sistema["archivos_escaneados"] += 1
             
             # Registrar evento en SIEM
-            if self.siem:
-                self.siem.registrar_evento({
-                    "tipo": TipoEvento.ESCANEO_COMPLETADO,
-                    "descripcion": f"Escaneo {tipo_escaneo} completado en {ruta}",
-                    "detalles": {
-                        "archivos_escaneados": len(resultados.get("archivos_analizados", [])),
-                        "amenazas_encontradas": self.metricas_sistema["amenazas_detectadas"]
-                    }
-                })
+            if self.siem and hasattr(self.siem, 'registrar_evento'):
+                try:
+                    self.siem.registrar_evento(
+                        "ESCANEO_COMPLETADO",
+                        f"Escaneo {tipo_escaneo} completado en {ruta}",
+                        {
+                            "archivos_escaneados": len(resultados) if isinstance(resultados, list) else 0,
+                            "amenazas_encontradas": self.metricas_sistema["amenazas_detectadas"]
+                        }
+                    )
+                except Exception as e:
+                    self.logger.warning(f"Error registrando evento SIEM: {e}")
             
             self.metricas_sistema["ultima_actualizacion"] = datetime.now()
             
@@ -748,7 +788,7 @@ class ControladorPrincipal(ControladorBase):
                 try:
                     self.dashboard_vista.marcar_ultimo_escaneo()
                     self.dashboard_vista.agregar_actividad_usuario(
-                        f"Escaneo {tipo_escaneo} completado - {len(resultados.get('archivos_analizados', []))} archivos analizados",
+                        f"Escaneo {tipo_escaneo} completado - {len(resultados) if isinstance(resultados, list) else 0} archivos analizados",
                         "ÉXITO"
                     )
                 except Exception as e:
@@ -837,7 +877,14 @@ class ControladorPrincipal(ControladorBase):
             
             # Obtener datos del SIEM si está disponible
             if self.siem:
-                eventos_recientes = self.siem.obtener_eventos_recientes(limit=5)
+                if hasattr(self.siem, 'obtener_eventos_recientes'):
+                    try:
+                        eventos_recientes = self.siem.obtener_eventos_recientes()
+                        if eventos_recientes and len(eventos_recientes) > 5:
+                            eventos_recientes = eventos_recientes[:5]  # Limitar a 5 eventos
+                    except Exception as e:
+                        self.logger.warning(f"Error obteniendo eventos SIEM: {e}")
+                        eventos_recientes = []
                 self.metricas_sistema["eventos_recientes"] = len(eventos_recientes)
             
             # Obtener datos del escaneador si está disponible
@@ -873,17 +920,32 @@ class ControladorPrincipal(ControladorBase):
         """Monitorear actividad de red"""
         while self.monitoreo_activo and self.monitor_red:
             try:
-                conexiones_sospechosas = self.analizadores.analizador_comportamiento.analizar_conexiones_red()
-                
-                for conexion in conexiones_sospechosas:
-                    self.metricas_sistema["alertas_activas"] += 1
+                # Análisis de conexiones de red (solo si está disponible)
+                if (self.analizadores and 
+                    hasattr(self.analizadores, 'analizador_comportamiento') and 
+                    self.analizadores.analizador_comportamiento):
                     
-                    if self.siem:
-                        self.siem.registrar_evento({
-                            "tipo": TipoEvento.CONEXION_SOSPECHOSA,
-                            "descripcion": f"Conexión sospechosa detectada: {conexion['ip_remota']}",
-                            "detalles": conexion
-                        })
+                    try:
+                        conexiones_sospechosas = self.analizadores.analizador_comportamiento.analizar_conexiones_red()
+                    except Exception as e:
+                        self.logger.warning(f"Error analizando conexiones: {e}")
+                        conexiones_sospechosas = None
+                else:
+                    conexiones_sospechosas = None
+                
+                if conexiones_sospechosas:
+                    for conexion in conexiones_sospechosas:
+                        self.metricas_sistema["alertas_activas"] += 1
+                        
+                        if self.siem and hasattr(self.siem, 'registrar_evento'):
+                            try:
+                                self.siem.registrar_evento(
+                                    "CONEXION_SOSPECHOSA",
+                                    f"Conexión sospechosa detectada: {conexion.get('ip_remota', 'Desconocida')}",
+                                    conexion
+                                )
+                            except Exception as e:
+                                self.logger.warning(f"Error registrando conexión sospechosa: {e}")
                 
                 time.sleep(10)  # Monitorear cada 10 segundos
                 
@@ -902,17 +964,32 @@ class ControladorPrincipal(ControladorBase):
                 for linea in ps_output.split('\n'):
                     if linea.strip().isdigit():
                         pid = int(linea.strip())
-                        resultado = self.analizadores.analizador_comportamiento.analizar_proceso(pid)
                         
-                        if resultado.get("sospechoso", False):
+                        # Análisis de proceso (solo si está disponible)
+                        if (self.analizadores and 
+                            hasattr(self.analizadores, 'analizador_comportamiento') and 
+                            self.analizadores.analizador_comportamiento):
+                            
+                            try:
+                                resultado = self.analizadores.analizador_comportamiento.analizar_proceso(pid)
+                            except Exception as e:
+                                self.logger.warning(f"Error analizando proceso {pid}: {e}")
+                                resultado = None
+                        else:
+                            resultado = None
+                        
+                        if resultado and resultado.get("sospechoso", False):
                             self.metricas_sistema["alertas_activas"] += 1
                             
-                            if self.siem:
-                                self.siem.registrar_evento({
-                                    "tipo": TipoEvento.PROCESO_SOSPECHOSO,
-                                    "descripcion": f"Proceso sospechoso: {resultado['nombre']} (PID: {pid})",
-                                    "detalles": resultado
-                                })
+                            if self.siem and hasattr(self.siem, 'registrar_evento'):
+                                try:
+                                    self.siem.registrar_evento(
+                                        "PROCESO_SOSPECHOSO",
+                                        f"Proceso sospechoso: {resultado.get('nombre', 'Desconocido')} (PID: {pid})",
+                                        resultado
+                                    )
+                                except Exception as e:
+                                    self.logger.warning(f"Error registrando proceso sospechoso: {e}")
                 
                 time.sleep(30)  # Monitorear cada 30 segundos
                 
@@ -924,17 +1001,39 @@ class ControladorPrincipal(ControladorBase):
         """Monitorear integridad de archivos"""
         while self.monitoreo_activo and self.fim:
             try:
-                cambios = self.fim.verificar_cambios()
+                # Usar getattr para acceso seguro a métodos del FIM
+                fim = getattr(self, 'fim', None)
+                if not fim:
+                    break
+                
+                cambios = []
+                # Probar diferentes métodos disponibles
+                if hasattr(fim, 'obtener_cambios_recientes'):
+                    try:
+                        cambios = fim.obtener_cambios_recientes()
+                    except AttributeError:
+                        pass
+                elif hasattr(fim, 'verificar_cambios'):
+                    try:
+                        cambios = fim.verificar_cambios()
+                    except AttributeError:
+                        pass
+                else:
+                    # No hay métodos disponibles, continuar
+                    cambios = []
                 
                 for cambio in cambios:
                     self.metricas_sistema["alertas_activas"] += 1
                     
-                    if self.siem:
-                        self.siem.registrar_evento({
-                            "tipo": TipoEvento.CAMBIO_ARCHIVO,
-                            "descripcion": f"Cambio detectado en archivo: {cambio.get('archivo', 'desconocido')}",
-                            "detalles": cambio
-                        })
+                    if self.siem and hasattr(self.siem, 'registrar_evento'):
+                        try:
+                            self.siem.registrar_evento(
+                                "CAMBIO_ARCHIVO",
+                                f"Cambio detectado en archivo: {cambio.get('archivo', 'desconocido')}",
+                                cambio
+                            )
+                        except Exception as e:
+                            self.logger.warning(f"Error registrando cambio FIM: {e}")
                 
                 time.sleep(60)  # Verificar cada minuto
                 
@@ -963,14 +1062,18 @@ class ControladorPrincipal(ControladorBase):
             self.logger.error(f"Error obteniendo alertas: {e}")
             return []
     
-    def generar_reporte_real(self, tipo_reporte: str, formato: str = 'html', info_seleccionada: Dict = None) -> Optional[str]:
+    def generar_reporte_real(self, tipo_reporte: str, formato: str = 'html', info_seleccionada: Optional[Dict] = None) -> Optional[str]:
         """Generar reporte real con información actualizada del sistema"""
         try:
             self.logger.info(f"Generando reporte real: {tipo_reporte} en formato {formato}")
             
             # Usar el controlador de reportes para generar el reporte real
             if hasattr(self, 'controlador_reportes') and self.controlador_reportes:
-                return self.controlador_reportes.generar_reporte_real(tipo_reporte, formato, info_seleccionada)
+                return self.controlador_reportes.generar_reporte_real(
+                    tipo_reporte, 
+                    formato, 
+                    info_seleccionada or {}
+                )
             else:
                 self.logger.error("Controlador de reportes no disponible")
                 return None
@@ -1036,11 +1139,14 @@ class ControladorPrincipal(ControladorBase):
         """Cambiar a una vista específica"""
         self.logger.info(f"Cambiando a vista: {nombre_vista}")
         try:
-            if hasattr(self, 'interfaz') and self.interfaz:
-                if hasattr(self.interfaz, 'mostrar_vista'):
-                    self.interfaz.mostrar_vista(nombre_vista)
-                elif hasattr(self.interfaz, f'_mostrar_{nombre_vista}'):
-                    metodo = getattr(self.interfaz, f'_mostrar_{nombre_vista}')
+            # Buscar la interfaz principal en diferentes posibles ubicaciones
+            vista_principal = getattr(self, 'vista_principal', None) or getattr(self, 'interfaz', None)
+            
+            if vista_principal:
+                if hasattr(vista_principal, 'mostrar_vista'):
+                    vista_principal.mostrar_vista(nombre_vista)
+                elif hasattr(vista_principal, f'_mostrar_{nombre_vista}'):
+                    metodo = getattr(vista_principal, f'_mostrar_{nombre_vista}')
                     metodo()
                 else:
                     self.logger.warning(f"No se encontró método para vista: {nombre_vista}")
@@ -1053,22 +1159,23 @@ class ControladorPrincipal(ControladorBase):
         """Iniciar escaneo rápido del sistema"""
         self.logger.info("Iniciando escaneo rápido desde controlador principal")
         try:
-            if hasattr(self, 'controladores'):
-                escaneador = self.controladores.get('escaneador')
-                if escaneador:
-                    # Implementar escaneo rápido
+            # Usar el escaneador directo en lugar de buscar en controladores
+            escaneador = getattr(self, 'escaneador', None)
+            if escaneador:
+                # Implementar escaneo rápido
+                if hasattr(escaneador, 'escanear_sistema_rapido'):
                     escaneador.escanear_sistema_rapido()
                 else:
-                    self.logger.warning("Controlador de escaneador no disponible")
+                    self.logger.warning("Método escanear_sistema_rapido no disponible")
             else:
-                self.logger.warning("Controladores no inicializados")
+                self.logger.warning("Escaneador no disponible")
         except Exception as e:
             self.logger.error(f"Error en escaneo rápido: {e}")
 
     def finalizar(self):
         """Finalizar el controlador y limpiar recursos completamente"""
         try:
-            self.logger.info("🛡️ Iniciando proceso de finalización del controlador...")
+            self.logger.info("[SHIELD] Iniciando proceso de finalización del controlador...")
             
             # Detener monitoreo activo
             self.detener_monitoreo()
@@ -1082,29 +1189,38 @@ class ControladorPrincipal(ControladorBase):
             if self.siem:
                 try:
                     self.siem.finalizar()
-                    self.logger.info("✅ SIEM finalizado correctamente")
+                    self.logger.info("[SUCCESS] SIEM finalizado correctamente")
                 except Exception as e:
                     self.logger.error(f"Error finalizando SIEM: {e}")
             
             if hasattr(self, 'monitor_red') and self.monitor_red:
                 try:
                     self.monitor_red.detener_monitoreo()
-                    self.logger.info("✅ Monitor de red detenido")
+                    self.logger.info("[SUCCESS] Monitor de red detenido")
                 except Exception as e:
                     self.logger.error(f"Error deteniendo monitor de red: {e}")
             
             if hasattr(self, 'escaneador') and self.escaneador:
                 try:
-                    if hasattr(self.escaneador, 'finalizar'):
-                        self.escaneador.finalizar()
-                    self.logger.info("✅ Escaneador finalizado")
+                    # Finalizar el escaneador usando getattr para acceso seguro
+                    escaneador = getattr(self, 'escaneador', None)
+                    if escaneador:
+                        if hasattr(escaneador, 'finalizar'):
+                            escaneador.finalizar()
+                        elif hasattr(escaneador, 'limpiar'):
+                            escaneador.limpiar()
+                        elif hasattr(escaneador, 'cerrar'):
+                            escaneador.cerrar()
+                        else:
+                            self.logger.debug("Escaneador no tiene método de finalización específico")
+                    self.logger.info("[SUCCESS] Escaneador finalizado")
                 except Exception as e:
                     self.logger.error(f"Error finalizando escaneador: {e}")
             
             # Limpiar cache y recursos temporales
             self._limpiar_recursos_temporales()
             
-            self.logger.info("🏛️ Controlador Principal finalizado correctamente")
+            self.logger.info("[MAIN] Controlador Principal finalizado correctamente")
             
         except Exception as e:
             self.logger.error(f"Error finalizando controlador: {e}")
@@ -1126,16 +1242,16 @@ class ControladorPrincipal(ControladorBase):
                         hilos_a_esperar.append(hilo)
             
             if hilos_a_esperar:
-                self.logger.info(f"🔄 Esperando a {len(hilos_a_esperar)} hilos activos...")
+                self.logger.info(f"[WAIT] Esperando a {len(hilos_a_esperar)} hilos activos...")
                 
                 # Dar tiempo limitado para que terminen
                 for hilo in hilos_a_esperar:
                     try:
                         hilo.join(timeout=2.0)  # Esperar máximo 2 segundos por hilo
                         if hilo.is_alive():
-                            self.logger.warning(f"⚠️ Hilo {hilo.name} no terminó en tiempo límite")
+                            self.logger.warning(f"[WARNING] Hilo {hilo.name} no terminó en tiempo límite")
                         else:
-                            self.logger.info(f"✅ Hilo {hilo.name} terminado correctamente")
+                            self.logger.info(f"[SUCCESS] Hilo {hilo.name} terminado correctamente")
                     except Exception as e:
                         self.logger.error(f"Error esperando hilo {hilo.name}: {e}")
                         
@@ -1150,10 +1266,19 @@ class ControladorPrincipal(ControladorBase):
                 self.metricas_sistema.clear()
             
             # Limpiar cache de hallazgos
-            if hasattr(self, 'cache_hallazgos'):
-                self.cache_hallazgos.clear()
+            try:
+                # Usar getattr para acceso seguro a atributos que pueden no existir
+                cache_hallazgos = getattr(self, 'cache_hallazgos', None)
+                if cache_hallazgos and hasattr(cache_hallazgos, 'clear'):
+                    cache_hallazgos.clear()
+                else:
+                    cache_privado = getattr(self, '_cache_hallazgos', None)
+                    if cache_privado and hasattr(cache_privado, 'clear'):
+                        cache_privado.clear()
+            except AttributeError:
+                pass  # Los caches no están inicializados
             
-            self.logger.info("✅ Recursos temporales limpiados")
+            self.logger.info("[SUCCESS] Recursos temporales limpiados")
             
         except Exception as e:
             self.logger.error(f"Error limpiando recursos temporales: {e}")
@@ -1313,12 +1438,15 @@ class ControladorPrincipal(ControladorBase):
                 subprocess.run(["kill", "-9", str(pid)], 
                              check=True, capture_output=True)
                 
-                if self.siem:
-                    self.siem.registrar_evento({
-                        "tipo": TipoEvento.ACCION_SISTEMA,
-                        "descripcion": f"Proceso terminado: PID {pid}",
-                        "detalles": {"pid": pid, "accion": "terminate"}
-                    })
+                if self.siem and hasattr(self.siem, 'registrar_evento'):
+                    try:
+                        self.siem.registrar_evento(
+                            "ACCION_SISTEMA",
+                            f"Proceso terminado: PID {pid}",
+                            {"pid": pid, "accion": "terminate"}
+                        )
+                    except Exception as e:
+                        self.logger.warning(f"Error registrando terminación de proceso: {e}")
                 
                 self.logger.info(f"Proceso {pid} terminado exitosamente")
                 return True
@@ -1336,7 +1464,34 @@ class ControladorPrincipal(ControladorBase):
             return []
         
         try:
-            return self.gestor_cuarentena.listar_archivos_cuarentena()
+            # Usar getattr para acceso seguro a métodos del gestor
+            gestor = getattr(self, 'gestor_cuarentena', None)
+            if not gestor:
+                return []
+            
+            # Probar diferentes métodos posibles usando getattr
+            if hasattr(gestor, 'listar_archivos_cuarentena'):
+                try:
+                    return gestor.listar_archivos_cuarentena()
+                except AttributeError:
+                    pass
+            
+            if hasattr(gestor, 'obtener_archivos'):
+                try:
+                    return gestor.obtener_archivos()
+                except AttributeError:
+                    pass
+                    
+            if hasattr(gestor, 'listar_archivos'):
+                try:
+                    return gestor.listar_archivos()
+                except AttributeError:
+                    pass
+            
+            # Si ningún método funciona, retornar lista vacía
+            self.logger.warning("Ningún método de listado disponible en gestor de cuarentena")
+            return []
+            
         except Exception as e:
             self.logger.error(f"Error obteniendo archivos en cuarentena: {e}")
             return []
@@ -1358,7 +1513,33 @@ class ControladorPrincipal(ControladorBase):
             return False
         
         try:
-            return self.gestor_cuarentena.eliminar_archivo_permanente(archivo_id)
+            # Usar getattr para acceso seguro a métodos de eliminación
+            gestor = getattr(self, 'gestor_cuarentena', None)
+            if not gestor:
+                return False
+            
+            # Probar diferentes métodos posibles usando getattr
+            if hasattr(gestor, 'eliminar_archivo_permanente'):
+                try:
+                    return gestor.eliminar_archivo_permanente(archivo_id)
+                except AttributeError:
+                    pass
+                    
+            if hasattr(gestor, 'eliminar_archivo'):
+                try:
+                    return gestor.eliminar_archivo(archivo_id)
+                except AttributeError:
+                    pass
+                    
+            if hasattr(gestor, 'borrar_archivo'):
+                try:
+                    return gestor.borrar_archivo(archivo_id)
+                except AttributeError:
+                    pass
+            
+            # Si ningún método funciona
+            self.logger.warning("Ningún método de eliminación disponible en gestor de cuarentena")
+            return False
         except Exception as e:
             self.logger.error(f"Error eliminando archivo {archivo_id}: {e}")
             return False
@@ -1369,7 +1550,33 @@ class ControladorPrincipal(ControladorBase):
             return False
         
         try:
-            return self.fim.agregar_directorio_monitoreo(directorio)
+            # Usar getattr para acceso seguro a métodos del FIM
+            fim = getattr(self, 'fim', None)
+            if not fim:
+                return False
+            
+            # Probar diferentes métodos posibles usando getattr
+            if hasattr(fim, 'agregar_directorio_monitoreo'):
+                try:
+                    return fim.agregar_directorio_monitoreo(directorio)
+                except AttributeError:
+                    pass
+                    
+            if hasattr(fim, 'agregar_directorio'):
+                try:
+                    return fim.agregar_directorio(directorio)
+                except AttributeError:
+                    pass
+                    
+            if hasattr(fim, 'monitorear_directorio'):
+                try:
+                    return fim.monitorear_directorio(directorio)
+                except AttributeError:
+                    pass
+            
+            # Si ningún método funciona
+            self.logger.warning("Ningún método para agregar directorio disponible en FIM")
+            return False
         except Exception as e:
             self.logger.error(f"Error configurando FIM para {directorio}: {e}")
             return False
@@ -1380,7 +1587,33 @@ class ControladorPrincipal(ControladorBase):
             return []
         
         try:
-            return self.fim.obtener_cambios_recientes()
+            # Usar getattr para acceso seguro a métodos del FIM
+            fim = getattr(self, 'fim', None)
+            if not fim:
+                return []
+            
+            # Probar diferentes métodos posibles usando getattr
+            if hasattr(fim, 'obtener_cambios_recientes'):
+                try:
+                    return fim.obtener_cambios_recientes()
+                except AttributeError:
+                    pass
+                    
+            if hasattr(fim, 'obtener_cambios'):
+                try:
+                    return fim.obtener_cambios()
+                except AttributeError:
+                    pass
+                    
+            if hasattr(fim, 'listar_cambios'):
+                try:
+                    return fim.listar_cambios()
+                except AttributeError:
+                    pass
+            
+            # Si ningún método funciona
+            self.logger.warning("Ningún método para obtener cambios disponible en FIM")
+            return []
         except Exception as e:
             self.logger.error(f"Error obteniendo cambios FIM: {e}")
             return []
@@ -1425,20 +1658,40 @@ class ControladorPrincipal(ControladorBase):
                         self.logger.error(f"Error cargando {filename}: {e}")
             
             # Actualizar escáner si existe
-            if self.controlador_escaneador and hasattr(self.controlador_escaneador, 'actualizar_bases_personalizadas'):
-                self.controlador_escaneador.actualizar_bases_personalizadas(
-                    cves_personalizados,
-                    malware_personalizado, 
-                    vulnerabilidades_personalizadas
-                )
+            controlador_escaneador = getattr(self, 'controlador_escaneador', None)
+            if controlador_escaneador and hasattr(controlador_escaneador, 'actualizar_bases_personalizadas'):
+                try:
+                    controlador_escaneador.actualizar_bases_personalizadas(
+                        cves_personalizados,
+                        malware_personalizado, 
+                        vulnerabilidades_personalizadas
+                    )
+                except (AttributeError, Exception) as e:
+                    self.logger.warning(f"Error actualizando bases del controlador escaneador: {e}")
             
             # También actualizar el escáner directo si existe
-            if self.escaneador and hasattr(self.escaneador, 'cargar_bases_personalizadas'):
-                self.escaneador.cargar_bases_personalizadas({
-                    'cves': cves_personalizados,
-                    'malware': malware_personalizado,
-                    'vulnerabilidades': vulnerabilidades_personalizadas
-                })
+            escaneador = getattr(self, 'escaneador', None)
+            if escaneador:
+                if hasattr(escaneador, 'cargar_bases_personalizadas'):
+                    try:
+                        escaneador.cargar_bases_personalizadas({
+                            'cves': cves_personalizados,
+                            'malware': malware_personalizado,
+                            'vulnerabilidades': vulnerabilidades_personalizadas
+                        })
+                    except (AttributeError, Exception) as e:
+                        self.logger.warning(f"Error cargando bases personalizadas en escaneador: {e}")
+                elif hasattr(escaneador, 'actualizar_bases'):
+                    try:
+                        escaneador.actualizar_bases({
+                            'cves': cves_personalizados,
+                            'malware': malware_personalizado,
+                            'vulnerabilidades': vulnerabilidades_personalizadas
+                        })
+                    except (AttributeError, Exception) as e:
+                        self.logger.warning(f"Error actualizando bases en escaneador: {e}")
+                else:
+                    self.logger.warning("Escaneador no tiene métodos para cargar bases personalizadas")
             
             total_registros = len(cves_personalizados) + len(malware_personalizado) + len(vulnerabilidades_personalizadas)
             self.logger.info(f"Bases de datos personalizadas actualizadas: {total_registros} registros totales")

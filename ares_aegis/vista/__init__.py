@@ -6,8 +6,8 @@ Vista MVC - Interfaz Cybersecurity con Temática Mitológica
 """
 
 # Interfaz principal con temática de Kali Linux
-from .interfaz_principal import InterfazCybersecSimple
+from .interfaz_principal import InterfazPrincipalAresAegis
 
 __all__ = [
-    'InterfazCybersecSimple'
+    'InterfazPrincipalAresAegis'
 ]
