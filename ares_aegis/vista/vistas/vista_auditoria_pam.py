@@ -56,14 +56,14 @@ class VistaAuditoriaPAM:
         self.auditoria_en_progreso = False
         self.ultimo_resultado = None
         
-        # Referencias a widgets
-        self.contenedor = None
-        self.area_resultados = None
-        self.area_log = None
-        self.btn_auditoria_pam = None
-        self.btn_auditoria_completa = None
-        self.label_estado = None
-        self.progress_bar = None
+        # Referencias a widgets inicializadas correctamente
+        self.contenedor = None  # Se inicializa en crear_vista
+        self.area_resultados = None  # Se inicializa en _crear_area_resultados
+        self.area_log = None  # Se inicializa en _crear_area_log
+        self.btn_auditoria_pam = None  # Se inicializa en _crear_panel_control
+        self.btn_auditoria_completa = None  # Se inicializa en _crear_panel_control
+        self.label_estado = None  # Se inicializa en _crear_panel_control
+        self.progress_bar = None  # Se inicializa en _crear_panel_control
         
         # Control de auditoría
         self.auditoria_activa = False
@@ -154,9 +154,9 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
         for widget in self.contenedor_padre.winfo_children():
             widget.destroy()
         
-        # Frame principal
+        # Frame principal con padding estandarizado
         self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-        self.frame_principal.pack(fill='both', expand=True, padx=15, pady=15)
+        self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
         
         # Configurar grid con mejores proporciones
         self.frame_principal.grid_rowconfigure(0, weight=0)  # Header fijo
@@ -442,10 +442,23 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
         """Configura la interfaz para inicio de auditoría."""
         self.auditoria_activa = True
         
+        # Verificar que los widgets estén inicializados individualmente
+        if not self.btn_auditoria_pam:
+            self.logger.warning("btn_auditoria_pam no inicializado")
+            return
+        if not self.btn_auditoria_completa:
+            self.logger.warning("btn_auditoria_completa no inicializado")
+            return
+        if not self.progress_bar:
+            self.logger.warning("progress_bar no inicializado")
+            return
+        if not self.label_estado:
+            self.logger.warning("label_estado no inicializado")
+            return
+        
         # Deshabilitar botones de auditoría y habilitar cancelar
         self.btn_auditoria_pam.config(state='disabled')
         self.btn_auditoria_completa.config(state='disabled')
-        self.btn_cancelar.config(state='normal', bg=self.colores.rojo_critico)
         
         # Activar barra de progreso
         self.progress_bar.start(10)
@@ -728,34 +741,49 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
     
     def _finalizar_auditoria(self):
         """Finaliza la auditoría y restaura la interfaz."""
-        self.contenedor.after(0, self._finalizar_auditoria_ui)
+        if self.contenedor:
+            self.contenedor.after(0, self._finalizar_auditoria_ui)
+        else:
+            self.logger.warning("Contenedor no inicializado, llamando directamente _finalizar_auditoria_ui")
+            self._finalizar_auditoria_ui()
     
     def _finalizar_auditoria_ui(self):
         """Finaliza auditoría en UI thread."""
         self.auditoria_activa = False
         
-        # Habilitar botones de auditoría y deshabilitar cancelar
-        self.btn_auditoria_pam.config(state='normal')
-        self.btn_auditoria_completa.config(state='normal')
-        self.btn_cancelar.config(state='disabled', bg=self.colores.gris_hierro)
+        # Verificar que los widgets estén inicializados individualmente
+        if self.btn_auditoria_pam:
+            self.btn_auditoria_pam.config(state='normal')
+        if self.btn_auditoria_completa:
+            self.btn_auditoria_completa.config(state='normal')
         
         # Detener barra de progreso
-        self.progress_bar.stop()
+        if self.progress_bar:
+            self.progress_bar.stop()
         
         # Actualizar estado
-        self.label_estado.config(text="✅ Auditoría completada - Sistema listo", 
-                                fg=self.colores.verde_terminal)
+        if self.label_estado:
+            self.label_estado.config(text="✅ Auditoría completada - Sistema listo", 
+                                    fg=self.colores.verde_terminal)
         
         self._agregar_log("Auditoría finalizada", "SUCCESS")
     
     def _limpiar_area_resultados(self):
         """Limpia el área de resultados."""
+        if not self.area_resultados:
+            self.logger.warning("area_resultados no inicializada, omitiendo limpieza")
+            return
+            
         for widget in self.area_resultados.winfo_children():
             widget.destroy()
     
     def _agregar_log(self, mensaje, tipo="INFO"):
         """Agrega mensaje al área de logs."""
         def agregar():
+            if not self.area_log:
+                self.logger.warning("area_log no inicializada, omitiendo mensaje de log")
+                return
+                
             timestamp = datetime.now().strftime("%H:%M:%S")
             linea = f"[{timestamp}] {mensaje}\n"
             
@@ -764,7 +792,10 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
             self.area_log.see(tk.END)
             self.area_log.config(state=tk.DISABLED)
         
-        self.contenedor.after(0, agregar)
+        if self.contenedor:
+            self.contenedor.after(0, agregar)
+        else:
+            self.logger.warning("Contenedor no inicializado, omitiendo log")
     
     def _agregar_efecto_hover(self, boton, color_original):
         """Agrega efectos hover a un botón."""

@@ -108,12 +108,12 @@ class VistaConstructorWordlists:
             for widget in self.contenedor_padre.winfo_children():
                 widget.destroy()
             
-            # Frame principal
+            # Frame principal con padding estandarizado
             self.frame_principal = tk.Frame(
                 self.contenedor_padre,
                 bg=self.colores.fondo_primario
             )
-            self.frame_principal.pack(fill='both', expand=True, padx=10, pady=10)
+            self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
             
             # Configurar grid
             self.frame_principal.grid_rowconfigure(1, weight=1)
@@ -496,7 +496,7 @@ class VistaConstructorWordlists:
                 title="Exportar Wordlist",
                 defaultextension=".txt",
                 filetypes=[("Archivos de texto", "*.txt"), ("Todos los archivos", "*.*")],
-                initialvalue=f"{self.lista_seleccionada}.txt"
+                initialfile=f"{self.lista_seleccionada}.txt"
             )
             
             if archivo:
@@ -531,7 +531,8 @@ class VistaConstructorWordlists:
                     return
                 
                 # Solicitar nombre para la nueva lista
-                nombre = tk.simpledialog.askstring(
+                from tkinter import simpledialog
+                nombre = simpledialog.askstring(
                     "Nombre de Lista",
                     "Introduce un nombre para la wordlist:",
                     initialvalue=Path(archivo).stem
@@ -555,7 +556,8 @@ class VistaConstructorWordlists:
     def _crear_nueva_lista(self):
         """Crear nueva wordlist vacía"""
         try:
-            nombre = tk.simpledialog.askstring(
+            from tkinter import simpledialog
+            nombre = simpledialog.askstring(
                 "Nueva Wordlist",
                 "Introduce un nombre para la nueva wordlist:"
             )

@@ -26,8 +26,10 @@ class VistaMonitor:
         # Variables de control
         self.monitoreo_activo = False
         self.hilo_monitoreo = None
-        self.resultados_text = None
-        self.estado_var = None
+        
+        # Variables de UI inicializadas correctamente
+        self.resultados_text = None  # Se inicializa en _crear_area_resultados
+        self.estado_var = tk.StringVar(value="🔴 DETENIDO")  # Inicializada con valor por defecto
         
         # Sistema de ayuda
         self.sistema_ayuda = SistemaAyuda(colores)
@@ -89,9 +91,9 @@ class VistaMonitor:
         """Crear la vista del monitor con diseño responsive"""
         self._limpiar_contenedor()
         
-        # Frame principal con grid responsive
+        # Frame principal con padding estandarizado
         self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-        self.frame_principal.pack(fill='both', expand=True, padx=15, pady=15)
+        self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
         
         # Configurar grid responsive con mejores proporciones
         self.frame_principal.grid_rowconfigure(0, weight=0)  # Header fijo
@@ -316,6 +318,11 @@ class VistaMonitor:
     def _limpiar_resultados(self):
         """Limpiar el área de resultados"""
         try:
+            # Verificar que el widget esté inicializado
+            if not self.resultados_text:
+                self.logger.warning("resultados_text no inicializado, omitiendo limpieza")
+                return
+                
             self.resultados_text.config(state='normal')
             self.resultados_text.delete(1.0, tk.END)
             self.resultados_text.config(state='disabled')
@@ -363,11 +370,17 @@ class VistaMonitor:
     def _actualizar_texto(self, texto):
         """Actualizar texto en el widget de resultados"""
         try:
+            # Verificar que el widget esté inicializado
+            if not self.resultados_text:
+                self.logger.warning("resultados_text no inicializado, omitiendo actualización de texto")
+                return
+                
             self.resultados_text.config(state='normal')
             self.resultados_text.insert(tk.END, f"{texto}\\n")
             self.resultados_text.see(tk.END)
             self.resultados_text.config(state='disabled')
-        except:
+        except Exception as e:
+            self.logger.error(f"Error actualizando texto: {e}")
             pass  # Widget ya destruido
     
     def _ejecutar_monitoreo_hilo(self):

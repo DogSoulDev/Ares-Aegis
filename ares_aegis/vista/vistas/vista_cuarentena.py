@@ -21,10 +21,10 @@ class VistaCuarentena:
         self.colores = colores
         self.logger = logging.getLogger('ares_aegis.vista.vista_cuarentena')
         
-        # Variables de UI
-        self.total_archivos_var = None
-        self.tamaño_total_var = None
-        self.tree_cuarentena = None
+        # Variables de UI inicializadas correctamente
+        self.total_archivos_var = tk.StringVar(value="0")
+        self.tamaño_total_var = tk.StringVar(value="0 MB")
+        self.tree_cuarentena = None  # Se inicializa en _crear_lista_cuarentena
         self.frame_scroll = None
         
         # Frame contenedor principal
@@ -94,9 +94,9 @@ class VistaCuarentena:
             for widget in self.contenedor_padre.winfo_children():
                 widget.destroy()
             
-            # Frame principal
+            # Frame principal con padding estandarizado
             self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-            self.frame_principal.pack(fill='both', expand=True, padx=15, pady=15)
+            self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
                 
             # Configurar grid del frame principal con mejores proporciones
             self.frame_principal.grid_rowconfigure(0, weight=0)  # Header fijo
@@ -199,8 +199,9 @@ class VistaCuarentena:
         stats_frame = tk.Frame(control_frame, bg=self.colores.fondo_secundario)
         stats_frame.grid(row=0, column=0, sticky='ew', padx=10, pady=10)
         
-        self.total_archivos_var = tk.StringVar(value="0")
-        self.tamaño_total_var = tk.StringVar(value="0 MB")
+        # Las variables ya están inicializadas en __init__
+        # self.total_archivos_var = tk.StringVar(value="0")
+        # self.tamaño_total_var = tk.StringVar(value="0 MB")
         
         tk.Label(stats_frame,
                 text=f"📊 {EmoticonosMitologicos.CRISTAL} Estadísticas:",
@@ -332,6 +333,11 @@ class VistaCuarentena:
     def _cargar_archivos_cuarentena(self):
         """Cargar y mostrar archivos en cuarentena"""
         try:
+            # Verificar que el treeview esté inicializado
+            if not self.tree_cuarentena:
+                self.logger.warning("Treeview no inicializado, omitiendo carga de archivos")
+                return
+                
             # Limpiar treeview
             for item in self.tree_cuarentena.get_children():
                 self.tree_cuarentena.delete(item)
@@ -399,6 +405,10 @@ class VistaCuarentena:
     def _restaurar_archivo(self):
         """Restaurar archivo seleccionado de cuarentena"""
         try:
+            if not self.tree_cuarentena:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             seleccion = self.tree_cuarentena.selection()
             if not seleccion:
                 messagebox.showwarning("Advertencia", "Seleccione un archivo para restaurar")
@@ -427,6 +437,10 @@ class VistaCuarentena:
     def _ignorar_archivo(self):
         """Ignorar archivo - agregarlo a lista blanca para futuras detecciones"""
         try:
+            if not self.tree_cuarentena:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             seleccion = self.tree_cuarentena.selection()
             if not seleccion:
                 messagebox.showwarning("Advertencia", "Seleccione un archivo para ignorar")
@@ -501,6 +515,10 @@ class VistaCuarentena:
     def _eliminar_archivo_permanente(self):
         """Eliminar archivo permanentemente de cuarentena"""
         try:
+            if not self.tree_cuarentena:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             seleccion = self.tree_cuarentena.selection()
             if not seleccion:
                 messagebox.showwarning("Advertencia", "Seleccione un archivo para eliminar")
@@ -531,6 +549,10 @@ class VistaCuarentena:
     def _ver_detalles_archivo(self):
         """Ver detalles del archivo seleccionado"""
         try:
+            if not self.tree_cuarentena:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             seleccion = self.tree_cuarentena.selection()
             if not seleccion:
                 messagebox.showwarning("Advertencia", "Seleccione un archivo para ver detalles")

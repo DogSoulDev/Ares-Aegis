@@ -411,9 +411,7 @@ class InterfazPrincipalAresAegis:
             ('auditoria_pam', '🔐 AUDITORÍA PAM', 'Auditoría de autenticación', self._mostrar_auditoria_pam),
             ('monitor', '📡 MONITOR DEL SISTEMA', 'Monitor del sistema', self._mostrar_monitor),
             ('siem', '🛡️ SIEM', 'Sistema de eventos de seguridad', self._mostrar_siem),
-            ('cuarentena', '🔒 CUARENTENA', 'Gestión de cuarentena', self._mostrar_cuarentena),
-            ('constructor_wordlists', '🔧 CONSTRUCTOR WORDLISTS', 'Generador de listas de palabras', self._mostrar_constructor_wordlists),
-            ('reportes', '📊 REPORTES', 'Informes y análisis', self._mostrar_reportes)
+            ('cuarentena', '🔒 CUARENTENA', 'Gestión de cuarentena', self._mostrar_cuarentena)
         ]
         
         self.botones_navegacion = {}
@@ -499,8 +497,10 @@ class InterfazPrincipalAresAegis:
         
         # Botones de acceso rápido
         accesos = [
-            ("📚 GUÍAS", self._mostrar_cheatsheets),
-            ("🐙 GITHUB", self._abrir_github)
+            ("� REPORTES", self._mostrar_reportes),
+            ("🔧 CONSTRUCTOR WORDLISTS", self._mostrar_constructor_wordlists),
+            ("�📚 GUÍAS", self._mostrar_cheatsheets),
+            ("👨‍� DESARROLLADOR", self._abrir_github)
         ]
         
         for texto, comando in accesos:

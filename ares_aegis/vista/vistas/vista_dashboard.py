@@ -77,9 +77,9 @@ class VistaDashboard:
         """Crear vista dashboard estilo centralita profesional"""
         self._limpiar_contenedor()
         
-        # Frame principal estilo terminal
+        # Frame principal con padding estandarizado
         self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-        self.frame_principal.pack(fill='both', expand=True, padx=0, pady=0)
+        self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
         
         # === HEADER DE LA CENTRALITA ===
         self._crear_header_command_center()
@@ -713,13 +713,13 @@ class VistaDashboard:
                 self._actualizar_estadisticas_rapidas(estado)
                         
             # Programar próxima actualización en 3 segundos
-            if self._tiempo_activo:
+            if self._tiempo_activo and self.frame_principal:
                 self.frame_principal.after(3000, self._actualizar_metricas_tiempo_real)
                 
         except Exception as e:
             self.logger.error(f"Error actualizando métricas en tiempo real: {e}")
             # Reintentar en 5 segundos si hay error
-            if self._tiempo_activo:
+            if self._tiempo_activo and self.frame_principal:
                 self.frame_principal.after(5000, self._actualizar_metricas_tiempo_real)
     
     def _actualizar_estadisticas_rapidas(self, estado):
@@ -858,22 +858,3 @@ class VistaDashboard:
     def marcar_ultimo_escaneo(self):
         """Método público para marcar el tiempo del último escaneo"""
         self.actualizar_estadistica_evento("escaneo_completado")
-    
-    def destruir_vista(self):
-        """Limpiar recursos al destruir la vista"""
-        try:
-            # Detener actualizaciones de tiempo
-            self._tiempo_activo = False
-            
-            # Cerrar terminales si existen
-            if hasattr(self, 'terminal_integrado') and self.terminal_integrado:
-                try:
-                    self.terminal_integrado.cerrar_todos_terminales()
-                except Exception as e:
-                    self.logger.warning(f"Error cerrando terminales: {e}")
-            
-            self.logger.info("Vista dashboard destruida y recursos liberados")
-            
-        except Exception as e:
-            self.logger.error(f"Error destruyendo vista dashboard: {e}")
-    

@@ -24,17 +24,18 @@ class VistaEscaneador:
         self.logger = logging.getLogger(__name__)
         self.frame_principal = None
         
-        # Variables de control
-        self.ruta_escaneo_var = None
-        self.escaneo_profundo_var = None
-        self.verificar_hashes_var = None
-        self.analisis_contenido_var = None
+        # Variables de control inicializadas correctamente
+        self.ruta_escaneo_var = tk.StringVar(value=os.path.expanduser("~"))
+        self.escaneo_profundo_var = tk.BooleanVar(value=False)
+        self.verificar_hashes_var = tk.BooleanVar(value=True)
+        self.analisis_contenido_var = tk.BooleanVar(value=False)
         
-        # Sistema de ayuda
-        self.sistema_ayuda = SistemaAyuda(colores)
-        self.progreso_var = None
-        self.estado_var = None
-        self.resultados_text = None
+        # Variables de estado de la interfaz
+        self.estado_var = tk.StringVar(value="🛡️ Listo para escanear")
+        self.progreso_var = tk.DoubleVar(value=0.0)
+        self.resultados_text = None  # Se inicializa en _crear_area_resultados
+        self.estado_var = tk.StringVar(value="🛡️ Listo para escanear")
+        self.resultados_text = None  # Se inicializa en crear_vista
         self.escaneo_activo = False
         self.hilo_escaneo = None
         
@@ -84,9 +85,9 @@ class VistaEscaneador:
         """Crear la vista del escaneador con diseño responsive"""
         self._limpiar_contenedor()
         
-        # Frame principal con grid responsive
+        # Frame principal con padding estandarizado
         self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-        self.frame_principal.pack(fill='both', expand=True, padx=15, pady=15)
+        self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
         
         # Configurar grid responsive con mejores proporciones
         self.frame_principal.grid_rowconfigure(0, weight=0)  # Header fijo
@@ -401,10 +402,11 @@ class VistaEscaneador:
             self.estado_var.set(f"🔍 {EmoticonosMitologicos.PROCESANDO} Escaneando...")
             self.progreso_var.set(0)
             
-            # Limpiar resultados previos
-            self.resultados_text.configure(state='normal')
-            self.resultados_text.delete(1.0, tk.END)
-            self.resultados_text.configure(state='disabled')
+            # Limpiar resultados previos - verificar que el widget esté inicializado
+            if self.resultados_text:
+                self.resultados_text.configure(state='normal')
+                self.resultados_text.delete(1.0, tk.END)
+                self.resultados_text.configure(state='disabled')
             
             # Determinar tipo de escaneo
             tipo_escaneo = "completo" if self.escaneo_profundo_var.get() else "rapido"
@@ -723,9 +725,11 @@ class VistaEscaneador:
     def _agregar_resultado(self, mensaje):
         """Agregar mensaje a los resultados del escaneo"""
         def agregar_a_texto():
-            self.resultados_text.configure(state='normal')
-            self.resultados_text.insert(tk.END, f"{mensaje}\n")
-            self.resultados_text.configure(state='disabled')
-            self.resultados_text.see(tk.END)
+            if self.resultados_text:
+                self.resultados_text.configure(state='normal')
+                self.resultados_text.insert(tk.END, f"{mensaje}\n")
+                self.resultados_text.configure(state='disabled')
+                self.resultados_text.see(tk.END)
         
-        self.contenedor_padre.after(0, agregar_a_texto)
+        if hasattr(self, 'contenedor_padre') and self.contenedor_padre:
+            self.contenedor_padre.after(0, agregar_a_texto)

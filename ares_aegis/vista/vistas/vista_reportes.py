@@ -25,7 +25,9 @@ class VistaReportes:
         
         # Variables de control
         self.reportes_disponibles = []
-        self.tree_reportes = None
+        
+        # Variables de UI inicializadas correctamente
+        self.tree_reportes = None  # Se inicializa en _crear_lista_reportes
         
         # Sistema de ayuda
         self.sistema_ayuda = SistemaAyuda(colores)
@@ -96,9 +98,9 @@ class VistaReportes:
         """Crear la vista de reportes con diseño responsive"""
         self._limpiar_contenedor()
         
-        # Frame principal con grid responsive
+        # Frame principal con padding estandarizado
         self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-        self.frame_principal.pack(fill='both', expand=True, padx=15, pady=15)
+        self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
         
         # Configurar grid responsive con mejores proporciones
         self.frame_principal.grid_rowconfigure(0, weight=0)  # Header fijo
@@ -455,6 +457,11 @@ class VistaReportes:
     def _cargar_reportes_existentes(self):
         """Cargar lista de reportes existentes"""
         try:
+            # Verificar que el treeview esté inicializado
+            if not self.tree_reportes:
+                self.logger.warning("tree_reportes no inicializado, omitiendo carga de reportes")
+                return
+                
             # Limpiar lista actual
             for item in self.tree_reportes.get_children():
                 self.tree_reportes.delete(item)
@@ -477,6 +484,11 @@ class VistaReportes:
     def _abrir_reporte(self):
         """Abrir reporte seleccionado"""
         try:
+            # Verificar que el treeview esté inicializado
+            if not self.tree_reportes:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             seleccion = self.tree_reportes.selection()
             if not seleccion:
                 messagebox.showwarning("Advertencia", "Por favor seleccione un reporte")
@@ -497,6 +509,11 @@ class VistaReportes:
     def _exportar_reporte(self):
         """Exportar reporte seleccionado"""
         try:
+            # Verificar que el treeview esté inicializado
+            if not self.tree_reportes:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             seleccion = self.tree_reportes.selection()
             if not seleccion:
                 messagebox.showwarning("Advertencia", "Por favor seleccione un reporte")
@@ -530,6 +547,11 @@ class VistaReportes:
     def _eliminar_reporte(self):
         """Eliminar reporte seleccionado"""
         try:
+            # Verificar que el treeview esté inicializado
+            if not self.tree_reportes:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             seleccion = self.tree_reportes.selection()
             if not seleccion:
                 messagebox.showwarning("Advertencia", "Por favor seleccione un reporte")

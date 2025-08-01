@@ -34,11 +34,11 @@ class VistaCheatsheets:
         self.cheatsheet_actual = None
         self.categoria_actual = "todas"
         
-        # Widgets principales
-        self.tree_cheatsheets = None
-        self.text_contenido = None
-        self.search_var = None
-        self.categoria_var = None
+        # Widgets principales inicializados correctamente
+        self.tree_cheatsheets = None  # Se inicializa en _crear_panel_lateral
+        self.text_contenido = None  # Se inicializa en _crear_panel_contenido
+        self.search_var = tk.StringVar()  # Inicializada con valor por defecto
+        self.categoria_var = tk.StringVar(value="todas")  # Inicializada con valor por defecto
         
         # Sistema de ayuda
         self.sistema_ayuda = SistemaAyuda(colores)
@@ -148,9 +148,9 @@ Siempre obtén permiso antes de realizar pruebas de penetración."""
         """Crear la vista principal de CheatSheets"""
         self._limpiar_contenedor()
         
-        # Frame principal
+        # Frame principal con padding estandarizado
         self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-        self.frame_principal.pack(fill='both', expand=True, padx=0, pady=0)
+        self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
         
         # === HEADER ===
         self._crear_header()
@@ -498,20 +498,23 @@ Siempre obtén permiso antes de realizar pruebas de penetración."""
     def _configurar_tags_sintaxis(self):
         """Configurar tags para destacar sintaxis en el texto"""
         # Tags para diferentes elementos
-        self.text_contenido.tag_configure("comando", 
-                                        foreground=self.colores.verde_terminal, 
-                                        font=('Consolas', 10, 'bold'))
-        self.text_contenido.tag_configure("descripcion", 
-                                        foreground=self.colores.cyan_brillante)
-        self.text_contenido.tag_configure("ejemplo", 
-                                        foreground=self.colores.amarillo_medio,
-                                        font=('Consolas', 10, 'italic'))
-        self.text_contenido.tag_configure("categoria", 
-                                        foreground=self.colores.verde_esmeralda,
-                                        font=('Consolas', 12, 'bold'))
-        self.text_contenido.tag_configure("herramienta", 
-                                        foreground=self.colores.naranja_alto,
-                                        font=('Consolas', 11, 'bold'))
+        if self.text_contenido:
+            self.text_contenido.tag_configure("comando", 
+                                            foreground=self.colores.verde_terminal, 
+                                            font=('Consolas', 10, 'bold'))
+            self.text_contenido.tag_configure("descripcion", 
+                                            foreground=self.colores.cyan_brillante)
+            self.text_contenido.tag_configure("ejemplo", 
+                                            foreground=self.colores.amarillo_medio,
+                                            font=('Consolas', 10, 'italic'))
+            self.text_contenido.tag_configure("categoria", 
+                                            foreground=self.colores.verde_esmeralda,
+                                            font=('Consolas', 12, 'bold'))
+            self.text_contenido.tag_configure("herramienta", 
+                                            foreground=self.colores.naranja_alto,
+                                            font=('Consolas', 11, 'bold'))
+        else:
+            self.logger.warning("text_contenido no inicializado, omitiendo configuración de tags")
     
     def _obtener_categorias(self):
         """Obtener lista de categorías disponibles"""
@@ -638,6 +641,10 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
     
     def _actualizar_lista(self):
         """Actualizar la lista de cheatsheets en el TreeView"""
+        if not self.tree_cheatsheets:
+            self.logger.warning("tree_cheatsheets no inicializado, omitiendo actualización de lista")
+            return
+            
         # Limpiar TreeView
         for item in self.tree_cheatsheets.get_children():
             self.tree_cheatsheets.delete(item)
@@ -652,6 +659,10 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
     
     def _filtrar_cheatsheets(self, event=None):
         """Filtrar cheatsheets según búsqueda y categoría"""
+        if not self.tree_cheatsheets:
+            self.logger.warning("tree_cheatsheets no inicializado, omitiendo filtrado")
+            return
+            
         busqueda = self.search_var.get().lower()
         categoria = self.categoria_var.get()
         
@@ -679,6 +690,10 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
     
     def _seleccionar_cheatsheet(self, event=None):
         """Manejar selección de cheatsheet"""
+        if not self.tree_cheatsheets:
+            self.logger.warning("tree_cheatsheets no inicializado, omitiendo selección")
+            return
+            
         seleccion = self.tree_cheatsheets.selection()
         if seleccion:
             nombre = seleccion[0]
@@ -706,29 +721,38 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
                 # Formatear y mostrar contenido
                 texto_formateado = self._formatear_contenido(contenido)
                 
-                self.text_contenido.configure(state='normal')
-                self.text_contenido.delete(1.0, tk.END)
-                self.text_contenido.insert(1.0, texto_formateado)
-                
-                # Aplicar formato
-                self._aplicar_formato_sintaxis()
-                
-                self.text_contenido.configure(state='disabled')
+                if self.text_contenido:
+                    self.text_contenido.configure(state='normal')
+                    self.text_contenido.delete(1.0, tk.END)
+                    self.text_contenido.insert(1.0, texto_formateado)
+                    
+                    # Aplicar formato
+                    self._aplicar_formato_sintaxis()
+                    
+                    self.text_contenido.configure(state='disabled')
+                else:
+                    self.logger.warning("text_contenido no inicializado, omitiendo carga de contenido")
                 
                 self.cheatsheet_actual = nombre
                 
             else:
-                self.text_contenido.configure(state='normal')
-                self.text_contenido.delete(1.0, tk.END)
-                self.text_contenido.insert(1.0, f"⚠️ Archivo no encontrado: {archivo}")
-                self.text_contenido.configure(state='disabled')
+                if self.text_contenido:
+                    self.text_contenido.configure(state='normal')
+                    self.text_contenido.delete(1.0, tk.END)
+                    self.text_contenido.insert(1.0, f"⚠️ Archivo no encontrado: {archivo}")
+                    self.text_contenido.configure(state='disabled')
+                else:
+                    self.logger.warning("text_contenido no inicializado, omitiendo mensaje de error")
                 
         except Exception as e:
             self.logger.error(f"Error cargando contenido de {nombre}: {e}")
-            self.text_contenido.configure(state='normal')
-            self.text_contenido.delete(1.0, tk.END)
-            self.text_contenido.insert(1.0, f"❌ Error cargando contenido:\n{str(e)}")
-            self.text_contenido.configure(state='disabled')
+            if self.text_contenido:
+                self.text_contenido.configure(state='normal')
+                self.text_contenido.delete(1.0, tk.END)
+                self.text_contenido.insert(1.0, f"❌ Error cargando contenido:\n{str(e)}")
+                self.text_contenido.configure(state='disabled')
+            else:
+                self.logger.warning("text_contenido no inicializado, omitiendo mensaje de error")
     
     def _formatear_contenido(self, contenido):
         """Formatear contenido JSON a texto legible"""
@@ -773,6 +797,10 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
     
     def _aplicar_formato_sintaxis(self):
         """Aplicar formato de sintaxis al contenido"""
+        if not self.text_contenido:
+            self.logger.warning("text_contenido no inicializado, omitiendo formato de sintaxis")
+            return
+            
         contenido = self.text_contenido.get(1.0, tk.END)
         lines = contenido.split('\n')
         
@@ -794,6 +822,10 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
     def _copiar_contenido(self):
         """Copiar contenido actual al portapapeles"""
         try:
+            if not self.text_contenido:
+                messagebox.showwarning("Error", "Vista no inicializada correctamente")
+                return
+                
             contenido = self.text_contenido.get(1.0, tk.END)
             self.text_contenido.clipboard_clear()
             self.text_contenido.clipboard_append(contenido)

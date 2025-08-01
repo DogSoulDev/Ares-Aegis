@@ -40,12 +40,12 @@ class VistaSIEM:
         self.actualizacion_activa = False
         self.thread_actualizacion = None
         
-        # Widgets principales
-        self.btn_iniciar_siem = None
-        self.btn_detener_siem = None
-        self.estado_label = None
-        self.tree_eventos = None
-        self.text_detalles = None
+        # Widgets principales inicializados correctamente
+        self.btn_iniciar_siem = None  # Se inicializa en _crear_controles_siem
+        self.btn_detener_siem = None  # Se inicializa en _crear_controles_siem
+        self.estado_label = None  # Se inicializa en _crear_controles_siem
+        self.tree_eventos = None  # Se inicializa en _crear_tabla_eventos
+        self.text_detalles = None  # Se inicializa en _crear_panel_detalles
         
         # Métricas reales del sistema
         self.metricas_widgets = {}
@@ -119,9 +119,9 @@ class VistaSIEM:
             self._limpiar_contenedor()
             self.logger.info("✅ Contenedor limpiado")
             
-            # Frame principal con padding estándar
+            # Frame principal con padding estandarizado
             self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
-            self.frame_principal.pack(fill='both', expand=True, padx=15, pady=15)
+            self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
             self.logger.info("✅ Frame principal creado")
             
             # Configurar grid responsive
@@ -401,10 +401,13 @@ class VistaSIEM:
             self.siem_activo = True
             self.actualizacion_activa = True
             
-            # Actualizar interfaz
-            self.estado_label.config(text="🟢 SIEM ACTIVO", fg=self.colores.verde_terminal)
-            self.btn_iniciar_siem.config(state='disabled')
-            self.btn_detener_siem.config(state='normal')
+            # Actualizar interfaz - verificar que los widgets estén inicializados
+            if self.estado_label:
+                self.estado_label.config(text="🟢 SIEM ACTIVO", fg=self.colores.verde_terminal)
+            if self.btn_iniciar_siem:
+                self.btn_iniciar_siem.config(state='disabled')
+            if self.btn_detener_siem:
+                self.btn_detener_siem.config(state='normal')
             
             # Iniciar hilo de actualización
             self.thread_actualizacion = threading.Thread(target=self._actualizar_metricas_reales, daemon=True)
@@ -426,10 +429,13 @@ class VistaSIEM:
             self.siem_activo = False
             self.actualizacion_activa = False
             
-            # Actualizar interfaz
-            self.estado_label.config(text="🔴 SIEM INACTIVO", fg=self.colores.rojo_critico)
-            self.btn_iniciar_siem.config(state='normal')
-            self.btn_detener_siem.config(state='disabled')
+            # Actualizar interfaz - verificar que los widgets estén inicializados
+            if self.estado_label:
+                self.estado_label.config(text="🔴 SIEM INACTIVO", fg=self.colores.rojo_critico)
+            if self.btn_iniciar_siem:
+                self.btn_iniciar_siem.config(state='normal')
+            if self.btn_detener_siem:
+                self.btn_detener_siem.config(state='disabled')
             
             # Usar controlador SIEM si está disponible
             if hasattr(self.controlador, 'detener_siem'):
@@ -580,7 +586,7 @@ class VistaSIEM:
                             if len(mem_line) >= 3:
                                 total = int(mem_line[1])
                                 used = int(mem_line[2])
-                            return (used / total) * 100 if total > 0 else 0.0
+                                return (used / total) * 100 if total > 0 else 0.0
                 return 0.0
             except:
                 return 0.0
@@ -888,11 +894,15 @@ class VistaSIEM:
             self.eventos_reales.pop(0)
         
         # Actualizar tabla en el hilo principal
-        self.tree_eventos.after(0, lambda: self._insertar_evento_tabla(evento))
+        if self.tree_eventos:
+            self.tree_eventos.after(0, lambda: self._insertar_evento_tabla(evento))
     
     def _insertar_evento_tabla(self, evento):
         """Insertar evento en la tabla (debe ejecutarse en el hilo principal)"""
         try:
+            if not self.tree_eventos:
+                return
+                
             self.tree_eventos.insert('', 0, values=(
                 evento['timestamp'],
                 evento['tipo'],
@@ -910,6 +920,9 @@ class VistaSIEM:
     
     def mostrar_detalles_evento(self, event):
         """Mostrar detalles del evento seleccionado"""
+        if not self.tree_eventos:
+            return
+            
         seleccion = self.tree_eventos.selection()
         if not seleccion:
             return
@@ -917,7 +930,7 @@ class VistaSIEM:
         item = self.tree_eventos.item(seleccion[0])
         valores = item['values']
         
-        if valores:
+        if valores and self.text_detalles:
             # Buscar evento correspondiente
             for evento in self.eventos_reales:
                 if (evento['timestamp'] == valores[0] and 
