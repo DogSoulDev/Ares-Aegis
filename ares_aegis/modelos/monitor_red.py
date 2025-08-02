@@ -13,6 +13,7 @@ import logging
 import subprocess
 import re
 import threading
+import json
 from typing import Dict, List, Optional, Tuple
 from collections import defaultdict
 
@@ -37,6 +38,7 @@ class MonitorRed:
         }
         self.conexiones_sospechosas = []
         self.puertos_monitoreados = [21, 22, 23, 25, 53, 80, 135, 139, 443, 445, 993, 995, 3389, 5432, 3306]
+        self.info_sistema_red = {}
         
     def iniciar_monitoreo(self):
         """Iniciar el monitoreo de red."""
@@ -47,6 +49,25 @@ class MonitorRed:
         """Detener el monitoreo de red."""
         self.monitoreando = False
         self.logger.info("🛑 Monitor de red detenido")
+        
+    def obtener_informacion_sistema_completa(self) -> Dict:
+        """Obtener información completa del sistema de red en tiempo real."""
+        info = {
+            'interfaces': self.obtener_interfaces_red(),
+            'conexiones_tcp': self.obtener_conexiones_tcp(),
+            'conexiones_udp': self.obtener_conexiones_udp(),
+            'puertos_escucha': self.obtener_puertos_escucha(),
+            'estadisticas_trafico': self.obtener_estadisticas_trafico(),
+            'routing_table': self.obtener_tabla_rutas(),
+            'dns_info': self.obtener_informacion_dns(),
+            'arp_table': self.obtener_tabla_arp(),
+            'firewall_status': self.obtener_estado_firewall(),
+            'conexiones_activas_detalladas': self.obtener_conexiones_detalladas(),
+            'timestamp': time.time()
+        }
+        
+        self.info_sistema_red = info
+        return info
         
     def obtener_estadisticas(self):
         """Obtener estadísticas completas de red."""
@@ -423,9 +444,276 @@ class MonitorRed:
     
     def _formatear_bytes(self, bytes_count: int) -> str:
         """Formatear bytes en unidades legibles."""
+        bytes_float = float(bytes_count)
         for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
-            if bytes_count < 1024.0:
-                return f"{bytes_count:.1f} {unit}"
-            bytes_count /= 1024.0
-        return f"{bytes_count:.1f} PB"
+            if bytes_float < 1024.0:
+                return f"{bytes_float:.1f} {unit}"
+            bytes_float /= 1024.0
+        return f"{bytes_float:.1f} PB"
+    
+    def obtener_conexiones_tcp(self) -> List[Dict]:
+        """Obtener conexiones TCP usando herramientas nativas."""
+        conexiones = []
+        try:
+            result = subprocess.run(['netstat', '-tn'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                lines = result.stdout.strip().split('\n')
+                for line in lines[2:]:  # Saltar headers
+                    parts = line.split()
+                    if len(parts) >= 6 and parts[0] == 'tcp':
+                        conexiones.append({
+                            'protocolo': 'TCP',
+                            'local_addr': parts[3],
+                            'remote_addr': parts[4],
+                            'estado': parts[5],
+                            'timestamp': time.time()
+                        })
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo conexiones TCP: {e}")
+        return conexiones
+    
+    def obtener_conexiones_udp(self) -> List[Dict]:
+        """Obtener conexiones UDP usando herramientas nativas."""
+        conexiones = []
+        try:
+            result = subprocess.run(['netstat', '-un'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                lines = result.stdout.strip().split('\n')
+                for line in lines[2:]:  # Saltar headers
+                    parts = line.split()
+                    if len(parts) >= 4 and parts[0] == 'udp':
+                        conexiones.append({
+                            'protocolo': 'UDP',
+                            'local_addr': parts[3],
+                            'remote_addr': parts[4] if len(parts) > 4 else 'N/A',
+                            'estado': 'LISTENING',
+                            'timestamp': time.time()
+                        })
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo conexiones UDP: {e}")
+        return conexiones
+    
+    def obtener_puertos_escucha(self) -> List[Dict]:
+        """Obtener puertos en escucha usando netstat."""
+        puertos = []
+        try:
+            result = subprocess.run(['netstat', '-tln'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                lines = result.stdout.strip().split('\n')
+                for line in lines[2:]:  # Saltar headers
+                    parts = line.split()
+                    if len(parts) >= 6 and 'LISTEN' in parts[5]:
+                        local_addr = parts[3]
+                        if ':' in local_addr:
+                            ip, puerto = local_addr.rsplit(':', 1)
+                            puertos.append({
+                                'puerto': int(puerto),
+                                'ip': ip,
+                                'protocolo': parts[0].upper(),
+                                'servicio': self._identificar_servicio(int(puerto)),
+                                'timestamp': time.time()
+                            })
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo puertos en escucha: {e}")
+        return puertos
+    
+    def obtener_estadisticas_trafico(self) -> Dict:
+        """Obtener estadísticas detalladas de tráfico de red."""
+        estadisticas = {}
+        try:
+            with open('/proc/net/dev', 'r') as f:
+                lines = f.readlines()
+            
+            for line in lines[2:]:  # Saltar headers
+                if ':' in line:
+                    parts = line.split(':')
+                    interface = parts[0].strip()
+                    stats = parts[1].split()
+                    
+                    if len(stats) >= 16:
+                        estadisticas[interface] = {
+                            'bytes_rx': int(stats[0]),
+                            'packets_rx': int(stats[1]),
+                            'errors_rx': int(stats[2]),
+                            'dropped_rx': int(stats[3]),
+                            'bytes_tx': int(stats[8]),
+                            'packets_tx': int(stats[9]),
+                            'errors_tx': int(stats[10]),
+                            'dropped_tx': int(stats[11]),
+                            'timestamp': time.time()
+                        }
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo estadísticas de tráfico: {e}")
+        return estadisticas
+    
+    def obtener_tabla_rutas(self) -> List[Dict]:
+        """Obtener tabla de rutas usando herramientas nativas."""
+        rutas = []
+        try:
+            result = subprocess.run(['route', '-n'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                lines = result.stdout.strip().split('\n')
+                for line in lines[2:]:  # Saltar headers
+                    parts = line.split()
+                    if len(parts) >= 8:
+                        rutas.append({
+                            'destino': parts[0],
+                            'gateway': parts[1],
+                            'mascara': parts[2],
+                            'flags': parts[3],
+                            'interface': parts[7],
+                            'timestamp': time.time()
+                        })
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo tabla de rutas: {e}")
+        return rutas
+    
+    def obtener_informacion_dns(self) -> Dict:
+        """Obtener información de DNS del sistema."""
+        dns_info = {}
+        try:
+            # Leer resolv.conf
+            with open('/etc/resolv.conf', 'r') as f:
+                lines = f.readlines()
+            
+            dns_servers = []
+            search_domains = []
+            
+            for line in lines:
+                line = line.strip()
+                if line.startswith('nameserver'):
+                    dns_servers.append(line.split()[1])
+                elif line.startswith('search'):
+                    search_domains.extend(line.split()[1:])
+            
+            dns_info = {
+                'dns_servers': dns_servers,
+                'search_domains': search_domains,
+                'timestamp': time.time()
+            }
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo información DNS: {e}")
+        return dns_info
+    
+    def obtener_tabla_arp(self) -> List[Dict]:
+        """Obtener tabla ARP usando herramientas nativas."""
+        arp_entries = []
+        try:
+            result = subprocess.run(['arp', '-a'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                lines = result.stdout.strip().split('\n')
+                for line in lines:
+                    # Parsear líneas como: hostname (192.168.1.1) at 00:11:22:33:44:55 [ether] on eth0
+                    match = re.search(r'(\S+)\s+\(([^)]+)\)\s+at\s+([0-9a-f:]{17})', line)
+                    if match:
+                        hostname, ip, mac = match.groups()
+                        arp_entries.append({
+                            'hostname': hostname,
+                            'ip': ip,
+                            'mac': mac,
+                            'timestamp': time.time()
+                        })
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo tabla ARP: {e}")
+        return arp_entries
+    
+    def obtener_estado_firewall(self) -> Dict:
+        """Obtener estado del firewall usando iptables."""
+        firewall_info = {}
+        try:
+            # Verificar iptables
+            result = subprocess.run(['iptables', '-L', '-n'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                firewall_info['iptables'] = {
+                    'activo': True,
+                    'reglas': result.stdout.count('\n'),
+                    'timestamp': time.time()
+                }
+            
+            # Verificar ufw si está disponible
+            result_ufw = subprocess.run(['ufw', 'status'], 
+                                      capture_output=True, text=True, timeout=5)
+            
+            if result_ufw.returncode == 0:
+                status = 'activo' if 'Status: active' in result_ufw.stdout else 'inactivo'
+                firewall_info['ufw'] = {
+                    'estado': status,
+                    'timestamp': time.time()
+                }
+        except Exception as e:
+            self.logger.warning(f"Error obteniendo estado del firewall: {e}")
+        return firewall_info
+    
+    def obtener_conexiones_detalladas(self) -> List[Dict]:
+        """Obtener conexiones activas con información detallada."""
+        conexiones = []
+        try:
+            result = subprocess.run(['ss', '-tuln'], 
+                                  capture_output=True, text=True, timeout=10)
+            
+            if result.returncode == 0:
+                lines = result.stdout.strip().split('\n')
+                for line in lines[1:]:  # Saltar header
+                    parts = line.split()
+                    if len(parts) >= 5:
+                        conexiones.append({
+                            'protocolo': parts[0],
+                            'estado': parts[1],
+                            'recv_q': parts[2],
+                            'send_q': parts[3],
+                            'local_addr': parts[4],
+                            'peer_addr': parts[5] if len(parts) > 5 else 'N/A',
+                            'timestamp': time.time()
+                        })
+        except Exception as e:
+            # Fallback a netstat si ss no está disponible
+            try:
+                result = subprocess.run(['netstat', '-tupln'], 
+                                      capture_output=True, text=True, timeout=10)
+                if result.returncode == 0:
+                    conexiones = self._parsear_netstat_detallado(result.stdout)
+            except Exception as e2:
+                self.logger.warning(f"Error obteniendo conexiones detalladas: {e}, {e2}")
+        return conexiones
+    
+    def _identificar_servicio(self, puerto: int) -> str:
+        """Identificar servicio común por puerto."""
+        servicios_comunes = {
+            21: 'FTP', 22: 'SSH', 23: 'Telnet', 25: 'SMTP', 
+            53: 'DNS', 80: 'HTTP', 110: 'POP3', 143: 'IMAP',
+            443: 'HTTPS', 993: 'IMAPS', 995: 'POP3S',
+            3306: 'MySQL', 5432: 'PostgreSQL', 3389: 'RDP',
+            135: 'RPC', 139: 'NetBIOS', 445: 'SMB'
+        }
+        return servicios_comunes.get(puerto, 'Desconocido')
+    
+    def _parsear_netstat_detallado(self, output: str) -> List[Dict]:
+        """Parsear salida detallada de netstat."""
+        conexiones = []
+        lines = output.strip().split('\n')
+        for line in lines[2:]:  # Saltar headers
+            parts = line.split()
+            if len(parts) >= 6:
+                conexiones.append({
+                    'protocolo': parts[0],
+                    'estado': parts[5] if len(parts) > 5 else 'N/A',
+                    'recv_q': '0',
+                    'send_q': '0',
+                    'local_addr': parts[3],
+                    'peer_addr': parts[4],
+                    'timestamp': time.time()
+                })
+        return conexiones
 
