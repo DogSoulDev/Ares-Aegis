@@ -41,43 +41,66 @@ class VistaEscaneador:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre el Escaneador"""
-        info_text = """🛡️ ESCANEADOR DE AMENAZAS - INFORMACIÓN
+        info_text = """🛡️ ESCANEADOR DE AMENAZAS - DETECCIÓN AVANZADA
 
 🔍 FUNCIONALIDADES PRINCIPALES:
-• Escaneo de archivos y directorios
-• Detección de amenazas y malware
-• Análisis de contenido avanzado
-• Verificación de hashes sospechosos
+• Escaneo exhaustivo de archivos y directorios del sistema
+• Detección avanzada de amenazas y malware conocido
+• Análisis de contenido profundo con múltiples algoritmos
+• Verificación de hashes contra bases de datos de amenazas
 
-⚡ OPCIONES DE ESCANEO:
-• Escaneo Básico: Verificación rápida
-• Escaneo Profundo: Análisis exhaustivo
-• Verificar Hashes: Comparación con bases de datos
-• Análisis de Contenido: Inspección detallada
+⚡ OPCIONES DE ESCANEO DISPONIBLES:
+• Escaneo Básico: Verificación rápida con firmas principales
+• Escaneo Profundo: Análisis exhaustivo con heurística avanzada
+• Verificar Hashes: Comparación con bases de datos de malware
+• Análisis de Contenido: Inspección detallada de código y patrones
 
 🎯 TIPOS DE DETECCIÓN:
-• Malware conocido por firmas
-• Archivos ejecutables sospechosos
-• Scripts potencialmente peligrosos
-• Patrones de comportamiento anómalo
+• Malware conocido identificado por firmas actualizadas
+• Archivos ejecutables con comportamiento sospechoso
+• Scripts potencialmente peligrosos (Python, Bash, PowerShell)
+• Patrones de comportamiento anómalo y técnicas de evasión
+• Archivos con extensiones dobles o nombres engañosos
 
-🔧 CÓMO USAR:
-1. Selecciona la ruta a escanear
-2. Configura las opciones de análisis
-3. Inicia el escaneo con 'Comenzar Análisis'
-4. Revisa los resultados en tiempo real
+🔧 GUÍA DE USO PASO A PASO:
+1. Selecciona la ruta específica que deseas escanear
+2. Configura las opciones de análisis según tus necesidades
+3. Inicia el proceso con el botón 'Comenzar Análisis'
+4. Supervisa el progreso en tiempo real en la interfaz
+5. Revisa los resultados detallados al finalizar el escaneo
 
-⚠️ RECOMENDACIONES:
-• Usa escaneo profundo para análisis completo
-• Verifica hashes para mayor precisión
-• Revisa todos los archivos detectados
-• Mantén actualizadas las firmas de amenazas
+⚠️ RECOMENDACIONES DE SEGURIDAD:
+• Utiliza escaneo profundo para análisis críticos completos
+• Verifica hashes para obtener mayor precisión en la detección
+• Revisa manualmente todos los archivos detectados como sospechosos
+• Mantén actualizadas las firmas de amenazas regularmente
+• Realiza escaneos periódicos en directorios críticos del sistema
 
 📊 INTERPRETACIÓN DE RESULTADOS:
-• 🟢 LIMPIO: Archivo seguro
-• 🟡 SOSPECHOSO: Requiere revisión
-• 🔴 AMENAZA: Archivo potencialmente peligroso
-• ⚫ ERROR: No se pudo analizar"""
+• 🟢 LIMPIO: Archivo completamente seguro, sin amenazas detectadas
+• 🟡 SOSPECHOSO: Requiere revisión manual adicional por parte del usuario
+• 🔴 AMENAZA: Archivo potencialmente peligroso, aislamiento recomendado
+• ⚫ ERROR: No se pudo analizar el archivo por restricciones o corrupción
+
+🚀 CARACTERÍSTICAS AVANZADAS:
+• Análisis heurístico para detectar amenazas de día cero
+• Integración con sistemas de cuarentena automática
+• Generación de reportes detallados de cada escaneo
+• Estadísticas de rendimiento y tiempo de procesamiento
+• Compatibilidad con múltiples formatos de archivo
+
+🔐 OPTIMIZADO PARA KALI LINUX:
+• Integración completa con herramientas nativas de seguridad
+• Compatibilidad con formatos específicos de pentesting
+• Análisis especializado para entornos de auditoría
+• Integración con frameworks de ciberseguridad de Kali
+• Optimización para hardware y software de sistemas Linux
+
+💡 CONSEJOS PROFESIONALES:
+• Combina diferentes tipos de escaneo para máxima efectividad
+• Programa escaneos automáticos para monitoreo continuo
+• Mantén un log de todos los escaneos para auditoría
+• Configura alertas automáticas para detecciones críticas"""
         
         messagebox.showinfo("Información - Escaneador de Amenazas", info_text)
         

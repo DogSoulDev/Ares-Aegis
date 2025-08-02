@@ -77,68 +77,106 @@ class VistaCheatsheets:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre las CheatSheets"""
-        info_text = """🛡️ CHEATSHEETS DE CIBERSEGURIDAD - INFORMACIÓN
+        info_text = """� CHEATSHEETS DE CIBERSEGURIDAD - ARSENAL DE CONOCIMIENTO
 
-📚 FUNCIONALIDADES PRINCIPALES:
-• Biblioteca completa de hojas de trucos
-• Comandos y técnicas de pentesting
-• Referencias rápidas para auditorías
-• Guías paso a paso para estudiantes
+🎯 FUNCIONALIDADES PRINCIPALES:
+• Biblioteca completa de referencias técnicas especializadas
+• Comandos profesionales y técnicas avanzadas de pentesting
+• Referencias rápidas para auditorías de seguridad complejas
+• Guías detalladas paso a paso para profesionales y estudiantes
 
-⚡ CATEGORÍAS DISPONIBLES:
-• Reconnaissance: Recopilación de información
-• Exploitation: Técnicas de explotación
-• Post-Exploitation: Mantenimiento de acceso
-• Network: Análisis y ataques de red
-• Web: Seguridad de aplicaciones web
-• Forensics: Análisis forense digital
+⚡ CATEGORÍAS ESPECIALIZADAS DISPONIBLES:
+• Reconnaissance: Recopilación de información y fingerprinting avanzado
+• Exploitation: Técnicas de explotación con payloads especializados
+• Post-Exploitation: Mantenimiento de acceso y movimiento lateral
+• Network Security: Análisis profundo y ataques de infraestructura
+• Web Application Security: Pruebas exhaustivas de aplicaciones web
+• Digital Forensics: Análisis forense y recuperación de evidencias
 
-🎯 HERRAMIENTAS INCLUIDAS:
-• Nmap: Escaneo de puertos y servicios
-• Metasploit: Framework de explotación
-• Burp Suite: Análisis de aplicaciones web
-• Wireshark: Análisis de tráfico de red
-• John the Ripper: Cracking de contraseñas
-• Hashcat: Recuperación de contraseñas
+🛠️ HERRAMIENTAS PROFESIONALES INCLUIDAS:
+• Nmap: Escaneo de puertos, detección de servicios y fingerprinting de SO
+• Metasploit Framework: Suite completa de explotación con payloads avanzados
+• Burp Suite Professional: Análisis integral de aplicaciones web
+• Wireshark: Análisis forense de tráfico de red y protocolos
+• John the Ripper: Cracking avanzado de hashes con reglas personalizadas
+• Hashcat: Recuperación de contraseñas con aceleración GPU
 
-🔧 FUNCIONES AVANZADAS:
-• Búsqueda inteligente por comando
-• Filtrado por categoría y herramienta
-• Favoritos para acceso rápido
-• Exportación de cheatsheets
-• Creación de cheatsheets personalizadas
+🔧 FUNCIONES AVANZADAS DE NAVEGACIÓN:
+• Búsqueda inteligente por comando, técnica o vulnerabilidad específica
+• Filtrado avanzado por categoría, herramienta y nivel de complejidad
+• Sistema de favoritos para acceso instantáneo a técnicas frecuentes
+• Exportación profesional de cheatsheets en múltiples formatos
+• Creación colaborativa de cheatsheets personalizadas para equipos
 
-⚠️ PARA ESTUDIANTES DE ETHICAL HACKING:
-• Comandos explicados paso a paso
-• Ejemplos prácticos de uso
-• Contexto de cuándo usar cada técnica
-• Referencias a documentación oficial
-• Tips y trucos de profesionales
+⚠️ RECURSOS PARA PROFESIONALES EN CIBERSEGURIDAD:
+• Comandos explicados con contexto técnico y casos de uso reales
+• Ejemplos prácticos con escenarios de red team y blue team
+• Contextualización profesional de cuándo aplicar cada técnica
+• Referencias directas a documentación oficial y CVEs relacionados
+• Tips especializados y trucos de penetration testers experimentados
 
-📊 CONTENIDO ESTRUCTURADO:
-• Sintaxis completa de comandos
-• Parámetros más utilizados
-• Ejemplos de uso real
-• Casos de estudio prácticos
-• Troubleshooting común
+📊 CONTENIDO ESTRUCTURADO PROFESIONALMENTE:
+• Sintaxis completa de comandos con todos los parámetros disponibles
+• Parámetros críticos más utilizados en auditorías reales
+• Ejemplos de uso en entornos empresariales complejos
+• Casos de estudio de penetration testing en diferentes sectores
+• Troubleshooting especializado para problemas técnicos comunes
 
-💡 CASOS DE USO:
-• Preparación para certificaciones (CEH, OSCP)
-• Consulta rápida durante pentests
-• Aprendizaje de nuevas herramientas
-• Referencia durante auditorías
-• Estudio y práctica personal
+💡 CASOS DE USO PROFESIONALES:
+• Preparación intensiva para certificaciones avanzadas (CEH, OSCP, CISSP)
+• Consulta rápida durante ejercicios Red Team en vivo
+• Aprendizaje acelerado de herramientas especializadas de Kali Linux
+• Referencia técnica durante auditorías de cumplimiento regulatorio
+• Entrenamiento continuo y actualización de conocimientos técnicos
 
-🔐 METODOLOGÍAS INCLUIDAS:
-• OWASP Testing Guide
-• NIST Cybersecurity Framework
-• PTES (Penetration Testing Execution Standard)
-• OSSTMM (Open Source Security Testing)
-• Kill Chain Methodology
+🔐 METODOLOGÍAS INTEGRADAS DE CIBERSEGURIDAD:
+• OWASP Testing Guide: Metodología completa para aplicaciones web
+• NIST Cybersecurity Framework: Estándares de seguridad empresarial
+• PTES (Penetration Testing Execution Standard): Metodología de pentesting
+• OSSTMM (Open Source Security Testing): Testing de seguridad sistemático
+• Cyber Kill Chain: Metodología de análisis de amenazas avanzadas
 
-📋 NOTA EDUCATIVA:
-Estas herramientas son para uso educativo y auditorías autorizadas únicamente.
-Siempre obtén permiso antes de realizar pruebas de penetración."""
+� CARACTERÍSTICAS TÉCNICAS AVANZADAS:
+• Integración con bases de datos de vulnerabilidades (CVE, ExploitDB)
+• Actualizaciones automáticas de técnicas y exploits emergentes
+• Correlación automática entre herramientas y técnicas MITRE ATT&CK
+• Mapeo directo con frameworks de threat hunting especializados
+
+📋 COMPLIANCE Y FRAMEWORKS REGULATORIOS:
+• ISO 27001: Controles de seguridad y gestión de riesgos
+• SOC 2: Auditorías de controles de sistemas de información
+• PCI DSS: Seguridad en procesamiento de datos de tarjetas
+• GDPR: Protección de datos personales y privacidad
+
+🎯 ESPECIALIZACIÓN POR SECTORES:
+• Sector Financiero: Técnicas específicas para banca y fintech
+• Sector Salud: Cumplimiento HIPAA y protección de datos médicos
+• Sector Energético: Seguridad de sistemas SCADA e ICS/OT
+• Sector Gubernamental: Estándares de seguridad nacional y clasificada
+
+⚡ INTEGRACIÓN CON HERRAMIENTAS DE KALI LINUX:
+• Comandos optimizados para distribuciones de pentesting
+• Integración nativa con herramientas pre-instaladas en Kali
+• Scripts automatizados para reconocimiento y explotación
+• Workflows completos desde reconnaissance hasta post-exploitation
+
+🔒 CONSIDERACIONES ÉTICAS Y LEGALES:
+• Uso exclusivo para auditorías autorizadas y hacking ético
+• Cumplimiento estricto de marcos legales internacionales
+• Documentación obligatoria de todas las actividades de testing
+• Responsabilidad profesional en el uso de técnicas avanzadas
+
+📖 RECURSOS DE APRENDIZAJE CONTINUO:
+• Enlaces a laboratorios prácticos y plataformas de training
+• Actualizaciones semanales con nuevas técnicas y exploits
+• Comunidad de práctica para intercambio de conocimientos
+• Certificaciones profesionales y rutas de carrera especializadas
+
+💻 OPTIMIZACIÓN PARA ENTORNOS PROFESIONALES:
+• Compatibilidad con entornos corporativos y SOCs especializados
+• Integración con herramientas SIEM y plataformas de threat intelligence
+• Exportación a formatos compatibles con documentación de auditoría
+• Plantillas profesionales para reportes ejecutivos y técnicos"""
         
         messagebox.showinfo("Información - CheatSheets de Ciberseguridad", info_text)
         

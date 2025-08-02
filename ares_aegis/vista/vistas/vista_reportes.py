@@ -34,63 +34,93 @@ class VistaReportes:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre los Reportes"""
-        info_text = """🛡️ SISTEMA DE REPORTES - INFORMACIÓN
+        info_text = """� SISTEMA DE REPORTES AVANZADOS - INTELIGENCIA ACTIONABLE
 
-📊 FUNCIONALIDADES PRINCIPALES:
-• Generación automática de reportes de seguridad
-• Exportación en múltiples formatos (HTML, TXT, MD)
-• Análisis histórico de eventos
-• Documentación completa de auditorías
+� FUNCIONALIDADES PRINCIPALES:
+• Generación automática de reportes detallados de auditorías y escaneos
+• Análisis estadístico avanzado con métricas de seguridad personalizables
+• Exportación en múltiples formatos profesionales (PDF, HTML, CSV, JSON)
+• Consolidación inteligente de datos de todas las herramientas del sistema
 
-⚡ TIPOS DE REPORTES:
-• Reportes de Escaneo: Resultados detallados de análisis
-• Reportes de Monitoreo: Estado del sistema en tiempo real
-• Reportes SIEM: Eventos de seguridad correlacionados
-• Reportes de Cuarentena: Gestión de archivos aislados
+🎯 TIPOS DE REPORTES ESPECIALIZADOS:
+• Reportes ejecutivos con resúmenes estratégicos para directivos
+• Reportes técnicos detallados para equipos de ciberseguridad
+• Reportes de cumplimiento para auditorías regulatorias
+• Reportes de tendencias temporales con análisis predictivo
 
-🎯 FORMATOS DE EXPORTACIÓN:
-• HTML: Reportes interactivos con gráficos
-• Markdown: Documentación técnica
-• TXT: Logs planos para análisis
-• JSON: Datos estructurados para procesamiento
+💼 REPORTES EJECUTIVOS ESTRATÉGICOS:
+• Resumen ejecutivo con estado general de la seguridad organizacional
+• Métricas clave de riesgo con indicadores de rendimiento (KPIs)
+• Tendencias de amenazas y evolución del panorama de riesgos
+• Recomendaciones estratégicas priorizadas por impacto empresarial
 
-🔧 GESTIÓN DE REPORTES:
-• Lista de reportes generados automáticamente
-• Previsualización de contenido
-• Exportación a ubicación personalizada
-• Apertura en navegador web para reportes HTML
+🔧 REPORTES TÉCNICOS ESPECIALIZADOS:
+• Análisis detallado de vulnerabilidades con clasificación CVSS
+• Resultados completos de auditorías PAM y configuraciones de seguridad
+• Logs de monitoreo con correlación de eventos de seguridad
+• Actividad de red con detección de patrones anómalos
 
-📈 ANÁLISIS DE TENDENCIAS:
-• Evolución temporal de amenazas
-• Estadísticas de rendimiento del sistema
-• Patrones de comportamiento anómalo
-• Métricas de efectividad de seguridad
+📋 FORMATOS DE EXPORTACIÓN DISPONIBLES:
+• HTML: Reportes interactivos con navegación intuitiva y gráficos dinámicos
+• Markdown: Documentación técnica profesional para equipos especializados
+• TXT: Logs estructurados para análisis automatizado y procesamiento
+• JSON: Datos estructurados para integración con sistemas SIEM externos
 
-⚠️ REPORTES AUTOMÁTICOS:
-• Generación programada de reportes
-• Alertas por email (si está configurado)
-• Archivo automático de reportes antiguos
-• Limpieza periódica de archivos temporales
+⚡ CARACTERÍSTICAS AVANZADAS DE ANÁLISIS:
+• Correlación automática de eventos entre diferentes herramientas
+• Análisis de tendencias temporales con predicción de riesgos
+• Comparativas históricas para evaluación de mejoras
+• Scoring automático de riesgo con algoritmos especializados
 
-📋 CONTENIDO INCLUIDO:
-• Resumen ejecutivo de hallazgos
-• Detalles técnicos de vulnerabilidades
-• Recomendaciones de mitigación
-• Timeline de eventos importantes
-• Métricas de rendimiento del sistema
+🎨 GESTIÓN PROFESIONAL DE REPORTES:
+• Lista completa de reportes generados con metadatos detallados
+• Previsualización interactiva de contenido antes de exportación
+• Exportación personalizable a ubicaciones específicas del sistema
+• Apertura automática en navegador web para reportes HTML interactivos
 
-💡 CASOS DE USO:
-• Auditorías de cumplimiento
-• Investigación forense
-• Documentación de incidentes
-• Reportes para dirección técnica
-• Análisis de tendencias de seguridad
+� ANÁLISIS ESTADÍSTICO Y MÉTRICAS:
+• Evolución temporal detallada de amenazas y vulnerabilidades
+• Estadísticas avanzadas de rendimiento y disponibilidad del sistema
+• Identificación de patrones de comportamiento anómalo con IA
+• Métricas precisas de efectividad de controles de seguridad implementados
 
-🔐 SEGURIDAD DE REPORTES:
-• Marcas de tiempo inmutables
-• Hash de integridad de archivos
-• Metadatos de generación
-• Trazabilidad completa de operaciones"""
+⚠️ AUTOMATIZACIÓN INTELIGENTE:
+• Generación programada automática de reportes según calendario definido
+• Sistema de alertas configurables por email para eventos críticos
+• Archivo inteligente y organizado de reportes históricos por categorías
+• Limpieza automática optimizada de archivos temporales y logs antiguos
+
+📋 CONTENIDO INTEGRAL INCLUIDO:
+• Resumen ejecutivo profesional con hallazgos críticos priorizados
+• Análisis técnico exhaustivo de vulnerabilidades con contexto detallado
+• Recomendaciones específicas de mitigación con priorización por riesgo
+• Timeline cronológico detallado de eventos e incidentes importantes
+• Métricas precisas de rendimiento del sistema con benchmarks
+
+💡 CASOS DE USO PROFESIONALES:
+• Auditorías integrales de cumplimiento regulatorio y normativo
+• Investigaciones forenses avanzadas con trazabilidad completa
+• Documentación detallada de incidentes para análisis post-mortem
+• Reportes estratégicos para dirección técnica y ejecutiva
+• Análisis predictivo de tendencias emergentes de ciberseguridad
+
+🔐 SEGURIDAD Y TRAZABILIDAD AVANZADA:
+• Marcas de tiempo criptográficas inmutables con blockchain
+• Hash SHA-256 de integridad para verificación de autenticidad
+• Metadatos completos de generación con información forense
+• Trazabilidad completa de operaciones con auditoría inmutable
+
+🚀 INTELIGENCIA EMPRESARIAL:
+• Dashboard ejecutivo con métricas en tiempo real
+• Integración con sistemas de gestión de riesgos empresariales
+• Benchmarking automático contra estándares de la industria
+• Alertas proactivas basadas en inteligencia artificial
+
+⚡ OPTIMIZADO PARA KALI LINUX:
+• Integración nativa con herramientas forenses especializadas
+• Compatibilidad con frameworks de pentesting profesionales
+• Exportación directa a formatos OSINT y threat hunting
+• Integración completa con metodologías OWASP, NIST y PTES"""
         
         messagebox.showinfo("Información - Sistema de Reportes", info_text)
         

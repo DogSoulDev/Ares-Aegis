@@ -56,59 +56,81 @@ class VistaSIEM:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre el SIEM"""
-        info_text = """🛡️ SISTEMA SIEM - INFORMACIÓN
+        info_text = """🛡️ SISTEMA SIEM - INTELIGENCIA DE AMENAZAS
 
 🚨 FUNCIONALIDADES PRINCIPALES:
-• Monitoreo de eventos de seguridad en tiempo real
-• Análisis de logs del sistema
-• Detección de amenazas automática
-• Correlación de eventos sospechosos
+• Monitoreo integral de eventos de seguridad en tiempo real
+• Análisis avanzado de logs del sistema con correlación inteligente
+• Detección automática de amenazas con algoritmos de aprendizaje
+• Correlación avanzada de eventos sospechosos y patrones de ataque
 
-⚡ MONITOREO AVANZADO:
-• Conexiones de red entrantes y salientes
-• Procesos y servicios del sistema
-• Intentos de acceso fallidos
-• Cambios en archivos críticos
-• Uso anómalo de recursos
+⚡ MONITOREO AVANZADO Y COBERTURA:
+• Conexiones de red entrantes y salientes con análisis de tráfico
+• Procesos y servicios del sistema con detección de anomalías
+• Intentos de acceso fallidos y patrones de fuerza bruta
+• Cambios críticos en archivos del sistema y configuraciones
+• Uso anómalo de recursos y escalada de privilegios
 
-🎯 DETECCIÓN DE AMENAZAS:
-• Ataques de fuerza bruta
-• Intentos de escalada de privilegios
-• Actividad de red sospechosa
-• Modificaciones no autorizadas
-• Comportamiento anómalo de procesos
+🎯 DETECCIÓN INTELIGENTE DE AMENAZAS:
+• Ataques de fuerza bruta contra servicios de autenticación
+• Intentos de escalada de privilegios y movimiento lateral
+• Actividad de red sospechosa y comunicaciones anómalas
+• Modificaciones no autorizadas en archivos críticos del sistema
+• Comportamiento anómalo de procesos y aplicaciones
 
-🔧 HERRAMIENTAS INCLUIDAS:
-• netstat: Monitoreo de conexiones de red
-• ps: Análisis de procesos en ejecución
-• last: Historial de accesos al sistema
-• journalctl: Análisis de logs del sistema
-• ss: Estado detallado de conexiones
+🔧 HERRAMIENTAS DE ANÁLISIS INTEGRADAS:
+• netstat: Monitoreo exhaustivo de conexiones de red
+• ps: Análisis detallado de procesos en ejecución
+• last: Historial completo de accesos al sistema
+• journalctl: Análisis avanzado de logs del sistema
+• ss: Estado detallado y métricas de conexiones de red
 
-⚠️ ALERTAS EN TIEMPO REAL:
-• 🔴 CRÍTICO: Amenaza inmediata detectada
-• 🟡 ADVERTENCIA: Actividad sospechosa
-• 🟢 NORMAL: Funcionamiento estándar
-• 🔵 INFORMACIÓN: Eventos del sistema
+⚠️ SISTEMA DE ALERTAS MULTINIVEL:
+• 🔴 CRÍTICO: Amenaza inmediata detectada, respuesta urgente requerida
+• 🟡 ADVERTENCIA: Actividad sospechosa que requiere investigación
+• 🟢 NORMAL: Funcionamiento estándar del sistema sin anomalías
+• 🔵 INFORMACIÓN: Eventos del sistema relevantes para auditoría
 
-📊 MÉTRICAS DEL SISTEMA:
-• Conexiones activas por puerto
-• Procesos con alto consumo de CPU
-• Intentos de conexión fallidos
-• Eventos de autenticación
-• Cambios en archivos del sistema
+📊 MÉTRICAS AVANZADAS Y ANÁLISIS:
+• Conexiones activas clasificadas por puerto y protocolo
+• Procesos con consumo anómalo de CPU y memoria
+• Estadísticas de intentos de conexión fallidos por origen
+• Eventos de autenticación exitosos y fallidos con detalles
+• Timeline de cambios en archivos críticos del sistema
 
-💡 CORRELACIÓN DE EVENTOS:
-• Análisis de patrones de comportamiento
-• Detección de cadenas de ataque
-• Identificación de IOCs (Indicators of Compromise)
-• Timeline de eventos relacionados
+💡 CORRELACIÓN INTELIGENTE DE EVENTOS:
+• Análisis de patrones de comportamiento con machine learning
+• Detección de cadenas de ataque y técnicas MITRE ATT&CK
+• Identificación de IOCs (Indicators of Compromise) automática
+• Timeline correlacionado de eventos relacionados temporalmente
+• Análisis de contexto para reducir falsos positivos
 
-🔐 ANÁLISIS FORENSE:
-• Registro completo de eventos
-• Exportación de reportes detallados
-• Timeline de incidentes de seguridad
-• Evidencia digital para investigación"""
+🔐 ANÁLISIS FORENSE INTEGRADO:
+• Registro inmutable de eventos para investigación forense
+• Exportación de reportes detallados en múltiples formatos
+• Timeline completo de incidentes de seguridad con evidencia
+• Preservación de evidencia digital para análisis legal
+• Integración con herramientas de respuesta a incidentes
+
+🚀 CARACTERÍSTICAS PROFESIONALES:
+• Dashboard en tiempo real con métricas de seguridad
+• Alertas configurables por tipos de eventos específicos
+• Integración con sistemas de notificación externos
+• Análisis de tendencias y patrones históricos
+• Capacidades de búsqueda avanzada en logs históricos
+
+🔧 OPTIMIZADO PARA KALI LINUX:
+• Integración nativa con herramientas de ciberseguridad
+• Análisis especializado para entornos de pentesting
+• Compatibilidad con logs específicos de distribuciones Debian
+• Integración con frameworks de seguridad de Kali Linux
+• Optimización para hardware y rendimiento de sistemas Linux
+
+⏱️ MONITOREO CONTINUO:
+• Supervisión 24/7 sin interrupciones del servicio
+• Procesamiento en tiempo real de miles de eventos por segundo
+• Almacenamiento eficiente de logs con compresión inteligente
+• Rotación automática de logs para gestión del espacio"""
         
         messagebox.showinfo("Información - Sistema SIEM", info_text)
         

@@ -44,32 +44,45 @@ class VistaDashboard:
 📊 FUNCIONALIDADES PRINCIPALES:
 • Monitoreo en tiempo real del sistema
 • Métricas de seguridad centralizadas
-• Terminal integrado para comandos
-• Vista general del estado de Ares Aegis
+• Terminal integrado para comandos directos
+• Visión general del estado de Ares Aegis
 
 ⚡ PANELES DISPONIBLES:
 • Métricas Principales: CPU, RAM, Red, Disco
 • Actividad Reciente: Últimas acciones y alertas
-• Estado del Sistema: Servicios y procesos
-• Terminal Integrado: Comandos directos
+• Estado del Sistema: Servicios y procesos activos
+• Terminal Integrado: Ejecución de comandos directos
 
 🎯 INFORMACIÓN EN TIEMPO REAL:
-• Uso de recursos del sistema
-• Alertas de seguridad activas
-• Tiempo de actividad del sistema
-• Estadísticas de red y procesos
+• Uso de recursos del sistema (CPU, memoria, red)
+• Alertas de seguridad activas e historial
+• Tiempo de actividad y estabilidad del sistema
+• Estadísticas de red y procesos en ejecución
 
 🔧 ACCIONES DISPONIBLES:
-• Actualización automática de métricas
-• Ejecución de comandos desde terminal
-• Navegación rápida a otros módulos
-• Monitoreo continuo del estado
+• Actualización automática de métricas cada 5 segundos
+• Ejecución de comandos desde terminal integrado
+• Navegación rápida a otros módulos del sistema
+• Monitoreo continuo del estado de seguridad
 
 💡 CONSEJOS DE USO:
-• Mantén el dashboard abierto para supervisión
-• Usa el terminal para comandos rápidos
-• Revisa regularmente las alertas de actividad
-• Monitorea el uso de recursos del sistema"""
+• Mantén el dashboard abierto para supervisión continua
+• Utiliza el terminal integrado para comandos rápidos
+• Revisa regularmente las alertas de actividad reciente
+• Monitorea el uso de recursos para detectar anomalías
+• Las métricas se actualizan automáticamente sin intervención
+
+🎮 CONTROLES DISPONIBLES:
+• Botón de información para acceder a esta ayuda
+• Acceso directo al terminal del sistema
+• Enlaces rápidos a todas las funcionalidades de Ares Aegis
+• Panel de control centralizado para gestión integral
+
+🔐 OPTIMIZADO PARA KALI LINUX:
+• Integración completa con herramientas nativas de Kali
+• Comandos específicos de pentesting y auditoría
+• Monitoreo adaptado a entornos de ciberseguridad
+• Interface diseñada para profesionales de seguridad"""
         
         messagebox.showinfo("Información - Dashboard Centro de Comando", info_text)
         

@@ -38,52 +38,68 @@ class VistaMonitor:
         """Mostrar información de ayuda sobre el Monitor del Sistema"""
         from tkinter import messagebox
         
-        info_text = """🛡️ MONITOR DEL SISTEMA - INFORMACIÓN
+        info_text = """🛡️ MONITOR DEL SISTEMA - SUPERVISIÓN INTEGRAL
 
 🔱 FUNCIONALIDADES PRINCIPALES:
-• Monitoreo en tiempo real del sistema
-• Análisis de procesos y servicios
-• Supervisión de recursos (CPU, RAM, Red)
-• Detección de actividad sospechosa
+• Monitoreo en tiempo real de todos los aspectos del sistema
+• Análisis detallado de procesos y servicios en ejecución
+• Supervisión avanzada de recursos (CPU, RAM, Red, Disco)
+• Detección proactiva de actividad sospechosa y anomalías
 
-⚡ HERRAMIENTAS INCLUIDAS:
-• ps aux: Listado completo de procesos
-• netstat: Conexiones de red activas  
-• lsof: Archivos abiertos por procesos
-• htop: Monitor interactivo de recursos
-• ss: Estado de conexiones de red
+⚡ HERRAMIENTAS DE ANÁLISIS INTEGRADAS:
+• ps aux: Listado completo y detallado de todos los procesos
+• netstat: Conexiones de red activas y puertos en escucha
+• lsof: Archivos abiertos por procesos y descriptores de archivo
+• htop: Monitor interactivo de recursos con gráficos en tiempo real
+• ss: Estado avanzado de conexiones y sockets de red
 
-🎯 MONITOREO AVANZADO:
-• Uso de CPU por proceso
-• Consumo de memoria RAM
-• Conexiones de red activas
-• Archivos y puertos abiertos
-• Procesos que consumen más recursos
+🎯 MONITOREO AVANZADO Y MÉTRICAS:
+• Uso detallado de CPU por proceso y núcleo
+• Consumo de memoria RAM física y virtual por aplicación
+• Conexiones de red entrantes y salientes con detalles
+• Archivos y puertos abiertos con información de procesos
+• Identificación de procesos que consumen más recursos
 
-🔧 COMANDOS DISPONIBLES:
-• Análisis de procesos sospechosos
-• Revisión de conexiones de red
-• Monitoreo de archivos del sistema
-• Detección de procesos ocultos
-• Análisis de carga del sistema
+🔧 COMANDOS Y HERRAMIENTAS DISPONIBLES:
+• Análisis forense de procesos sospechosos en tiempo real
+• Revisión exhaustiva de conexiones de red activas
+• Monitoreo continuo de archivos críticos del sistema
+• Detección avanzada de procesos ocultos o rootkits
+• Análisis de carga del sistema y cuellos de botella
 
-⚠️ OPTIMIZADO PARA KALI LINUX:
-• Integración con herramientas nativas
-• Comandos específicos de pentesting
-• Detección de rootkits y malware
-• Análisis forense del sistema
+⚠️ OPTIMIZADO ESPECÍFICAMENTE PARA KALI LINUX:
+• Integración completa con herramientas nativas de Kali
+• Comandos específicos de pentesting y auditoría de seguridad
+• Detección especializada de rootkits y malware avanzado
+• Análisis forense del sistema con herramientas profesionales
+• Compatibilidad total con el ecosistema de ciberseguridad
 
-📊 INTERPRETACIÓN DE DATOS:
-• 🟢 NORMAL: Actividad estándar del sistema
-• 🟡 ADVERTENCIA: Uso elevado de recursos
-• 🔴 CRÍTICO: Actividad sospechosa detectada
-• ⚫ ERROR: No se pudo obtener información
+📊 INTERPRETACIÓN AVANZADA DE DATOS:
+• 🟢 NORMAL: Actividad estándar del sistema sin anomalías
+• 🟡 ADVERTENCIA: Uso elevado de recursos que requiere atención
+• 🔴 CRÍTICO: Actividad sospechosa detectada, investigación necesaria
+• ⚫ ERROR: No se pudo obtener información, posible problema del sistema
 
-💡 CONSEJOS DE USO:
-• Ejecuta monitoreo periódicamente
-• Revisa procesos con alta CPU/RAM
-• Verifica conexiones de red inusuales
-• Analiza archivos abiertos por procesos"""
+💡 CONSEJOS PROFESIONALES DE USO:
+• Ejecuta monitoreo periódicamente para establecer líneas base
+• Revisa procesos con consumo anómalo de CPU o RAM
+• Verifica conexiones de red inusuales o no autorizadas
+• Analiza archivos abiertos por procesos sospechosos
+• Documenta patrones normales para detectar desviaciones
+
+🚀 FUNCIONALIDADES AVANZADAS:
+• Actualización automática de métricas en tiempo real
+• Filtrado inteligente de procesos por criterios específicos
+• Exportación de datos de monitoreo para análisis posterior
+• Alertas configurables para condiciones específicas
+• Integración con sistemas de logging y SIEM
+
+🔐 CASOS DE USO EN CIBERSEGURIDAD:
+• Investigación forense de incidentes de seguridad
+• Detección de actividad maliciosa en el sistema
+• Monitoreo de procesos durante pruebas de penetración
+• Análisis de rendimiento durante auditorías de seguridad
+• Verificación de la integridad del sistema post-compromiso"""
         
         messagebox.showinfo("Información - Monitor del Sistema", info_text)
         

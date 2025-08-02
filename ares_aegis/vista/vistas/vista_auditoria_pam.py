@@ -62,6 +62,7 @@ class VistaAuditoriaPAM:
         self.area_log = None  # Se inicializa en _crear_area_log
         self.btn_auditoria_pam = None  # Se inicializa en _crear_panel_control
         self.btn_auditoria_completa = None  # Se inicializa en _crear_panel_control
+        self.btn_cancelar = None  # Se inicializa en _crear_panel_control
         self.label_estado = None  # Se inicializa en _crear_panel_control
         self.progress_bar = None  # Se inicializa en _crear_panel_control
         
@@ -74,72 +75,73 @@ class VistaAuditoriaPAM:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre la Auditoría PAM"""
-        info_text = """🛡️ AUDITORÍA PAM - INFORMACIÓN
+        info_text = """🛡️ AUDITORÍA PAM - SISTEMA DE AUTENTICACIÓN
 
 🔐 FUNCIONALIDADES PRINCIPALES:
 • Auditoría completa del sistema PAM (Pluggable Authentication Modules)
-• Análisis de configuraciones de autenticación
-• Verificación de políticas de contraseñas
-• Detección de vulnerabilidades de autenticación
+• Análisis exhaustivo de configuraciones de autenticación
+• Verificación de políticas de contraseñas y seguridad
+• Detección proactiva de vulnerabilidades de autenticación
 
 ⚡ MÓDULOS AUDITADOS:
-• Configuración PAM del sistema
+• Configuración PAM del sistema (/etc/pam.d/)
 • Políticas de contraseñas (pam_pwquality)
-• Módulos de autenticación activos
-• Configuraciones de sudo y su
-• Análisis de archivos /etc/pam.d/
+• Módulos de autenticación activos y su estado
+• Configuraciones de sudo y su para escalada de privilegios
+• Análisis de todos los archivos en /etc/pam.d/
 
 🎯 ANÁLISIS DE SEGURIDAD:
-• Fortaleza de políticas de contraseñas
-• Configuraciones de bloqueo de cuentas
-• Módulos de autenticación obsoletos
-• Configuraciones inseguras detectadas
-• Cumplimiento con estándares de seguridad
+• Evaluación de la fortaleza de políticas de contraseñas
+• Verificación de configuraciones de bloqueo de cuentas
+• Detección de módulos de autenticación obsoletos o inseguros
+• Identificación de configuraciones inseguras o mal configuradas
+• Verificación del cumplimiento con estándares de seguridad
 
-🔧 AUDITORÍA DEL SISTEMA:
-• Análisis completo de autenticación
-• Verificación de archivos de configuración
-• Estado de servicios de autenticación
-• Permisos de archivos críticos
-• Logs de autenticación recientes
+🔧 TIPOS DE AUDITORÍA:
+• Auditoría PAM: Análisis específico del sistema de autenticación
+• Auditoría Completa: Análisis integral del sistema incluyendo PAM
+• Verificación en tiempo real del estado de configuraciones
+• Generación automática de reportes detallados
 
 ⚠️ DETECCIÓN DE VULNERABILIDADES:
-• Configuraciones PAM inseguras
-• Políticas de contraseñas débiles
-• Módulos PAM desactualizados
-• Configuraciones de sudo peligrosas
-• Accesos privilegiados sin restricciones
+• Configuraciones PAM potencialmente inseguras
+• Políticas de contraseñas débiles o inadecuadas
+• Módulos PAM desactualizados con vulnerabilidades conocidas
+• Configuraciones de sudo peligrosas que permiten escalada
+• Accesos privilegiados sin restricciones adecuadas
 
 📊 RESULTADOS DETALLADOS:
-• Estado de cada módulo PAM
-• Análisis de configuraciones críticas
-• Recomendaciones específicas de mejora
-• Nivel de riesgo por hallazgo
-• Pasos de mitigación recomendados
+• Estado individual de cada módulo PAM
+• Análisis detallado de configuraciones críticas
+• Recomendaciones específicas de mejora para cada hallazgo
+• Clasificación de nivel de riesgo por hallazgo detectado
+• Pasos detallados de mitigación recomendados
 
 💡 RECOMENDACIONES INCLUIDAS:
-• Fortalecimiento de políticas de contraseñas
-• Configuraciones PAM más seguras
-• Implementación de autenticación multifactor
-• Mejores prácticas de configuración sudo
-• Monitoreo de eventos de autenticación
+• Fortalecimiento de políticas de contraseñas según mejores prácticas
+• Configuraciones PAM más seguras y actualizadas
+• Implementación de autenticación multifactor (MFA)
+• Mejores prácticas de configuración sudo y su
+• Monitoreo continuo de eventos de autenticación
 
 🔐 ESPECÍFICO PARA KALI LINUX:
-• Análisis adaptado a distribuciones Debian
-• Verificación de módulos PAM específicos
-• Integración con herramientas de pentesting
-• Consideraciones especiales para entornos de auditoría
+• Análisis adaptado a distribuciones basadas en Debian
+• Verificación de módulos PAM específicos de Kali Linux
+• Integración con herramientas de auditoría nativas
+• Optimización para entornos de pentesting y seguridad
+• Compatibilidad completa con el ecosistema de Kali Linux
 
-📋 CASOS DE USO:
-• Auditorías de cumplimiento normativo
-• Evaluaciones de seguridad internas
-• Preparación para certificaciones
-• Hardening de sistemas Linux
-• Análisis forense de autenticación
+🚀 CÓMO UTILIZAR:
+1. Selecciona el tipo de auditoría deseada (PAM o Completa)
+2. Haz clic en el botón correspondiente para iniciar
+3. Observa el progreso en tiempo real en el panel de logs
+4. Revisa los resultados detallados en el panel de resultados
+5. Implementa las recomendaciones de seguridad sugeridas
 
-🚨 NOTA IMPORTANTE:
-Esta auditoría examina configuraciones críticas del sistema.
-Siempre realiza respaldos antes de aplicar cambios recomendados."""
+⏱️ FUNCIONES DE CONTROL:
+• Botón Cancelar: Detiene la auditoría en progreso de forma segura
+• Progreso en tiempo real: Visualización del estado actual
+• Logs detallados: Seguimiento paso a paso del proceso"""
         
         messagebox.showinfo("Información - Auditoría PAM", info_text)
         
@@ -434,6 +436,12 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
                                        "¿Estás seguro de que quieres cancelar la auditoría en progreso?")
         if respuesta:
             self.auditoria_activa = False
+            
+            # Esperar a que el hilo termine si está ejecutándose
+            if self.thread_auditoria and self.thread_auditoria.is_alive():
+                self._agregar_log("⏳ Esperando finalización del hilo de auditoría...", "INFO")
+                # No hacemos join() para evitar bloquear la UI, solo marcamos como inactiva
+            
             self._finalizar_auditoria()
             self._agregar_log("❌ Auditoría cancelada por el usuario", "ERROR")
             messagebox.showinfo("Auditoría Cancelada", "La auditoría ha sido cancelada exitosamente.")
@@ -449,6 +457,9 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
         if not self.btn_auditoria_completa:
             self.logger.warning("btn_auditoria_completa no inicializado")
             return
+        if not self.btn_cancelar:
+            self.logger.warning("btn_cancelar no inicializado")
+            return
         if not self.progress_bar:
             self.logger.warning("progress_bar no inicializado")
             return
@@ -459,6 +470,10 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
         # Deshabilitar botones de auditoría y habilitar cancelar
         self.btn_auditoria_pam.config(state='disabled')
         self.btn_auditoria_completa.config(state='disabled')
+        
+        # Habilitar botón de cancelar
+        if self.btn_cancelar:
+            self.btn_cancelar.config(state='normal', bg=self.colores.rojo_critico)
         
         # Activar barra de progreso
         self.progress_bar.start(10)
@@ -756,6 +771,10 @@ Siempre realiza respaldos antes de aplicar cambios recomendados."""
             self.btn_auditoria_pam.config(state='normal')
         if self.btn_auditoria_completa:
             self.btn_auditoria_completa.config(state='normal')
+        
+        # Deshabilitar botón de cancelar
+        if self.btn_cancelar:
+            self.btn_cancelar.config(state='disabled', bg=self.colores.gris_hierro)
         
         # Detener barra de progreso
         if self.progress_bar:

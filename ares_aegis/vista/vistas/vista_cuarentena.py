@@ -35,55 +35,70 @@ class VistaCuarentena:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre la Cuarentena"""
-        info_text = """🛡️ CUARENTENA DE ARCHIVOS - INFORMACIÓN
+        info_text = """🛡️ CUARENTENA DE ARCHIVOS - AISLAMIENTO SEGURO
 
 🔒 FUNCIONALIDADES PRINCIPALES:
-• Aislamiento seguro de archivos sospechosos
-• Gestión completa de archivos en cuarentena
-• Restauración segura de archivos legítimos
-• Eliminación permanente de amenazas
+• Aislamiento seguro y completo de archivos sospechosos o maliciosos
+• Gestión integral de archivos en cuarentena con interfaz intuitiva
+• Restauración segura de archivos legítimos incorrectamente detectados
+• Eliminación permanente y segura de amenazas confirmadas
 
 ⚡ OPERACIONES DISPONIBLES:
-• Mover archivos a cuarentena
-• Restaurar archivos desde cuarentena
-• Eliminar archivos permanentemente
-• Analizar archivos aislados
+• Mover archivos a cuarentena desde cualquier ubicación del sistema
+• Restaurar archivos desde cuarentena a su ubicación original
+• Eliminar archivos permanentemente con borrado seguro
+• Analizar archivos aislados con herramientas especializadas
 
-🎯 GESTIÓN DE CUARENTENA:
-• Lista de archivos en cuarentena
-• Información detallada de cada archivo
-• Fecha y hora de cuarentena
-• Razón del aislamiento
+🎯 GESTIÓN AVANZADA DE CUARENTENA:
+• Lista detallada de todos los archivos en cuarentena
+• Información exhaustiva de cada archivo (tamaño, fecha, origen)
+• Fecha y hora exacta de cuarentena con trazabilidad completa
+• Razón detallada del aislamiento y nivel de amenaza detectado
 
-🔧 CÓMO USAR:
+🔧 GUÍA DE USO PASO A PASO:
 1. Los archivos se mueven automáticamente desde el escaneador
-2. Revisa la lista de archivos en cuarentena
-3. Analiza cada archivo antes de decidir
-4. Restaura archivos legítimos o elimina amenazas
+2. Revisa cuidadosamente la lista de archivos en cuarentena
+3. Analiza cada archivo individualmente antes de tomar decisiones
+4. Restaura archivos legítimos o elimina permanentemente las amenazas
 
-⚠️ PRISIÓN DE HADES:
-• Aislamiento total del sistema
-• Sin acceso desde aplicaciones
-• Backup de metadatos original
-• Historial de operaciones
+⚠️ PRISIÓN DIGITAL DE HADES - MÁXIMA SEGURIDAD:
+• Aislamiento total y completo del sistema operativo
+• Sin acceso posible desde aplicaciones externas
+• Backup automático de metadatos originales del archivo
+• Historial detallado de todas las operaciones realizadas
 
-📊 ESTADO DE ARCHIVOS:
-• 🔒 EN CUARENTENA: Aislado de forma segura
-• 📅 FECHA: Momento del aislamiento
-• 📂 ORIGEN: Ubicación original del archivo
-• ⚠️ MOTIVO: Razón del aislamiento
+📊 ESTADOS Y CLASIFICACIÓN DE ARCHIVOS:
+• 🔒 EN CUARENTENA: Aislado de forma segura sin posibilidad de ejecución
+• 📅 FECHA: Momento exacto del aislamiento con precisión de segundos
+• 📂 ORIGEN: Ubicación original completa del archivo en el sistema
+• ⚠️ MOTIVO: Razón específica del aislamiento y tipo de amenaza
 
-💡 RECOMENDACIONES DE SEGURIDAD:
-• Analiza cuidadosamente antes de restaurar
-• Mantén archivos sospechosos aislados
-• Elimina permanentemente las amenazas confirmadas
-• Revisa periódicamente la cuarentena
+💡 RECOMENDACIONES PROFESIONALES DE SEGURIDAD:
+• Analiza cuidadosamente cada archivo antes de restaurar
+• Mantén archivos sospechosos aislados hasta verificación completa
+• Elimina permanentemente las amenazas confirmadas por múltiples análisis
+• Revisa periódicamente la cuarentena para gestión del espacio
+• Documenta todas las decisiones de restauración o eliminación
 
-🔐 SEGURIDAD DEL SISTEMA:
-• Los archivos en cuarentena no pueden ejecutarse
-• Aislamiento completo del sistema operativo
-• Backup automático de información original
-• Registro de todas las operaciones"""
+🔐 SEGURIDAD INTEGRAL DEL SISTEMA:
+• Los archivos en cuarentena no pueden ejecutarse bajo ninguna circunstancia
+• Aislamiento completo del sistema operativo y aplicaciones
+• Backup automático de información original para restauración
+• Registro inmutable de todas las operaciones para auditoría
+• Encriptación de archivos en cuarentena para máxima seguridad
+
+🚀 CARACTERÍSTICAS AVANZADAS:
+• Análisis automático de archivos en cuarentena
+• Integración con sistemas de inteligencia de amenazas
+• Exportación de reportes de actividad de cuarentena
+• Alertas configurables para archivos críticos
+• Sincronización con bases de datos de malware actualizadas
+
+⚡ OPTIMIZADO PARA KALI LINUX:
+• Integración completa con herramientas forenses de Kali
+• Compatibilidad con sistemas de archivos específicos de Linux
+• Análisis especializado con herramientas nativas de ciberseguridad
+• Integración con frameworks de respuesta a incidentes"""
         
         messagebox.showinfo("Información - Cuarentena de Archivos", info_text)
         
