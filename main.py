@@ -336,7 +336,7 @@ def main():
             
             # Intentar cargar controlador principal
             try:
-                from ares_aegis.controladores.controlador_principal import ControladorPrincipal
+                from ares_aegis.controlador.controlador_principal import ControladorPrincipal
                 controlador = ControladorPrincipal()
                 # La interfaz simple maneja el controlador internamente
                 interfaz.inicializar(controlador)

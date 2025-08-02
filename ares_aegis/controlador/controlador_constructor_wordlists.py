@@ -10,7 +10,7 @@ Controlador siguiendo patrón MVC de Ares Aegis.
 import threading
 import os
 from typing import Dict, List, Optional, Any, Callable
-from ..modelos.constructor_wordlists import ConstructorWordlists
+from ..modelo.modelo_constructor_wordlists import ConstructorWordlists
 from ..utils.ayuda_logging import configurar_logger_modulo
 from .controlador_base import ControladorBase
 
@@ -51,34 +51,6 @@ class ControladorConstructorWordlists(ControladorBase):
             return True
         except Exception as e:
             self.logger.error(f"Error inicializando constructor de wordlists: {e}")
-            return False
-    
-    async def _finalizar_impl(self) -> bool:
-        """Implementación específica de finalización."""
-        try:
-            if self.hilo_procesamiento and self.hilo_procesamiento.is_alive():
-                self.logger.info("Deteniendo hilo de procesamiento...")
-                # Marcar como no procesando para detener bucles
-                self.procesando = False
-                self.hilo_procesamiento.join(timeout=2)
-            
-            self.logger.info("🔧 Recursos del constructor de wordlists liberados")
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Error finalizando controlador: {e}")
-            return False
-    
-    # === GESTIÓN DE LISTAS BASE ===
-    
-    async def _inicializar_impl(self) -> bool:
-        """Implementación específica de inicialización."""
-        try:
-            # No hay inicialización asíncrona específica requerida
-            self.logger.info("✅ Controlador Constructor de Wordlists inicializado correctamente")
-            return True
-        except Exception as e:
-            self.logger.error(f"Error inicializando controlador: {e}")
             return False
     
     async def _finalizar_impl(self) -> bool:
@@ -216,39 +188,6 @@ class ControladorConstructorWordlists(ControladorBase):
                 
         except Exception as e:
             error_msg = f"Error agregando lista desde archivo: {e}"
-            self.logger.error(error_msg)
-            return {'exito': False, 'mensaje': error_msg}
-    
-    def eliminar_lista_base(self, nombre: str) -> Dict[str, Any]:
-        """
-        Elimina una lista base.
-        
-        Args:
-            nombre (str): Nombre de la lista a eliminar
-            
-        Returns:
-            Dict[str, Any]: Resultado de la operación
-        """
-        try:
-            if nombre not in self.constructor.listas_base:
-                return {'exito': False, 'mensaje': 'La lista no existe'}
-            
-            del self.constructor.listas_base[nombre]
-            
-            # Guardar cambios
-            exito = self.constructor._guardar_json(
-                self.constructor.listas_base, 
-                self.constructor.archivo_listas_base
-            )
-            
-            if exito:
-                self.logger.info(f"Lista base '{nombre}' eliminada")
-                return {'exito': True, 'mensaje': f'Lista "{nombre}" eliminada exitosamente'}
-            else:
-                return {'exito': False, 'mensaje': 'Error guardando cambios'}
-                
-        except Exception as e:
-            error_msg = f"Error eliminando lista base: {e}"
             self.logger.error(error_msg)
             return {'exito': False, 'mensaje': error_msg}
     

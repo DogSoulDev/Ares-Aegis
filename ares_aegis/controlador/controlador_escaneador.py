@@ -18,8 +18,8 @@ from typing import Dict, Any, List, Optional, Callable
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from ..modelos.escaneador import EscaneadorMalware
-from ..modelos.siem import SIEM, TipoEvento
+from ..modelo.modelo_escaneador import EscaneadorMalware
+from ..modelo.modelo_siem import SIEM, TipoEvento
 from ..utils.ayuda_logging import configurar_logger_modulo
 from .controlador_base import ControladorBase
 from .gestor_configuracion import gestor_configuracion
@@ -47,6 +47,7 @@ class ControladorEscaneador(ControladorBase):
         self.ultimo_escaneo = None
         self.escaneos_programados = []
         self.pool_threads = None
+        self.lock = threading.Lock()  # Agregar lock para thread safety
         
         # Cache de resultados para optimización
         self._cache_escaneos = {}

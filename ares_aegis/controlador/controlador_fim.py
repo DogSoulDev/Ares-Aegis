@@ -16,8 +16,8 @@ from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
 from pathlib import Path
 
-from ..modelos.fim import FIMAvanzado
-from ..modelos.siem import SIEM, TipoEvento
+from ..modelo.modelo_fim import FIMAvanzado
+from ..modelo.modelo_siem import SIEM, TipoEvento
 from ..utils.ayuda_logging import configurar_logger_modulo
 
 

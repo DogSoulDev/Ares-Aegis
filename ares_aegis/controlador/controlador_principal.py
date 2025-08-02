@@ -20,14 +20,14 @@ from typing import Dict, Any, List, Optional
 from pathlib import Path
 
 # Importar modelos principales
-from ..modelos.siem import SIEM, TipoEvento
-from ..modelos.escaneador import EscaneadorMalware
-from ..modelos.fim import FIMAvanzado
-from ..modelos.monitor_red import MonitorRed
-from ..modelos.gestor_cuarentena import GestorCuarentenaAvanzado
-from ..modelos.monitor_procesos import MonitorProcesos
-from ..modelos.analizadores import AnalizadoresUnificados
-from ..modelos.constructor_wordlists import ConstructorWordlists
+from ..modelo.modelo_siem import SIEM, TipoEvento
+from ..modelo.modelo_escaneador import EscaneadorMalware
+from ..modelo.modelo_fim import FIMAvanzado
+from ..modelo.modelo_monitor_red import MonitorRed
+from ..modelo.modelo_gestor_cuarentena import GestorCuarentenaAvanzado
+from ..modelo.modelo_monitor_procesos import MonitorProcesos
+from ..modelo.modelo_analizadores import AnalizadoresUnificados
+from ..modelo.modelo_constructor_wordlists import ConstructorWordlists
 
 # Importar nueva arquitectura
 from .controlador_base import ControladorBase, ControladorBaseException

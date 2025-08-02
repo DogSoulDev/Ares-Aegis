@@ -17,7 +17,7 @@ from typing import List, Dict, Any, Optional, Union, Callable
 from datetime import datetime, timedelta
 from collections import defaultdict, deque
 
-from .siem import SIEM, TipoEvento, NivelCriticidad
+from .modelo_siem import SIEM, TipoEvento, NivelCriticidad
 from ..utils.validaciones import (
     validar_ruta_archivo, validar_ruta_directorio, 
     validar_permisos_lectura, es_ruta_segura
@@ -59,9 +59,9 @@ class ResultadoEscaneo:
     """Resultado de un escaneo individual."""
     
     def __init__(self, ruta: str, amenaza_detectada: bool = False, 
-                 tipo_amenaza: str = None, nivel_criticidad: int = 1,
+                 tipo_amenaza: Optional[str] = None, nivel_criticidad: int = 1,
                  hash_archivo: str = "", descripcion: str = "",
-                 metadatos: Dict[str, Any] = None):
+                 metadatos: Optional[Dict[str, Any]] = None):
         self.ruta = ruta
         self.amenaza_detectada = amenaza_detectada
         self.tipo_amenaza = tipo_amenaza or TipoAmenaza.UNKNOWN
@@ -88,6 +88,10 @@ class ResultadoEscaneo:
             'timestamp': self.timestamp.isoformat()
         }
     
+    def tiene_amenazas(self) -> bool:
+        """Verifica si se detectó alguna amenaza en el resultado."""
+        return self.amenaza_detectada
+    
     def obtener_tamaño(self) -> int:
         """Obtiene el tamaño del archivo."""
         try:
@@ -99,7 +103,7 @@ class ResultadoEscaneo:
 class EscaneadorMalware:
     """Sistema de detección de malware avanzado con múltiples capas de análisis."""
     
-    def __init__(self, configuracion: Dict[str, Any] = None):
+    def __init__(self, configuracion: Optional[Dict[str, Any]] = None):
         """Inicializa el escaneador con configuración personalizada."""
         self.configuracion = configuracion or self._configuracion_por_defecto()
         self.logger = configurar_logger_modulo(__name__)

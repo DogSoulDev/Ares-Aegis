@@ -23,7 +23,7 @@ from collections import defaultdict, deque
 from enum import Enum
 from stat import filemode
 
-from .siem import SIEM, TipoEvento
+from .modelo_siem import SIEM, TipoEvento
 from ..utils.validaciones import validar_ruta_directorio, validar_permisos_lectura
 from ..utils.ayuda_rutas import (
     listar_archivos_recursivo, obtener_rutas_sistema, crear_ruta_segura

@@ -7,13 +7,13 @@ Modelos MVC - Arquitectura Simplificada
 """
 
 # Modelos principales simplificados
-from .siem import SIEM, TipoEvento
-from .escaneador import EscaneadorMalware
-from .fim import FIMAvanzado
-from .monitor_red import MonitorRed
-from .gestor_cuarentena import GestorCuarentenaAvanzado
-from .monitor_procesos import MonitorProcesos
-from .analizadores import AnalizadoresUnificados
+from .modelo_siem import SIEM, TipoEvento
+from .modelo_escaneador import EscaneadorMalware
+from .modelo_fim import FIMAvanzado
+from .modelo_monitor_red import MonitorRed
+from .modelo_gestor_cuarentena import GestorCuarentenaAvanzado
+from .modelo_monitor_procesos import MonitorProcesos
+from .modelo_analizadores import AnalizadoresUnificados
 
 __all__ = [
     'SIEM',

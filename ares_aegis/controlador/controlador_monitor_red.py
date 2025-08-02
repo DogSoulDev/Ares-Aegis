@@ -16,8 +16,8 @@ from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Set
 from collections import defaultdict
 
-from ..modelos.monitor_red import MonitorRed
-from ..modelos.siem import SIEM, TipoEvento
+from ..modelo.modelo_monitor_red import MonitorRed
+from ..modelo.modelo_siem import SIEM, TipoEvento
 from ..utils.ayuda_logging import configurar_logger_modulo
 
 

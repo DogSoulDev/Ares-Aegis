@@ -219,6 +219,68 @@ class ConstructorWordlists:
     def agregar_al_historial(self, entrada):
         """Agrega una entrada al historial (método de compatibilidad)"""
         return True
+    
+    def eliminar_lista_base(self, nombre: str) -> bool:
+        """Elimina una lista base por nombre"""
+        try:
+            if nombre in self.listas_base:
+                del self.listas_base[nombre]
+                self._guardar_json(self.archivo_listas_base, self.listas_base)
+                self.logger.info(f'Lista base eliminada: {nombre}')
+                return True
+            return False
+        except Exception as e:
+            self.logger.error(f'Error eliminando lista base {nombre}: {e}')
+            return False
+    
+    def actualizar_lista_base(self, nombre: str, nuevas_palabras: List[str]) -> bool:
+        """Actualiza una lista base con nuevas palabras"""
+        try:
+            if nombre not in self.listas_base:
+                self.listas_base[nombre] = []
+            
+            self.listas_base[nombre] = list(set(self.listas_base[nombre] + nuevas_palabras))
+            self._guardar_json(self.archivo_listas_base, self.listas_base)
+            self.logger.info(f'Lista base actualizada: {nombre} ({len(nuevas_palabras)} palabras)')
+            return True
+        except Exception as e:
+            self.logger.error(f'Error actualizando lista base {nombre}: {e}')
+            return False
+    
+    def eliminar_receta(self, nombre: str) -> bool:
+        """Elimina una receta por nombre"""
+        # Este es un método de compatibilidad, siempre retorna True
+        self.logger.info(f'Solicitud de eliminación de receta: {nombre} (no implementado)')
+        return True
+    
+    def obtener_estadisticas(self) -> Dict[str, Any]:
+        """Obtiene estadísticas del constructor de wordlists"""
+        try:
+            total_listas = len(self.listas_base)
+            total_palabras = sum(len(palabras) for palabras in self.listas_base.values())
+            
+            return {
+                'total_listas_base': total_listas,
+                'total_palabras': total_palabras,
+                'listas_disponibles': list(self.listas_base.keys()),
+                'timestamp': datetime.now().isoformat()
+            }
+        except Exception as e:
+            self.logger.error(f'Error obteniendo estadísticas: {e}')
+            return {}
+    
+    def obtener_fuentes_populares(self) -> List[Dict[str, str]]:
+        """Obtiene una lista de fuentes populares para wordlists"""
+        fuentes = [
+            'rockyou.txt',
+            'common-passwords.txt',
+            'dictionary.txt',
+            'names.txt',
+            'spanish-words.txt',
+            'numbers.txt'
+        ]
+        
+        return [{'nombre': fuente, 'descripcion': f'Wordlist {fuente}'} for fuente in fuentes]
 
 
 # Exportar la clase

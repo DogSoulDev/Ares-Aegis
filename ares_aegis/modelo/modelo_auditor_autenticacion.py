@@ -13,11 +13,11 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 
-from .hallazgos_seguridad import (
+from .modelo_hallazgos_seguridad import (
     Hallazgo, HallazgoAutenticacion, TipoHallazgo, 
     PrioridadHallazgo, EstadoHallazgo
 )
-from .utilidades_sistema import utilidades_sistema
+from .modelo_utilidades_sistema import utilidades_sistema
 from ..utils.ayuda_logging import configurar_logger_modulo
 
 

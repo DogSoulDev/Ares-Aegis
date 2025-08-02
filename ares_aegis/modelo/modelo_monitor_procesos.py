@@ -462,7 +462,7 @@ class MonitorProcesos:
         self.hilo_monitor.start()
         
         if self.siem:
-            from .siem import TipoEvento
+            from .modelo_siem import TipoEvento
             self.siem.registrar_evento(
                 TipoEvento.SISTEMA_INICIADO,
                 "🔱 Monitor de procesos de Argos activado - Los mil ojos comienzan su vigilia",
@@ -483,7 +483,7 @@ class MonitorProcesos:
             self.hilo_monitor.join(timeout=10)
         
         if self.siem:
-            from .siem import TipoEvento
+            from .modelo_siem import TipoEvento
             self.siem.registrar_evento(
                 TipoEvento.SISTEMA_DETENIDO,
                 "🔱 Monitor de procesos de Argos desactivado - Los ojos se cierran",
@@ -668,7 +668,7 @@ class MonitorProcesos:
     def _notificar_alerta(self, alerta: AlertaProceso):
         """Notifica sobre una alerta de proceso."""
         if self.siem:
-            from .siem import TipoEvento
+            from .modelo_siem import TipoEvento
             nivel_evento = "CRITICO" if alerta.nivel_severidad == NivelRiesgoProceso.CRITICO else "ALTO"
             
             self.siem.registrar_evento(
@@ -1024,7 +1024,7 @@ class MonitorProcesos:
         mensaje = f"Proceso {proceso.nombre} (PID: {proceso.pid}) usando {proceso.uso_cpu}% CPU"
         
         if self.siem:
-            from .siem import TipoEvento
+            from .modelo_siem import TipoEvento
             self.siem.registrar_evento(
                 TipoEvento.PROCESO_SOSPECHOSO,
                 f"Ares detecta gula de poder computacional: {mensaje}",
@@ -1045,7 +1045,7 @@ class MonitorProcesos:
         mensaje = f"Proceso {proceso.nombre} (PID: {proceso.pid}) usando {memoria_mb:.1f}MB de memoria"
         
         if self.siem:
-            from .siem import TipoEvento
+            from .modelo_siem import TipoEvento
             self.siem.registrar_evento(
                 TipoEvento.PROCESO_SOSPECHOSO,
                 f"Las fuentes de Mnemósine se agotan: {mensaje}",
@@ -1065,7 +1065,7 @@ class MonitorProcesos:
         mensaje = f"Proceso {proceso.nombre} (PID: {proceso.pid}) con {len(proceso.conexiones_red)} conexiones"
         
         if self.siem:
-            from .siem import TipoEvento
+            from .modelo_siem import TipoEvento
             self.siem.registrar_evento(
                 TipoEvento.CONEXION_SOSPECHOSA,
                 f"Hermes susurra sobre múltiples caminos: {mensaje}",
@@ -1085,7 +1085,7 @@ class MonitorProcesos:
         mensaje = f"Proceso sospechoso: {proceso.nombre} (PID: {proceso.pid})"
         
         if self.siem:
-            from .siem import TipoEvento
+            from .modelo_siem import TipoEvento
             self.siem.registrar_evento(
                 TipoEvento.AMENAZA_DETECTADA,
                 f"Una sombra se agita en los reinos inferiores: {mensaje}",
@@ -1314,7 +1314,7 @@ class MonitorProcesos:
             mensaje = f"Proceso {proceso.nombre} (PID: {pid}) juzgado por Ares - {estado}"
             
             if self.siem:
-                from .siem import TipoEvento
+                from .modelo_siem import TipoEvento
                 self.siem.registrar_evento(
                     TipoEvento.PROCESO_SOSPECHOSO,
                     f"Juicio divino ejecutado: {mensaje}",

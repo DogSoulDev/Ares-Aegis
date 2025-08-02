@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Union
 from pathlib import Path
 
-from ..modelos.siem import SIEM, TipoEvento
+from ..modelo.modelo_siem import SIEM, TipoEvento
 from ..utils.ayuda_logging import configurar_logger_modulo
 from ..utils.ayuda_rutas import crear_ruta_segura
 
@@ -1301,5 +1301,43 @@ class ControladorReportes:
                 config,
                 "MEDIO"
             )
+    
+    def generar_reporte_html(self, resultado: Any, nombre_reporte: str) -> bool:
+        """
+        Genera un reporte en formato HTML.
+        
+        Args:
+            resultado: Datos del resultado para el reporte
+            nombre_reporte: Nombre del archivo del reporte
+            
+        Returns:
+            True si se generó correctamente, False en caso contrario
+        """
+        try:
+            # Convertir resultado a diccionario si es necesario
+            if hasattr(resultado, '__dict__'):
+                datos = vars(resultado)
+            else:
+                datos = {'resultado': str(resultado)}
+            
+            # Generar contenido HTML
+            contenido_html = self._generar_reporte_html('auditoria_avanzada', datos)
+            
+            # Crear ruta del archivo
+            ruta_reporte = crear_ruta_segura(
+                self.configuracion.get('directorio_reportes', 'reportes'),
+                f"{nombre_reporte}.html"
+            )
+            
+            # Escribir archivo
+            with open(ruta_reporte, 'w', encoding='utf-8') as archivo:
+                archivo.write(contenido_html)
+            
+            self.logger.info(f"Reporte HTML generado: {ruta_reporte}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error generando reporte HTML {nombre_reporte}: {e}")
+            return False
 
 

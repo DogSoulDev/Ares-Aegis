@@ -16,8 +16,8 @@ from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
 from pathlib import Path
 
-from ..modelos.gestor_cuarentena import GestorCuarentenaAvanzado
-from ..modelos.siem import SIEM, TipoEvento
+from ..modelo.modelo_gestor_cuarentena import GestorCuarentenaAvanzado
+from ..modelo.modelo_siem import SIEM, TipoEvento
 from ..utils.ayuda_logging import configurar_logger_modulo
 
 
@@ -954,5 +954,23 @@ class ControladorCuarentena:
                 encontradas.append(string.decode('utf-8', errors='ignore'))
         
         return encontradas[:10]  # Limitar a 10 resultados
+    
+    def poner_en_cuarentena(self, ruta_archivo: str, razon: str = "Archivo sospechoso") -> bool:
+        """
+        Wrapper para poner un archivo en cuarentena.
+        
+        Args:
+            ruta_archivo: Ruta del archivo a cuarentenar
+            razon: Razón de la cuarentena
+            
+        Returns:
+            True si la operación fue exitosa, False en caso contrario
+        """
+        try:
+            resultado = self.cuarentenar_archivo(ruta_archivo, razon)
+            return resultado.get('exitoso', False)
+        except Exception as e:
+            self.logger.error(f"Error poniendo archivo en cuarentena {ruta_archivo}: {e}")
+            return False
 
 

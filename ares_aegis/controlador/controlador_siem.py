@@ -18,7 +18,7 @@ from typing import Dict, Any, List, Optional, Set
 from collections import defaultdict
 from pathlib import Path
 
-from ..modelos.siem import SIEM, TipoEvento, EventoSIEM
+from ..modelo.modelo_siem import SIEM, TipoEvento, EventoSIEM
 from ..utils.ayuda_logging import configurar_logger_modulo
 from .controlador_base import ControladorBase
 from .gestor_configuracion import gestor_configuracion

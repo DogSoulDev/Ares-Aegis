@@ -18,13 +18,13 @@ from typing import List, Dict, Any, Optional
 from pathlib import Path
 
 # Importaciones locales del proyecto
-from ..modelos.hallazgos_seguridad import (
+from ..modelo.modelo_hallazgos_seguridad import (
     Hallazgo, HallazgoAutenticacion, TipoHallazgo, 
     PrioridadHallazgo, ResultadoEscaneo
 )
-from ..modelos.auditor_autenticacion import AuditorPAM
-from ..modelos.escaneador_vulnerabilidades_sistema import VigiaGrietasRealm
-from ..modelos.utilidades_sistema import UtilidadesSistema
+from ..modelo.modelo_auditor_autenticacion import AuditorPAM
+from ..modelo.modelo_escaneador_vulnerabilidades_sistema import VigiaGrietasRealm
+from ..modelo.modelo_utilidades_sistema import UtilidadesSistema
 from .controlador_cuarentena import ControladorCuarentena
 from .controlador_reportes import ControladorReportes
 
@@ -214,6 +214,10 @@ class ControladorAuditoriaAvanzada:
     def _enviar_a_cuarentena(self, hallazgo: Hallazgo) -> bool:
         """Envía un archivo a cuarentena si es posible."""
         try:
+            if not self.controlador_cuarentena:
+                self.logger.warning("Controlador de cuarentena no disponible")
+                return False
+                
             if hallazgo.ruta_afectada and self.utilidades.archivo_existe(hallazgo.ruta_afectada):
                 return self.controlador_cuarentena.poner_en_cuarentena(
                     hallazgo.ruta_afectada, 
@@ -232,7 +236,7 @@ class ControladorAuditoriaAvanzada:
             if (hallazgo.ruta_afectada in archivos_seguros and 
                 'chmod 644' in hallazgo.recomendacion):
                 
-                comando = f"chmod 644 {hallazgo.ruta_afectada}"
+                comando = ['chmod', '644', hallazgo.ruta_afectada]
                 resultado = self.utilidades.ejecutar_comando_sistema(comando)
                 
                 if resultado.get('exitcode') == 0:
@@ -253,7 +257,7 @@ class ControladorAuditoriaAvanzada:
             self.logger.error(f"Error enviando notificación: {e}")
     
     def _crear_resultado_integrado(self, todos_hallazgos: List[Hallazgo], 
-                                  hallazgos_pam: List[HallazgoAutenticacion],
+                                  hallazgos_pam: List[Hallazgo],
                                   fecha_inicio: datetime,
                                   acciones_ejecutadas: Dict[str, int]) -> ResultadoEscaneo:
         """Crea un resultado integrado de la auditoría."""
@@ -371,6 +375,10 @@ class ControladorAuditoriaAvanzada:
     def _generar_reporte_auditoria(self, resultado: ResultadoEscaneo):
         """Genera y guarda el reporte de la auditoría."""
         try:
+            if not self.controlador_reportes:
+                self.logger.warning("Controlador de reportes no disponible, saltando generación de reporte")
+                return
+                
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             nombre_reporte = f"auditoria_avanzada_{timestamp}.html"
             
@@ -414,7 +422,7 @@ class ControladorAuditoriaAvanzada:
             'auditoria_activa': self.auditoria_activa
         }
     
-    def auditar_solo_pam(self) -> List[HallazgoAutenticacion]:
+    def auditar_solo_pam(self) -> List[Hallazgo]:
         """Ejecuta únicamente auditoría PAM."""
         self.logger.info("🔐 Ejecutando auditoría PAM exclusiva...")
         return self.auditor_pam.auditar_configuracion_completa()

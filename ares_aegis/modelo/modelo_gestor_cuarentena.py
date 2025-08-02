@@ -26,7 +26,7 @@ from enum import Enum
 import tempfile
 import stat
 
-from .siem import SIEM, TipoEvento
+from .modelo_siem import SIEM, TipoEvento
 from ..utils.validaciones import validar_ruta_archivo, validar_permisos_lectura
 from ..utils.ayuda_rutas import crear_ruta_segura, obtener_rutas_sistema
 from ..utils.ayuda_logging import configurar_logger_modulo

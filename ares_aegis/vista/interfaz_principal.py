@@ -14,7 +14,7 @@ import os
 import webbrowser
 import time
 
-from ..controladores.controlador_principal import ControladorPrincipal
+from ..controlador.controlador_principal import ControladorPrincipal
 from ..utils.ayuda_logging import configurar_logger
 
 # Componentes UI Modularizados

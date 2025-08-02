@@ -135,6 +135,22 @@ class UtilidadesSistema:
             self.logger.error(f"Error obteniendo información de permisos para {ruta}: {e}")
             return None
     
+    def archivo_existe(self, ruta: str) -> bool:
+        """
+        Verifica si un archivo o directorio existe.
+        
+        Args:
+            ruta: Ruta del archivo o directorio a verificar
+            
+        Returns:
+            True si existe, False en caso contrario
+        """
+        try:
+            return Path(ruta).exists()
+        except Exception as e:
+            self.logger.debug(f"Error verificando existencia de {ruta}: {e}")
+            return False
+    
     def validar_permisos_archivo_critico(self, ruta: str, 
                                        permisos_esperados: str = "644",
                                        propietario_esperado: str = "root") -> Dict[str, Any]:
