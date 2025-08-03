@@ -14,27 +14,29 @@ import os
 import webbrowser
 import time
 
-from ..controlador.controlador_principal import ControladorPrincipal
-from ..utils.ayuda_logging import configurar_logger
+from ares_aegis.controlador.controlador_principal import ControladorPrincipal
+from ares_aegis.utils.utils_ayuda_logging import configurar_logger
 
 # Componentes UI Modularizados
-from .componentes_ui.emoticonos_mitologicos import EmoticonosMitologicos
-from .componentes_ui.colores_kali import ColoresKaliLinux
-from .componentes_ui.metricas_tiempo_real import MetricasTiempoReal
-from .componentes_ui.gestor_cheatsheets import GestorCheatsheets
-from .componentes_ui.ventana_cheatsheets import VentanaCheatsheets
-from .componentes_ui.sistema_ayuda import SistemaAyuda
+from ares_aegis.vista.componentes_ui.emoticonos_mitologicos import EmoticonosMitologicos
+from ares_aegis.vista.componentes_ui.colores_kali import ColoresKaliLinux
+from ares_aegis.vista.componentes_ui.metricas_tiempo_real import MetricasTiempoReal
+from ares_aegis.vista.componentes_ui.gestor_cheatsheets import GestorCheatsheets
+from ares_aegis.vista.componentes_ui.ventana_cheatsheets import VentanaCheatsheets
+from ares_aegis.vista.componentes_ui.sistema_ayuda import SistemaAyuda
 
 # Vistas Especializadas
-from .vistas.vista_dashboard import VistaDashboard
-from .vistas.vista_escaneador import VistaEscaneador
-from .vistas.vista_auditoria_pam import VistaAuditoriaPAM
-from .vistas.vista_monitor import VistaMonitor
-from .vistas.vista_siem import VistaSIEM
-from .vistas.vista_cuarentena import VistaCuarentena
-from .vistas.vista_reportes import VistaReportes
-from .vistas.vista_cheatsheets import VistaCheatsheets
-from .vistas.vista_constructor_wordlists import VistaConstructorWordlists
+from ares_aegis.vista.vista_dashboard import VistaDashboard
+from ares_aegis.vista.vista_escaneador import VistaEscaneador
+from ares_aegis.vista.vista_auditoria_pam import VistaAuditoriaPAM
+from ares_aegis.vista.vista_monitor import VistaMonitor
+from ares_aegis.vista.vista_monitor_procesos import VistaMonitorProcesos
+from ares_aegis.vista.vista_monitor_red import VistaMonitorRed
+from ares_aegis.vista.vista_siem import VistaSIEM
+from ares_aegis.vista.vista_cuarentena import VistaCuarentena
+from ares_aegis.vista.vista_reportes import VistaReportes
+from ares_aegis.vista.vista_cheatsheets import VistaCheatsheets
+from ares_aegis.vista.vista_constructor_wordlists import VistaConstructorWordlists
 
 
 class InterfazPrincipalAresAegis:
@@ -151,6 +153,7 @@ class InterfazPrincipalAresAegis:
         try:
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             icon_paths = [
+                os.path.join(base_dir, "recursos", "AresAegis.png"),
                 os.path.join(base_dir, "recursos", "aresIcon.png")
             ]
             
@@ -409,7 +412,8 @@ class InterfazPrincipalAresAegis:
             ('dashboard', '◢ INICIO', 'Centralita principal', self._mostrar_dashboard),
             ('escaneador', '⚡ ESCÁNER', 'Escáner de vulnerabilidades', self._mostrar_escaneador),
             ('auditoria_pam', '🔐 AUDITORÍA PAM', 'Auditoría de autenticación', self._mostrar_auditoria_pam),
-            ('monitor', '📡 MONITOR DEL SISTEMA', 'Monitor del sistema', self._mostrar_monitor),
+            ('monitor_procesos', '� MONITOR PROCESOS', 'Monitor de procesos del sistema', self._mostrar_monitor_procesos),
+            ('monitor_red', '🌐 MONITOR RED', 'Monitor de actividad de red', self._mostrar_monitor_red),
             ('siem', '🛡️ SIEM', 'Sistema de eventos de seguridad', self._mostrar_siem),
             ('cuarentena', '🔒 CUARENTENA', 'Gestión de cuarentena', self._mostrar_cuarentena)
         ]
@@ -686,6 +690,8 @@ class InterfazPrincipalAresAegis:
             'escaneador': VistaEscaneador(self.area_contenido, self.controlador, self.colores),
             'auditoria_pam': VistaAuditoriaPAM(self.area_contenido, self.controlador, self.colores),
             'monitor': VistaMonitor(self.area_contenido, self.controlador, self.colores),
+            'monitor_procesos': VistaMonitorProcesos(self.area_contenido, self.controlador, self.colores),
+            'monitor_red': VistaMonitorRed(self.area_contenido, self.controlador, self.colores),
             'siem': VistaSIEM(self.area_contenido, self.controlador, self.colores),
             'cuarentena': VistaCuarentena(self.area_contenido, self.controlador, self.colores),
             'constructor_wordlists': VistaConstructorWordlists(self.area_contenido, self.controlador, self.colores),
@@ -757,6 +763,8 @@ class InterfazPrincipalAresAegis:
             'escaneador': 'Escáner',
             'auditoria_pam': 'Auditoría PAM',
             'monitor': 'Monitor del Sistema',
+            'monitor_procesos': 'Monitor de Procesos',
+            'monitor_red': 'Monitor de Red',
             'siem': 'Sistema SIEM', 
             'cuarentena': 'Gestor de Cuarentena',
             'reportes': 'Reportes y Análisis',
@@ -788,6 +796,14 @@ class InterfazPrincipalAresAegis:
     def _mostrar_monitor(self):
         """Mostrar vigilancia del sistema"""
         self._mostrar_vista('monitor')
+
+    def _mostrar_monitor_procesos(self):
+        """Mostrar monitor especializado de procesos"""
+        self._mostrar_vista('monitor_procesos')
+
+    def _mostrar_monitor_red(self):
+        """Mostrar monitor especializado de red"""
+        self._mostrar_vista('monitor_red')
     
     def _mostrar_siem(self):
         """Mostrar sistema SIEM"""
@@ -872,7 +888,24 @@ class InterfazPrincipalAresAegis:
             # Finalizar controlador principal
             if hasattr(self, 'controlador') and self.controlador:
                 try:
-                    self.controlador.finalizar()
+                    # Verificar si finalizar es async o sync
+                    if hasattr(self.controlador, 'finalizar') and callable(self.controlador.finalizar):
+                        import asyncio
+                        if asyncio.iscoroutinefunction(self.controlador.finalizar):
+                            # Es async - crear nueva event loop si es necesario
+                            try:
+                                loop = asyncio.get_event_loop()
+                                if loop.is_running():
+                                    # Crear nueva tarea para el método async
+                                    asyncio.create_task(self.controlador.finalizar())
+                                else:
+                                    loop.run_until_complete(self.controlador.finalizar())
+                            except RuntimeError:
+                                # No hay loop activo, crear uno nuevo
+                                asyncio.run(self.controlador.finalizar())
+                        else:
+                            # Es sync
+                            self.controlador.finalizar()
                     self.logger.info("✅ Controlador principal finalizado")
                 except Exception as e:
                     self.logger.error(f"Error finalizando controlador: {e}")

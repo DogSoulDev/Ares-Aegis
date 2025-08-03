@@ -20,9 +20,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ..modelo.modelo_escaneador import EscaneadorMalware
 from ..modelo.modelo_siem import SIEM, TipoEvento
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 from .controlador_base import ControladorBase
-from .gestor_configuracion import gestor_configuracion
+from ..utils.utils_gestor_configuracion import gestor_configuracion
 
 
 class ControladorEscaneador(ControladorBase):

@@ -22,7 +22,7 @@ from tkinter import messagebox
 sys.path.insert(0, str(Path(__file__).parent))
 
 try:
-    from ares_aegis.utils.ayuda_logging import configurar_logging_completo
+    from ares_aegis.utils.utils_ayuda_logging import configurar_logging_completo
 except ImportError:
     def configurar_logging_completo():
         logging.basicConfig(level=logging.INFO)
@@ -261,15 +261,7 @@ def mostrar_banner_inicio():
     Muestra banner de inicio en la consola.
     """
     print("\033[96m" + "="*70)
-    print("🛡️  ARES AEGIS v4.0 - CYBERSECURITY SUITE 🛡️")
-    print("="*70)
-    if platform.system() == "Windows":
-        print("⚠️  ADVERTENCIA: Ejecutándose en Windows")
-        print("🎯 Optimizado para Kali Linux - Funcionalidad limitada")
-    else:
-        print("🎯 Optimizado para Kali Linux")
-    print("🔐 Suite de Seguridad Avanzada")
-    print("⚡ Iniciando con permisos de administrador...")
+    print("🛡️  ARES AEGIS - EL ESCUDO DEL DIOS DE LA GUERRA �️")
     print("="*70 + "\033[0m")
     print()
 

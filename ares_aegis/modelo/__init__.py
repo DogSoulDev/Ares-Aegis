@@ -9,7 +9,7 @@ Modelos MVC - Arquitectura Simplificada
 # Modelos principales simplificados
 from .modelo_siem import SIEM, TipoEvento
 from .modelo_escaneador import EscaneadorMalware
-from .modelo_fim import FIMAvanzado
+from .modelo_fim import FIM
 from .modelo_monitor_red import MonitorRed
 from .modelo_gestor_cuarentena import GestorCuarentenaAvanzado
 from .modelo_monitor_procesos import MonitorProcesos
@@ -19,7 +19,7 @@ __all__ = [
     'SIEM',
     'TipoEvento',
     'EscaneadorMalware',
-    'FIMAvanzado',
+    'FIM',
     'MonitorRed',
     'GestorCuarentenaAvanzado',
     'MonitorProcesos',

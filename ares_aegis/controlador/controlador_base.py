@@ -15,7 +15,7 @@ from datetime import datetime
 from typing import Dict, Any, List, Optional, Callable
 from contextlib import asynccontextmanager
 
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
 
 class ControladorBaseException(Exception):

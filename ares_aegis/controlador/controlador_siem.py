@@ -19,9 +19,9 @@ from collections import defaultdict
 from pathlib import Path
 
 from ..modelo.modelo_siem import SIEM, TipoEvento, EventoSIEM
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 from .controlador_base import ControladorBase
-from .gestor_configuracion import gestor_configuracion
+from ..utils.utils_gestor_configuracion import gestor_configuracion
 
 
 class ControladorSIEM(ControladorBase):
@@ -44,22 +44,27 @@ class ControladorSIEM(ControladorBase):
         self.alertas_criticas = []
         self.eventos_recientes = []
         self.patrones_detectados = defaultdict(int)
+        self.lock = threading.Lock()  # Agregar lock faltante
         
         # Configuración de correlación con valores por defecto
-        config = self.configuracion or type('obj', (object,), {
-            'ventana_tiempo': 300,
-            'umbral_eventos_similares': 5,
-            'tipos_eventos_criticos': ['AMENAZA_DETECTADA', 'MALWARE_DETECTADO']
-        })()
-        
-        self.configuracion_correlacion = {
-            'ventana_tiempo': config.ventana_tiempo,
-            'umbral_eventos_similares': config.umbral_eventos_similares,
-            'tipos_eventos_criticos': getattr(config, 'tipos_eventos_criticos', [
-                'AMENAZA_DETECTADA',
-                'MALWARE_DETECTADO'
-            ])
-        }
+        if self.configuracion:
+            self.configuracion_correlacion = {
+                'ventana_tiempo': self.configuracion.ventana_tiempo,
+                'umbral_eventos_similares': self.configuracion.umbral_eventos_similares,
+                'tipos_eventos_criticos': self.configuracion.tipos_eventos_criticos or [
+                    'AMENAZA_DETECTADA',
+                    'MALWARE_DETECTADO'
+                ]
+            }
+        else:
+            self.configuracion_correlacion = {
+                'ventana_tiempo': 300,
+                'umbral_eventos_similares': 5,
+                'tipos_eventos_criticos': [
+                    'AMENAZA_DETECTADA',
+                    'MALWARE_DETECTADO'
+                ]
+            }
         
         self.logger.info("Controlador SIEM inicializado con nueva arquitectura")
     
@@ -113,7 +118,7 @@ class ControladorSIEM(ControladorBase):
         
         try:
             # Obtener eventos recientes del SIEM
-            eventos = self.siem.obtener_eventos_recientes(limit=100)
+            eventos = self.siem.obtener_eventos_recientes(limite=100)
             self.eventos_recientes = eventos[-50:]  # Mantener solo los últimos 50
             
             # Procesar para correlación
@@ -175,7 +180,7 @@ class ControladorSIEM(ControladorBase):
         # Registrar en SIEM
         if self.siem:
             self.siem.registrar_evento(
-                TipoEvento.ANOMALIA_DETECTADA,
+                TipoEvento.CORRELACION_AMENAZAS,
                 f"Patrón sospechoso: {tipo}",
                 {"tipo": tipo, "ocurrencias": count}
             )

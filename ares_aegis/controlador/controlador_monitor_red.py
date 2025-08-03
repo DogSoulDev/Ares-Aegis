@@ -12,13 +12,14 @@ Versión: 4.0.0
 
 import time
 import threading
+import subprocess
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Set
 from collections import defaultdict
 
 from ..modelo.modelo_monitor_red import MonitorRed
 from ..modelo.modelo_siem import SIEM, TipoEvento
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
 
 class ControladorMonitorRed:
@@ -522,5 +523,86 @@ class ControladorMonitorRed:
             self.alertas_red = alertas_nuevas
         
         self.logger.info(f"Limpieza completada: {conexiones_removidas} conexiones, {alertas_removidas} alertas removidas")
+    
+    def obtener_conexiones_red_activas(self) -> List[Dict[str, Any]]:
+        """Obtener conexiones de red activas usando herramientas nativas de Kali Linux"""
+        try:
+            conexiones = []
+            
+            # Usar netstat para obtener conexiones activas
+            resultado = subprocess.run(
+                ['netstat', '-tuln'],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            if resultado.returncode != 0:
+                self.logger.warning("No se pudo ejecutar netstat")
+                return []
+            
+            # Procesar salida de netstat
+            lineas = resultado.stdout.strip().split('\n')[2:]  # Omitir headers
+            
+            for linea in lineas:
+                if not linea.strip():
+                    continue
+                    
+                partes = linea.split()
+                if len(partes) >= 6:
+                    protocolo = partes[0]
+                    direccion_local = partes[3]
+                    direccion_remota = partes[4]
+                    estado = partes[5] if len(partes) > 5 else "UNKNOWN"
+                    
+                    # Separar IP y puerto
+                    try:
+                        if ':' in direccion_local:
+                            ip_local, puerto_local = direccion_local.rsplit(':', 1)
+                        else:
+                            ip_local, puerto_local = direccion_local, "0"
+                            
+                        if ':' in direccion_remota:
+                            ip_remota, puerto_remoto = direccion_remota.rsplit(':', 1)
+                        else:
+                            ip_remota, puerto_remoto = direccion_remota, "0"
+                        
+                        conexion = {
+                            "protocolo": protocolo.upper(),
+                            "ip_local": ip_local,
+                            "puerto_local": int(puerto_local) if puerto_local.isdigit() else 0,
+                            "ip_remota": ip_remota,
+                            "puerto_remoto": int(puerto_remoto) if puerto_remoto.isdigit() else 0,
+                            "estado": estado,
+                            "timestamp": datetime.now().isoformat()
+                        }
+                        conexiones.append(conexion)
+                        
+                    except (ValueError, IndexError) as e:
+                        self.logger.debug(f"Error procesando línea de netstat: {linea} - {e}")
+                        continue
+            
+            return conexiones
+            
+        except subprocess.TimeoutExpired:
+            self.logger.error("Timeout ejecutando netstat")
+            return []
+        except Exception as e:
+            self.logger.error(f"Error obteniendo conexiones de red: {e}")
+            return []
+    
+    def obtener_conexiones_establecidas(self) -> List[Dict[str, Any]]:
+        """Obtener solo las conexiones de red establecidas"""
+        try:
+            todas_conexiones = self.obtener_conexiones_red_activas()
+            conexiones_establecidas = [
+                c for c in todas_conexiones 
+                if c.get('estado', '').upper() == 'ESTABLISHED'
+            ]
+            return conexiones_establecidas
+            
+        except Exception as e:
+            self.logger.error(f"Error obteniendo conexiones establecidas: {e}")
+            return []
 
 

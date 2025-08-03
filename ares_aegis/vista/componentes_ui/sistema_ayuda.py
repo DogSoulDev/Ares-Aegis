@@ -11,7 +11,7 @@ from tkinter import messagebox
 import json
 import os
 from typing import Dict, Any
-from ...utils.ayuda_logging import configurar_logger_modulo
+from ...utils.utils_ayuda_logging import configurar_logger_modulo
 
 
 class SistemaAyuda:

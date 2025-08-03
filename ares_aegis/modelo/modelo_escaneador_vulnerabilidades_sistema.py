@@ -19,7 +19,7 @@ from .modelo_hallazgos_seguridad import (
 )
 from .modelo_utilidades_sistema import utilidades_sistema
 from .modelo_auditor_autenticacion import AuditorPAM
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
 
 class VigiaGrietasRealm:

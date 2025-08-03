@@ -7,7 +7,7 @@ Controladores MVC - Arquitectura Optimizada v4.1
 
 # Infraestructura base
 from .controlador_base import ControladorBase, ControladorBaseException, ControladorNoInicializadoException
-from .gestor_configuracion import gestor_configuracion, ConfiguracionGlobal
+from ..utils.utils_gestor_configuracion import gestor_configuracion, ConfiguracionGlobal
 
 # Controlador principal
 from .controlador_principal import ControladorPrincipal
@@ -25,7 +25,6 @@ __all__ = [
     'ControladorBase',
     'ControladorBaseException', 
     'ControladorNoInicializadoException',
-    'gestor_configuracion',
     'ConfiguracionGlobal',
     
     # Controladores

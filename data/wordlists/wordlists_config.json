@@ -1,0 +1,242 @@
+{
+    "wordlists_metadata": {
+        "version": "4.0.0",
+        "fecha_actualizacion": "2025-08-03",
+        "descripcion": "Metadatos y configuración de wordlists para Ares Aegis",
+        "total_listas": 11,
+        "categorias": ["passwords", "subdominios", "directorios", "usuarios", "api", "diccionarios"]
+    },
+    "wordlists_disponibles": {
+        "passwords": {
+            "rockyou_top10k.txt": {
+                "descripcion": "Top 10,000 contraseñas más comunes de RockYou",
+                "tamaño_aproximado": 10000,
+                "nivel_efectividad": "alto",
+                "uso_recomendado": "Ataques de diccionario básicos, auditorías rápidas",
+                "herramientas_compatibles": ["hydra", "john", "hashcat", "medusa"],
+                "comandos_ejemplo": [
+                    "hydra -L users.txt -P rockyou_top10k.txt ssh://target.com",
+                    "john --wordlist=rockyou_top10k.txt hashes.txt"
+                ]
+            },
+            "passwords_worst_500.txt": {
+                "descripcion": "500 peores contraseñas más utilizadas",
+                "tamaño_aproximado": 500,
+                "nivel_efectividad": "medio",
+                "uso_recomendado": "Auditorías rápidas, primeras pruebas",
+                "herramientas_compatibles": ["hydra", "john", "hashcat"]
+            },
+            "combinaciones_basicas.txt": {
+                "descripcion": "Combinaciones básicas y patrones comunes",
+                "tamaño_aproximado": 2000,
+                "nivel_efectividad": "medio",
+                "uso_recomendado": "Contraseñas corporativas, patrones locales"
+            }
+        },
+        "subdominios": {
+            "seclists_subdomains.txt": {
+                "descripcion": "Lista completa de subdominios comunes",
+                "tamaño_aproximado": 110000,
+                "nivel_efectividad": "alto",
+                "uso_recomendado": "Enumeración de subdominios, reconocimiento",
+                "herramientas_compatibles": ["gobuster", "ffuf", "amass", "subfinder"],
+                "comandos_ejemplo": [
+                    "gobuster dns -d target.com -w seclists_subdomains.txt",
+                    "ffuf -u https://FUZZ.target.com -w seclists_subdomains.txt"
+                ]
+            }
+        },
+        "directorios": {
+            "seclists_directories.txt": {
+                "descripcion": "Directorios y rutas web comunes",
+                "tamaño_aproximado": 87000,
+                "nivel_efectividad": "alto",
+                "uso_recomendado": "Fuzzing web, descubrimiento de contenido",
+                "herramientas_compatibles": ["gobuster", "ffuf", "wfuzz", "dirb"],
+                "comandos_ejemplo": [
+                    "gobuster dir -u http://target.com -w seclists_directories.txt",
+                    "ffuf -u http://target.com/FUZZ -w seclists_directories.txt"
+                ]
+            },
+            "web_extensions.txt": {
+                "descripcion": "Extensiones de archivo web comunes",
+                "tamaño_aproximado": 200,
+                "nivel_efectividad": "medio",
+                "uso_recomendado": "Descubrimiento de archivos, fuzzing de extensiones"
+            }
+        },
+        "usuarios": {
+            "seclists_usernames.txt": {
+                "descripcion": "Nombres de usuario comunes para sistemas",
+                "tamaño_aproximado": 17000,
+                "nivel_efectividad": "alto",
+                "uso_recomendado": "Enumeración de usuarios, ataques de fuerza bruta",
+                "herramientas_compatibles": ["hydra", "enum4linux", "rpcclient"]
+            }
+        },
+        "api": {
+            "api_endpoints.txt": {
+                "descripcion": "Endpoints de API y rutas comunes",
+                "tamaño_aproximado": 5000,
+                "nivel_efectividad": "medio-alto",
+                "uso_recomendado": "Descubrimiento de APIs, fuzzing de endpoints",
+                "herramientas_compatibles": ["ffuf", "wfuzz", "gobuster"]
+            }
+        },
+        "diccionarios": {
+            "palabras_españolas.txt": {
+                "descripcion": "Diccionario en español para ataques localizados",
+                "tamaño_aproximado": 15000,
+                "nivel_efectividad": "medio",
+                "uso_recomendado": "Ataques en español, contraseñas corporativas locales"
+            },
+            "numeros_comunes.txt": {
+                "descripcion": "Números, fechas y patrones numéricos",
+                "tamaño_aproximado": 1000,
+                "nivel_efectividad": "bajo-medio",
+                "uso_recomendado": "Complemento para generación de contraseñas"
+            },
+            "simbolos_especiales.txt": {
+                "descripcion": "Símbolos especiales y caracteres",
+                "tamaño_aproximado": 100,
+                "nivel_efectividad": "bajo",
+                "uso_recomendado": "Complemento para mutaciones de contraseñas"
+            }
+        }
+    },
+    "configuraciones_predefinidas": {
+        "fuzzing_web_basico": {
+            "descripcion": "Configuración básica para fuzzing web",
+            "wordlists": ["seclists_directories.txt", "web_extensions.txt"],
+            "herramientas_recomendadas": ["gobuster", "ffuf"],
+            "tiempo_estimado": "10-30 minutos"
+        },
+        "enumeracion_subdominios": {
+            "descripcion": "Enumeración completa de subdominios",
+            "wordlists": ["seclists_subdomains.txt"],
+            "herramientas_recomendadas": ["gobuster", "amass", "subfinder"],
+            "tiempo_estimado": "5-15 minutos"
+        },
+        "ataque_contraseñas_rapido": {
+            "descripcion": "Ataque rápido con contraseñas comunes",
+            "wordlists": ["passwords_worst_500.txt", "rockyou_top10k.txt"],
+            "herramientas_recomendadas": ["hydra", "john"],
+            "tiempo_estimado": "< 5 minutos"
+        },
+        "reconocimiento_completo": {
+            "descripcion": "Reconocimiento completo de objetivo",
+            "wordlists": ["seclists_subdomains.txt", "seclists_directories.txt", "seclists_usernames.txt"],
+            "herramientas_recomendadas": ["gobuster", "ffuf", "hydra"],
+            "tiempo_estimado": "30-60 minutos"
+        },
+        "fuzzing_api": {
+            "descripcion": "Descubrimiento y fuzzing de APIs",
+            "wordlists": ["api_endpoints.txt", "seclists_directories.txt"],
+            "herramientas_recomendadas": ["ffuf", "wfuzz"],
+            "tiempo_estimado": "15-45 minutos"
+        }
+    },
+    "herramientas_kali": {
+        "gobuster": {
+            "descripcion": "Herramienta de fuzzing rápida escrita en Go",
+            "instalacion": "apt install gobuster",
+            "modos": ["dir", "dns", "vhost"],
+            "wordlists_compatibles": ["seclists_directories.txt", "seclists_subdomains.txt"],
+            "ejemplos_uso": [
+                "gobuster dir -u http://target.com -w seclists_directories.txt -x php,html,txt",
+                "gobuster dns -d target.com -w seclists_subdomains.txt",
+                "gobuster vhost -u http://target.com -w seclists_subdomains.txt"
+            ]
+        },
+        "ffuf": {
+            "descripcion": "Fast web fuzzer escrito en Go",
+            "instalacion": "apt install ffuf",
+            "wordlists_compatibles": ["seclists_directories.txt", "api_endpoints.txt", "web_extensions.txt"],
+            "ejemplos_uso": [
+                "ffuf -u http://target.com/FUZZ -w seclists_directories.txt",
+                "ffuf -u http://target.com/FUZZ.FUZ2Z -w seclists_directories.txt:FUZZ -w web_extensions.txt:FUZ2Z",
+                "ffuf -u https://FUZZ.target.com -w seclists_subdomains.txt"
+            ]
+        },
+        "hydra": {
+            "descripcion": "Herramienta de fuerza bruta para múltiples protocolos",
+            "instalacion": "apt install hydra",
+            "protocolos": ["ssh", "ftp", "http", "https", "smb", "pop3", "imap"],
+            "wordlists_compatibles": ["seclists_usernames.txt", "rockyou_top10k.txt", "passwords_worst_500.txt"],
+            "ejemplos_uso": [
+                "hydra -L seclists_usernames.txt -P rockyou_top10k.txt ssh://target.com",
+                "hydra -l admin -P passwords_worst_500.txt http-post-form '/login:username=^USER^&password=^PASS^:Invalid'",
+                "hydra -L seclists_usernames.txt -P rockyou_top10k.txt ftp://target.com"
+            ]
+        },
+        "wfuzz": {
+            "descripcion": "Web application fuzzer flexible",
+            "instalacion": "apt install wfuzz",
+            "wordlists_compatibles": ["seclists_directories.txt", "api_endpoints.txt"],
+            "ejemplos_uso": [
+                "wfuzz -c -z file,seclists_directories.txt http://target.com/FUZZ",
+                "wfuzz -c -z file,api_endpoints.txt -z file,web_extensions.txt http://target.com/FUZZ.FUZ2Z"
+            ]
+        },
+        "john": {
+            "descripcion": "John the Ripper - Crackeador de contraseñas",
+            "instalacion": "apt install john",
+            "wordlists_compatibles": ["rockyou_top10k.txt", "passwords_worst_500.txt", "combinaciones_basicas.txt"],
+            "ejemplos_uso": [
+                "john --wordlist=rockyou_top10k.txt hashes.txt",
+                "john --wordlist=passwords_worst_500.txt --rules hashes.txt"
+            ]
+        },
+        "hashcat": {
+            "descripcion": "Avanzado crackeador de contraseñas",
+            "instalacion": "apt install hashcat",
+            "wordlists_compatibles": ["rockyou_top10k.txt", "passwords_worst_500.txt"],
+            "ejemplos_uso": [
+                "hashcat -m 0 -a 0 hashes.txt rockyou_top10k.txt",
+                "hashcat -m 1000 -a 0 hashes.txt passwords_worst_500.txt"
+            ]
+        }
+    },
+    "consejos_uso": {
+        "optimizacion": [
+            "Usa wordlists específicas según el objetivo (corporativo vs personal)",
+            "Combina múltiples wordlists pequeñas en lugar de una grande",
+            "Filtra resultados por códigos de estado HTTP relevantes",
+            "Usa threads/concurrencia apropiada para no saturar el objetivo"
+        ],
+        "buenas_practicas": [
+            "Siempre obtén autorización antes de usar estas herramientas",
+            "Documenta todos los hallazgos durante el proceso",
+            "Usa rate limiting para evitar detectores de intrusión",
+            "Combina fuzzing con análisis manual de resultados"
+        ],
+        "personalizacion": [
+            "Crea wordlists personalizadas basadas en información del objetivo",
+            "Usa cewl para generar wordlists desde sitios web del objetivo",
+            "Combina nombres, fechas y patrones específicos de la organización",
+            "Mantén wordlists actualizadas con nuevos patrones y vulnerabilidades"
+        ]
+    },
+    "estadisticas_efectividad": {
+        "rockyou_top10k.txt": {
+            "tasa_exito": "85%",
+            "casos_uso": "Auditorías corporativas, CTFs, pentesting básico",
+            "tiempo_promedio": "< 5 minutos"
+        },
+        "seclists_directories.txt": {
+            "tasa_exito": "70%", 
+            "casos_uso": "Pentesting web, bug bounty, auditorías de aplicaciones",
+            "tiempo_promedio": "10-30 minutos"
+        },
+        "seclists_subdomains.txt": {
+            "tasa_exito": "60%",
+            "casos_uso": "Reconocimiento, mapeo de infraestructura",
+            "tiempo_promedio": "5-15 minutos"
+        },
+        "api_endpoints.txt": {
+            "tasa_exito": "45%",
+            "casos_uso": "Descubrimiento de APIs, testing de microservicios",
+            "tiempo_promedio": "15-45 minutos"
+        }
+    }
+}

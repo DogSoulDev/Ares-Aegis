@@ -25,7 +25,7 @@ except ImportError:
     grp = None
     UNIX_AVAILABLE = False
 
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
 
 class UtilidadesSistema:

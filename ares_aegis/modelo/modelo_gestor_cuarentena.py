@@ -1,12 +1,3 @@
-#!/usr/bin/env python3
-"""
-Creado por DogSoulDev (https://github.com/DogSoulDev)
-Todos los derechos reservados. Este código es propietario y confidencial.
-
-Gestor de Cuarentena Avanzado - Ares Aegis
-Sistema integral de cuarentena con análisis forense y restauración segura
-"""
-
 import os
 import json
 import shutil
@@ -16,615 +7,113 @@ import threading
 import zipfile
 import tarfile
 import subprocess
+import tempfile
 import mimetypes
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Set, Union, Tuple
-from dataclasses import dataclass, field
 from collections import defaultdict, deque
-from enum import Enum
-import tempfile
-import stat
+from dataclasses import dataclass, field
 
 from .modelo_siem import SIEM, TipoEvento
-from ..utils.validaciones import validar_ruta_archivo, validar_permisos_lectura
-from ..utils.ayuda_rutas import crear_ruta_segura, obtener_rutas_sistema
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_validaciones import validar_ruta_archivo, validar_permisos_lectura
+from ..utils.utils_ayuda_rutas import crear_ruta_segura, obtener_rutas_sistema
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
-
-class EstadoCuarentena(Enum):
-    """Estados de los archivos en cuarentena."""
-    PENDIENTE = "pendiente"
-    EN_ANALISIS = "en_analisis"
-    ANALIZADO = "analizado"
-    SEGURO = "seguro"
-    MALICIOSO = "malicioso"
-    SOSPECHOSO = "sospechoso"
-    RESTAURADO = "restaurado"
-    ELIMINADO = "eliminado"
-    ERROR = "error"
-
-
-class TipoAmenazaCuarentena(Enum):
-    """Tipos de amenazas detectadas en cuarentena."""
-    VIRUS = "virus"
-    TROYANO = "troyano"
-    BACKDOOR = "backdoor"
-    ROOTKIT = "rootkit"
-    ADWARE = "adware"
-    SPYWARE = "spyware"
-    RANSOMWARE = "ransomware"
-    BOTNET = "botnet"
-    EXPLOIT = "exploit"
-    PHISHING = "phishing"
-    SCRIPT_MALICIOSO = "script_malicioso"
-    ARCHIVO_SOSPECHOSO = "archivo_sospechoso"
-    CONFIGURACION_COMPROMETIDA = "configuracion_comprometida"
-    FIRMA_INVALIDA = "firma_invalida"
-    COMPORTAMIENTO_ANOMALO = "comportamiento_anomalo"
-    DESCONOCIDO = "desconocido"
-
-
-class NivelRiesgoCuarentena(Enum):
-    """Niveles de riesgo para archivos en cuarentena."""
-    CRITICO = "CRITICO"
-    ALTO = "ALTO"
-    MEDIO = "MEDIO"
-    BAJO = "BAJO"
-    MINIMO = "MINIMO"
-
-
-class AccionCuarentena(Enum):
-    """Acciones realizadas sobre archivos en cuarentena."""
-    CUARENTENADO = "cuarentenado"
-    ANALIZADO = "analizado"
-    RESTAURADO = "restaurado"
-    ELIMINADO = "eliminado"
-    VALIDADO = "validado"
-    MARCADO_SEGURO = "marcado_seguro"
-    MARCADO_MALICIOSO = "marcado_malicioso"
-    COPIA_SEGURIDAD = "copia_seguridad"
-    ENVIADO_ANALISIS = "enviado_analisis"
-    DESCOMPRIMIDO = "descomprimido"
-
-
-@dataclass
-class MetadatosCuarentena:
-    """Metadatos completos de un archivo en cuarentena."""
-    archivo_id: str
-    ruta_original: str
-    ruta_cuarentena: str
-    nombre_original: str
-    extension: str
-    tamaño_bytes: int
-    hash_md5: str
-    hash_sha1: str
-    hash_sha256: str
-    hash_sha512: str
-    tipo_mime: str
-    encoding: Optional[str]
-    timestamp_cuarentena: datetime
-    timestamp_ultimo_analisis: Optional[datetime]
-    estado: EstadoCuarentena
-    tipo_amenaza: Optional[TipoAmenazaCuarentena]
-    nivel_riesgo: NivelRiesgoCuarentena
-    origen_deteccion: str  # Módulo que detectó la amenaza
-    razon_cuarentena: str
-    permisos_originales: str
-    propietario_original: str
-    grupo_original: str
-    resultado_analisis: Dict[str, Any] = field(default_factory=dict)
-    acciones_realizadas: List[str] = field(default_factory=list)
-    intentos_restauracion: int = 0
-    comentarios: List[str] = field(default_factory=list)
-    archivos_relacionados: List[str] = field(default_factory=list)
-    es_falso_positivo: bool = False
-    requiere_atencion_manual: bool = False
-    
-    def __post_init__(self):
-        """Post-procesamiento de metadatos."""
-        if not self.archivo_id:
-            datos = f"{self.ruta_original}_{self.timestamp_cuarentena.timestamp()}"
-            self.archivo_id = hashlib.sha256(datos.encode()).hexdigest()[:16]
-        
-        if isinstance(self.estado, str):
-            self.estado = EstadoCuarentena(self.estado)
-        
-        if isinstance(self.nivel_riesgo, str):
-            self.nivel_riesgo = NivelRiesgoCuarentena(self.nivel_riesgo)
-        
-        if isinstance(self.tipo_amenaza, str) and self.tipo_amenaza:
-            self.tipo_amenaza = TipoAmenazaCuarentena(self.tipo_amenaza)
-    
-    @property
-    def dias_en_cuarentena(self) -> int:
-        """Calcula los días que lleva el archivo en cuarentena."""
-        return (datetime.now() - self.timestamp_cuarentena).days
-    
-    @property
-    def riesgo_numerico(self) -> int:
-        """Convierte el nivel de riesgo a valor numérico."""
-        return {
-            NivelRiesgoCuarentena.CRITICO: 5,
-            NivelRiesgoCuarentena.ALTO: 4,
-            NivelRiesgoCuarentena.MEDIO: 3,
-            NivelRiesgoCuarentena.BAJO: 2,
-            NivelRiesgoCuarentena.MINIMO: 1
-        }.get(self.nivel_riesgo, 0)
-    
-    def agregar_accion(self, accion: AccionCuarentena, detalles: str = ""):
-        """Agrega una acción realizada al historial."""
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        entrada = f"[{timestamp}] {accion.value}"
-        if detalles:
-            entrada += f": {detalles}"
-        self.acciones_realizadas.append(entrada)
-    
-    def agregar_comentario(self, comentario: str, usuario: str = "sistema"):
-        """Agrega un comentario al archivo en cuarentena."""
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        entrada = f"[{timestamp}] {usuario}: {comentario}"
-        self.comentarios.append(entrada)
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """Convierte metadatos a diccionario."""
-        return {
-            'archivo_id': self.archivo_id,
-            'ruta_original': self.ruta_original,
-            'ruta_cuarentena': self.ruta_cuarentena,
-            'nombre_original': self.nombre_original,
-            'extension': self.extension,
-            'tamaño_bytes': self.tamaño_bytes,
-            'hash_md5': self.hash_md5,
-            'hash_sha1': self.hash_sha1,
-            'hash_sha256': self.hash_sha256,
-            'hash_sha512': self.hash_sha512,
-            'tipo_mime': self.tipo_mime,
-            'encoding': self.encoding,
-            'timestamp_cuarentena': self.timestamp_cuarentena.isoformat(),
-            'timestamp_ultimo_analisis': self.timestamp_ultimo_analisis.isoformat() if self.timestamp_ultimo_analisis else None,
-            'estado': self.estado.value,
-            'tipo_amenaza': self.tipo_amenaza.value if self.tipo_amenaza else None,
-            'nivel_riesgo': self.nivel_riesgo.value,
-            'origen_deteccion': self.origen_deteccion,
-            'razon_cuarentena': self.razon_cuarentena,
-            'permisos_originales': self.permisos_originales,
-            'propietario_original': self.propietario_original,
-            'grupo_original': self.grupo_original,
-            'resultado_analisis': self.resultado_analisis,
-            'acciones_realizadas': self.acciones_realizadas,
-            'intentos_restauracion': self.intentos_restauracion,
-            'comentarios': self.comentarios,
-            'archivos_relacionados': self.archivos_relacionados,
-            'es_falso_positivo': self.es_falso_positivo,
-            'requiere_atencion_manual': self.requiere_atencion_manual,
-            'dias_en_cuarentena': self.dias_en_cuarentena,
-            'riesgo_numerico': self.riesgo_numerico
-        }
+# Importar utilidades de cuarentena
+from ..utils.utils_cuarentena import (
+    EstadoCuarentena, TipoAmenazaCuarentena, NivelRiesgoCuarentena, AccionCuarentena,
+    MetadatosCuarentena, UtilsCuarentena, AnalizadorForenseUtils, 
+    GestorBackupCuarentena, ValidadorCuarentena
+)
 
 
 class AnalizadorForenseCuarentena:
-    """Analizador forense para archivos en cuarentena."""
+    """Analizador forense simplificado que usa utilidades"""
     
     def __init__(self):
         """Inicializa el analizador forense."""
         self.logger = configurar_logger_modulo("analizador_forense_cuarentena")
-        
-        # Herramientas de análisis disponibles
-        self.herramientas_disponibles = self._verificar_herramientas()
-        
-        # Patrones de análisis
-        self.patrones_malware = self._cargar_patrones_analisis()
-        self.firmas_conocidas = self._cargar_firmas_conocidas()
-        
+        self.herramientas_disponibles = AnalizadorForenseUtils.verificar_herramientas_disponibles()
+        self.patrones_malware = AnalizadorForenseUtils.cargar_patrones_malware()
+        self.firmas_conocidas = {}  # Para almacenar firmas conocidas de malware
         self.logger.info("Analizador forense de cuarentena inicializado")
     
-    def _verificar_herramientas(self) -> Dict[str, bool]:
-        """Verifica qué herramientas de análisis están disponibles."""
-        herramientas = {
-            'file': self._comando_disponible('file'),
-            'strings': self._comando_disponible('strings'),
-            'hexdump': self._comando_disponible('hexdump'),
-            'xxd': self._comando_disponible('xxd'),
-            'binwalk': self._comando_disponible('binwalk'),
-            'foremost': self._comando_disponible('foremost'),
-            'volatility': self._comando_disponible('volatility'),
-            'yara': self._comando_disponible('yara'),
-            'clamav': self._comando_disponible('clamscan'),
-            'exiftool': self._comando_disponible('exiftool'),
-            'strace': self._comando_disponible('strace'),
-            'ltrace': self._comando_disponible('ltrace')
-        }
-        
-        disponibles = sum(herramientas.values())
-        self.logger.info(f"Herramientas de análisis disponibles: {disponibles}/{len(herramientas)}")
-        
-        return herramientas
-    
-    def _comando_disponible(self, comando: str) -> bool:
-        """Verifica si un comando está disponible en el sistema."""
-        try:
-            subprocess.run(['which', comando], check=True, capture_output=True)
-            return True
-        except subprocess.CalledProcessError:
-            return False
-    
-    def _cargar_patrones_analisis(self) -> Dict[str, Union[List[str], List[bytes]]]:
-        """Carga patrones para análisis de malware."""
-        return {
-            'strings_sospechosos': [
-                'eval(', 'exec(', 'system(', 'shell_exec(', 'passthru(',
-                'base64_decode', 'gzinflate', 'str_rot13', 'chr(',
-                '/bin/sh', 'bash -i', 'nc -e', 'python -c',
-                'downloadstring', 'invoke-expression', 'bypass', 'hidden',
-                'mimikatz', 'meterpreter', 'metasploit', 'payload',
-                'shellcode', 'backdoor', 'keylogger', 'trojan'
-            ],
-            'extensiones_ejecutables': [
-                '.exe', '.com', '.scr', '.pif', '.bat', '.cmd',
-                '.vbs', '.js', '.jar', '.ps1', '.sh', '.py'
-            ],
-            'headers_maliciosos': [
-                b'MZ',  # PE ejecutable
-                b'\x7fELF',  # ELF ejecutable
-                b'PK',  # ZIP/JAR
-                b'\x1f\x8b',  # GZIP
-                b'Rar!',  # RAR
-                b'\x89PNG',  # PNG con posible steganografía
-                b'\xff\xd8\xff'  # JPEG con posible steganografía
-            ]
-        }
-    
-    def _cargar_firmas_conocidas(self) -> Dict[str, str]:
-        """Carga firmas conocidas de malware."""
-        return {
-            # Hashes conocidos de malware (ejemplos)
-            'e2e7d3e3af6ed5c23e4e7b4f3e1d2a1b': 'Generic.Trojan',
-            'a1b2c3d4e5f6789012345678901234567890abcd': 'Generic.Backdoor',
-            'f1e2d3c4b5a6978564123098745612307896541230': 'Linux.Rootkit'
-        }
-    
-    def analizar_archivo_completo(self, ruta_archivo: str, metadatos: MetadatosCuarentena) -> Dict[str, Any]:
-        """
-        Realiza un análisis forense completo del archivo.
-        
-        Args:
-            ruta_archivo: Ruta al archivo en cuarentena
-            metadatos: Metadatos del archivo
-            
-        Returns:
-            Dict[str, Any]: Resultados del análisis forense
-        """
-        self.logger.info(f"Iniciando análisis forense completo: {metadatos.nombre_original}")
-        
-        resultado = {
-            'timestamp_analisis': datetime.now().isoformat(),
-            'archivo_analizado': metadatos.nombre_original,
-            'hash_sha256': metadatos.hash_sha256,
-            'analisis_basico': {},
-            'analisis_strings': {},
-            'analisis_headers': {},
-            'analisis_herramientas': {},
-            'detecciones': [],
-            'nivel_amenaza': 'BAJO',
-            'recomendaciones': [],
-            'tiempo_analisis': 0
-        }
-        
+    def analizar_archivo(self, ruta_archivo: str, metadatos: MetadatosCuarentena) -> Dict[str, Any]:
+        """Realiza análisis forense completo de un archivo usando utilidades."""
         inicio_tiempo = time.time()
+        resultado = {
+            'archivo': ruta_archivo,
+            'timestamp': datetime.now().isoformat(),
+            'herramientas_usadas': [],
+            'resultados': {},
+            'nivel_amenaza': 'bajo',
+            'recomendaciones': []
+        }
         
-        try:
-            # Análisis básico de archivo
-            resultado['analisis_basico'] = self._analisis_basico(ruta_archivo, metadatos)
-            
-            # Análisis de strings sospechosos
-            resultado['analisis_strings'] = self._analisis_strings(ruta_archivo)
-            
-            # Análisis de headers y estructura
-            resultado['analisis_headers'] = self._analisis_headers(ruta_archivo)
-            
-            # Análisis con herramientas externas
-            resultado['analisis_herramientas'] = self._analisis_herramientas_externas(ruta_archivo)
-            
-            # Verificación de firmas conocidas
-            deteccion_firma = self._verificar_firmas_conocidas(metadatos.hash_sha256)
-            if deteccion_firma:
-                resultado['detecciones'].append({
-                    'tipo': 'firma_conocida',
-                    'descripcion': f"Hash conocido: {deteccion_firma}",
-                    'severidad': 'ALTO'
-                })
-            
-            # Evaluación del nivel de amenaza
-            resultado['nivel_amenaza'] = self._evaluar_nivel_amenaza(resultado)
-            
-            # Generar recomendaciones
-            resultado['recomendaciones'] = self._generar_recomendaciones(resultado, metadatos)
-            
-        except Exception as e:
-            self.logger.error(f"Error en análisis forense: {e}")
-            resultado['error'] = str(e)
+        # Análisis básico con 'file'
+        if self.herramientas_disponibles.get('file'):
+            resultado_file = AnalizadorForenseUtils.ejecutar_file(ruta_archivo)
+            if resultado_file.get('exitoso'):
+                resultado['resultados']['file'] = resultado_file
+                resultado['herramientas_usadas'].append('file')
         
+        # Análisis de strings
+        if self.herramientas_disponibles.get('strings'):
+            resultado_strings = AnalizadorForenseUtils.ejecutar_strings(ruta_archivo)
+            if resultado_strings.get('exitoso'):
+                resultado['resultados']['strings'] = resultado_strings
+                resultado['herramientas_usadas'].append('strings')
+        
+        # Análisis hexadecimal
+        if self.herramientas_disponibles.get('hexdump'):
+            resultado_hex = AnalizadorForenseUtils.analizar_con_hexdump(ruta_archivo)
+            if resultado_hex.get('exitoso'):
+                resultado['resultados']['hexdump'] = resultado_hex
+                resultado['herramientas_usadas'].append('hexdump')
+        
+        # Búsqueda de patrones sospechosos
+        analisis_patrones = AnalizadorForenseUtils.buscar_patrones_en_archivo(ruta_archivo, self.patrones_malware)
+        resultado['resultados']['patrones'] = analisis_patrones
+        resultado['nivel_amenaza'] = analisis_patrones.get('nivel_sospecha', 'bajo')
+        
+        # Generar recomendaciones
+        resultado['recomendaciones'] = self._generar_recomendaciones(analisis_patrones, metadatos)
         resultado['tiempo_analisis'] = time.time() - inicio_tiempo
-        
-        self.logger.info(f"Análisis forense completado en {resultado['tiempo_analisis']:.2f}s")
         
         return resultado
     
-    def _analisis_basico(self, ruta_archivo: str, metadatos: MetadatosCuarentena) -> Dict[str, Any]:
-        """Realiza análisis básico del archivo."""
-        analisis = {
-            'tamaño_archivo': metadatos.tamaño_bytes,
-            'tipo_mime': metadatos.tipo_mime,
-            'extension': metadatos.extension,
-            'permisos_sospechosos': False,
-            'tamaño_anormal': False,
-            'nombre_sospechoso': False
-        }
-        
-        # Verificar permisos sospechosos (ejecutable cuando no debería serlo)
-        if metadatos.extension in ['.txt', '.doc', '.pdf', '.jpg', '.png']:
-            if 'x' in metadatos.permisos_originales:
-                analisis['permisos_sospechosos'] = True
-        
-        # Verificar tamaño anormal
-        if metadatos.tamaño_bytes > 100 * 1024 * 1024:  # 100MB
-            analisis['tamaño_anormal'] = True
-        elif metadatos.tamaño_bytes == 0:
-            analisis['tamaño_anormal'] = True
-        
-        # Verificar nombre sospechoso
-        nombre_lower = metadatos.nombre_original.lower()
-        strings_sospechosos = [patron for patron in self.patrones_malware['strings_sospechosos'][:10] if isinstance(patron, str)]
-        if any(patron in nombre_lower for patron in strings_sospechosos):
-            analisis['nombre_sospechoso'] = True
-        
-        return analisis
-    
-    def _analisis_strings(self, ruta_archivo: str) -> Dict[str, Any]:
-        """Analiza strings en el archivo."""
-        analisis = {
-            'strings_sospechosos_encontrados': [],
-            'urls_encontradas': [],
-            'ips_encontradas': [],
-            'comandos_sospechosos': [],
-            'total_strings': 0
-        }
-        
-        if not self.herramientas_disponibles.get('strings', False):
-            return analisis
-        
-        try:
-            # Ejecutar strings
-            resultado = subprocess.run(
-                ['strings', '-n', '4', ruta_archivo],
-                capture_output=True, text=True, timeout=30
-            )
-            
-            if resultado.returncode == 0:
-                strings_encontrados = resultado.stdout.split('\n')
-                analisis['total_strings'] = len(strings_encontrados)
-                
-                # Buscar patrones sospechosos
-                for string in strings_encontrados:
-                    string_lower = string.lower()
-                    
-                    # Strings sospechosos
-                    for patron in self.patrones_malware['strings_sospechosos']:
-                        if isinstance(patron, str) and patron in string_lower and string not in analisis['strings_sospechosos_encontrados']:
-                            analisis['strings_sospechosos_encontrados'].append(string[:100])  # Limitar longitud
-                    
-                    # URLs
-                    if 'http' in string_lower and string not in analisis['urls_encontradas']:
-                        analisis['urls_encontradas'].append(string[:100])
-                    
-                    # IPs (búsqueda simple)
-                    import re
-                    ips = re.findall(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b', string)
-                    for ip in ips:
-                        if ip not in analisis['ips_encontradas']:
-                            analisis['ips_encontradas'].append(ip)
-                    
-                    # Comandos sospechosos de Linux
-                    comandos_sospechosos = ['bash -i', 'nc -e', '/bin/sh', 'python -c', '/bin/', 'system(']
-                    for cmd in comandos_sospechosos:
-                        if cmd in string_lower and string not in analisis['comandos_sospechosos']:
-                            analisis['comandos_sospechosos'].append(string[:100])
-        
-        except Exception as e:
-            self.logger.warning(f"Error en análisis de strings: {e}")
-        
-        return analisis
-    
-    def _analisis_headers(self, ruta_archivo: str) -> Dict[str, Any]:
-        """Analiza headers y estructura del archivo."""
-        analisis = {
-            'header_detectado': '',
-            'tipo_archivo_real': '',
-            'discrepancia_extension': False,
-            'headers_sospechosos': [],
-            'estructura_valida': True
-        }
-        
-        try:
-            # Leer primeros bytes para header
-            with open(ruta_archivo, 'rb') as f:
-                header = f.read(16)
-            
-            # Identificar tipo por header
-            if header.startswith(b'MZ'):
-                analisis['tipo_archivo_real'] = 'PE_Ejecutable'
-            elif header.startswith(b'\x7fELF'):
-                analisis['tipo_archivo_real'] = 'ELF_Ejecutable'
-            elif header.startswith(b'PK'):
-                analisis['tipo_archivo_real'] = 'ZIP_Archive'
-            elif header.startswith(b'\x89PNG'):
-                analisis['tipo_archivo_real'] = 'PNG_Image'
-            elif header.startswith(b'\xff\xd8\xff'):
-                analisis['tipo_archivo_real'] = 'JPEG_Image'
-            elif header.startswith(b'%PDF'):
-                analisis['tipo_archivo_real'] = 'PDF_Document'
-            else:
-                analisis['tipo_archivo_real'] = 'Desconocido'
-            
-            analisis['header_detectado'] = header.hex()[:32]
-            
-            # Verificar discrepancias
-            ruta_path = Path(ruta_archivo)
-            extension = ruta_path.suffix.lower()
-            
-            if extension == '.txt' and 'Ejecutable' in analisis['tipo_archivo_real']:
-                analisis['discrepancia_extension'] = True
-            elif extension == '.jpg' and analisis['tipo_archivo_real'] != 'JPEG_Image':
-                analisis['discrepancia_extension'] = True
-            elif extension == '.png' and analisis['tipo_archivo_real'] != 'PNG_Image':
-                analisis['discrepancia_extension'] = True
-            
-            # Buscar headers maliciosos conocidos
-            for header_malicioso in self.patrones_malware['headers_maliciosos']:
-                if isinstance(header_malicioso, bytes) and header.startswith(header_malicioso):
-                    analisis['headers_sospechosos'].append(header_malicioso.hex())
-        
-        except Exception as e:
-            self.logger.warning(f"Error en análisis de headers: {e}")
-            analisis['estructura_valida'] = False
-        
-        return analisis
-    
-    def _analisis_herramientas_externas(self, ruta_archivo: str) -> Dict[str, Any]:
-        """Ejecuta herramientas externas de análisis."""
-        analisis = {
-            'file_output': '',
-            'binwalk_output': '',
-            'clamav_result': '',
-            'exiftool_data': {},
-            'herramientas_ejecutadas': []
-        }
-        
-        # Análisis con 'file'
-        if self.herramientas_disponibles.get('file', False):
-            try:
-                resultado = subprocess.run(
-                    ['file', '-b', ruta_archivo],
-                    capture_output=True, text=True, timeout=10
-                )
-                if resultado.returncode == 0:
-                    analisis['file_output'] = resultado.stdout.strip()
-                    analisis['herramientas_ejecutadas'].append('file')
-            except Exception as e:
-                self.logger.warning(f"Error ejecutando 'file': {e}")
-        
-        # Análisis con binwalk (si está disponible)
-        if self.herramientas_disponibles.get('binwalk', False):
-            try:
-                resultado = subprocess.run(
-                    ['binwalk', '-e', '-q', ruta_archivo],
-                    capture_output=True, text=True, timeout=30
-                )
-                if resultado.returncode == 0:
-                    analisis['binwalk_output'] = resultado.stdout[:1000]  # Limitar salida
-                    analisis['herramientas_ejecutadas'].append('binwalk')
-            except Exception as e:
-                self.logger.warning(f"Error ejecutando binwalk: {e}")
-        
-        # Análisis con ClamAV (si está disponible)
-        if self.herramientas_disponibles.get('clamav', False):
-            try:
-                resultado = subprocess.run(
-                    ['clamscan', '--no-summary', ruta_archivo],
-                    capture_output=True, text=True, timeout=30
-                )
-                analisis['clamav_result'] = resultado.stdout.strip()
-                analisis['herramientas_ejecutadas'].append('clamav')
-            except Exception as e:
-                self.logger.warning(f"Error ejecutando ClamAV: {e}")
-        
-        return analisis
-    
-    def _verificar_firmas_conocidas(self, hash_sha256: str) -> Optional[str]:
-        """Verifica si el hash corresponde a malware conocido."""
-        return self.firmas_conocidas.get(hash_sha256)
-    
-    def _evaluar_nivel_amenaza(self, resultado_analisis: Dict[str, Any]) -> str:
-        """Evalúa el nivel de amenaza basado en los resultados del análisis."""
-        puntuacion = 0
-        
-        # Análisis básico
-        analisis_basico = resultado_analisis.get('analisis_basico', {})
-        if analisis_basico.get('permisos_sospechosos'):
-            puntuacion += 2
-        if analisis_basico.get('tamaño_anormal'):
-            puntuacion += 1
-        if analisis_basico.get('nombre_sospechoso'):
-            puntuacion += 2
-        
-        # Análisis de strings
-        analisis_strings = resultado_analisis.get('analisis_strings', {})
-        puntuacion += len(analisis_strings.get('strings_sospechosos_encontrados', [])) * 2
-        puntuacion += len(analisis_strings.get('comandos_sospechosos', []))
-        
-        # Análisis de headers
-        analisis_headers = resultado_analisis.get('analisis_headers', {})
-        if analisis_headers.get('discrepancia_extension'):
-            puntuacion += 3
-        if analisis_headers.get('headers_sospechosos'):
-            puntuacion += 4
-        
-        # Detecciones específicas
-        detecciones = resultado_analisis.get('detecciones', [])
-        for deteccion in detecciones:
-            if deteccion.get('severidad') == 'ALTO':
-                puntuacion += 5
-            elif deteccion.get('severidad') == 'MEDIO':
-                puntuacion += 3
-        
-        # Evaluación final
-        if puntuacion >= 10:
-            return 'CRITICO'
-        elif puntuacion >= 7:
-            return 'ALTO'
-        elif puntuacion >= 4:
-            return 'MEDIO'
-        elif puntuacion >= 2:
-            return 'BAJO'
-        else:
-            return 'MINIMO'
-    
-    def _generar_recomendaciones(self, resultado_analisis: Dict[str, Any], metadatos: MetadatosCuarentena) -> List[str]:
+    def _generar_recomendaciones(self, analisis_patrones: Dict[str, Any], metadatos: MetadatosCuarentena) -> List[str]:
         """Genera recomendaciones basadas en el análisis."""
         recomendaciones = []
+        nivel_sospecha = analisis_patrones.get('nivel_sospecha', 'bajo')
         
-        nivel_amenaza = resultado_analisis.get('nivel_amenaza', 'BAJO')
-        
-        if nivel_amenaza in ['CRITICO', 'ALTO']:
-            recomendaciones.append("🚨 ELIMINAR INMEDIATAMENTE - Alto riesgo de seguridad")
-            recomendaciones.append("🔍 Realizar análisis forense completo del sistema")
-            recomendaciones.append("🛡️ Verificar integridad de archivos críticos")
-        
-        elif nivel_amenaza == 'MEDIO':
-            recomendaciones.append("⚠️ Mantener en cuarentena para análisis adicional")
-            recomendaciones.append("🔬 Realizar análisis en entorno aislado")
-            recomendaciones.append("📊 Monitorear actividad del sistema")
-        
-        elif nivel_amenaza == 'BAJO':
-            recomendaciones.append("ℹ️ Posible falso positivo - Revisar manualmente")
-            recomendaciones.append("✅ Considerar restauración después de validación")
-        
+        if nivel_sospecha == 'critico':
+            recomendaciones.extend([
+                "🚨 ALTO RIESGO: Mantener en cuarentena permanente",
+                "🔍 Realizar análisis manual inmediato",
+                "🚫 NO restaurar bajo ninguna circunstancia",
+                "📊 Enviar muestra a laboratorio de análisis"
+            ])
+        elif nivel_sospecha == 'alto':
+            recomendaciones.extend([
+                "⚠️ RIESGO ELEVADO: Análisis adicional requerido",
+                "🔒 Mantener aislado hasta confirmación",
+                "🧪 Ejecutar en entorno sandboxed",
+                "👨‍💻 Revisión manual recomendada"
+            ])
+        elif nivel_sospecha == 'medio':
+            recomendaciones.extend([
+                "🔍 Análisis adicional recomendado",
+                "⏳ Monitoreo extendido sugerido",
+                "🛡️ Verificar con antivirus actualizado"
+            ])
         else:
-            recomendaciones.append("✅ Archivo probablemente seguro")
-            recomendaciones.append("🔄 Candidato para restauración automática")
-        
-        # Recomendaciones específicas
-        analisis_headers = resultado_analisis.get('analisis_headers', {})
-        if analisis_headers.get('discrepancia_extension'):
-            recomendaciones.append("⚠️ Discrepancia entre extensión y contenido real")
-        
-        analisis_strings = resultado_analisis.get('analisis_strings', {})
-        if analisis_strings.get('strings_sospechosos_encontrados'):
-            recomendaciones.append("🔍 Contiene strings potencialmente maliciosos")
-        
-        if metadatos.dias_en_cuarentena > 30:
-            recomendaciones.append("🗂️ Archivo lleva más de 30 días en cuarentena - Considerar eliminación")
+            recomendaciones.extend([
+                "✅ Archivo aparenta ser seguro",
+                "🔄 Verificación rutinaria completada",
+                "📝 Considerar para restauración"
+            ])
         
         return recomendaciones
 
@@ -771,42 +260,45 @@ class GestorCuarentenaAvanzado:
                     datos = json.load(archivo)
                     
                     for archivo_id, datos_metadatos in datos.items():
+                        # Crear metadatos con los parámetros correctos
                         metadatos = MetadatosCuarentena(
-                            archivo_id=archivo_id,
-                            ruta_original="",
-                            ruta_cuarentena="",
-                            nombre_original="",
-                            extension="",
-                            tamaño_bytes=0,
-                            hash_md5="", hash_sha1="", hash_sha256="", hash_sha512="",
-                            tipo_mime="", encoding=None,
-                            timestamp_cuarentena=datetime.now(),
-                            timestamp_ultimo_analisis=None,
+                            ruta_original=datos_metadatos.get('ruta_original', ''),
+                            ruta_cuarentena=datos_metadatos.get('ruta_cuarentena', ''),
+                            fecha_cuarentena=datetime.now(),
                             estado=EstadoCuarentena.PENDIENTE,
-                            tipo_amenaza=None,
+                            tipo_amenaza=TipoAmenazaCuarentena.DESCONOCIDO,
                             nivel_riesgo=NivelRiesgoCuarentena.BAJO,
-                            origen_deteccion="", razon_cuarentena="",
-                            permisos_originales="", propietario_original="", grupo_original=""
+                            hash_md5=datos_metadatos.get('hash_md5', ''),
+                            hash_sha256=datos_metadatos.get('hash_sha256', ''),
+                            tamaño_bytes=datos_metadatos.get('tamaño_bytes', 0),
+                            permisos_originales=datos_metadatos.get('permisos_originales', ''),
+                            propietario_original=datos_metadatos.get('propietario_original', ''),
+                            grupo_original=datos_metadatos.get('grupo_original', ''),
+                            mime_type=datos_metadatos.get('mime_type', datos_metadatos.get('tipo_mime', '')),
+                            motivo_cuarentena=datos_metadatos.get('motivo_cuarentena', datos_metadatos.get('razon_cuarentena', ''))
                         )
                         
-                        # Cargar datos desde diccionario
-                        metadatos.__dict__.update(datos_metadatos)
+                        # Actualizar fechas si están en formato string
+                        if 'fecha_cuarentena' in datos_metadatos:
+                            fecha_str = datos_metadatos['fecha_cuarentena']
+                            if isinstance(fecha_str, str):
+                                metadatos.fecha_cuarentena = datetime.fromisoformat(fecha_str)
                         
-                        # Convertir fechas
-                        if isinstance(metadatos.timestamp_cuarentena, str):
-                            metadatos.timestamp_cuarentena = datetime.fromisoformat(metadatos.timestamp_cuarentena)
-                        
-                        if metadatos.timestamp_ultimo_analisis and isinstance(metadatos.timestamp_ultimo_analisis, str):
-                            metadatos.timestamp_ultimo_analisis = datetime.fromisoformat(metadatos.timestamp_ultimo_analisis)
+                        # Actualizar última fecha de análisis
+                        if 'fecha_ultimo_analisis' in datos_metadatos and datos_metadatos['fecha_ultimo_analisis']:
+                            fecha_str = datos_metadatos['fecha_ultimo_analisis']
+                            if isinstance(fecha_str, str):
+                                metadatos.fecha_ultimo_analisis = datetime.fromisoformat(fecha_str)
                         
                         # Convertir enums desde strings
-                        if isinstance(metadatos.estado, str):
-                            metadatos.estado = EstadoCuarentena(metadatos.estado)
+                        if 'estado' in datos_metadatos and isinstance(datos_metadatos['estado'], str):
+                            metadatos.estado = EstadoCuarentena(datos_metadatos['estado'])
                         
-                        if isinstance(metadatos.nivel_riesgo, str):
-                            metadatos.nivel_riesgo = NivelRiesgoCuarentena(metadatos.nivel_riesgo)
+                        if 'nivel_riesgo' in datos_metadatos and isinstance(datos_metadatos['nivel_riesgo'], str):
+                            metadatos.nivel_riesgo = NivelRiesgoCuarentena(datos_metadatos['nivel_riesgo'])
                         
-                        if isinstance(metadatos.tipo_amenaza, str) and metadatos.tipo_amenaza:
+                        if 'tipo_amenaza' in datos_metadatos and datos_metadatos['tipo_amenaza']:
+                            metadatos.tipo_amenaza = TipoAmenazaCuarentena(datos_metadatos['tipo_amenaza'])
                             metadatos.tipo_amenaza = TipoAmenazaCuarentena(metadatos.tipo_amenaza)
                         
                         self.base_datos[archivo_id] = metadatos
@@ -869,12 +361,15 @@ class GestorCuarentenaAvanzado:
             metadatos = self._generar_metadatos_archivo(ruta_archivo, origen_deteccion, razon, tipo_amenaza, nivel_riesgo)
             
             # Crear ruta en cuarentena
-            nombre_cuarentena = f"{metadatos.archivo_id}_{metadatos.nombre_original}"
+            # Crear nombre único para cuarentena usando hash
+            nombre_archivo = os.path.basename(metadatos.ruta_original)
+            nombre_cuarentena = f"{metadatos.hash_sha256[:16]}_{nombre_archivo}"
             ruta_cuarentena = os.path.join(self.directorio_activos, nombre_cuarentena)
             
             # Crear backup antes de mover
             if self._crear_backup_archivo(ruta_archivo, metadatos):
-                metadatos.agregar_accion(AccionCuarentena.COPIA_SEGURIDAD, "Backup creado exitosamente")
+                # Registrar backup en notas forenses
+                metadatos.notas_forenses.append(f"[{datetime.now().isoformat()}] Backup creado exitosamente")
             
             # Mover archivo a cuarentena
             if self.compresion_habilitada:
@@ -884,21 +379,25 @@ class GestorCuarentenaAvanzado:
                 shutil.move(ruta_archivo, ruta_cuarentena)
             
             metadatos.ruta_cuarentena = ruta_cuarentena
-            metadatos.agregar_accion(AccionCuarentena.CUARENTENADO, f"Movido desde {ruta_archivo}")
+            # Registrar movimiento en notas forenses
+            metadatos.notas_forenses.append(f"[{datetime.now().isoformat()}] Movido desde {ruta_archivo}")
             
             # Establecer permisos restrictivos
             os.chmod(ruta_cuarentena, 0o600)
             
-            # Guardar en base de datos
-            self.base_datos[metadatos.archivo_id] = metadatos
+            # Guardar en base de datos usando hash como clave
+            archivo_id = metadatos.hash_sha256[:16]
+            self.base_datos[archivo_id] = metadatos
             self._guardar_base_datos()
             
             # Registrar evento
+            nombre_archivo = os.path.basename(metadatos.ruta_original)
             self.siem.registrar_evento(
                 TipoEvento.AMENAZA_DETECTADA,
-                f"Archivo puesto en cuarentena: {metadatos.nombre_original}",
+                f"Archivo puesto en cuarentena: {nombre_archivo}",
                 {
-                    'archivo_id': metadatos.archivo_id,
+                    'ruta_original': metadatos.ruta_original,
+                    'archivo_id': archivo_id,
                     'ruta_original': ruta_archivo,
                     'origen_deteccion': origen_deteccion,
                     'razon': razon,
@@ -913,14 +412,14 @@ class GestorCuarentenaAvanzado:
             if self.analisis_automatico:
                 threading.Thread(
                     target=self._analizar_archivo_automatico,
-                    args=(metadatos.archivo_id,),
+                    args=(archivo_id,),
                     daemon=True
                 ).start()
             
             self.archivos_procesados += 1
-            self.logger.info(f"Archivo puesto en cuarentena correctamente: {metadatos.archivo_id}")
+            self.logger.info(f"Archivo puesto en cuarentena correctamente: {archivo_id}")
             
-            return metadatos.archivo_id
+            return archivo_id
         
         except Exception as e:
             self.logger.error(f"Error al poner archivo en cuarentena: {e}")
@@ -947,36 +446,28 @@ class GestorCuarentenaAvanzado:
         
         # Obtener información de propietario
         try:
-            import pwd, grp
-            propietario = pwd.getpwuid(stat_info.st_uid).pw_name
-            grupo = grp.getgrgid(stat_info.st_gid).gr_name
+            import pwd, grp  # type: ignore
+            propietario = pwd.getpwuid(stat_info.st_uid).pw_name  # type: ignore
+            grupo = grp.getgrgid(stat_info.st_gid).gr_name  # type: ignore
         except Exception:
             propietario = str(stat_info.st_uid)
             grupo = str(stat_info.st_gid)
         
         return MetadatosCuarentena(
-            archivo_id="",  # Se generará automáticamente
             ruta_original=ruta_archivo,
             ruta_cuarentena="",  # Se establecerá después
-            nombre_original=ruta_path.name,
-            extension=ruta_path.suffix.lower(),
-            tamaño_bytes=stat_info.st_size,
-            hash_md5=hashes['md5'],
-            hash_sha1=hashes['sha1'],
-            hash_sha256=hashes['sha256'],
-            hash_sha512=hashes['sha512'],
-            tipo_mime=tipo_mime,
-            encoding=encoding,
-            timestamp_cuarentena=datetime.now(),
-            timestamp_ultimo_analisis=None,
+            fecha_cuarentena=datetime.now(),
             estado=EstadoCuarentena.PENDIENTE,
-            tipo_amenaza=tipo_amenaza,
+            tipo_amenaza=tipo_amenaza or TipoAmenazaCuarentena.DESCONOCIDO,
             nivel_riesgo=nivel_riesgo,
-            origen_deteccion=origen_deteccion,
-            razon_cuarentena=razon,
+            hash_md5=hashes['md5'],
+            hash_sha256=hashes['sha256'],
+            tamaño_bytes=stat_info.st_size,
             permisos_originales=oct(stat_info.st_mode)[-3:],
             propietario_original=propietario,
-            grupo_original=grupo
+            grupo_original=grupo,
+            mime_type=tipo_mime or "application/octet-stream",
+            motivo_cuarentena=razon,
         )
     
     def _calcular_hashes_archivo(self, ruta_archivo: str) -> Dict[str, str]:
@@ -1001,7 +492,9 @@ class GestorCuarentenaAvanzado:
         """Crea un backup del archivo antes de moverlo a cuarentena."""
         try:
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            nombre_backup = f"{metadatos.nombre_original}_{timestamp}_backup{metadatos.extension}"
+            nombre_archivo = os.path.basename(metadatos.ruta_original)
+            extension = os.path.splitext(nombre_archivo)[1]
+            nombre_backup = f"{nombre_archivo}_{timestamp}_backup{extension}"
             ruta_backup = os.path.join(self.directorio_backups, nombre_backup)
             
             shutil.copy2(ruta_archivo, ruta_backup)
@@ -1044,22 +537,24 @@ class GestorCuarentenaAvanzado:
             ruta_analisis = self._preparar_archivo_para_analisis(metadatos)
             
             # Ejecutar análisis forense
-            resultado_analisis = self.analizador_forense.analizar_archivo_completo(ruta_analisis, metadatos)
+            resultado_analisis = self.analizador_forense.analizar_archivo(ruta_analisis, metadatos)
             
             # Actualizar metadatos con resultados
-            metadatos.resultado_analisis = resultado_analisis
-            metadatos.timestamp_ultimo_analisis = datetime.now()
-            metadatos.agregar_accion(AccionCuarentena.ANALIZADO, f"Análisis completado - Nivel: {resultado_analisis['nivel_amenaza']}")
+            metadatos.resultado_analisis = json.dumps(resultado_analisis)  # Convertir a string
+            metadatos.fecha_ultimo_analisis = datetime.now()
+            # Registrar acción en notas forenses
+            metadatos.notas_forenses.append(f"[{datetime.now().isoformat()}] Análisis completado - Nivel: {resultado_analisis['nivel_amenaza']}")
             
             # Actualizar estado basado en análisis
             nivel_amenaza = resultado_analisis.get('nivel_amenaza', 'BAJO')
             if nivel_amenaza in ['CRITICO', 'ALTO']:
                 metadatos.estado = EstadoCuarentena.MALICIOSO
-                metadatos.tipo_amenaza = TipoAmenazaCuarentena.ARCHIVO_SOSPECHOSO
+                metadatos.tipo_amenaza = TipoAmenazaCuarentena.SOSPECHOSO
                 self.amenazas_detectadas += 1
             elif nivel_amenaza == 'MEDIO':
                 metadatos.estado = EstadoCuarentena.SOSPECHOSO
-                metadatos.requiere_atencion_manual = True
+                # Registrar necesidad de atención manual
+                metadatos.notas_forenses.append(f"[{datetime.now().isoformat()}] Requiere atención manual")
             else:
                 metadatos.estado = EstadoCuarentena.SEGURO
             
@@ -1073,9 +568,10 @@ class GestorCuarentenaAvanzado:
             self._guardar_base_datos()
             
             # Registrar resultado
+            nombre_archivo = os.path.basename(metadatos.ruta_original)
             self.siem.registrar_evento(
                 TipoEvento.ANALISIS_COMPLETADO,
-                f"Análisis automático completado: {metadatos.nombre_original}",
+                f"Análisis automático completado: {nombre_archivo}",
                 {
                     'archivo_id': archivo_id,
                     'nivel_amenaza': nivel_amenaza,
@@ -1097,7 +593,9 @@ class GestorCuarentenaAvanzado:
         """Prepara un archivo para análisis (descomprime si es necesario)."""
         if metadatos.ruta_cuarentena.endswith('.zip'):
             # Descomprimir temporalmente
-            ruta_temp = os.path.join(self.directorio_temp, f"analisis_{metadatos.archivo_id}")
+            # Crear directorio temporal para análisis usando hash como identificador
+            archivo_id = metadatos.hash_sha256[:16]
+            ruta_temp = os.path.join(self.directorio_temp, f"analisis_{archivo_id}")
             
             try:
                 with zipfile.ZipFile(metadatos.ruta_cuarentena, 'r') as archivo_zip:

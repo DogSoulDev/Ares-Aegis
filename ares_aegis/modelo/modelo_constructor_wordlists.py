@@ -8,7 +8,7 @@ import os
 import json
 from datetime import datetime
 from typing import Dict, List, Any
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
 
 class ConstructorWordlists:

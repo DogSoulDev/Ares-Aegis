@@ -11,7 +11,7 @@ import threading
 import os
 from typing import Dict, List, Optional, Any, Callable
 from ..modelo.modelo_constructor_wordlists import ConstructorWordlists
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 from .controlador_base import ControladorBase
 
 

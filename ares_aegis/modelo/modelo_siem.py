@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-"""
-Creado por DogSoulDev (https://github.com/DogSoulDev)
-Todos los derechos reservados. Este código es propietario y confidencial.
-
-SIEM - Sistema de Información y Gestión de Eventos Avanzado
-Núcleo central del sistema de ciberseguridad con análisis de correlación
-y detección de patrones de amenazas en tiempo real.
-"""
-
 import json
 import os
 from datetime import datetime, timedelta
@@ -16,363 +6,160 @@ from typing import List, Dict, Any, Optional, Tuple
 from collections import defaultdict, deque
 import threading
 import time
-from ..utils.ayuda_logging import configurar_logger_modulo
-from ..utils.ayuda_rutas import crear_ruta_segura
+import hashlib
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_rutas import crear_ruta_segura
 
 
-class TipoEvento:
-    """Constantes para tipos de eventos del SIEM con clasificación española."""
-    # Eventos de Escaneo y Análisis
-    ESCANEO_INICIADO = "ESCANEO_INICIADO"
-    ESCANEO_FINALIZADO = "ESCANEO_FINALIZADO"
-    ESCANEO_INTERRUMPIDO = "ESCANEO_INTERRUMPIDO"
-    ANALISIS_INICIADO = "ANALISIS_INICIADO"
-    ANALISIS_COMPLETADO = "ANALISIS_COMPLETADO"
-    AUDITORIA_COMPLETADA = "AUDITORIA_COMPLETADA"
-    
-    # Eventos de Amenazas y Seguridad
-    AMENAZA_DETECTADA = "AMENAZA_DETECTADA"
-    AMENAZA_BLOQUEADA = "AMENAZA_BLOQUEADA"
-    AMENAZA_NEUTRALIZADA = "AMENAZA_NEUTRALIZADA"
-    MALWARE_DETECTADO = "MALWARE_DETECTADO"
-    VIRUS_ENCONTRADO = "VIRUS_ENCONTRADO"
-    TROJAN_DETECTADO = "TROJAN_DETECTADO"
-    RANSOMWARE_DETECTADO = "RANSOMWARE_DETECTADO"
-    ROOTKIT_DETECTADO = "ROOTKIT_DETECTADO"
-    
-    # Eventos de Cuarentena
-    ARCHIVO_CUARENTENA = "ARCHIVO_CUARENTENA"
-    ARCHIVO_RESTAURADO = "ARCHIVO_RESTAURADO"
-    CUARENTENA_LIMPIADA = "CUARENTENA_LIMPIADA"
-    
-    # Eventos de Integridad
-    INTEGRIDAD_VIOLADA = "INTEGRIDAD_VIOLADA"
-    ARCHIVO_MODIFICADO = "ARCHIVO_MODIFICADO"
-    ARCHIVO_ELIMINADO = "ARCHIVO_ELIMINADO"
-    ARCHIVO_CREADO = "ARCHIVO_CREADO"
-    PERMISOS_MODIFICADOS = "PERMISOS_MODIFICADOS"
-    
-    # Eventos de Red
-    CONEXION_SOSPECHOSA = "CONEXION_SOSPECHOSA"
-    TRAFICO_MALICIOSO = "TRAFICO_MALICIOSO"
-    IP_BLOQUEADA = "IP_BLOQUEADA"
-    PUERTO_ESCANEADO = "PUERTO_ESCANEADO"
-    CONEXION_NO_AUTORIZADA = "CONEXION_NO_AUTORIZADA"
-    ATAQUE_DENEGACION_SERVICIO = "ATAQUE_DENEGACION_SERVICIO"
-    
-    # Eventos de Procesos
-    PROCESO_SOSPECHOSO = "PROCESO_SOSPECHOSO"
-    PROCESO_MALICIOSO = "PROCESO_MALICIOSO"
-    PROCESO_TERMINADO = "PROCESO_TERMINADO"
-    PROCESO_ELEVACION_PRIVILEGIOS = "PROCESO_ELEVACION_PRIVILEGIOS"
-    PROCESO_INYECCION_CODIGO = "PROCESO_INYECCION_CODIGO"
-    
-    # Eventos de Vulnerabilidades
-    VULNERABILIDAD_DETECTADA = "VULNERABILIDAD_DETECTADA"
-    VULNERABILIDAD_CRITICA = "VULNERABILIDAD_CRITICA"
-    EXPLOIT_DETECTADO = "EXPLOIT_DETECTADO"
-    CVE_ENCONTRADA = "CVE_ENCONTRADA"
-    
-    # Eventos de Sistema
-    SISTEMA_INICIADO = "SISTEMA_INICIADO"
-    SISTEMA_DETENIDO = "SISTEMA_DETENIDO"
-    SERVICIO_INICIADO = "SERVICIO_INICIADO"
-    SERVICIO_DETENIDO = "SERVICIO_DETENIDO"
-    CONFIGURACION_MODIFICADA = "CONFIGURACION_MODIFICADA"
-    
-    # Eventos de Autenticación y Acceso
-    LOGIN_EXITOSO = "LOGIN_EXITOSO"
-    LOGIN_FALLIDO = "LOGIN_FALLIDO"
-    ACCESO_DENEGADO = "ACCESO_DENEGADO"
-    SESION_EXPIRADA = "SESION_EXPIRADA"
-    PRIVILEGIOS_ELEVADOS = "PRIVILEGIOS_ELEVADOS"
-    
-    # Eventos de Error y Advertencia
-    ERROR_SISTEMA = "ERROR_SISTEMA"
-    ERROR_CRITICO = "ERROR_CRITICO"
-    ADVERTENCIA = "ADVERTENCIA"
-    INFORMACION = "INFORMACION"
-    
-    # Eventos de Correlación
-    PATRON_ATAQUE_DETECTADO = "PATRON_ATAQUE_DETECTADO"
-    MULTIPLES_INTENTOS_ACCESO = "MULTIPLES_INTENTOS_ACCESO"
-    ACTIVIDAD_ANOMALA = "ACTIVIDAD_ANOMALA"
-    CORRELACION_AMENAZAS = "CORRELACION_AMENAZAS"
+# Importar utilidades SIEM básicas
+from ..utils.utils_siem import (
+    TipoEvento as TipoEventoBase, 
+    NivelCriticidad as NivelCriticidadBase,
+    ReglaCorrelacion as ReglaCorrelacionBase,
+    EventoSIEMUtils,
+    MotorCorrelacionUtils,
+    SIEMUtils
+)
 
+# Clases locales simplificadas
+class TipoEvento(TipoEventoBase):
+    """Extensión local de tipos de evento"""
+    pass
 
-class NivelCriticidad:
-    """Niveles de criticidad con descripción española."""
-    CRITICO = "CRITICO"          # Amenaza inmediata al sistema
-    ALTO = "ALTO"                # Amenaza significativa
-    MEDIO = "MEDIO"              # Advertencia importante
-    BAJO = "BAJO"                # Información general
-    INFORMATIVO = "INFORMATIVO"  # Solo información
+class NivelCriticidad(NivelCriticidadBase):
+    """Extensión local de niveles de criticidad"""
+    pass
 
-
-class ReglaCorrelacion:
-    """Representa una regla de correlación de eventos."""
-    
-    def __init__(self, nombre: str, tipos_eventos: List[str], 
-                 ventana_tiempo: int = 300, umbral_eventos: int = 3,
-                 accion: str = "ALERTA", descripcion: str = ""):
-        """
-        Inicializa una regla de correlación.
-        
-        Args:
-            nombre: Nombre de la regla
-            tipos_eventos: Lista de tipos de eventos a correlacionar
-            ventana_tiempo: Ventana de tiempo en segundos
-            umbral_eventos: Número mínimo de eventos para activar la regla
-            accion: Acción a realizar cuando se active la regla
-            descripcion: Descripción de la regla
-        """
-        self.nombre = nombre
-        self.tipos_eventos = tipos_eventos
-        self.ventana_tiempo = ventana_tiempo
-        self.umbral_eventos = umbral_eventos
-        self.accion = accion
-        self.descripcion = descripcion
-        self.activa = True
-        self.eventos_detectados = 0
+class ReglaCorrelacion(ReglaCorrelacionBase):
+    """Extensión local de reglas de correlación"""
+    pass
 
 
 class EventoSIEM:
-    """
-    Representa un evento en el sistema SIEM con correlación avanzada.
-    
-    Maneja la información completa del evento incluyendo:
-    - Metadatos temporales y de origen
-    - Clasificación de criticidad
-    - Contexto adicional para correlación
-    - Patrones de comportamiento
-    """
+    """Evento SIEM simplificado que usa utilidades"""
     
     def __init__(self, tipo: str, mensaje: str, detalles: Optional[Dict[str, Any]] = None,
-                 nivel_criticidad: str = NivelCriticidad.MEDIO, origen: str = "Sistema"):
-        """
-        Inicializa un evento SIEM con información completa.
-        
-        Args:
-            tipo: Tipo de evento (usar constantes de TipoEvento)
-            mensaje: Descripción detallada del evento
-            detalles: Información adicional del evento
-            nivel_criticidad: Nivel de criticidad del evento
-            origen: Sistema u origen que genera el evento
-        """
-        self.timestamp = datetime.now()
+                 nivel_criticidad: str = NivelCriticidad.MEDIO, fuente_ip: Optional[str] = None,
+                 usuario: Optional[str] = None, proceso: Optional[str] = None, origen: str = "Sistema"):
+        """Inicializa un evento SIEM"""
+        self.id = EventoSIEMUtils.generar_id_evento()
+        self.id_evento = self.id  # Compatibilidad con código existente
         self.tipo = tipo
         self.mensaje = mensaje
-        self.detalles = detalles or {}
+        self.timestamp = datetime.now()
         self.nivel_criticidad = nivel_criticidad
+        self.detalles = detalles or {}
+        self.contexto_hash = EventoSIEMUtils.calcular_hash_contexto(tipo, mensaje, self.detalles)
+        self.fuente_ip = fuente_ip
+        self.usuario = usuario
+        self.proceso = proceso
         self.origen = origen
-        self.id_evento = self._generar_id_evento()
-        
-        # Información adicional para correlación
+        self.correlaciones = []
+        self.patrones = []
         self.correlacionado = False
         self.reglas_activadas = []
         self.eventos_relacionados = []
-        self.hash_contexto = self._calcular_hash_contexto()
-        self.patron_detectado = None
-    
-    def _generar_id_evento(self) -> str:
-        """Genera un ID único para el evento."""
-        timestamp_str = self.timestamp.strftime('%Y%m%d%H%M%S')
-        hash_mensaje = abs(hash(f"{self.mensaje}{self.tipo}")) % 100000
-        return f"EVT-{timestamp_str}-{hash_mensaje:05d}"
-    
-    def _calcular_hash_contexto(self) -> str:
-        """Calcula un hash del contexto para agrupación rápida."""
-        import hashlib
-        contexto_str = str(sorted(self.detalles.items()))
-        return hashlib.md5(f"{self.tipo}{contexto_str}".encode()).hexdigest()[:8]
     
     def agregar_correlacion(self, regla_nombre: str, eventos_relacionados: List[str]):
-        """Agrega información de correlación al evento."""
+        """Agrega información de correlación"""
         self.correlacionado = True
         if regla_nombre not in self.reglas_activadas:
             self.reglas_activadas.append(regla_nombre)
         self.eventos_relacionados.extend(eventos_relacionados)
     
     def establecer_patron(self, patron: str):
-        """Establece el patrón de amenaza detectado."""
-        self.patron_detectado = patron
+        """Establece patrón detectado"""
+        if patron not in self.patrones:
+            self.patrones.append(patron)
     
     def obtener_prioridad_numerica(self) -> int:
-        """Convierte el nivel de criticidad a valor numérico para ordenamiento."""
-        prioridades = {
-            NivelCriticidad.CRITICO: 5,
-            NivelCriticidad.ALTO: 4,
-            NivelCriticidad.MEDIO: 3,
-            NivelCriticidad.BAJO: 2,
-            NivelCriticidad.INFORMATIVO: 1
-        }
-        return prioridades.get(self.nivel_criticidad, 3)
+        """Obtiene prioridad numérica"""
+        return EventoSIEMUtils.obtener_prioridad_numerica(self.nivel_criticidad)
     
     def es_critico(self) -> bool:
-        """Verifica si el evento es de criticidad alta o crítica."""
+        """Verifica si es crítico"""
         return self.nivel_criticidad in [NivelCriticidad.CRITICO, NivelCriticidad.ALTO]
     
-    def obtener_resumen(self) -> str:
-        """Obtiene un resumen corto del evento."""
-        estado_correlacion = " [CORRELACIONADO]" if self.correlacionado else ""
-        patron_info = f" - Patrón: {self.patron_detectado}" if self.patron_detectado else ""
-        return f"[{self.nivel_criticidad}] {self.tipo}: {self.mensaje[:100]}...{estado_correlacion}{patron_info}"
-    
     def to_dict(self) -> Dict[str, Any]:
-        """Convierte el evento a diccionario para serialización completa."""
-        return {
-            'id': self.id_evento,
-            'timestamp': self.timestamp.isoformat(),
-            'tipo': self.tipo,
-            'mensaje': self.mensaje,
-            'detalles': self.detalles,
-            'nivel_criticidad': self.nivel_criticidad,
-            'origen': self.origen,
-            'correlacionado': self.correlacionado,
-            'reglas_activadas': self.reglas_activadas,
-            'eventos_relacionados': self.eventos_relacionados,
-            'hash_contexto': self.hash_contexto,
-            'patron_detectado': self.patron_detectado
-        }
+        """Convierte a diccionario"""
+        return EventoSIEMUtils.evento_to_dict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EventoSIEM':
-        """Crea un evento desde un diccionario con información completa."""
-        evento = cls(
-            data['tipo'], 
-            data['mensaje'],
-            data.get('detalles', {}),
-            data.get('nivel_criticidad', NivelCriticidad.MEDIO),
-            data.get('origen', 'Sistema')
-        )
-        evento.id_evento = data.get('id', evento.id_evento)
-        if 'timestamp' in data:
-            evento.timestamp = datetime.fromisoformat(data['timestamp'])
+        """Crea desde diccionario"""
+        evento_data = EventoSIEMUtils.evento_from_dict(data)
+        evento = cls(**evento_data)
         
-        # Restaurar información de correlación
-        evento.correlacionado = data.get('correlacionado', False)
-        evento.reglas_activadas = data.get('reglas_activadas', [])
-        evento.eventos_relacionados = data.get('eventos_relacionados', [])
-        evento.hash_contexto = data.get('hash_contexto', evento.hash_contexto)
-        evento.patron_detectado = data.get('patron_detectado')
+        # Restaurar timestamp si existe en los datos originales
+        if 'timestamp' in data:
+            try:
+                if isinstance(data['timestamp'], str):
+                    evento.timestamp = datetime.fromisoformat(data['timestamp'])
+                elif isinstance(data['timestamp'], datetime):
+                    evento.timestamp = data['timestamp']
+            except (ValueError, TypeError) as e:
+                # Si no se puede parsear el timestamp, usar el actual
+                pass
+                
+        # Restaurar otros atributos específicos del evento
+        if 'id' in data or 'id_evento' in data:
+            evento.id_evento = data.get('id', data.get('id_evento', evento.id_evento))
+            evento.id = evento.id_evento  # Compatibilidad
         
         return evento
     
     def to_markdown(self) -> str:
-        """Convierte el evento a formato Markdown."""
-        timestamp_str = self.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-        
-        # Elegir emoji según criticidad
-        emoji_criticidad = {
-            'BAJO': '🔵',
-            'MEDIO': '🟡',
-            'ALTO': '🟠',
-            'CRITICO': '🔴'
-        }.get(self.nivel_criticidad, '⚪')
-        
-        md = f"### {emoji_criticidad} {self.tipo}\n\n"
-        md += f"**ID:** {self.id_evento}\n"
-        md += f"**Timestamp:** {timestamp_str}\n"
-        md += f"**Criticidad:** {self.nivel_criticidad}\n"
-        md += f"**Mensaje:** {self.mensaje}\n\n"
-        
-        if self.detalles:
-            md += "**Detalles:**\n"
-            for clave, valor in self.detalles.items():
-                md += f"- **{clave}:** {valor}\n"
-            md += "\n"
-        
-        return md
+        """Convierte a Markdown"""
+        return EventoSIEMUtils.evento_to_markdown(self)
     
     def __str__(self) -> str:
-        """Representación en string del evento."""
-        timestamp_str = self.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-        return f"[{timestamp_str}] [{self.nivel_criticidad}] {self.tipo}: {self.mensaje}"
+        """Representación en string"""
+        return f"[{self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}] [{self.nivel_criticidad}] {self.tipo}: {self.mensaje}"
 
 
 class MotorCorrelacion:
-    """Motor de correlación de eventos para detección de patrones."""
+    """Motor de correlación simplificado que usa utilidades"""
     
     def __init__(self):
-        """Inicializa el motor de correlación."""
-        self.reglas: List[ReglaCorrelacion] = []
-        self.ventana_eventos: deque = deque(maxlen=1000)  # Últimos 1000 eventos
+        """Inicializa el motor de correlación"""
+        # Usar funciones de utilidades para crear reglas predefinidas
+        reglas_base = MotorCorrelacionUtils.crear_reglas_predefinidas()
+        self.reglas = []
+        # Convertir a tipo local para compatibilidad
+        for regla_base in reglas_base:
+            regla_local = ReglaCorrelacion(
+                regla_base.nombre,
+                regla_base.tipos_eventos,
+                regla_base.ventana_tiempo,
+                regla_base.umbral_eventos,
+                regla_base.accion,
+                regla_base.descripcion
+            )
+            self.reglas.append(regla_local)
+        
+        self.ventana_eventos: deque = deque(maxlen=1000)
         self.patrones_detectados: Dict[str, List[str]] = {}
         self.estadisticas_correlacion = {
             'reglas_activadas': 0,
             'patrones_detectados': 0,
             'eventos_correlacionados': 0
         }
-        
-        self._inicializar_reglas_predefinidas()
-    
-    def _inicializar_reglas_predefinidas(self):
-        """Inicializa reglas de correlación predefinidas."""
-        reglas_base = [
-            ReglaCorrelacion(
-                "Multiples_Intentos_Acceso",
-                [TipoEvento.LOGIN_FALLIDO, TipoEvento.ACCESO_DENEGADO],
-                ventana_tiempo=300,  # 5 minutos
-                umbral_eventos=5,
-                accion="BLOQUEAR_IP",
-                descripcion="Detecta múltiples intentos de acceso fallidos"
-            ),
-            ReglaCorrelacion(
-                "Escalada_Privilegios",
-                [TipoEvento.PRIVILEGIOS_ELEVADOS, TipoEvento.PROCESO_ELEVACION_PRIVILEGIOS],
-                ventana_tiempo=600,  # 10 minutos
-                umbral_eventos=3,
-                accion="ALERTA_CRITICA",
-                descripcion="Detecta intentos de escalada de privilegios"
-            ),
-            ReglaCorrelacion(
-                "Patron_Malware",
-                [TipoEvento.MALWARE_DETECTADO, TipoEvento.PROCESO_SOSPECHOSO, TipoEvento.CONEXION_SOSPECHOSA],
-                ventana_tiempo=900,  # 15 minutos
-                umbral_eventos=3,
-                accion="CUARENTENA_AUTOMATICA",
-                descripcion="Detecta patrones típicos de actividad malware"
-            ),
-            ReglaCorrelacion(
-                "Intento_Intrusión",
-                [TipoEvento.PUERTO_ESCANEADO, TipoEvento.CONEXION_NO_AUTORIZADA, TipoEvento.IP_BLOQUEADA],
-                ventana_tiempo=1200,  # 20 minutos
-                umbral_eventos=4,
-                accion="ALERTA_SEGURIDAD",
-                descripcion="Detecta intentos de intrusión en la red"
-            ),
-            ReglaCorrelacion(
-                "Violacion_Integridad_Masiva",
-                [TipoEvento.INTEGRIDAD_VIOLADA, TipoEvento.ARCHIVO_MODIFICADO, TipoEvento.PERMISOS_MODIFICADOS],
-                ventana_tiempo=300,  # 5 minutos
-                umbral_eventos=10,
-                accion="ALERTA_CRITICA",
-                descripcion="Detecta modificaciones masivas de archivos"
-            )
-        ]
-        
-        self.reglas.extend(reglas_base)
     
     def agregar_regla(self, regla: ReglaCorrelacion):
-        """Agrega una nueva regla de correlación."""
+        """Agrega una nueva regla de correlación"""
         self.reglas.append(regla)
     
     def procesar_evento(self, evento: EventoSIEM) -> List[str]:
-        """
-        Procesa un evento y verifica correlaciones.
-        
-        Returns:
-            Lista de reglas activadas
-        """
+        """Procesa un evento y verifica correlaciones"""
         self.ventana_eventos.append(evento)
         reglas_activadas = []
         
-        # Verificar cada regla
+        # Verificar cada regla usando utilidades
         for regla in self.reglas:
             if not regla.activa:
                 continue
                 
-            if self._verificar_regla(regla, evento):
+            if regla.evaluar(evento, list(self.ventana_eventos)):
                 reglas_activadas.append(regla.nombre)
                 self.estadisticas_correlacion['reglas_activadas'] += 1
                 
@@ -393,23 +180,8 @@ class MotorCorrelacion:
         
         return reglas_activadas
     
-    def _verificar_regla(self, regla: ReglaCorrelacion, evento_actual: EventoSIEM) -> bool:
-        """Verifica si una regla se activa con el evento actual."""
-        if evento_actual.tipo not in regla.tipos_eventos:
-            return False
-        
-        # Obtener eventos en la ventana de tiempo
-        tiempo_limite = evento_actual.timestamp - timedelta(seconds=regla.ventana_tiempo)
-        eventos_ventana = [
-            e for e in self.ventana_eventos 
-            if e.timestamp >= tiempo_limite and e.tipo in regla.tipos_eventos
-        ]
-        
-        # Verificar si se alcanza el umbral
-        return len(eventos_ventana) >= regla.umbral_eventos
-    
     def _obtener_eventos_relacionados(self, regla: ReglaCorrelacion) -> List[EventoSIEM]:
-        """Obtiene los eventos relacionados para una regla activada."""
+        """Obtiene los eventos relacionados para una regla activada"""
         tiempo_limite = datetime.now() - timedelta(seconds=regla.ventana_tiempo)
         return [
             e for e in self.ventana_eventos 
@@ -417,7 +189,7 @@ class MotorCorrelacion:
         ]
     
     def obtener_estadisticas(self) -> Dict[str, Any]:
-        """Obtiene estadísticas del motor de correlación."""
+        """Obtiene estadísticas del motor de correlación"""
         return {
             'reglas_activas': len([r for r in self.reglas if r.activa]),
             'total_reglas': len(self.reglas),
@@ -427,21 +199,31 @@ class MotorCorrelacion:
         }
     
     def obtener_patrones_recientes(self, limite: int = 10) -> List[Dict[str, Any]]:
-        """Obtiene los patrones detectados más recientes."""
+        """Obtiene los patrones detectados más recientes"""
         patrones_ordenados = sorted(
             self.patrones_detectados.items(),
-            key=lambda x: x[0].split('_')[-1],  # Ordenar por timestamp
+            key=lambda x: x[0].split('_')[-1] if '_' in x[0] else '0',
             reverse=True
         )
         
         return [
             {
-                'patron': patron.split('_')[0],
-                'timestamp': patron.split('_')[-1],
+                'patron': patron.split('_')[0] if '_' in patron else patron,
+                'timestamp': patron.split('_')[-1] if '_' in patron else 'unknown',
                 'eventos_relacionados': eventos
             }
             for patron, eventos in patrones_ordenados[:limite]
         ]
+    
+    def analizar_patrones_temporales(self, ventana_minutos: int = 60) -> Dict[str, Any]:
+        """Analiza patrones temporales usando utilidades"""
+        eventos_lista = list(self.ventana_eventos)
+        return MotorCorrelacionUtils.analizar_patron_temporal(eventos_lista, ventana_minutos)
+    
+    def detectar_patrones_avanzados(self) -> List[Dict[str, Any]]:
+        """Detecta patrones avanzados usando utilidades"""
+        eventos_lista = list(self.ventana_eventos)
+        return MotorCorrelacionUtils.detectar_patrones_avanzados(eventos_lista)
 
 
 class SIEM:
@@ -821,20 +603,11 @@ class SIEM:
         return eventos_encontrados[:limite]
     
     def limpiar_eventos_antiguos(self, dias_antiguedad: int = 30) -> int:
-        """
-        Limpia eventos anteriores al número de días especificado.
-        
-        Args:
-            dias_antiguedad: Días de antigüedad para considerar eventos antiguos
-            
-        Returns:
-            Número de eventos eliminados
-        """
-        fecha_limite = datetime.now() - timedelta(days=dias_antiguedad)
+        """Limpia eventos anteriores al número de días especificado usando utilidades"""
         eventos_antes = len(self.eventos)
         
-        # Filtrar eventos recientes
-        self.eventos = [e for e in self.eventos if e.timestamp >= fecha_limite]
+        # Usar utilidades para limpiar eventos
+        self.eventos = SIEMUtils.limpiar_eventos_antiguos(self.eventos, dias_antiguedad)
         eventos_eliminados = eventos_antes - len(self.eventos)
         
         if eventos_eliminados > 0:
@@ -978,51 +751,26 @@ class SIEM:
             return False
     
     def obtener_resumen_seguridad(self) -> Dict[str, Any]:
-        """
-        Obtiene un resumen del estado de seguridad basado en eventos.
+        """Obtiene un resumen del estado de seguridad usando utilidades SIEM"""
+        # Usar utilidades para generar resumen básico
+        resumen_base = SIEMUtils.generar_resumen_seguridad(self.eventos)
         
-        Returns:
-            Diccionario con el resumen de seguridad
-        """
-        ahora = datetime.now()
-        hace_24h = ahora - timedelta(hours=24)
-        hace_1h = ahora - timedelta(hours=1)
-        
-        # Eventos recientes
-        eventos_24h = [e for e in self.eventos if e.timestamp >= hace_24h]
-        eventos_1h = [e for e in self.eventos if e.timestamp >= hace_1h]
-        
-        # Contar eventos críticos y altos
-        criticos_24h = len([e for e in eventos_24h if e.nivel_criticidad == NivelCriticidad.CRITICO])
-        altos_24h = len([e for e in eventos_24h if e.nivel_criticidad == NivelCriticidad.ALTO])
-        
-        # Calcular nivel de amenaza
-        if criticos_24h > 5 or altos_24h > 10:
-            nivel_amenaza = "CRÍTICO"
-        elif criticos_24h > 0 or altos_24h > 5:
-            nivel_amenaza = "ALTO"
-        elif altos_24h > 0 or len(eventos_1h) > 20:
-            nivel_amenaza = "MEDIO"
-        else:
-            nivel_amenaza = "BAJO"
-        
-        # Patrones detectados
+        # Agregar información específica del motor de correlación
+        stats_correlacion = self.motor_correlacion.obtener_estadisticas()
         patrones_recientes = self.obtener_patrones_detectados(10)
         
-        # Estadísticas de correlación
-        stats_correlacion = self.motor_correlacion.obtener_estadisticas()
-        
+        # Combinar información
         return {
-            'nivel_amenaza': nivel_amenaza,
-            'eventos_ultima_hora': len(eventos_1h),
-            'eventos_ultimas_24h': len(eventos_24h),
-            'eventos_criticos_24h': criticos_24h,
-            'eventos_altos_24h': altos_24h,
+            **resumen_base,
             'patrones_detectados': len(patrones_recientes),
             'eventos_correlacionados': stats_correlacion['eventos_correlacionados'],
             'reglas_activas': stats_correlacion['reglas_activas'],
-            'timestamp_analisis': ahora.isoformat(),
-            'recomendaciones': self._generar_recomendaciones_seguridad(nivel_amenaza, criticos_24h, altos_24h)
+            'motor_correlacion_activo': True,
+            'recomendaciones': self._generar_recomendaciones_seguridad(
+                resumen_base.get('estado', 'NORMAL'), 
+                resumen_base.get('eventos_criticos', 0),
+                resumen_base.get('eventos_altos', 0)
+            )
         }
     
     def _generar_recomendaciones_seguridad(self, nivel_amenaza: str, criticos: int, altos: int) -> List[str]:
@@ -1156,11 +904,11 @@ class SIEM:
         """Obtener eventos recientes del SIEM"""
         try:
             eventos_recientes = sorted(
-                self.eventos_buffer, 
-                key=lambda x: x.get('timestamp', ''), 
+                self.eventos, 
+                key=lambda x: x.timestamp if hasattr(x, 'timestamp') else '', 
                 reverse=True
             )
-            return eventos_recientes[:limite]
+            return [evento.__dict__ for evento in eventos_recientes[:limite]]
         except Exception as e:
             self.logger.error(f"Error obteniendo eventos recientes: {e}")
             return []

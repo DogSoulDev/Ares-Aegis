@@ -18,15 +18,15 @@ from datetime import datetime, timedelta
 from collections import defaultdict, deque
 
 from .modelo_siem import SIEM, TipoEvento, NivelCriticidad
-from ..utils.validaciones import (
+from ..utils.utils_validaciones import (
     validar_ruta_archivo, validar_ruta_directorio, 
     validar_permisos_lectura, es_ruta_segura
 )
-from ..utils.ayuda_rutas import (
+from ..utils.utils_ayuda_rutas import (
     listar_archivos_recursivo, obtener_tamaño_archivo,
     obtener_rutas_sistema
 )
-from ..utils.ayuda_logging import configurar_logger_modulo
+from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
 
 class TipoAmenaza:
