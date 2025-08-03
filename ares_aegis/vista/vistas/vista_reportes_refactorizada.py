@@ -3,6 +3,7 @@
 Vista Reportes para Ares Aegis
 Interfaz del módulo de reportes con soporte para exportación Markdown
 """
+from ..componentes_ui.vista_base import VistaBase
 
 from ...utils.imports_comunes import (
     tk, ttk, messagebox, filedialog, logging, os, time, threading
@@ -14,10 +15,11 @@ from ..componentes_ui.emoticonos_mitologicos import EmoticonosMitologicos
 from ..componentes_ui.sistema_ayuda import SistemaAyuda
 
 
-class VistaReportes:
+class VistaReportes(VistaBase):
     """Vista de reportes con soporte para exportación Markdown"""
     
     def __init__(self, contenedor_padre, controlador, colores):
+        super().__init__(contenedor_padre, controlador, colores)
         self.contenedor_padre = contenedor_padre
         self.controlador = controlador
         self.colores = colores
@@ -32,7 +34,9 @@ class VistaReportes:
         # Sistema de ayuda
         self.sistema_ayuda = SistemaAyuda(colores)
         
-    def mostrar_informacion(self):
+    # Método mostrar_informacion heredado de VistaBase
+    # Para personalizar, implementar métodos abstractos:
+    # _get_titulo_ventana() y _get_descripcion_funcionalidades()
         """Mostrar información de ayuda sobre los Reportes"""
         info_text = """� SISTEMA DE REPORTES AVANZADOS - INTELIGENCIA ACTIONABLE
 

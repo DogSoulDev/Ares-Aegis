@@ -3,6 +3,7 @@
 Vista CheatSheets para Ares Aegis
 Dashboard completo de gestión de hojas de trucos para estudiantes de ciberseguridad
 
+from ..componentes_ui.vista_base import VistaBase
 Creado por DogSoulDev
 Versión: 4.0.0 - Vista Especializada
 """
@@ -18,10 +19,11 @@ from datetime import datetime
 from ..componentes_ui.sistema_ayuda import SistemaAyuda
 
 
-class VistaCheatsheets:
+class VistaCheatsheets(VistaBase):
     """Vista especializada para gestión de CheatSheets de ciberseguridad"""
     
     def __init__(self, contenedor_padre, controlador, colores):
+        super().__init__(contenedor_padre, controlador, colores)
         self.contenedor_padre = contenedor_padre
         self.controlador = controlador
         self.colores = colores
@@ -74,7 +76,9 @@ class VistaCheatsheets:
             self.ruta_cheatsheets = Path.cwd() / "recursos" / "cheatsheets"
             self.ruta_cheatsheets.mkdir(parents=True, exist_ok=True)
         
-    def mostrar_informacion(self):
+    # Método mostrar_informacion heredado de VistaBase
+    # Para personalizar, implementar métodos abstractos:
+    # _get_titulo_ventana() y _get_descripcion_funcionalidades()
         """Mostrar información de ayuda sobre las CheatSheets"""
         info_text = """� CHEATSHEETS DE CIBERSEGURIDAD - ARSENAL DE CONOCIMIENTO
 

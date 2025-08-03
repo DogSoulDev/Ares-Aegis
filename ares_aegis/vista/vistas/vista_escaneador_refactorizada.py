@@ -3,6 +3,7 @@
 Vista Escaneador para Ares Aegis
 Interfaz del módulo de escaneador de amenazas
 """
+from ..componentes_ui.vista_base import VistaBase
 
 from ...utils.imports_comunes import (
     tk, ttk, messagebox, filedialog, logging, os, time, threading
@@ -13,10 +14,11 @@ from ..componentes_ui.sistema_ayuda import SistemaAyuda
 from ...utils.validaciones import validar_directorio, validar_permisos_lectura
 
 
-class VistaEscaneador:
+class VistaEscaneador(VistaBase):
     """Vista del escaneador de amenazas"""
     
     def __init__(self, contenedor_padre, controlador, colores):
+        super().__init__(contenedor_padre, controlador, colores)
         self.contenedor_padre = contenedor_padre
         self.controlador = controlador
         self.colores = colores
@@ -38,7 +40,9 @@ class VistaEscaneador:
         self.escaneo_activo = False
         self.hilo_escaneo = None
         
-    def mostrar_informacion(self):
+    # Método mostrar_informacion heredado de VistaBase
+    # Para personalizar, implementar métodos abstractos:
+    # _get_titulo_ventana() y _get_descripcion_funcionalidades()
         """Mostrar información de ayuda sobre el Escaneador"""
         info_text = """🛡️ ESCANEADOR DE AMENAZAS - DETECCIÓN AVANZADA
 

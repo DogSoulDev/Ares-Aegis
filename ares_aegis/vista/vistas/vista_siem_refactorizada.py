@@ -3,6 +3,7 @@
 Vista SIEM para Ares Aegis
 Sistema de monitoreo y análisis de eventos de seguridad en tiempo real
 """
+from ..componentes_ui.vista_base import VistaBase
 
 from ...utils.imports_comunes import (
     tk, ttk, messagebox, filedialog, logging, os, time, threading
@@ -23,10 +24,11 @@ import shutil
 PSUTIL_DISPONIBLE = False
 
 
-class VistaSIEM:
+class VistaSIEM(VistaBase):
     """Vista del sistema SIEM con monitoreo en tiempo real"""
     
     def __init__(self, contenedor_padre, controlador, colores):
+        super().__init__(contenedor_padre, controlador, colores)
         self.contenedor_padre = contenedor_padre
         self.controlador = controlador
         self.colores = colores
@@ -52,7 +54,9 @@ class VistaSIEM:
         # Sistema de ayuda
         self.sistema_ayuda = SistemaAyuda(colores)
         
-    def mostrar_informacion(self):
+    # Método mostrar_informacion heredado de VistaBase
+    # Para personalizar, implementar métodos abstractos:
+    # _get_titulo_ventana() y _get_descripcion_funcionalidades()
         """Mostrar información de ayuda sobre el SIEM"""
         info_text = """🛡️ SISTEMA SIEM - INTELIGENCIA DE AMENAZAS
 

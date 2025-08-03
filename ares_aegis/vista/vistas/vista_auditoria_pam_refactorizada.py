@@ -3,6 +3,7 @@
 Vista de Auditoría PAM para Ares Aegis
 ====================================
 
+from ..componentes_ui.vista_base import VistaBase
 Vista especializada para mostrar y gestionar auditorías de autenticación PAM.
 Proporciona una interfaz profesional para ejecutar auditorías y visualizar resultados.
 
@@ -20,7 +21,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 
-class VistaAuditoriaPAM:
+class VistaAuditoriaPAM(VistaBase):
     """
     Vista especializada para auditorías de autenticación PAM.
     
@@ -33,6 +34,7 @@ class VistaAuditoriaPAM:
     """
     
     def __init__(self, contenedor_padre, controlador, colores):
+        super().__init__(contenedor_padre, controlador, colores)
         """
         Inicializa la vista de auditoría PAM.
         
@@ -73,7 +75,9 @@ class VistaAuditoriaPAM:
         # Sistema de ayuda
         self.sistema_ayuda = SistemaAyuda(self.colores)
         
-    def mostrar_informacion(self):
+    # Método mostrar_informacion heredado de VistaBase
+    # Para personalizar, implementar métodos abstractos:
+    # _get_titulo_ventana() y _get_descripcion_funcionalidades()
         """Mostrar información de ayuda sobre la Auditoría PAM"""
         info_text = """🛡️ AUDITORÍA PAM - SISTEMA DE AUTENTICACIÓN
 

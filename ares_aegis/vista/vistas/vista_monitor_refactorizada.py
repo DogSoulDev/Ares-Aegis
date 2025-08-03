@@ -3,6 +3,7 @@
 Vista Monitor para Ares Aegis
 Interfaz del módulo de monitoreo del sistema optimizado para Kali Linux
 """
+from ..componentes_ui.vista_base import VistaBase
 
 from ...utils.imports_comunes import (
     tk, ttk, messagebox, filedialog, logging, os, time, threading
@@ -13,10 +14,11 @@ from ..componentes_ui.emoticonos_mitologicos import EmoticonosMitologicos
 from ..componentes_ui.sistema_ayuda import SistemaAyuda
 
 
-class VistaMonitor:
+class VistaMonitor(VistaBase):
     """Vista del monitor del sistema optimizada para Kali Linux"""
     
     def __init__(self, contenedor_padre, controlador, colores):
+        super().__init__(contenedor_padre, controlador, colores)
         self.contenedor_padre = contenedor_padre
         self.controlador = controlador
         self.colores = colores
@@ -33,7 +35,9 @@ class VistaMonitor:
         # Sistema de ayuda
         self.sistema_ayuda = SistemaAyuda(colores)
         
-    def mostrar_informacion(self):
+    # Método mostrar_informacion heredado de VistaBase
+    # Para personalizar, implementar métodos abstractos:
+    # _get_titulo_ventana() y _get_descripcion_funcionalidades()
         """Mostrar información de ayuda sobre el Monitor del Sistema"""
         
         info_text = """🛡️ MONITOR DEL SISTEMA - SUPERVISIÓN INTEGRAL

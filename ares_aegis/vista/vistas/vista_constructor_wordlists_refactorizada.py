@@ -3,6 +3,7 @@
 Vista Constructor de Wordlists para Ares Aegis
 Sistema avanzado para gestión, edición y creación de wordlists
 """
+from ..componentes_ui.vista_base import VistaBase
 
 from ...utils.imports_comunes import (
     tk, ttk, messagebox, filedialog, logging, os, time, threading
@@ -13,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-class VistaConstructorWordlists:
+class VistaConstructorWordlists(VistaBase):
     """
     Constructor de Wordlists Avanzado para Ares Aegis
     
@@ -26,6 +27,7 @@ class VistaConstructorWordlists:
     """
     
     def __init__(self, contenedor_padre, controlador, colores):
+        super().__init__(contenedor_padre, controlador, colores)
         """Inicializar vista del constructor de wordlists"""
         self.contenedor_padre = contenedor_padre
         self.controlador = controlador
@@ -62,7 +64,9 @@ class VistaConstructorWordlists:
             
         self.colores = ColoresBasicos()
     
-    def mostrar_informacion(self):
+    # Método mostrar_informacion heredado de VistaBase
+    # Para personalizar, implementar métodos abstractos:
+    # _get_titulo_ventana() y _get_descripcion_funcionalidades()
         """Mostrar información de ayuda sobre el Constructor de Wordlists"""
         info_text = """� CONSTRUCTOR DE WORDLISTS AVANZADO - ARSENAL DIGITAL
 
