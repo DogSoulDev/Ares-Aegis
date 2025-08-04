@@ -290,7 +290,11 @@ class ControladorBase(abc.ABC):
                 else:
                     self.logger.error(f"Todos los reintentos fallaron. Último error: {e}")
         
-        raise ultimo_error
+        # Si llegamos aquí, todos los reintentos fallaron
+        if ultimo_error is not None:
+            raise ultimo_error
+        else:
+            raise RuntimeError(f"Operación falló después de {max_reintentos + 1} intentos sin capturar error específico")
     
     def obtener_estado(self) -> Dict[str, Any]:
         """

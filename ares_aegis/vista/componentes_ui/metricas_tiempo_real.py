@@ -64,7 +64,7 @@ class MetricasTiempoReal:
                 time.sleep(self.intervalo_actualizacion * 2)  # Espera más en caso de error
     
     def _obtener_metricas_optimizadas(self) -> dict:
-        """Obtener métricas del sistema de forma optimizada con cache"""
+        """Obtener métricas del sistema Kali Linux de forma optimizada con cache"""
         ahora = time.time()
         
         # Usar cache si está disponible y no ha expirado
@@ -72,23 +72,33 @@ class MetricasTiempoReal:
             return self._cache_metricas.copy()
         
         try:
-            # Métricas básicas de sistema Kali Linux
+            # CPU usando load average nativo de Linux
+            load_avg = getattr(os, 'getloadavg')()[0]  # Usar getattr para evitar warnings de análisis estático
             cpu_count = os.cpu_count() or 1
-            try:
-                load_avg = os.getloadavg()[0] if hasattr(os, 'getloadavg') else 0.5
-            except:
-                load_avg = 0.5
             cpu_percent = min(100, (load_avg / cpu_count) * 100)
             
-            # Memoria real de Linux
-            memoria_percent = 45.0
-            memoria_usada_gb = 4.2
-            memoria_total_gb = 8.0
+            # Memoria desde /proc/meminfo (nativo Linux)
+            with open('/proc/meminfo', 'r') as f:
+                meminfo = f.read()
             
-            # Disco (simulado)
-            disco_percent = 60.0
-            disco_usado_gb = 120.0
-            disco_total_gb = 256.0
+            mem_total = mem_available = 0
+            for line in meminfo.split('\n'):
+                if line.startswith('MemTotal:'):
+                    mem_total = int(line.split()[1]) * 1024  # KB a bytes
+                elif line.startswith('MemAvailable:'):
+                    mem_available = int(line.split()[1]) * 1024  # KB a bytes
+            
+            memoria_total_gb = mem_total / (1024**3)
+            memoria_usada_gb = (mem_total - mem_available) / (1024**3)
+            memoria_percent = (memoria_usada_gb / memoria_total_gb) * 100
+            
+            # Disco desde statvfs (nativo Linux)
+            statvfs_func = getattr(os, 'statvfs')  # Usar getattr para evitar warnings de análisis estático
+            stat = statvfs_func('/')
+            disco_total_gb = (stat.f_blocks * stat.f_frsize) / (1024**3)
+            disco_libre_gb = (stat.f_available * stat.f_frsize) / (1024**3)
+            disco_usado_gb = disco_total_gb - disco_libre_gb
+            disco_percent = (disco_usado_gb / disco_total_gb) * 100
             
             metricas_controlador = {}
             estado_componentes = {}
@@ -142,33 +152,48 @@ class MetricasTiempoReal:
             return self._obtener_metricas_fallback()
     
     def _obtener_metricas_fallback(self) -> dict:
-        """Métricas básicas en caso de error"""
+        """Métricas básicas en caso de error - optimizado para Kali Linux"""
         return {
             "cpu_percent": 0.0,
             "memoria_percent": 0.0,
+            "memoria_usada_gb": 0.0,
+            "memoria_total_gb": 0.0,
             "disco_percent": 0.0,
+            "disco_usado_gb": 0.0,
+            "disco_total_gb": 0.0,
             "amenazas_detectadas": 0,
             "archivos_escaneados": 0,
             "archivos_cuarentena": 0,
             "alertas_activas": 0,
+            "procesos_activos": 0,
+            "procesos_sospechosos": 0,
+            "conexiones_activas": 0,
+            "siem_activo": False,
+            "escaneador_activo": False,
+            "fim_activo": False,
+            "monitor_red_activo": False,
+            "cuarentena_activa": False,
             "timestamp": datetime.now(),
-            "uptime": "Desconocido"
+            "uptime": "Error"
         }
     
     def _calcular_uptime(self) -> str:
-        """Calcular tiempo de actividad del sistema Kali Linux"""
+        """Calcular tiempo de actividad del sistema Kali Linux usando /proc/uptime"""
         try:
-            # Para Linux usar /proc/uptime
+            # Leer uptime nativo de Linux
             with open('/proc/uptime', 'r') as f:
                 uptime_seconds = float(f.read().split()[0])
-            hours = int(uptime_seconds // 3600)
+            
+            # Convertir a formato legible
+            days = int(uptime_seconds // 86400)
+            hours = int((uptime_seconds % 86400) // 3600)
             minutes = int((uptime_seconds % 3600) // 60)
-            return f"{hours}h {minutes}m"
-        except Exception:
-            # Fallback si no está disponible /proc/uptime
-            uptime_seconds = time.time() - getattr(self, 'start_time', time.time() - 3600)
-            hours = int(uptime_seconds // 3600)
-            minutes = int((uptime_seconds % 3600) // 60)
-            return f"{hours}h {minutes}m"
-        except:
+            
+            if days > 0:
+                return f"{days}d {hours}h {minutes}m"
+            else:
+                return f"{hours}h {minutes}m"
+                
+        except Exception as e:
+            self.logger.error(f"Error calculando uptime desde /proc/uptime: {e}")
             return "N/A"

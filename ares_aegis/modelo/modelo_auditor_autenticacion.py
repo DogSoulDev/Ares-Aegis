@@ -71,6 +71,8 @@ class AuditorPAM:
                 recomendacion="Esta auditoría debe ejecutarse en un sistema Kali Linux o similar para obtener resultados válidos.",
                 fecha_deteccion=datetime.now()
             )
+            if not hasattr(hallazgo_informativo, 'metadatos') or hallazgo_informativo.metadatos is None:
+                hallazgo_informativo.metadatos = {}
             hallazgo_informativo.metadatos.update({
                 'sistema_operativo': platform.system(),
                 'razon': 'PAM no disponible en este sistema operativo'
@@ -182,6 +184,8 @@ class AuditorPAM:
                         recomendacion=f"Ajustar {config} a un valor más seguro en {ruta_pwquality}",
                         fecha_deteccion=datetime.now()
                     )
+                    if not hasattr(hallazgo, 'metadatos') or hallazgo.metadatos is None:
+                        hallazgo.metadatos = {}
                     hallazgo.metadatos.update({
                         'configuracion': config,
                         'valor_actual': valor_actual,
@@ -505,6 +509,8 @@ class AuditorPAM:
                     recomendacion=f"Corregir permisos: chown {esperados['propietario']}:{esperados['propietario']} {ruta} && chmod {esperados['permisos']} {ruta}",
                     fecha_deteccion=datetime.now()
                 )
+                if not hasattr(hallazgo, 'metadatos') or hallazgo.metadatos is None:
+                    hallazgo.metadatos = {}
                 hallazgo.metadatos.update({
                     'permisos_actuales': resultado['informacion']['permisos_octales'],
                     'permisos_esperados': esperados['permisos'],

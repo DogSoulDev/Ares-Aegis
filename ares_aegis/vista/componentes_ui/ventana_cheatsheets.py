@@ -22,31 +22,35 @@ class VentanaCheatsheets:
         self.colores = ColoresKaliLinux()
         
     def mostrar(self):
-        """Mostrar ventana modal de cheatsheet"""
+        """Mostrar ventana modal de cheatsheet optimizada para Kali Linux"""
         if self.ventana and tk.Toplevel.winfo_exists(self.ventana):
             self.ventana.lift()
             return
         
+        # Crear ventana optimizada para Kali Linux
         self.ventana = tk.Toplevel(self.parent)
-        self.ventana.title(f"📚 {self.titulo} - Escudo Divino de Ciberseguridad")
+        self.ventana.title(f"📚 {self.titulo} - Ares Aegis Kali Linux")
         self.ventana.geometry("1200x800")
         self.ventana.configure(bg=self.colores.fondo_primario)
         
-        # Hacer ventana modal
+        # Configurar para Kali Linux (entorno de escritorio típico)
         self.ventana.transient(self.parent)
         self.ventana.grab_set()
         
-        # Centrar ventana
+        # Centrar en pantalla Kali Linux
         self._centrar_ventana()
         
-        # Crear interfaz
+        # Crear interfaz optimizada
         self._crear_interfaz()
         
-        # Configurar cierre
+        # Configurar cierre limpio
         self.ventana.protocol("WM_DELETE_WINDOW", self._cerrar)
     
     def _centrar_ventana(self):
-        """Centrar ventana en pantalla"""
+        """Centrar ventana en pantalla para Kali Linux"""
+        if not self.ventana:
+            return
+            
         self.ventana.update_idletasks()
         width = 1200
         height = 800
@@ -86,23 +90,25 @@ class VentanaCheatsheets:
         self._crear_footer()
     
     def _crear_interfaz_categorias(self, parent):
-        """Crear interfaz con categorías para cheatsheets JSON con estilo mejorado"""
-        # Configurar estilo del notebook
+        """Crear interfaz con categorías para cheatsheets JSON - Estilo Kali Linux 2025"""
+        # Configurar estilo del notebook específico para Kali Linux
         style = ttk.Style()
-        style.theme_use('clam')
+        style.theme_use('clam')  # Tema base compatible con Kali Linux
         
-        # Estilos personalizados para Kali
+        # Estilos personalizados auténticos de Kali Linux
         style.configure('Kali.TNotebook', 
                        background=self.colores.fondo_primario,
-                       borderwidth=0)
+                       borderwidth=0,
+                       tabmargins=[2, 5, 2, 0])
         style.configure('Kali.TNotebook.Tab',
                        background=self.colores.fondo_terciario,
                        foreground=self.colores.texto_primario,
                        padding=[20, 10],
-                       focuscolor='none')
+                       focuscolor='none',
+                       borderwidth=1)
         style.map('Kali.TNotebook.Tab',
                  background=[('selected', self.colores.acento_primario),
-                           ('active', self.colores.fondo_hover)])
+                           ('active', self.colores.boton_hover)])
         
         # Crear notebook
         self.notebook = ttk.Notebook(parent, style='Kali.TNotebook')
@@ -154,14 +160,18 @@ class VentanaCheatsheets:
         for herr_key, herramienta in herramientas.items():
             self._mostrar_herramienta(scrollable_frame, herr_key, herramienta)
         
-        # Configurar scroll
+        # Configurar scroll optimizado para Kali Linux
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
         
-        # Bind mouse wheel
+        # Bind mouse wheel para scroll suave en Kali Linux
         def _on_mousewheel(event):
             canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        canvas.bind("<MouseWheel>", _on_mousewheel)
+        
+        # Binds múltiples para compatibilidad con diferentes sistemas de Kali
+        canvas.bind("<MouseWheel>", _on_mousewheel)  # Windows style (en caso de usar en VM)
+        canvas.bind("<Button-4>", lambda e: canvas.yview_scroll(-1, "units"))  # Linux mouse wheel up
+        canvas.bind("<Button-5>", lambda e: canvas.yview_scroll(1, "units"))   # Linux mouse wheel down
     
     def _mostrar_herramienta(self, parent, nombre, herramienta):
         """Mostrar información de una herramienta específica"""
@@ -214,7 +224,7 @@ class VentanaCheatsheets:
             cmd_bg.pack(fill='x', padx=12, pady=5)
             
             cmd_label = tk.Label(cmd_bg,
-                               text=f"$ {cmd_text}",
+                               text=f"┌──(kali㉿kali)-[~]\n└─$ {cmd_text}",  # Prompt auténtico Kali Linux
                                font=('Consolas', 11, 'bold'),
                                fg=self.colores.exito,
                                bg=self.colores.fondo_terciario,
@@ -267,9 +277,9 @@ class VentanaCheatsheets:
         footer.pack(fill='x', padx=15, pady=(0, 15))
         footer.pack_propagate(False)
         
-        # Información de ayuda
+        # Información de ayuda específica para Kali Linux
         tk.Label(footer,
-                text="💡 Usa Ctrl+C para copiar • Rueda del mouse para scroll",
+                text="� Kali Linux • Ctrl+C para copiar • Rueda del mouse para scroll",
                 font=('Consolas', 9),
                 fg=self.colores.texto_terciario,
                 bg=self.colores.fondo_secundario).pack(side='left', padx=20, pady=20)

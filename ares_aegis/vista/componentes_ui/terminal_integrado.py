@@ -39,18 +39,18 @@ class TerminalIntegrado:
     def _detectar_shell_usuario(self):
         """Detectar el shell predeterminado del usuario en Kali Linux"""
         try:
-            # Usar SHELL environment variable
+            # En Kali Linux, usar directamente la variable SHELL
             shell_env = os.environ.get('SHELL', '/bin/bash')
             if os.path.exists(shell_env):
                 return shell_env
             
-            # Fallbacks comunes en Kali Linux
-            shells_comunes = ['/bin/bash', '/bin/zsh', '/bin/sh']
-            for shell in shells_comunes:
+            # Shells comunes en Kali Linux en orden de preferencia
+            shells_kali = ['/bin/zsh', '/bin/bash', '/bin/sh']
+            for shell in shells_kali:
                 if os.path.exists(shell):
                     return shell
                     
-            # Último recurso
+            # Fallback a bash (siempre disponible en Kali)
             return '/bin/bash'
                 
         except Exception as e:
@@ -192,8 +192,9 @@ class TerminalIntegrado:
         
         # Agregar tab al notebook
         tab_name = f"Terminal {self.contador_terminales}"
-        self.notebook.add(terminal_frame, text=tab_name)
-        self.notebook.select(terminal_frame)
+        if self.notebook:
+            self.notebook.add(terminal_frame, text=tab_name)
+            self.notebook.select(terminal_frame)
         self.terminal_actual = terminal_id
         
         # Configurar eventos del terminal
@@ -210,17 +211,14 @@ class TerminalIntegrado:
     def _iniciar_proceso_shell(self):
         """Iniciar proceso real del shell en Kali Linux"""
         try:
-            # Verificar si estamos en un sistema Linux real
-            if not hasattr(os, 'setsid'):
-                self.logger.warning("os.setsid no disponible - probablemente no es Linux")
-                return None
-            
-            # Configurar variables de entorno para Kali Linux
+            # Configurar variables de entorno específicas para Kali Linux
             env = os.environ.copy()
             env['TERM'] = 'xterm-256color'
-            env['PS1'] = '┌─[\\u@\\h]─[\\w]\\n└─$ '  # Prompt estilo Kali
+            env['COLORTERM'] = 'truecolor'
+            env['PS1'] = '┌──(\\u㉿\\h)-[\\w]\\n└─\\$ '  # Prompt auténtico de Kali Linux 2024+
+            env['DEBIAN_FRONTEND'] = 'noninteractive'  # Para comandos no interactivos
             
-            # Crear proceso para Linux
+            # Crear proceso nativo para Kali Linux
             proceso = subprocess.Popen(
                 [self.shell_usuario],
                 stdin=subprocess.PIPE,
@@ -229,7 +227,7 @@ class TerminalIntegrado:
                 universal_newlines=True,
                 bufsize=0,
                 env=env,
-                preexec_fn=os.setsid
+                preexec_fn=getattr(os, 'setsid')  # Usar getattr para funciones Linux
             )
             
             return proceso
@@ -266,19 +264,16 @@ class TerminalIntegrado:
         # Obtener información del sistema Kali Linux
         try:
             usuario = os.getenv('USER', 'kali')
-            if hasattr(os, 'uname'):
-                hostname = os.uname().nodename
-            else:
-                hostname = 'kali-sistema'
+            hostname = getattr(os, 'uname')().nodename  # Usar getattr para funciones Linux
         except:
             usuario = 'kali'
             hostname = 'kali-sistema'
         
         # Mensaje de bienvenida estilo Kali Linux
-        bienvenida = f"""🛡️ {EmoticonosMitologicos.ARES} Terminal de Ares Aegis - Shell Real
+        bienvenida = f"""🛡️  {EmoticonosMitologicos.ARES} ARES AEGIS - TERMINAL KALI LINUX 
 ┌─[{usuario}@{hostname}]─[{os.getcwd()}]
-└─$ Terminal de Kali Linux Listo
-Shell: {self.shell_usuario}
+└─$ Kali Linux Terminal Ready
+Shell: {self.shell_usuario} | Terminal ID: {terminal_id[-1]}
 
 """
         
@@ -381,8 +376,10 @@ Shell: {self.shell_usuario}
         
         try:
             if proceso and proceso.poll() is None:
-                # Enviar SIGINT al grupo de procesos en Linux
-                os.killpg(os.getpgid(proceso.pid), signal.SIGINT)
+                # Enviar SIGINT al grupo de procesos en Kali Linux
+                killpg = getattr(os, 'killpg')
+                getpgid = getattr(os, 'getpgid')
+                killpg(getpgid(proceso.pid), signal.SIGINT)
                 
                 # Mostrar ^C en el terminal
                 text_widget = terminal_info['text_widget']
@@ -443,17 +440,23 @@ Shell: {self.shell_usuario}
             proceso = terminal_info['proceso']
             if proceso and proceso.poll() is None:
                 try:
-                    # Terminar grupo de procesos en Linux
-                    os.killpg(os.getpgid(proceso.pid), signal.SIGTERM)
+                    # Terminar grupo de procesos en Kali Linux usando funciones nativas
+                    killpg = getattr(os, 'killpg')
+                    getpgid = getattr(os, 'getpgid')
+                    sigterm = getattr(signal, 'SIGTERM')
+                    sigkill = getattr(signal, 'SIGKILL')
+                    
+                    killpg(getpgid(proceso.pid), sigterm)
                     time.sleep(0.1)
                     if proceso.poll() is None:
-                        os.killpg(os.getpgid(proceso.pid), signal.SIGKILL)
+                        killpg(getpgid(proceso.pid), sigkill)
                 except Exception:
                     proceso.terminate()
             
             # Remover tab del notebook
             frame = terminal_info['frame']
-            self.notebook.forget(frame)
+            if self.notebook:
+                self.notebook.forget(frame)
             
             # Limpiar referencia
             del self.terminales_activos[terminal_id]

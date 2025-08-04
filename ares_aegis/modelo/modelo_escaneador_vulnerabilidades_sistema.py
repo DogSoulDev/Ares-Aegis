@@ -348,14 +348,19 @@ class VigiaGrietasRealm:
     def _verificar_archivo_critico(self, archivo: str, ruta: str) -> Optional[Hallazgo]:
         """Verifica permisos específicos de un archivo crítico."""
         try:
-            permisos = utilidades_sistema.obtener_permisos_archivo(ruta)
+            permisos = utilidades_sistema.obtener_informacion_permisos(ruta)
+            if not permisos:
+                return None
             
             # Criterios específicos por archivo
             problemas = []
             
             if archivo in ['passwd', 'group']:
-                if permisos['otros_pueden_escribir']:
-                    problemas.append("Otros usuarios pueden escribir en este archivo crítico")
+                # Verificar si otros pueden escribir (tercer dígito de permisos octales)
+                if permisos['permisos_octales'] and len(permisos['permisos_octales']) >= 3:
+                    otros_permisos = int(permisos['permisos_octales'][-1])
+                    if otros_permisos & 2:  # Bit de escritura
+                        problemas.append("Otros usuarios pueden escribir en este archivo crítico")
                 if permisos['propietario'] != 'root':
                     problemas.append(f"Propietario debería ser root, actual: {permisos['propietario']}")
                     
@@ -389,34 +394,6 @@ class VigiaGrietasRealm:
                 
         except Exception as e:
             self.logger.warning(f"Error verificando {ruta}: {e}")
-            
-        return None
-    
-    def _verificar_permisos_directorio(self, directorio: str) -> Optional[Hallazgo]:
-        """Verifica permisos de directorios importantes."""
-        try:
-            permisos = utilidades_sistema.obtener_permisos_archivo(directorio)
-            problemas = []
-            
-            if directorio == '/root':
-                if permisos['otros_pueden_leer'] or permisos['otros_pueden_escribir']:
-                    problemas.append("Directorio root accesible por otros usuarios")
-            elif directorio == '/etc/shadow' or directorio == '/etc/sudoers':
-                if permisos['otros_pueden_escribir']:
-                    problemas.append("Directorio crítico escribible por otros")
-                    
-            if problemas:
-                return Hallazgo(
-                    tipo_anomalia=TipoHallazgo.VULNERABILIDAD_SISTEMA,
-                    ruta_afectada=directorio,
-                    detalle_especifico=f"Permisos inseguros en directorio: {'; '.join(problemas)}",
-                    prioridad=PrioridadHallazgo.MEDIA,
-                    recomendacion=f"Revisar y corregir permisos del directorio {directorio}",
-                    fecha_deteccion=datetime.now()
-                )
-                
-        except Exception as e:
-            self.logger.warning(f"Error verificando directorio {directorio}: {e}")
             
         return None
 

@@ -219,10 +219,11 @@ class ControladorAuditoriaAvanzada:
                 return False
                 
             if hallazgo.ruta_afectada and self.utilidades.archivo_existe(hallazgo.ruta_afectada):
-                return self.controlador_cuarentena.poner_en_cuarentena(
+                resultado = self.controlador_cuarentena.cuarentenar_archivo(
                     hallazgo.ruta_afectada, 
                     f"Cuarentena automática: {hallazgo.detalle_especifico}"
                 )
+                return resultado.get('exito', False)
         except Exception as e:
             self.logger.error(f"Error enviando a cuarentena {hallazgo.ruta_afectada}: {e}")
         return False
@@ -380,10 +381,17 @@ class ControladorAuditoriaAvanzada:
                 return
                 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            nombre_reporte = f"auditoria_avanzada_{timestamp}.html"
+            nombre_reporte = f"auditoria_avanzada_{timestamp}"
             
-            self.controlador_reportes.generar_reporte_html(resultado, nombre_reporte)
-            self.logger.info(f"📊 Reporte generado: {nombre_reporte}")
+            # Generar reporte usando el método correcto
+            ruta_reporte = self.controlador_reportes.generar_reporte_real(
+                tipo_reporte="auditoria_avanzada", 
+                formato="html"
+            )
+            if ruta_reporte:
+                self.logger.info(f"📊 Reporte generado: {ruta_reporte}")
+            else:
+                self.logger.warning("⚠️ Error generando reporte")
             
         except Exception as e:
             self.logger.error(f"Error generando reporte: {e}")

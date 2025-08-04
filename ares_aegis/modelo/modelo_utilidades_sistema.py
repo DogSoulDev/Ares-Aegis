@@ -27,6 +27,28 @@ except ImportError:
 
 from ..utils.utils_ayuda_logging import configurar_logger_modulo
 
+# Herramientas comunes de Kali Linux con sus rutas típicas
+HERRAMIENTAS_KALI = {
+    'nmap': '/usr/bin/nmap',
+    'nikto': '/usr/bin/nikto',
+    'sqlmap': '/usr/bin/sqlmap',
+    'dirb': '/usr/bin/dirb',
+    'gobuster': '/usr/bin/gobuster',
+    'wpscan': '/usr/bin/wpscan',
+    'john': '/usr/bin/john',
+    'hashcat': '/usr/bin/hashcat',
+    'hydra': '/usr/bin/hydra',
+    'metasploit': '/usr/bin/msfconsole',
+    'aircrack-ng': '/usr/bin/aircrack-ng',
+    'wireshark': '/usr/bin/wireshark',
+    'netcat': '/usr/bin/nc',
+    'ncat': '/usr/bin/ncat',
+    'masscan': '/usr/bin/masscan',
+    'zap': '/usr/bin/zaproxy',
+    'burpsuite': '/usr/bin/burpsuite',
+    'searchsploit': '/usr/bin/searchsploit'
+}
+
 
 class UtilidadesSistema:
     """
@@ -95,19 +117,30 @@ class UtilidadesSistema:
             permisos_octales = oct(stat_info.st_mode)[-3:]
             
             # Obtener información del propietario y grupo
-            if UNIX_AVAILABLE:
+            if UNIX_AVAILABLE and pwd and grp:
                 try:
-                    propietario = pwd.getpwuid(stat_info.st_uid).pw_name
-                except KeyError:
+                    getpwuid = getattr(pwd, 'getpwuid', None)
+                    if getpwuid:
+                        propietario = getpwuid(stat_info.st_uid).pw_name
+                    else:
+                        propietario = str(stat_info.st_uid)
+                except (KeyError, AttributeError, OSError):
                     propietario = str(stat_info.st_uid)
                 
                 try:
-                    grupo = grp.getgrgid(stat_info.st_gid).gr_name
-                except KeyError:
+                    getgrgid = getattr(grp, 'getgrgid', None)
+                    if getgrgid:
+                        grupo = getgrgid(stat_info.st_gid).gr_name
+                    else:
+                        grupo = str(stat_info.st_gid)
+                except (KeyError, AttributeError, OSError):
                     grupo = str(stat_info.st_gid)
             else:
                 # En Windows, usar información básica
-                propietario = os.getlogin() if hasattr(os, 'getlogin') else 'user'
+                try:
+                    propietario = os.getlogin()
+                except (AttributeError, OSError):
+                    propietario = 'user'
                 grupo = 'users'
             
             # Convertir permisos a formato legible
@@ -419,8 +452,14 @@ def ejecutar_comando_kali(comando: str, usar_sudo: bool = False) -> Tuple[int, s
     """Ejecuta comandos optimizados para Kali Linux"""
     import subprocess
     
-    if usar_sudo and os.geteuid() != 0:
-        comando = f"sudo {comando}"
+    # Verificar si necesita sudo solo en sistemas Unix
+    if usar_sudo and UNIX_AVAILABLE:
+        try:
+            geteuid = getattr(os, 'geteuid', None)
+            if geteuid and geteuid() != 0:
+                comando = f"sudo {comando}"
+        except (AttributeError, OSError):
+            pass
     
     try:
         resultado = subprocess.run(
@@ -455,9 +494,23 @@ def obtener_info_sistema_kali() -> Dict[str, Any]:
         info['es_kali'] = False
     
     # Información de permisos
-    info['es_root'] = os.geteuid() == 0
-    info['uid'] = os.geteuid()
-    info['gid'] = os.getegid()
+    if UNIX_AVAILABLE:
+        try:
+            geteuid = getattr(os, 'geteuid', None)
+            getegid = getattr(os, 'getegid', None)
+            
+            info['es_root'] = geteuid() == 0 if geteuid else False
+            info['uid'] = geteuid() if geteuid else 0
+            info['gid'] = getegid() if getegid else 0
+        except (AttributeError, OSError):
+            info['es_root'] = False
+            info['uid'] = 0
+            info['gid'] = 0
+    else:
+        # En Windows
+        info['es_root'] = False  # Windows no usa el concepto de root igual
+        info['uid'] = 0
+        info['gid'] = 0
     
     # Herramientas disponibles
     info['herramientas'] = verificar_herramientas_kali()

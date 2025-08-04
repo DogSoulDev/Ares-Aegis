@@ -151,7 +151,7 @@ class ControladorMonitorProcesos(ControladorBase):
                 # Si tenemos monitor avanzado, también hacer análisis avanzado
                 if self.monitor_procesos:
                     try:
-                        procesos_avanzados = self.monitor_procesos.obtener_procesos()
+                        procesos_avanzados = self.monitor_procesos.obtener_procesos_sistema()
                         # Análisis avanzado de amenazas
                         self._analisis_avanzado_procesos(procesos_avanzados)
                     except Exception as e:
@@ -313,19 +313,29 @@ class ControladorMonitorProcesos(ControladorBase):
     def _analisis_avanzado_procesos(self, procesos_avanzados):
         """Realizar análisis avanzado de procesos usando el modelo MonitorProcesos."""
         try:
-            amenazas = []
             for proceso in procesos_avanzados:
                 try:
                     # Usar el analizador del modelo para detectar amenazas
-                    proceso_analizado = self.monitor_procesos.analizador.analizar_proceso(proceso)
-                    if proceso_analizado.amenazas_detectadas:
-                        amenazas.append(proceso_analizado)
+                    alertas = self.monitor_procesos.analizador.analizar_proceso(proceso)
+                    
+                    # Si hay alertas, procesar cada una
+                    if alertas:
+                        for alerta in alertas:
+                            # Crear un diccionario de amenaza para procesamiento
+                            amenaza = {
+                                'nombre': proceso.nombre,
+                                'pid': proceso.pid,
+                                'tipo': alerta.tipo_alerta,
+                                'descripcion': alerta.descripcion,
+                                'prioridad': alerta.nivel_severidad.value if hasattr(alerta.nivel_severidad, 'value') else str(alerta.nivel_severidad),
+                                'timestamp': alerta.timestamp,
+                                'evidencia': alerta.evidencia,
+                                'recomendaciones': alerta.recomendaciones
+                            }
+                            self._procesar_amenaza_proceso(amenaza)
+                            
                 except Exception as e:
-                    self.logger.debug(f"Error analizando proceso {proceso.pid}: {e}")
-            
-            # Procesar las amenazas detectadas
-            for proceso_amenaza in amenazas:
-                self._procesar_amenaza_proceso(proceso_amenaza)
+                    self.logger.debug(f"Error analizando proceso {getattr(proceso, 'pid', 'N/A')}: {e}")
                 
         except Exception as e:
             self.logger.error(f"Error en análisis avanzado de procesos: {e}")
