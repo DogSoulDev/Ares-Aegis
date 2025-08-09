@@ -60,16 +60,16 @@ class VistaBase(ABC):
         titulo = self._get_titulo_ventana()
         funcionalidades = self._get_descripcion_funcionalidades()
         
-        info_text = f"""🛡️ {titulo}
+        info_text = f"""[SHIELD] {titulo}
 
 {funcionalidades}
 
-⚡ CONTROLES COMUNES:
+ CONTROLES COMUNES:
 • Botón de ayuda (?) para información detallada
 • Área de logs para seguimiento de actividad
 • Controles de estado en tiempo real
 
-🔧 FUNCIONES AVANZADAS:
+[TOOL] FUNCIONES AVANZADAS:
 • Integración completa con sistema SIEM
 • Logs centralizados y estructurados
 • Interfaz optimizada para Kali Linux
@@ -105,7 +105,7 @@ class VistaBase(ABC):
         
         return self.frame_principal
         
-    def _crear_titulo_seccion(self, texto, icono="🛡️"):
+    def _crear_titulo_seccion(self, texto, icono="[SHIELD]"):
         """Crear título de sección estandarizado"""
         frame_titulo = tk.Frame(self.frame_principal, bg=self.colores.FONDO)
         frame_titulo.pack(fill='x', pady=(0, 10))
@@ -121,7 +121,7 @@ class VistaBase(ABC):
         
         return frame_titulo
         
-    def _crear_boton_estandar(self, padre, texto, comando, icono="⚡", estado='normal'):
+    def _crear_boton_estandar(self, padre, texto, comando, icono="", estado='normal'):
         """Crear botón con estilo estandarizado"""
         # Validar estado del botón
         estados_validos = ['normal', 'active', 'disabled']
@@ -159,7 +159,7 @@ class VistaBase(ABC):
         # Título del área de logs
         label_logs = tk.Label(
             frame_logs,
-            text="📋 Registro de Actividad",
+            text=" Registro de Actividad",
             font=('Hack', 10, 'bold'),
             fg=self.colores.VERDE_CLARO,
             bg=self.colores.FONDO

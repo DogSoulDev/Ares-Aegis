@@ -533,8 +533,8 @@ class ControladorFIM:
         md += f"**Fecha de generación:** {timestamp}\n\n"
         
         # Estado del FIM
-        md += "## 🔍 Estado del FIM\n\n"
-        md += f"- **Estado:** {'🟢 Activo' if estado['monitoreando'] else '🔴 Inactivo'}\n"
+        md += "##  Estado del FIM\n\n"
+        md += f"- **Estado:** {' Activo' if estado['monitoreando'] else ' Inactivo'}\n"
         md += f"- **Archivos en baseline:** {estado.get('archivos_en_baseline', 0)}\n"
         md += f"- **Cambios detectados (24h):** {estado.get('cambios_detectados_24h', 0)}\n"
         md += f"- **Total cambios históricos:** {estado.get('total_cambios_historicos', 0)}\n"
@@ -543,13 +543,13 @@ class ControladorFIM:
         # Último baseline
         if estado.get('ultimo_baseline'):
             baseline = estado['ultimo_baseline']
-            md += "## 📊 Último Baseline\n\n"
+            md += "## [STATS] Último Baseline\n\n"
             md += f"- **Fecha:** {baseline.get('timestamp', 'N/A')}\n"
             md += f"- **Archivos procesados:** {baseline.get('archivos_procesados', 0)}\n"
             md += f"- **Tiempo de creación:** {baseline.get('tiempo_creacion', 0):.2f}s\n\n"
         
         # Cambios críticos recientes
-        md += "## 🚨 Cambios Críticos Recientes\n\n"
+        md += "##  Cambios Críticos Recientes\n\n"
         if cambios_criticos:
             for cambio in cambios_criticos:
                 timestamp_cambio = cambio.get('timestamp', 'N/A')
@@ -559,7 +559,7 @@ class ControladorFIM:
         else:
             md += "No hay cambios críticos recientes.\n"
         
-        md += "\n## 📝 Cambios Recientes (Todos)\n\n"
+        md += "\n##  Cambios Recientes (Todos)\n\n"
         if cambios_recientes:
             for cambio in cambios_recientes[:10]:
                 timestamp_cambio = cambio.get('timestamp', 'N/A')

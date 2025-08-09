@@ -75,70 +75,70 @@ class VistaAuditoriaPAM:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre la Auditoría PAM"""
-        info_text = """🛡️ AUDITORÍA PAM - SISTEMA DE AUTENTICACIÓN
+        info_text = """[SHIELD] AUDITORÍA PAM - SISTEMA DE AUTENTICACIÓN
 
-🔐 FUNCIONALIDADES PRINCIPALES:
+[LOCK] FUNCIONALIDADES PRINCIPALES:
 • Auditoría completa del sistema PAM (Pluggable Authentication Modules)
 • Análisis exhaustivo de configuraciones de autenticación
 • Verificación de políticas de contraseñas y seguridad
 • Detección proactiva de vulnerabilidades de autenticación
 
-⚡ MÓDULOS AUDITADOS:
+ MÓDULOS AUDITADOS:
 • Configuración PAM del sistema (/etc/pam.d/)
 • Políticas de contraseñas (pam_pwquality)
 • Módulos de autenticación activos y su estado
 • Configuraciones de sudo y su para escalada de privilegios
 • Análisis de todos los archivos en /etc/pam.d/
 
-🎯 ANÁLISIS DE SEGURIDAD:
+[TARGET] ANÁLISIS DE SEGURIDAD:
 • Evaluación de la fortaleza de políticas de contraseñas
 • Verificación de configuraciones de bloqueo de cuentas
 • Detección de módulos de autenticación obsoletos o inseguros
 • Identificación de configuraciones inseguras o mal configuradas
 • Verificación del cumplimiento con estándares de seguridad
 
-🔧 TIPOS DE AUDITORÍA:
+[TOOL] TIPOS DE AUDITORÍA:
 • Auditoría PAM: Análisis específico del sistema de autenticación
 • Auditoría Completa: Análisis integral del sistema incluyendo PAM
 • Verificación en tiempo real del estado de configuraciones
 • Generación automática de reportes detallados
 
-⚠️ DETECCIÓN DE VULNERABILIDADES:
+ DETECCIÓN DE VULNERABILIDADES:
 • Configuraciones PAM potencialmente inseguras
 • Políticas de contraseñas débiles o inadecuadas
 • Módulos PAM desactualizados con vulnerabilidades conocidas
 • Configuraciones de sudo peligrosas que permiten escalada
 • Accesos privilegiados sin restricciones adecuadas
 
-📊 RESULTADOS DETALLADOS:
+[STATS] RESULTADOS DETALLADOS:
 • Estado individual de cada módulo PAM
 • Análisis detallado de configuraciones críticas
 • Recomendaciones específicas de mejora para cada hallazgo
 • Clasificación de nivel de riesgo por hallazgo detectado
 • Pasos detallados de mitigación recomendados
 
-💡 RECOMENDACIONES INCLUIDAS:
+ RECOMENDACIONES INCLUIDAS:
 • Fortalecimiento de políticas de contraseñas según mejores prácticas
 • Configuraciones PAM más seguras y actualizadas
 • Implementación de autenticación multifactor (MFA)
 • Mejores prácticas de configuración sudo y su
 • Monitoreo continuo de eventos de autenticación
 
-🔐 ESPECÍFICO PARA KALI LINUX:
+[LOCK] ESPECÍFICO PARA KALI LINUX:
 • Análisis adaptado a distribuciones basadas en Debian
 • Verificación de módulos PAM específicos de Kali Linux
 • Integración con herramientas de auditoría nativas
 • Optimización para entornos de pentesting y seguridad
 • Compatibilidad completa con el ecosistema de Kali Linux
 
-🚀 CÓMO UTILIZAR:
+ CÓMO UTILIZAR:
 1. Selecciona el tipo de auditoría deseada (PAM o Completa)
 2. Haz clic en el botón correspondiente para iniciar
 3. Observa el progreso en tiempo real en el panel de logs
 4. Revisa los resultados detallados en el panel de resultados
 5. Implementa las recomendaciones de seguridad sugeridas
 
-⏱️ FUNCIONES DE CONTROL:
+⏱ FUNCIONES DE CONTROL:
 • Botón Cancelar: Detiene la auditoría en progreso de forma segura
 • Progreso en tiempo real: Visualización del estado actual
 • Logs detallados: Seguimiento paso a paso del proceso"""
@@ -187,7 +187,7 @@ class VistaAuditoriaPAM:
         titulo_frame.grid(row=0, column=0, sticky="w", padx=20, pady=10)
         
         tk.Label(titulo_frame,
-                text="🔐 AUDITORÍA DE AUTENTICACIÓN PAM",
+                text="[LOCK] AUDITORÍA DE AUTENTICACIÓN PAM",
                 font=('Consolas', 16, 'bold'),
                 fg=self.colores.naranja_fuego,
                 bg=self.colores.negro_carbono).pack(anchor='w')
@@ -204,7 +204,7 @@ class VistaAuditoriaPAM:
         
         # Botón de información
         tk.Button(cabecera,
-                 text="❓ Info",
+                 text=" Info",
                  font=('Consolas', 10),
                  bg=self.colores.naranja_fuego,
                  fg=self.colores.negro_carbono,
@@ -214,7 +214,7 @@ class VistaAuditoriaPAM:
                  pady=5).grid(row=0, column=2, padx=20, sticky='e')
         
         self.btn_auditoria_pam = tk.Button(botones_frame,
-                                          text="🔍 AUDITORÍA PAM",
+                                          text=" AUDITORÍA PAM",
                                           command=self._ejecutar_auditoria_pam,
                                           bg=self.colores.azul_electrico,
                                           fg=self.colores.texto_primario,
@@ -225,7 +225,7 @@ class VistaAuditoriaPAM:
         self.btn_auditoria_pam.pack(side='left', padx=(0, 10))
         
         self.btn_auditoria_completa = tk.Button(botones_frame,
-                                               text="🛡️ AUDITORÍA COMPLETA",
+                                               text="[SHIELD] AUDITORÍA COMPLETA",
                                                command=self._ejecutar_auditoria_completa,
                                                bg=self.colores.rojo_critico,
                                                fg=self.colores.texto_primario,
@@ -237,7 +237,7 @@ class VistaAuditoriaPAM:
         
         # Botón de cancelar auditoría
         self.btn_cancelar = tk.Button(botones_frame,
-                                     text="❌ CANCELAR",
+                                     text="[ERROR] CANCELAR",
                                      command=self._cancelar_auditoria,
                                      bg=self.colores.gris_hierro,
                                      fg=self.colores.texto_primario,
@@ -272,7 +272,7 @@ class VistaAuditoriaPAM:
     def _crear_panel_resultados(self, padre):
         """Crea el panel de resultados de auditoría."""
         panel_resultados = tk.LabelFrame(padre,
-                                        text="📊 RESULTADOS DE AUDITORÍA",
+                                        text="[STATS] RESULTADOS DE AUDITORÍA",
                                         bg=self.colores.gris_pizarra,
                                         fg=self.colores.cyan_brillante,
                                         font=('Consolas', 12, 'bold'),
@@ -305,7 +305,7 @@ class VistaAuditoriaPAM:
     def _crear_panel_logs(self, padre):
         """Crea el panel de logs y estado."""
         panel_logs = tk.LabelFrame(padre,
-                                  text="📝 LOGS DE AUDITORÍA",
+                                  text=" LOGS DE AUDITORÍA",
                                   bg=self.colores.gris_pizarra,
                                   fg=self.colores.amarillo_medio,
                                   font=('Consolas', 12, 'bold'),
@@ -347,7 +347,7 @@ class VistaAuditoriaPAM:
         
         # Estado actual
         self.label_estado = tk.Label(barra_estado,
-                                    text="💤 Sistema en espera - Listo para auditoría",
+                                    text=" Sistema en espera - Listo para auditoría",
                                     font=('Consolas', 10),
                                     fg=self.colores.gris_platino,
                                     bg=self.colores.negro_carbono)
@@ -365,7 +365,7 @@ class VistaAuditoriaPAM:
         mensaje_frame.pack(fill='both', expand=True, padx=20, pady=50)
         
         tk.Label(mensaje_frame,
-                text="🔐 SISTEMA DE AUDITORÍA PAM",
+                text="[LOCK] SISTEMA DE AUDITORÍA PAM",
                 font=('Consolas', 18, 'bold'),
                 fg=self.colores.naranja_fuego,
                 bg=self.colores.gris_pizarra).pack(pady=20)
@@ -381,8 +381,8 @@ class VistaAuditoriaPAM:
         info_frame.pack(fill='x', pady=20, padx=40)
         
         auditorias_info = [
-            ("🔍 AUDITORÍA PAM", "Analiza configuración de autenticación PAM"),
-            ("🛡️ AUDITORÍA COMPLETA", "Analiza PAM + sistema + servicios expuestos")
+            (" AUDITORÍA PAM", "Analiza configuración de autenticación PAM"),
+            ("[SHIELD] AUDITORÍA COMPLETA", "Analiza PAM + sistema + servicios expuestos")
         ]
         
         for titulo, descripcion in auditorias_info:
@@ -443,7 +443,7 @@ class VistaAuditoriaPAM:
                 # No hacemos join() para evitar bloquear la UI, solo marcamos como inactiva
             
             self._finalizar_auditoria()
-            self._agregar_log("❌ Auditoría cancelada por el usuario", "ERROR")
+            self._agregar_log("[ERROR] Auditoría cancelada por el usuario", "ERROR")
             messagebox.showinfo("Auditoría Cancelada", "La auditoría ha sido cancelada exitosamente.")
     
     def _iniciar_auditoria(self, tipo):
@@ -479,7 +479,7 @@ class VistaAuditoriaPAM:
         self.progress_bar.start(10)
         
         # Actualizar estado
-        self.label_estado.config(text=f"🔥 Ejecutando auditoría {tipo}...", 
+        self.label_estado.config(text=f" Ejecutando auditoría {tipo}...", 
                                 fg=self.colores.naranja_fuego)
         
         # Limpiar resultados anteriores
@@ -494,22 +494,22 @@ class VistaAuditoriaPAM:
             if not self.auditoria_activa:
                 return
                 
-            self._agregar_log("🔐 Iniciando auditoría específica de PAM...", "INFO")
-            self._agregar_log("📋 Analizando configuraciones de autenticación...", "INFO")
+            self._agregar_log("[LOCK] Iniciando auditoría específica de PAM...", "INFO")
+            self._agregar_log(" Analizando configuraciones de autenticación...", "INFO")
             
             if not self.auditoria_activa:
                 return
             
             time.sleep(0.3)
-            self._agregar_log("🔍 Verificando módulos PAM del sistema...", "INFO")
+            self._agregar_log(" Verificando módulos PAM del sistema...", "INFO")
             
             if not self.auditoria_activa:
                 return
             
             time.sleep(0.3)
-            self._agregar_log("🔧 Analizando políticas de contraseñas...", "INFO")
+            self._agregar_log("[TOOL] Analizando políticas de contraseñas...", "INFO")
             time.sleep(0.3)
-            self._agregar_log("🛡️ Verificando configuraciones de seguridad...", "INFO")
+            self._agregar_log("[SHIELD] Verificando configuraciones de seguridad...", "INFO")
                 
             resultado = self.controlador.iniciar_auditoria_pam()
             
@@ -517,16 +517,16 @@ class VistaAuditoriaPAM:
                 return
             
             if resultado.get('exito', False):
-                self._agregar_log("✅ Auditoría PAM completada exitosamente", "SUCCESS")
+                self._agregar_log("[OK] Auditoría PAM completada exitosamente", "SUCCESS")
                 self._mostrar_resultados_pam(resultado)
             else:
                 error = resultado.get('error', 'Error desconocido')
-                self._agregar_log(f"❌ Error en auditoría PAM: {error}", "ERROR")
+                self._agregar_log(f"[ERROR] Error en auditoría PAM: {error}", "ERROR")
                 self._mostrar_error(error)
                 
         except Exception as e:
             if self.auditoria_activa:
-                self._agregar_log(f"💥 Excepción durante auditoría PAM: {e}", "ERROR")
+                self._agregar_log(f" Excepción durante auditoría PAM: {e}", "ERROR")
                 self._mostrar_error(str(e))
         finally:
             if self.auditoria_activa:
@@ -579,7 +579,7 @@ class VistaAuditoriaPAM:
         resumen_frame.pack(fill='x', padx=10, pady=10)
         
         tk.Label(resumen_frame,
-                text="🔐 RESULTADOS AUDITORÍA PAM",
+                text="[LOCK] RESULTADOS AUDITORÍA PAM",
                 font=('Consolas', 14, 'bold'),
                 fg=self.colores.naranja_fuego,
                 bg=self.colores.gris_hierro).pack(pady=10)
@@ -618,7 +618,7 @@ class VistaAuditoriaPAM:
         resumen_frame.pack(fill='x', padx=10, pady=10)
         
         tk.Label(resumen_frame,
-                text="🛡️ AUDITORÍA COMPLETA DE SEGURIDAD",
+                text="[SHIELD] AUDITORÍA COMPLETA DE SEGURIDAD",
                 font=('Consolas', 14, 'bold'),
                 fg=self.colores.naranja_fuego,
                 bg=self.colores.gris_hierro).pack(pady=10)
@@ -662,7 +662,7 @@ class VistaAuditoriaPAM:
     def _mostrar_hallazgos_detallados(self, hallazgos):
         """Muestra hallazgos detallados."""
         hallazgos_frame = tk.LabelFrame(self.area_resultados,
-                                       text="📋 HALLAZGOS DETALLADOS",
+                                       text=" HALLAZGOS DETALLADOS",
                                        bg=self.colores.gris_pizarra,
                                        fg=self.colores.cyan_brillante,
                                        font=('Consolas', 11, 'bold'))
@@ -706,7 +706,7 @@ class VistaAuditoriaPAM:
             
             # Recomendación
             if hallazgo.get('recomendacion'):
-                tk.Label(hallazgo_item, text=f"💡 {hallazgo['recomendacion']}",
+                tk.Label(hallazgo_item, text=f" {hallazgo['recomendacion']}",
                         font=('Consolas', 8), fg=self.colores.amarillo_medio,
                         bg=self.colores.gris_hierro, wraplength=600, justify='left').pack(
                         fill='x', padx=10, pady=2)
@@ -714,7 +714,7 @@ class VistaAuditoriaPAM:
     def _mostrar_recomendaciones(self, recomendaciones):
         """Muestra recomendaciones de seguridad."""
         rec_frame = tk.LabelFrame(self.area_resultados,
-                                 text="💡 RECOMENDACIONES PRIORITARIAS",
+                                 text=" RECOMENDACIONES PRIORITARIAS",
                                  bg=self.colores.gris_pizarra,
                                  fg=self.colores.amarillo_medio,
                                  font=('Consolas', 11, 'bold'))
@@ -741,7 +741,7 @@ class VistaAuditoriaPAM:
         error_frame.pack(fill='x', padx=10, pady=20)
         
         tk.Label(error_frame,
-                text="❌ ERROR EN AUDITORÍA",
+                text="[ERROR] ERROR EN AUDITORÍA",
                 font=('Consolas', 14, 'bold'),
                 fg=self.colores.texto_primario,
                 bg=self.colores.rojo_critico).pack(pady=10)
@@ -781,7 +781,7 @@ class VistaAuditoriaPAM:
         
         # Actualizar estado
         if self.label_estado:
-            self.label_estado.config(text="✅ Auditoría completada - Sistema listo", 
+            self.label_estado.config(text="[OK] Auditoría completada - Sistema listo", 
                                     fg=self.colores.verde_terminal)
         
         self._agregar_log("Auditoría finalizada", "SUCCESS")

@@ -78,7 +78,7 @@ class InterfazPrincipalAresAegis:
         # Vistas especializadas
         self.vistas = {}
         
-        self.logger.info("⚔️ Interfaz Principal de Ares Aegis inicializada con arquitectura modular")
+        self.logger.info(" Interfaz Principal de Ares Aegis inicializada con arquitectura modular")
     
     def inicializar(self, controlador=None) -> bool:
         """Inicializar la aplicación completa"""
@@ -96,7 +96,7 @@ class InterfazPrincipalAresAegis:
                 pass  # El controlador no soporta interfaz
             
             if not self.controlador.inicializar_componentes():
-                self.logger.warning("⚠️ Algunos componentes del controlador no se inicializaron correctamente")
+                self.logger.warning(" Algunos componentes del controlador no se inicializaron correctamente")
             
             # Crear ventana principal
             self._crear_ventana_principal()
@@ -116,11 +116,11 @@ class InterfazPrincipalAresAegis:
             # Mostrar dashboard por defecto
             self._mostrar_vista('dashboard')
             
-            self.logger.info("✅ Interfaz Principal inicializada correctamente")
+            self.logger.info("[OK] Interfaz Principal inicializada correctamente")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error inicializando interfaz: {e}")
+            self.logger.error(f"[ERROR] Error inicializando interfaz: {e}")
             messagebox.showerror("Error Fatal", f"Error inicializando aplicación:\n{str(e)}")
             return False
     
@@ -160,7 +160,7 @@ class InterfazPrincipalAresAegis:
             for path in icon_paths:
                 if os.path.exists(path) and self.root:
                     self.root.iconphoto(False, tk.PhotoImage(file=path))
-                    self.logger.info(f"🖼️ Icono cargado desde: {path}")
+                    self.logger.info(f"[ICON] Icono cargado desde: {path}")
                     return
             
         except Exception as e:
@@ -295,7 +295,7 @@ class InterfazPrincipalAresAegis:
         titulo_frame.grid(row=0, column=0, sticky="nsw", padx=20, pady=15)
         
         tk.Label(titulo_frame,
-                text="⚔️ ARES AEGIS • SISTEMA DE CIBERSEGURIDAD",
+                text=" ARES AEGIS • SISTEMA DE CIBERSEGURIDAD",
                 font=('Consolas', 14, 'bold'),
                 fg=self.colores.naranja_fuego,
                 bg=self.colores.negro_carbono).pack(anchor='w')
@@ -409,13 +409,13 @@ class InterfazPrincipalAresAegis:
         
         # Módulos principales con iconografía profesional
         modulos = [
-            ('dashboard', '◢ INICIO', 'Centralita principal', self._mostrar_dashboard),
-            ('escaneador', '⚡ ESCÁNER', 'Escáner de vulnerabilidades', self._mostrar_escaneador),
-            ('auditoria_pam', '🔐 AUDITORÍA PAM', 'Auditoría de autenticación', self._mostrar_auditoria_pam),
-            ('monitor_procesos', '� MONITOR PROCESOS', 'Monitor de procesos del sistema', self._mostrar_monitor_procesos),
-            ('monitor_red', '🌐 MONITOR RED', 'Monitor de actividad de red', self._mostrar_monitor_red),
-            ('siem', '🛡️ SIEM', 'Sistema de eventos de seguridad', self._mostrar_siem),
-            ('cuarentena', '🔒 CUARENTENA', 'Gestión de cuarentena', self._mostrar_cuarentena)
+            ('dashboard', ' INICIO', 'Centralita principal', self._mostrar_dashboard),
+            ('escaneador', ' ESCÁNER', 'Escáner de vulnerabilidades', self._mostrar_escaneador),
+            ('auditoria_pam', '[LOCK] AUDITORÍA PAM', 'Auditoría de autenticación', self._mostrar_auditoria_pam),
+            ('monitor_procesos', ' MONITOR PROCESOS', 'Monitor de procesos del sistema', self._mostrar_monitor_procesos),
+            ('monitor_red', ' MONITOR RED', 'Monitor de actividad de red', self._mostrar_monitor_red),
+            ('siem', '[SHIELD] SIEM', 'Sistema de eventos de seguridad', self._mostrar_siem),
+            ('cuarentena', ' CUARENTENA', 'Gestión de cuarentena', self._mostrar_cuarentena)
         ]
         
         self.botones_navegacion = {}
@@ -501,10 +501,10 @@ class InterfazPrincipalAresAegis:
         
         # Botones de acceso rápido
         accesos = [
-            ("� REPORTES", self._mostrar_reportes),
-            ("🔧 CONSTRUCTOR WORDLISTS", self._mostrar_constructor_wordlists),
-            ("�📚 GUÍAS", self._mostrar_cheatsheets),
-            ("👨‍� DESARROLLADOR", self._abrir_github)
+            (" REPORTES", self._mostrar_reportes),
+            ("[TOOL] CONSTRUCTOR WORDLISTS", self._mostrar_constructor_wordlists),
+            (" GUÍAS", self._mostrar_cheatsheets),
+            ("‍ DESARROLLADOR", self._abrir_github)
         ]
         
         for texto, comando in accesos:
@@ -751,7 +751,7 @@ class InterfazPrincipalAresAegis:
                 # Otras vistas usan el método estándar
                 self.vistas[vista_id].crear_vista()
             
-            self.logger.info(f"📱 Vista {vista_id} mostrada")
+            self.logger.info(f"[VIEW] Vista {vista_id} mostrada")
             
             # Actualizar estado en barra inferior
             self._actualizar_estado_barra(vista_id)
@@ -825,7 +825,7 @@ class InterfazPrincipalAresAegis:
         """Abrir página de GitHub"""
         try:
             webbrowser.open("https://github.com/DogSoulDev")
-            self.logger.info("🐙 Abriendo GitHub de DogSoulDev")
+            self.logger.info(" Abriendo GitHub de DogSoulDev")
         except Exception as e:
             self.logger.error(f"Error abriendo GitHub: {e}")
             messagebox.showinfo("GitHub", "Visita: https://github.com/DogSoulDev")
@@ -837,7 +837,7 @@ class InterfazPrincipalAresAegis:
     def _actualizar_sistema(self):
         """Actualizar el estado del sistema y recargar componentes"""
         try:
-            self.logger.info("🔄 Actualizando sistema...")
+            self.logger.info("[REFRESH] Actualizando sistema...")
             
             # Actualizar métricas
             if self.metricas_tiempo_real:
@@ -858,27 +858,27 @@ class InterfazPrincipalAresAegis:
                 self._mostrar_vista(self.vista_actual)
             
             messagebox.showinfo("Sistema Actualizado", 
-                              "✅ Sistema actualizado correctamente\n"
-                              "📊 Métricas refrescadas\n"
-                              "🔐 Estado de seguridad verificado")
+                              "[OK] Sistema actualizado correctamente\n"
+                              "[STATS] Métricas refrescadas\n"
+                              "[LOCK] Estado de seguridad verificado")
             
-            self.logger.info("✅ Sistema actualizado exitosamente")
+            self.logger.info("[OK] Sistema actualizado exitosamente")
             
         except Exception as e:
             self.logger.error(f"Error actualizando sistema: {e}")
             messagebox.showerror("Error de Actualización", 
-                               f"❌ Error actualizando sistema:\n{str(e)}")
+                               f"[ERROR] Error actualizando sistema:\n{str(e)}")
     
     def _cerrar_aplicacion(self):
         """Cerrar aplicación correctamente limpiando todos los recursos"""
         try:
-            self.logger.info("🛡️ Iniciando proceso de cierre seguro de la aplicación...")
+            self.logger.info("[SHIELD] Iniciando proceso de cierre seguro de la aplicación...")
             
             # Detener métricas de tiempo real
             if hasattr(self, 'metricas_tiempo_real') and self.metricas_tiempo_real:
                 try:
                     self.metricas_tiempo_real.detener()
-                    self.logger.info("✅ Métricas de tiempo real detenidas")
+                    self.logger.info("[OK] Métricas de tiempo real detenidas")
                 except Exception as e:
                     self.logger.error(f"Error deteniendo métricas: {e}")
             
@@ -906,14 +906,14 @@ class InterfazPrincipalAresAegis:
                         else:
                             # Es sync
                             self.controlador.finalizar()
-                    self.logger.info("✅ Controlador principal finalizado")
+                    self.logger.info("[OK] Controlador principal finalizado")
                 except Exception as e:
                     self.logger.error(f"Error finalizando controlador: {e}")
             
             # Detener hilos restantes
             self._detener_hilos_interfaz()
             
-            self.logger.info("🏛️ Sistema Ares Aegis finalizado correctamente")
+            self.logger.info("[SYSTEM] Sistema Ares Aegis finalizado correctamente")
             
             # Cerrar ventana principal
             if hasattr(self, 'root') and self.root:
@@ -939,7 +939,7 @@ class InterfazPrincipalAresAegis:
                     if vista and hasattr(vista, 'finalizar'):
                         try:
                             vista.finalizar()
-                            self.logger.info(f"✅ Vista {vista_id} finalizada")
+                            self.logger.info(f"[OK] Vista {vista_id} finalizada")
                         except Exception as e:
                             self.logger.error(f"Error finalizando vista {vista_id}: {e}")
             
@@ -955,7 +955,7 @@ class InterfazPrincipalAresAegis:
                     if vista and hasattr(vista, 'destruir_vista'):
                         try:
                             vista.destruir_vista()
-                            self.logger.info(f"✅ Vista {vista_nombre} finalizada")
+                            self.logger.info(f"[OK] Vista {vista_nombre} finalizada")
                         except Exception as e:
                             self.logger.error(f"Error finalizando {vista_nombre}: {e}")
                     
@@ -981,15 +981,15 @@ class InterfazPrincipalAresAegis:
                     hilos_interfaz.append(hilo)
             
             if hilos_interfaz:
-                self.logger.info(f"🔄 Finalizando {len(hilos_interfaz)} hilos de interfaz...")
+                self.logger.info(f"[REFRESH] Finalizando {len(hilos_interfaz)} hilos de interfaz...")
                 
                 for hilo in hilos_interfaz:
                     try:
                         hilo.join(timeout=1.0)  # Timeout corto para interfaz
                         if not hilo.is_alive():
-                            self.logger.info(f"✅ Hilo {hilo.name} finalizado")
+                            self.logger.info(f"[OK] Hilo {hilo.name} finalizado")
                         else:
-                            self.logger.warning(f"⚠️ Hilo {hilo.name} no respondió")
+                            self.logger.warning(f" Hilo {hilo.name} no respondió")
                     except Exception as e:
                         self.logger.error(f"Error finalizando hilo {hilo.name}: {e}")
                         
@@ -999,11 +999,11 @@ class InterfazPrincipalAresAegis:
     def ejecutar(self):
         """Ejecutar la aplicación"""
         try:
-            self.logger.info("🏛️ Iniciando Sistema de Ciberseguridad Ares Aegis")
+            self.logger.info("[SYSTEM] Iniciando Sistema de Ciberseguridad Ares Aegis")
             if self.root and hasattr(self.root, 'mainloop'):
                 self.root.mainloop()
             else:
-                self.logger.error("❌ No se puede ejecutar: ventana principal no inicializada")
+                self.logger.error("[ERROR] No se puede ejecutar: ventana principal no inicializada")
         except Exception as e:
             self.logger.error(f"Error ejecutando aplicación: {e}")
 

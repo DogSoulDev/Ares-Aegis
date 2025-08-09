@@ -197,14 +197,14 @@ class EventoSIEMUtils:
     def evento_to_markdown(evento) -> str:
         """Convertir evento a formato Markdown"""
         criticidad_emoji = {
-            NivelCriticidad.CRITICO: "🔴",
-            NivelCriticidad.ALTO: "🟠", 
-            NivelCriticidad.MEDIO: "🟡",
-            NivelCriticidad.BAJO: "🔵",
-            NivelCriticidad.INFORMATIVO: "⚪"
+            NivelCriticidad.CRITICO: "",
+            NivelCriticidad.ALTO: "", 
+            NivelCriticidad.MEDIO: "",
+            NivelCriticidad.BAJO: "",
+            NivelCriticidad.INFORMATIVO: ""
         }
         
-        emoji = criticidad_emoji.get(evento.nivel_criticidad, "⚪")
+        emoji = criticidad_emoji.get(evento.nivel_criticidad, "")
         
         markdown = f"""
 ## {emoji} Evento SIEM: {evento.tipo}

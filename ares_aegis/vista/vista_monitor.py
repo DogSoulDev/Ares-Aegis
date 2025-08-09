@@ -24,38 +24,38 @@ class VistaMonitor(VistaBase):
         self.metricas_tiempo_real = MetricasTiempoReal(controlador, self._callback_metricas)
         
     def _get_estado_inicial(self):
-        return "🔴 DETENIDO"
+        return " DETENIDO"
         
     def _get_titulo_ventana(self):
         return "MONITOR DEL SISTEMA - SUPERVISIÓN INTEGRAL"
         
     def _get_descripcion_funcionalidades(self):
-        return """🔱 FUNCIONALIDADES:
+        return """ FUNCIONALIDADES:
 • Monitoreo en tiempo real del sistema
 • Análisis de procesos y servicios
 • Supervisión de recursos (CPU, RAM, Red, Disco)
 • Detección de actividad sospechosa
 
-⚡ HERRAMIENTAS:
+ HERRAMIENTAS:
 • ps aux: Listado de procesos
 • netstat: Conexiones de red
 • lsof: Archivos abiertos
 • htop: Monitor de recursos
 • ss: Estado de conexiones
 
-🎯 MÉTRICAS:
+[TARGET] MÉTRICAS:
 • Uso de CPU por proceso
 • Consumo de memoria
 • Conexiones de red activas
 • Archivos y puertos abiertos
 
-📊 ESTADOS:
-• 🟢 NORMAL: Actividad estándar
-• 🟡 ADVERTENCIA: Uso elevado de recursos
-• 🔴 CRÍTICO: Actividad sospechosa
-• ⚫ ERROR: Problema del sistema
+[STATS] ESTADOS:
+•  NORMAL: Actividad estándar
+•  ADVERTENCIA: Uso elevado de recursos
+•  CRÍTICO: Actividad sospechosa
+•  ERROR: Problema del sistema
 
-💡 USO:
+ USO:
 • Monitoreo periódico para líneas base
 • Revisar procesos con consumo anómalo
 • Verificar conexiones inusuales
@@ -70,17 +70,17 @@ class VistaMonitor(VistaBase):
     def _determinar_estado_sistema(self, metricas):
         """Determinar estado del sistema basado en métricas"""
         if not metricas:
-            return "🔴 ERROR"
+            return " ERROR"
         
         cpu_uso = metricas.get('cpu_percent', 0)
         mem_uso = metricas.get('memory_percent', 0)
         
         if cpu_uso > 90 or mem_uso > 95:
-            return "🔴 CRÍTICO"
+            return " CRÍTICO"
         elif cpu_uso > 70 or mem_uso > 80:
-            return "🟡 ADVERTENCIA"
+            return " ADVERTENCIA"
         else:
-            return "🟢 NORMAL"
+            return " NORMAL"
 
     def crear_vista(self, area_contenido=None):
         """Crear la vista del monitor usando componentes modulares"""
@@ -106,7 +106,7 @@ class VistaMonitor(VistaBase):
         
         # Título principal
         titulo_label = tk.Label(header_frame,
-                               text=f"🔱 {EmoticonosMitologicos.ARGOS} MONITOR DEL SISTEMA",
+                               text=f" {EmoticonosMitologicos.ARGOS} MONITOR DEL SISTEMA",
                                font=('Consolas', 18, 'bold'),
                                fg=self.colores.verde_terminal,
                                bg=self.colores.negro_carbono)
@@ -128,7 +128,7 @@ class VistaMonitor(VistaBase):
         
         # Botones de control
         self.btn_iniciar = tk.Button(control_frame,
-                                   text="▶️ Iniciar Monitor",
+                                   text=" Iniciar Monitor",
                                    font=('Consolas', 10),
                                    bg=self.colores.verde_terminal,
                                    fg=self.colores.negro_carbono,
@@ -138,7 +138,7 @@ class VistaMonitor(VistaBase):
         self.btn_iniciar.pack(side='left', padx=10, pady=15)
         
         self.btn_detener = tk.Button(control_frame,
-                                   text="⏹️ Detener Monitor",
+                                   text="⏹ Detener Monitor",
                                    font=('Consolas', 10),
                                    bg=self.colores.rojo_critico,
                                    fg=self.colores.blanco_hueso,
@@ -150,7 +150,7 @@ class VistaMonitor(VistaBase):
         
         # Botón de info usando clase base
         info_button = tk.Button(control_frame,
-                               text="❓ Info",
+                               text=" Info",
                                font=('Consolas', 10),
                                bg=self.colores.cyan_brillante,
                                fg=self.colores.negro_carbono,
@@ -170,7 +170,7 @@ class VistaMonitor(VistaBase):
         metricas_frame.pack_propagate(False)
         
         tk.Label(metricas_frame,
-                text="📊 MÉTRICAS DEL SISTEMA",
+                text="[STATS] MÉTRICAS DEL SISTEMA",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.cyan_brillante,
                 bg=self.colores.fondo_terciario).pack(pady=10)
@@ -194,7 +194,7 @@ class VistaMonitor(VistaBase):
     def _crear_terminal_monitor(self, parent):
         """Crear terminal simplificado para monitoreo"""
         tk.Label(parent,
-                text="💻 TERMINAL DE MONITOREO",
+                text=" TERMINAL DE MONITOREO",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.cyan_brillante,
                 bg=self.colores.negro_carbono).pack(pady=10)
@@ -217,7 +217,7 @@ class VistaMonitor(VistaBase):
         """Iniciar monitoreo completo del sistema"""
         if not self.monitoreo_activo:
             self.monitoreo_activo = True
-            self.actualizar_estado("🟢 ACTIVO")
+            self.actualizar_estado(" ACTIVO")
             
             # Iniciar métricas en tiempo real
             self.metricas_tiempo_real.iniciar()
@@ -235,12 +235,12 @@ class VistaMonitor(VistaBase):
             self.btn_detener.config(state='normal')
             
             self.logger.info("Monitor del sistema iniciado")
-            self._agregar_resultado("🟢 Monitor del sistema iniciado - Supervisión activa")
+            self._agregar_resultado(" Monitor del sistema iniciado - Supervisión activa")
     
     def _detener_monitoreo_completo(self):
         """Detener monitoreo completo del sistema"""
         self.monitoreo_activo = False
-        self.actualizar_estado("🔴 DETENIDO")
+        self.actualizar_estado(" DETENIDO")
         
         # Detener métricas
         self.metricas_tiempo_real.detener()
@@ -250,7 +250,7 @@ class VistaMonitor(VistaBase):
         self.btn_detener.config(state='disabled')
         
         self.logger.info("Monitor del sistema detenido")
-        self._agregar_resultado("🔴 Monitor del sistema detenido")
+        self._agregar_resultado(" Monitor del sistema detenido")
         
     def _ejecutar_monitoreo_principal(self):
         """Hilo principal de monitoreo del sistema"""
@@ -270,7 +270,7 @@ class VistaMonitor(VistaBase):
                                       capture_output=True, text=True, timeout=10)
             if result_cpu.returncode == 0:
                 lines = result_cpu.stdout.split('\n')[:6]  # Top 5 procesos
-                self._agregar_resultado("🔍 TOP PROCESOS CPU:")
+                self._agregar_resultado(" TOP PROCESOS CPU:")
                 for line in lines[1:]:  # Skip header
                     if line.strip():
                         parts = line.split()
@@ -286,12 +286,12 @@ class VistaMonitor(VistaBase):
                 lines = result_net.stdout.split('\n')
                 tcp_count = len([l for l in lines if 'tcp' in l.lower()])
                 udp_count = len([l for l in lines if 'udp' in l.lower()])
-                self._agregar_resultado(f"🌐 CONEXIONES: TCP:{tcp_count} UDP:{udp_count}")
+                self._agregar_resultado(f" CONEXIONES: TCP:{tcp_count} UDP:{udp_count}")
                 
         except subprocess.TimeoutExpired:
-            self._agregar_resultado("⚠️ Timeout en comando de monitoreo")
+            self._agregar_resultado(" Timeout en comando de monitoreo")
         except Exception as e:
-            self._agregar_resultado(f"❌ Error en monitoreo: {str(e)}")
+            self._agregar_resultado(f"[ERROR] Error en monitoreo: {str(e)}")
             
     def _agregar_resultado(self, texto):
         """Agregar resultado al terminal de monitoreo"""

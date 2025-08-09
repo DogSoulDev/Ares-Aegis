@@ -591,20 +591,20 @@ class EscaneadorVulnerabilidadesRed:
         Returns:
             Reporte en formato Markdown
         """
-        md = "# 🌐 Reporte de Vulnerabilidades de Red\n\n"
+        md = "#  Reporte de Vulnerabilidades de Red\n\n"
         md += f"**Fecha de Escaneo:** {resultado['timestamp']}\n"
         md += f"**Targets Escaneados:** {resultado['targets_escaneados']}\n"
         md += f"**Nivel de Riesgo General:** {resultado['nivel_riesgo_general']}\n"
         md += f"**Hosts Comprometidos:** {resultado['hosts_comprometidos']}\n"
         md += f"**Vulnerabilidades Totales:** {resultado['vulnerabilidades_totales']}\n\n"
         
-        md += f"## 📊 Resumen Ejecutivo\n\n"
+        md += f"## [STATS] Resumen Ejecutivo\n\n"
         md += f"{resultado.get('mensaje_general', 'Sin mensaje general')}\n\n"
         
         # Recomendaciones generales
         recomendaciones = resultado.get('recomendaciones_generales', [])
         if recomendaciones:
-            md += "## ⚔️ Decretos del Égida (Recomendaciones)\n\n"
+            md += "##  Decretos del Égida (Recomendaciones)\n\n"
             for recom in recomendaciones:
                 md += f"- {recom}\n"
             md += "\n"
@@ -612,7 +612,7 @@ class EscaneadorVulnerabilidadesRed:
         # Detalles por target
         resultados_individuales = resultado.get('resultados_individuales', [])
         if resultados_individuales:
-            md += "## 🎯 Análisis Detallado por Objetivo\n\n"
+            md += "## [TARGET] Análisis Detallado por Objetivo\n\n"
             
             for i, target_resultado in enumerate(resultados_individuales, 1):
                 if 'red_escaneada' in target_resultado:

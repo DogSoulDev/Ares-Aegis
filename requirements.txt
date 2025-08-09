@@ -8,6 +8,9 @@
 # No se requieren dependencias externas para la funcionalidad completa
 #
 # Para desarrollo opcional (si se desea agregar funcionalidades externas):
-# tkinter  # Ya incluido en Python standard
+# customtkinter
+Pillow
+psutil
+psutil  # Ya incluido en Python standard
 # 
 # NOTA: Todas las funcionalidades están implementadas sin dependencias externas

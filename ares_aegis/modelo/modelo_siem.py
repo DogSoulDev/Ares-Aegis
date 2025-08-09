@@ -651,12 +651,12 @@ class SIEM:
         md += "### Distribución por Criticidad\n\n"
         for criticidad, cantidad in estadisticas['eventos_por_criticidad'].items():
             emoji = {
-                NivelCriticidad.BAJO: '🔵',
-                NivelCriticidad.MEDIO: '🟡', 
-                NivelCriticidad.ALTO: '🟠',
-                NivelCriticidad.CRITICO: '🔴',
-                NivelCriticidad.INFORMATIVO: '⚪'
-            }.get(criticidad, '⚪')
+                NivelCriticidad.BAJO: '',
+                NivelCriticidad.MEDIO: '', 
+                NivelCriticidad.ALTO: '',
+                NivelCriticidad.CRITICO: '',
+                NivelCriticidad.INFORMATIVO: ''
+            }.get(criticidad, '')
             md += f"- {emoji} **{criticidad}:** {cantidad}\n"
         md += "\n"
         
@@ -779,29 +779,29 @@ class SIEM:
         
         if nivel_amenaza == "CRÍTICO":
             recomendaciones.extend([
-                "🚨 Revisión inmediata del sistema requerida",
-                "🔒 Considerar aislar sistemas comprometidos",
-                "📞 Notificar al equipo de respuesta a incidentes",
-                "📊 Ejecutar análisis forense completo"
+                " Revisión inmediata del sistema requerida",
+                " Considerar aislar sistemas comprometidos",
+                " Notificar al equipo de respuesta a incidentes",
+                "[STATS] Ejecutar análisis forense completo"
             ])
         elif nivel_amenaza == "ALTO":
             recomendaciones.extend([
-                "⚠️ Monitoreo intensivo recomendado",
-                "🔍 Revisar logs de eventos críticos",
-                "🛡️ Verificar configuraciones de seguridad",
-                "📋 Actualizar reglas de detección"
+                " Monitoreo intensivo recomendado",
+                " Revisar logs de eventos críticos",
+                "[SHIELD] Verificar configuraciones de seguridad",
+                " Actualizar reglas de detección"
             ])
         elif nivel_amenaza == "MEDIO":
             recomendaciones.extend([
-                "👀 Mantener vigilancia de eventos",
-                "🔄 Revisar patrones de actividad",
-                "📈 Monitorear tendencias de amenazas"
+                " Mantener vigilancia de eventos",
+                "[REFRESH] Revisar patrones de actividad",
+                " Monitorear tendencias de amenazas"
             ])
         else:
             recomendaciones.extend([
-                "✅ Sistema operando normalmente",
-                "🔄 Continuar monitoreo rutinario",
-                "📅 Programar revisión periódica"
+                "[OK] Sistema operando normalmente",
+                "[REFRESH] Continuar monitoreo rutinario",
+                " Programar revisión periódica"
             ])
         
         return recomendaciones

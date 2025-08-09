@@ -43,12 +43,12 @@ class MonitorRed:
     def iniciar_monitoreo(self):
         """Iniciar el monitoreo de red."""
         self.monitoreando = True
-        self.logger.info("🌐 Monitor de red iniciado para Kali Linux")
+        self.logger.info(" Monitor de red iniciado para Kali Linux")
         
     def detener_monitoreo(self):
         """Detener el monitoreo de red."""
         self.monitoreando = False
-        self.logger.info("🛑 Monitor de red detenido")
+        self.logger.info(" Monitor de red detenido")
         
     def obtener_informacion_sistema_completa(self) -> Dict:
         """Obtener información completa del sistema de red en tiempo real."""
@@ -394,49 +394,49 @@ class MonitorRed:
         puertos_abiertos = self.escanear_puertos_abiertos()
         trafico = self.obtener_trafico_interfaces()
         
-        reporte = "# 🌐 REPORTE AVANZADO DE RED - ARES AEGIS\n\n"
+        reporte = "#  REPORTE AVANZADO DE RED - ARES AEGIS\n\n"
         
         # Interfaces de red
-        reporte += "## 📡 INTERFACES DE RED\n"
+        reporte += "##  INTERFACES DE RED\n"
         for interface in interfaces:
-            estado_emoji = "🟢" if interface['estado'] == 'UP' else "🔴"
+            estado_emoji = "" if interface['estado'] == 'UP' else ""
             reporte += f"{estado_emoji} **{interface['nombre']}** ({interface['estado']})\n"
             if interface['ips']:
-                reporte += f"   📍 IPs: {', '.join(interface['ips'])}\n"
+                reporte += f"    IPs: {', '.join(interface['ips'])}\n"
             if interface['mac']:
-                reporte += f"   🆔 MAC: {interface['mac']}\n"
+                reporte += f"    MAC: {interface['mac']}\n"
             reporte += "\n"
         
         # Tráfico de red
-        reporte += "## 📊 TRÁFICO DE RED\n"
+        reporte += "## [STATS] TRÁFICO DE RED\n"
         for iface, stats in trafico.items():
-            reporte += f"🔌 **{iface}**:\n"
-            reporte += f"   📥 Recibido: {self._formatear_bytes(stats['bytes_recibidos'])} ({stats['paquetes_recibidos']:,} paquetes)\n"
-            reporte += f"   📤 Enviado: {self._formatear_bytes(stats['bytes_enviados'])} ({stats['paquetes_enviados']:,} paquetes)\n\n"
+            reporte += f" **{iface}**:\n"
+            reporte += f"    Recibido: {self._formatear_bytes(stats['bytes_recibidos'])} ({stats['paquetes_recibidos']:,} paquetes)\n"
+            reporte += f"    Enviado: {self._formatear_bytes(stats['bytes_enviados'])} ({stats['paquetes_enviados']:,} paquetes)\n\n"
         
         # Puertos abiertos
-        reporte += "## 🔓 PUERTOS ABIERTOS\n"
+        reporte += "##  PUERTOS ABIERTOS\n"
         if puertos_abiertos:
             for puerto in puertos_abiertos:
-                riesgo = "🟡" if puerto in self.puertos_monitoreados else "🟢"
+                riesgo = "" if puerto in self.puertos_monitoreados else ""
                 reporte += f"{riesgo} Puerto {puerto}\n"
         else:
-            reporte += "✅ No se detectaron puertos abiertos públicos\n"
+            reporte += "[OK] No se detectaron puertos abiertos públicos\n"
         reporte += "\n"
         
         # Conexiones activas
-        reporte += f"## 🔗 CONEXIONES ACTIVAS ({len(conexiones)})\n"
+        reporte += f"##  CONEXIONES ACTIVAS ({len(conexiones)})\n"
         for conn in conexiones[:10]:  # Mostrar solo las primeras 10
-            reporte += f"🔌 {conn['protocolo']} {conn['direccion_local']} → {conn['direccion_remota']} ({conn['estado']})\n"
+            reporte += f" {conn['protocolo']} {conn['direccion_local']} → {conn['direccion_remota']} ({conn['estado']})\n"
         
         if len(conexiones) > 10:
             reporte += f"... y {len(conexiones) - 10} conexiones más\n"
         
         # Conexiones sospechosas
         if self.conexiones_sospechosas:
-            reporte += "\n## 🚨 CONEXIONES SOSPECHOSAS\n"
+            reporte += "\n##  CONEXIONES SOSPECHOSAS\n"
             for sospechosa in self.conexiones_sospechosas:
-                reporte += f"⚠️ {sospechosa['tipo']}: {sospechosa['detalles']}\n"
+                reporte += f" {sospechosa['tipo']}: {sospechosa['detalles']}\n"
         
         reporte += f"\n---\n*Generado: {time.strftime('%Y-%m-%d %H:%M:%S')}*"
         

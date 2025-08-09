@@ -71,7 +71,7 @@ class VigiaGrietasRealm:
             '27017': {'servicio': 'mongodb', 'riesgo': PrioridadHallazgo.ALTA}
         }
         
-        self.logger.info("🔍 El vigía de las grietas ha comenzado su vigilancia eterna sobre el reino")
+        self.logger.info(" El vigía de las grietas ha comenzado su vigilancia eterna sobre el reino")
     
     def verificar_permisos_archivos_criticos(self) -> List[Hallazgo]:
         """
@@ -81,7 +81,7 @@ class VigiaGrietasRealm:
         Returns:
             Lista de hallazgos relacionados con permisos
         """
-        self.logger.info("🔐 Iniciando inspección de permisos en los pergaminos sagrados")
+        self.logger.info("[LOCK] Iniciando inspección de permisos en los pergaminos sagrados")
         hallazgos = []
         
         # Configuraciones seguras esperadas para cada archivo
@@ -107,7 +107,7 @@ class VigiaGrietasRealm:
                 if resultado:
                     hallazgos.append(resultado)
         
-        self.logger.info(f"📊 Inspección de permisos completada: {len(hallazgos)} problemas detectados")
+        self.logger.info(f"[STATS] Inspección de permisos completada: {len(hallazgos)} problemas detectados")
         return hallazgos
     
     def _verificar_permisos_archivo(self, ruta: str, config_esperada: Dict[str, str]) -> Optional[Hallazgo]:
@@ -185,7 +185,7 @@ class VigiaGrietasRealm:
         Returns:
             Lista de hallazgos relacionados con servicios expuestos
         """
-        self.logger.info("🚪 Inspeccionando servicios que escuchan en las puertas del reino")
+        self.logger.info(" Inspeccionando servicios que escuchan en las puertas del reino")
         hallazgos = []
         
         try:
@@ -197,7 +197,7 @@ class VigiaGrietasRealm:
                 if hallazgo:
                     hallazgos.append(hallazgo)
             
-            self.logger.info(f"🔍 Verificación de servicios completada: {len(hallazgos)} servicios riesgosos detectados")
+            self.logger.info(f" Verificación de servicios completada: {len(hallazgos)} servicios riesgosos detectados")
             
         except Exception as e:
             self.logger.error(f"Error verificando servicios: {e}")
@@ -262,7 +262,7 @@ class VigiaGrietasRealm:
         if riesgo == PrioridadHallazgo.CRITICA:
             return f"¡PELIGRO EXTREMO! {mensaje_base}"
         elif riesgo == PrioridadHallazgo.ALTA:
-            return f"⚠️  ALTO RIESGO: {mensaje_base}"
+            return f"  ALTO RIESGO: {mensaje_base}"
         else:
             return mensaje_base
     
@@ -293,7 +293,7 @@ class VigiaGrietasRealm:
         Returns:
             Lista de hallazgos relacionados con permisos incorrectos
         """
-        self.logger.info("🔐 Iniciando auditoría completa de permisos críticos del sistema")
+        self.logger.info("[LOCK] Iniciando auditoría completa de permisos críticos del sistema")
         hallazgos = []
         
         try:
@@ -329,7 +329,7 @@ class VigiaGrietasRealm:
                     if problema:
                         hallazgos.append(problema)
                         
-            self.logger.info(f"🔐 Auditoría de permisos completada: {len(hallazgos)} problemas identificados")
+            self.logger.info(f"[LOCK] Auditoría de permisos completada: {len(hallazgos)} problemas identificados")
             
         except Exception as e:
             self.logger.error(f"Error en auditoría de permisos: {e}")

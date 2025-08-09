@@ -41,7 +41,7 @@ class ControladorConstructorWordlists(ControladorBase):
         self.palabras_generadas = []
         self.configuracion_actual = {}
         
-        self.logger.info("🎛️ Controlador Constructor de Wordlists inicializado")
+        self.logger.info(" Controlador Constructor de Wordlists inicializado")
     
     async def _inicializar_impl(self) -> bool:
         """Implementación específica de inicialización."""
@@ -62,7 +62,7 @@ class ControladorConstructorWordlists(ControladorBase):
                 self.procesando = False
                 self.hilo_procesamiento.join(timeout=2)
             
-            self.logger.info("🔧 Recursos del constructor de wordlists liberados")
+            self.logger.info("[TOOL] Recursos del constructor de wordlists liberados")
             return True
             
         except Exception as e:

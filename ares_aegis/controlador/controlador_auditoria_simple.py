@@ -23,7 +23,7 @@ class ControladorAuditoriaSimple:
         self.logger = configurar_logger_modulo("controlador_auditoria_simple")
         self.auditor_pam = AuditorPAM()
         
-        self.logger.info("🛡️ Controlador de Auditoría Simple inicializado")
+        self.logger.info("[SHIELD] Controlador de Auditoría Simple inicializado")
     
     def ejecutar_auditoria_pam(self) -> Dict[str, Any]:
         """
@@ -33,7 +33,7 @@ class ControladorAuditoriaSimple:
             Diccionario con los resultados de la auditoría
         """
         try:
-            self.logger.info("🔐 Iniciando auditoría PAM simple...")
+            self.logger.info("[LOCK] Iniciando auditoría PAM simple...")
             
             # Ejecutar auditoría
             hallazgos = self.auditor_pam.auditar_configuracion_completa()
@@ -81,11 +81,11 @@ class ControladorAuditoriaSimple:
                 "resumen": f"Auditoría PAM completada: {len(clasificacion['criticos'])} críticos, {len(clasificacion['altos'])} altos"
             }
             
-            self.logger.info(f"✅ Auditoría PAM completada: {len(hallazgos)} hallazgos encontrados")
+            self.logger.info(f"[OK] Auditoría PAM completada: {len(hallazgos)} hallazgos encontrados")
             return resultado
             
         except Exception as e:
-            self.logger.error(f"❌ Error en auditoría PAM: {e}")
+            self.logger.error(f"[ERROR] Error en auditoría PAM: {e}")
             return {
                 "exito": False,
                 "error": str(e),

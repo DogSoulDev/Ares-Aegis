@@ -467,15 +467,15 @@ class ControladorMonitorRed:
         md += f"**Fecha de generación:** {timestamp}\n\n"
         
         # Estado del monitoreo
-        md += "## 🌐 Estado del Monitoreo\n\n"
-        md += f"- **Estado:** {'🟢 Activo' if estado['activo'] else '🔴 Inactivo'}\n"
+        md += "##  Estado del Monitoreo\n\n"
+        md += f"- **Estado:** {' Activo' if estado['activo'] else ' Inactivo'}\n"
         md += f"- **Conexiones activas:** {estado.get('conexiones_activas', 0)}\n"
         md += f"- **Puertos abiertos:** {estado.get('puertos_abiertos', 0)}\n"
         md += f"- **IPs bloqueadas:** {estado.get('ips_bloqueadas', 0)}\n"
         md += f"- **Conexiones sospechosas:** {estado.get('conexiones_sospechosas', 0)}\n\n"
         
         # Estadísticas de tráfico
-        md += "## 📊 Estadísticas de Tráfico (24h)\n\n"
+        md += "## [STATS] Estadísticas de Tráfico (24h)\n\n"
         md += f"- **Total conexiones sospechosas:** {stats['total_conexiones_sospechosas']}\n"
         md += f"- **Total alertas:** {stats['total_alertas']}\n\n"
         
@@ -487,7 +487,7 @@ class ControladorMonitorRed:
             md += "\n"
         
         # Alertas recientes
-        md += "## 🚨 Alertas Recientes\n\n"
+        md += "##  Alertas Recientes\n\n"
         if alertas_recientes:
             for alerta in alertas_recientes[:5]:
                 timestamp_alerta = alerta['timestamp'].strftime('%H:%M:%S')

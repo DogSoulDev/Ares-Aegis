@@ -36,46 +36,46 @@ class VistaDashboard:
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre el Dashboard"""
         
-        info_text = """🛡️ DASHBOARD - CENTRO DE COMANDO
+        info_text = """[SHIELD] DASHBOARD - CENTRO DE COMANDO
 
-📊 FUNCIONALIDADES PRINCIPALES:
+[STATS] FUNCIONALIDADES PRINCIPALES:
 • Monitoreo en tiempo real del sistema
 • Métricas de seguridad centralizadas
 • Terminal integrado para comandos directos
 • Visión general del estado de Ares Aegis
 
-⚡ PANELES DISPONIBLES:
+ PANELES DISPONIBLES:
 • Métricas Principales: CPU, RAM, Red, Disco
 • Actividad Reciente: Últimas acciones y alertas
 • Estado del Sistema: Servicios y procesos activos
 • Terminal Integrado: Ejecución de comandos directos
 
-🎯 INFORMACIÓN EN TIEMPO REAL:
+[TARGET] INFORMACIÓN EN TIEMPO REAL:
 • Uso de recursos del sistema (CPU, memoria, red)
 • Alertas de seguridad activas e historial
 • Tiempo de actividad y estabilidad del sistema
 • Estadísticas de red y procesos en ejecución
 
-🔧 ACCIONES DISPONIBLES:
+[TOOL] ACCIONES DISPONIBLES:
 • Actualización automática de métricas cada 5 segundos
 • Ejecución de comandos desde terminal integrado
 • Navegación rápida a otros módulos del sistema
 • Monitoreo continuo del estado de seguridad
 
-💡 CONSEJOS DE USO:
+ CONSEJOS DE USO:
 • Mantén el dashboard abierto para supervisión continua
 • Utiliza el terminal integrado para comandos rápidos
 • Revisa regularmente las alertas de actividad reciente
 • Monitorea el uso de recursos para detectar anomalías
 • Las métricas se actualizan automáticamente sin intervención
 
-🎮 CONTROLES DISPONIBLES:
+ CONTROLES DISPONIBLES:
 • Botón de información para acceder a esta ayuda
 • Acceso directo al terminal del sistema
 • Enlaces rápidos a todas las funcionalidades de Ares Aegis
 • Panel de control centralizado para gestión integral
 
-🔐 OPTIMIZADO PARA KALI LINUX:
+[LOCK] OPTIMIZADO PARA KALI LINUX:
 • Integración completa con herramientas nativas de Kali
 • Comandos específicos de pentesting y auditoría
 • Monitoreo adaptado a entornos de ciberseguridad
@@ -142,7 +142,7 @@ class VistaDashboard:
         titulo_frame.grid(row=0, column=0, sticky="nsw", padx=30, pady=20)
         
         tk.Label(titulo_frame,
-                text="◢ CENTRO DE COMANDO",
+                text=" CENTRO DE COMANDO",
                 font=('Consolas', 20, 'bold'),
                 fg=self.colores.verde_terminal,
                 bg=self.colores.negro_carbono).pack(anchor='w')
@@ -175,7 +175,7 @@ class VistaDashboard:
         status_frame.grid(row=0, column=2, sticky="nse", padx=30, pady=20)
         
         tk.Label(status_frame,
-                text="● OPERATIVO",
+                text=" OPERATIVO",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.verde_terminal,
                 bg=self.colores.negro_carbono).pack(anchor='e')
@@ -191,7 +191,7 @@ class VistaDashboard:
         info_frame.grid(row=0, column=3, sticky="nse", padx=20, pady=20)
         
         tk.Button(info_frame,
-                 text="❓ Info",
+                 text=" Info",
                  font=('Consolas', 10),
                  bg=self.colores.verde_terminal,
                  fg=self.colores.negro_carbono,
@@ -235,12 +235,12 @@ class VistaDashboard:
                                       bg=self.colores.fondo_secundario)
                 label_imagen.pack(expand=True, anchor='center')
                 
-                self.logger.info(f"🖼️ Imagen principal cargada desde: {imagen_path}")
+                self.logger.info(f"[ICON] Imagen principal cargada desde: {imagen_path}")
             else:
                 self.logger.warning(f"No se encontró la imagen principal en: {imagen_path}")
                 # Mostrar texto alternativo
                 texto_label = tk.Label(imagen_frame,
-                        text="🛡️ ARES AEGIS\nSISTEMA DE CIBERSEGURIDAD",
+                        text="[SHIELD] ARES AEGIS\nSISTEMA DE CIBERSEGURIDAD",
                         font=('Consolas', 16, 'bold'),
                         fg=self.colores.verde_terminal,
                         bg=self.colores.fondo_secundario,
@@ -251,7 +251,7 @@ class VistaDashboard:
             self.logger.error(f"Error cargando imagen principal: {e}")
             # Mostrar texto alternativo en caso de error
             texto_label = tk.Label(imagen_frame,
-                    text="🛡️ ARES AEGIS\nSISTEMA DE CIBERSEGURIDAD",
+                    text="[SHIELD] ARES AEGIS\nSISTEMA DE CIBERSEGURIDAD",
                     font=('Consolas', 16, 'bold'),
                     fg=self.colores.verde_terminal,
                     bg=self.colores.fondo_secundario,
@@ -340,14 +340,14 @@ class VistaDashboard:
         header_frame.pack(fill='x', padx=5, pady=5)
         
         tk.Label(header_frame,
-                text="📊 ACTIVIDAD RECIENTE",
+                text="[STATS] ACTIVIDAD RECIENTE",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.cyan_brillante,
                 bg=self.colores.fondo_secundario).pack(side='left')
         
         # Botón limpiar actividad
         btn_limpiar_actividad = tk.Button(header_frame,
-                                        text="🗑️",
+                                        text="",
                                         font=('Consolas', 12),
                                         fg=self.colores.naranja_alto,
                                         bg=self.colores.fondo_terciario,
@@ -438,14 +438,14 @@ class VistaDashboard:
         header_frame.pack(fill='x', padx=5, pady=5)
         
         tk.Label(header_frame,
-                text="⚡ ESTADO DEL SISTEMA",
+                text=" ESTADO DEL SISTEMA",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.verde_terminal,
                 bg=self.colores.fondo_secundario).pack(side='left')
         
         # Botón reiniciar estado
         btn_reiniciar_estado = tk.Button(header_frame,
-                                       text="🔄",
+                                       text="[REFRESH]",
                                        font=('Consolas', 12),
                                        fg=self.colores.cyan_brillante,
                                        bg=self.colores.fondo_terciario,
@@ -511,7 +511,7 @@ class VistaDashboard:
         modulo_row.pack(fill='x', pady=2)
         
         # Indicador
-        indicador = "●" if activo else "○"
+        indicador = "" if activo else ""
         color = self.colores.verde_terminal if activo else self.colores.rojo_critico
         
         tk.Label(modulo_row,
@@ -566,7 +566,7 @@ class VistaDashboard:
     def _crear_panel_terminal(self, parent):
         """Crear panel del terminal integrado"""
         terminal_frame = tk.LabelFrame(parent,
-                                     text=f"💻 {EmoticonosMitologicos.HERMES} TERMINAL INTEGRADO",
+                                     text=f" {EmoticonosMitologicos.HERMES} TERMINAL INTEGRADO",
                                      bg=self.colores.fondo_secundario,
                                      fg=self.colores.acento_primario,
                                      font=('Consolas', 12, 'bold'),
@@ -587,7 +587,7 @@ class VistaDashboard:
             
             # Mostrar mensaje de error en caso de fallo
             error_label = tk.Label(terminal_frame,
-                                 text=f"⚠️ Error: Terminal no disponible en este sistema\n{str(e)}",
+                                 text=f" Error: Terminal no disponible en este sistema\n{str(e)}",
                                  font=('Consolas', 10),
                                  fg=self.colores.error,
                                  bg=self.colores.fondo_secundario,

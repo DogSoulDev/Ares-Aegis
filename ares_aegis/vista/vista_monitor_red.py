@@ -37,26 +37,26 @@ class VistaMonitorRed(VistaBase):
         }
         
     def _get_estado_inicial(self):
-        return "🔴 DETENIDO"
+        return " DETENIDO"
         
     def _get_titulo_ventana(self):
         return "MONITOR DE RED - SUPERVISIÓN DE CONEXIONES"
         
     def _get_descripcion_funcionalidades(self):
-        return """🌐 FUNCIONALIDADES:
+        return """ FUNCIONALIDADES:
 • Monitoreo en tiempo real de conexiones de red
 • Detección de conexiones sospechosas
 • Análisis de puertos abiertos y servicios
 • Supervisión de tráfico de red por interfaz
 
-⚡ HERRAMIENTAS:
+ HERRAMIENTAS:
 • netstat: Estado de conexiones de red
 • ss: Socket statistics moderno
 • lsof: Archivos y puertos abiertos por procesos
 • iftop: Monitor de tráfico por interfaz
 • tcpdump: Captura de paquetes de red
 
-🎯 MÉTRICAS:
+[TARGET] MÉTRICAS:
 • Conexiones TCP/UDP activas
 • Puertos en estado LISTEN
 • Conexiones establecidas por IP
@@ -90,7 +90,7 @@ class VistaMonitorRed(VistaBase):
         # Título
         titulo_label = ttk.Label(
             header_frame,
-            text="🌐 MONITOR DE RED - SUPERVISIÓN DE CONEXIONES",
+            text=" MONITOR DE RED - SUPERVISIÓN DE CONEXIONES",
             font=("Hack", 14, "bold")
         )
         titulo_label.pack(side=tk.LEFT)
@@ -108,7 +108,7 @@ class VistaMonitorRed(VistaBase):
         
     def _crear_area_resultados_general(self):
         """Crear área de resultados general para mensajes"""
-        resultados_frame = ttk.LabelFrame(self.frame_principal, text="📋 Registro de Actividad", padding=5)
+        resultados_frame = ttk.LabelFrame(self.frame_principal, text=" Registro de Actividad", padding=5)
         resultados_frame.pack(fill="x", pady=(0, 10))
         
         self.resultados_text = tk.Text(
@@ -129,7 +129,7 @@ class VistaMonitorRed(VistaBase):
         
     def _crear_panel_control_red(self):
         """Crear panel de control específico para red"""
-        control_frame = ttk.LabelFrame(self.frame_principal, text="🎮 Control de Monitoreo de Red", padding=10)
+        control_frame = ttk.LabelFrame(self.frame_principal, text=" Control de Monitoreo de Red", padding=10)
         control_frame.pack(fill="x", pady=(0, 10))
         
         # Botones de control
@@ -139,7 +139,7 @@ class VistaMonitorRed(VistaBase):
         # Botón iniciar/detener monitoreo
         self.btn_toggle_red = ttk.Button(
             botones_frame,
-            text="🟢 INICIAR MONITOREO",
+            text=" INICIAR MONITOREO",
             command=self._toggle_monitoreo_red,
             width=20
         )
@@ -148,7 +148,7 @@ class VistaMonitorRed(VistaBase):
         # Botón conexiones activas
         ttk.Button(
             botones_frame,
-            text="🔗 CONEXIONES ACTIVAS",
+            text=" CONEXIONES ACTIVAS",
             command=self._listar_conexiones,
             width=20
         ).pack(side=tk.LEFT, padx=5)
@@ -156,7 +156,7 @@ class VistaMonitorRed(VistaBase):
         # Botón puertos abiertos
         ttk.Button(
             botones_frame,
-            text="🚪 PUERTOS ABIERTOS",
+            text=" PUERTOS ABIERTOS",
             command=self._listar_puertos_abiertos,
             width=20
         ).pack(side=tk.LEFT, padx=5)
@@ -164,7 +164,7 @@ class VistaMonitorRed(VistaBase):
         # Botón conexiones sospechosas
         ttk.Button(
             botones_frame,
-            text="🚨 CONEXIONES SOSPECHOSAS",
+            text=" CONEXIONES SOSPECHOSAS",
             command=self._detectar_conexiones_sospechosas,
             width=20
         ).pack(side=tk.LEFT, padx=5)
@@ -172,14 +172,14 @@ class VistaMonitorRed(VistaBase):
         # Botón limpiar
         ttk.Button(
             botones_frame,
-            text="🧹 LIMPIAR",
+            text="[CLEAN] LIMPIAR",
             command=self._limpiar_resultados,
             width=15
         ).pack(side=tk.RIGHT)
         
     def _crear_area_resultados_red(self):
         """Crear área de resultados específica para red"""
-        resultados_frame = ttk.LabelFrame(self.frame_principal, text="📊 Resultados del Monitoreo de Red", padding=10)
+        resultados_frame = ttk.LabelFrame(self.frame_principal, text="[STATS] Resultados del Monitoreo de Red", padding=10)
         resultados_frame.pack(fill="both", expand=True, pady=(0, 10))
         
         # Crear notebook para diferentes vistas
@@ -201,7 +201,7 @@ class VistaMonitorRed(VistaBase):
     def _crear_tab_conexiones_activas(self):
         """Crear tab para conexiones activas"""
         frame_conexiones = ttk.Frame(self.notebook_red)
-        self.notebook_red.add(frame_conexiones, text="🔗 Conexiones Activas")
+        self.notebook_red.add(frame_conexiones, text=" Conexiones Activas")
         
         # Crear treeview para conexiones
         columns = ("Protocolo", "Local", "Remoto", "Estado", "PID", "Proceso")
@@ -224,7 +224,7 @@ class VistaMonitorRed(VistaBase):
     def _crear_tab_puertos_abiertos(self):
         """Crear tab para puertos abiertos"""
         frame_puertos = ttk.Frame(self.notebook_red)
-        self.notebook_red.add(frame_puertos, text="🚪 Puertos Abiertos")
+        self.notebook_red.add(frame_puertos, text=" Puertos Abiertos")
         
         # Crear treeview para puertos
         columns = ("Puerto", "Protocolo", "Estado", "PID", "Proceso", "Servicio")
@@ -247,7 +247,7 @@ class VistaMonitorRed(VistaBase):
     def _crear_tab_conexiones_sospechosas(self):
         """Crear tab para conexiones sospechosas"""
         frame_sospechosas = ttk.Frame(self.notebook_red)
-        self.notebook_red.add(frame_sospechosas, text="🚨 Conexiones Sospechosas")
+        self.notebook_red.add(frame_sospechosas, text=" Conexiones Sospechosas")
         
         # Crear treeview para conexiones sospechosas
         columns = ("IP Remota", "Puerto", "Protocolo", "Estado", "PID", "Proceso", "Razón")
@@ -270,7 +270,7 @@ class VistaMonitorRed(VistaBase):
     def _crear_tab_interfaces_red(self):
         """Crear tab para estadísticas de interfaces"""
         frame_interfaces = ttk.Frame(self.notebook_red)
-        self.notebook_red.add(frame_interfaces, text="📈 Interfaces de Red")
+        self.notebook_red.add(frame_interfaces, text=" Interfaces de Red")
         
         self.text_interfaces = tk.Text(
             frame_interfaces,
@@ -288,7 +288,7 @@ class VistaMonitorRed(VistaBase):
         
     def _crear_panel_estadisticas_red(self):
         """Crear panel de estadísticas en tiempo real"""
-        stats_frame = ttk.LabelFrame(self.frame_principal, text="📊 Estadísticas de Red en Tiempo Real", padding=10)
+        stats_frame = ttk.LabelFrame(self.frame_principal, text="[STATS] Estadísticas de Red en Tiempo Real", padding=10)
         stats_frame.pack(fill="x")
         
         # Variables para estadísticas
@@ -314,31 +314,31 @@ class VistaMonitorRed(VistaBase):
         """Iniciar monitoreo de red"""
         try:
             self.monitoreo_red_activo = True
-            self.btn_toggle_red.config(text="🔴 DETENER MONITOREO")
-            self.estado_label.config(text="🟢 MONITOREO ACTIVO")
+            self.btn_toggle_red.config(text=" DETENER MONITOREO")
+            self.estado_label.config(text=" MONITOREO ACTIVO")
             
             # Iniciar hilo de monitoreo
             self.hilo_monitoreo_red = threading.Thread(target=self._ciclo_monitoreo_red, daemon=True)
             self.hilo_monitoreo_red.start()
             
-            self._agregar_resultado("🟢 Monitoreo de red iniciado...")
+            self._agregar_resultado(" Monitoreo de red iniciado...")
             
             # Notificar al controlador
             if hasattr(self.controlador, 'controlador_monitor_red'):
                 try:
                     self.controlador.controlador_monitor_red.iniciar_monitoreo()
                 except Exception as e:
-                    self._agregar_resultado(f"⚠️ Error en controlador: {e}")
+                    self._agregar_resultado(f" Error en controlador: {e}")
                     
         except Exception as e:
-            self._agregar_resultado(f"❌ Error iniciando monitoreo: {e}")
+            self._agregar_resultado(f"[ERROR] Error iniciando monitoreo: {e}")
             
     def _detener_monitoreo_red(self):
         """Detener monitoreo de red"""
         self.monitoreo_red_activo = False
-        self.btn_toggle_red.config(text="🟢 INICIAR MONITOREO")
-        self.estado_label.config(text="🔴 DETENIDO")
-        self._agregar_resultado("🔴 Monitoreo de red detenido.")
+        self.btn_toggle_red.config(text=" INICIAR MONITOREO")
+        self.estado_label.config(text=" DETENIDO")
+        self._agregar_resultado(" Monitoreo de red detenido.")
         
     def _ciclo_monitoreo_red(self):
         """Ciclo principal del monitoreo de red"""
@@ -347,7 +347,7 @@ class VistaMonitorRed(VistaBase):
                 self._actualizar_conexiones_red()
                 time.sleep(3)  # Actualizar cada 3 segundos
             except Exception as e:
-                self._agregar_resultado(f"❌ Error en ciclo de monitoreo: {e}")
+                self._agregar_resultado(f"[ERROR] Error en ciclo de monitoreo: {e}")
                 break
                 
     def _actualizar_conexiones_red(self):
@@ -392,7 +392,7 @@ class VistaMonitorRed(VistaBase):
         except subprocess.TimeoutExpired:
             self._agregar_resultado("⏰ Timeout ejecutando netstat")
         except Exception as e:
-            self._agregar_resultado(f"❌ Error actualizando conexiones: {e}")
+            self._agregar_resultado(f"[ERROR] Error actualizando conexiones: {e}")
             
     def _actualizar_estadisticas_red(self, total, establecidas, puertos, sospechosas):
         """Actualizar estadísticas mostradas"""
@@ -404,7 +404,7 @@ class VistaMonitorRed(VistaBase):
     def _listar_conexiones(self):
         """Listar conexiones activas"""
         try:
-            self._agregar_resultado("🔗 Listando conexiones activas...")
+            self._agregar_resultado(" Listando conexiones activas...")
             
             # Limpiar tree de conexiones
             for item in self.tree_conexiones.get_children():
@@ -438,15 +438,15 @@ class VistaMonitorRed(VistaBase):
                             ))
                             conexiones_encontradas += 1
                 
-                self._agregar_resultado(f"✅ {conexiones_encontradas} conexiones listadas")
+                self._agregar_resultado(f"[OK] {conexiones_encontradas} conexiones listadas")
                 
         except Exception as e:
-            self._agregar_resultado(f"❌ Error listando conexiones: {e}")
+            self._agregar_resultado(f"[ERROR] Error listando conexiones: {e}")
             
     def _listar_puertos_abiertos(self):
         """Listar puertos abiertos"""
         try:
-            self._agregar_resultado("🚪 Analizando puertos abiertos...")
+            self._agregar_resultado(" Analizando puertos abiertos...")
             
             # Limpiar tree de puertos
             for item in self.tree_puertos.get_children():
@@ -484,10 +484,10 @@ class VistaMonitorRed(VistaBase):
                             ))
                             puertos_encontrados += 1
                 
-                self._agregar_resultado(f"✅ {puertos_encontrados} puertos abiertos encontrados")
+                self._agregar_resultado(f"[OK] {puertos_encontrados} puertos abiertos encontrados")
                 
         except Exception as e:
-            self._agregar_resultado(f"❌ Error listando puertos: {e}")
+            self._agregar_resultado(f"[ERROR] Error listando puertos: {e}")
             
     def _identificar_servicio(self, puerto):
         """Identificar servicio común por puerto"""
@@ -512,7 +512,7 @@ class VistaMonitorRed(VistaBase):
     def _detectar_conexiones_sospechosas(self):
         """Detectar conexiones potencialmente sospechosas"""
         try:
-            self._agregar_resultado("🚨 Analizando conexiones sospechosas...")
+            self._agregar_resultado(" Analizando conexiones sospechosas...")
             
             # Limpiar tree de sospechosas
             for item in self.tree_sospechosas.get_children():
@@ -565,10 +565,10 @@ class VistaMonitorRed(VistaBase):
                                 ))
                                 sospechosas_encontradas += 1
                 
-                self._agregar_resultado(f"🚨 Análisis completado: {sospechosas_encontradas} conexiones sospechosas encontradas")
+                self._agregar_resultado(f" Análisis completado: {sospechosas_encontradas} conexiones sospechosas encontradas")
                 
         except Exception as e:
-            self._agregar_resultado(f"❌ Error detectando conexiones sospechosas: {e}")
+            self._agregar_resultado(f"[ERROR] Error detectando conexiones sospechosas: {e}")
             
     def _es_ip_privada(self, ip):
         """Verificar si una IP es privada"""

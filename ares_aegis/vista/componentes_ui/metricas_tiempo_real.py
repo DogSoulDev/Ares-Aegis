@@ -37,14 +37,14 @@ class MetricasTiempoReal:
                 name="MetricasTiempoReal"
             )
             self.thread_actualizacion.start()
-            self.logger.info("📊 Sistema de métricas en tiempo real iniciado")
+            self.logger.info("[STATS] Sistema de métricas en tiempo real iniciado")
     
     def detener(self):
         """Detener monitoreo de métricas"""
         self.activo = False
         if self.thread_actualizacion:
             self.thread_actualizacion.join(timeout=1.0)
-        self.logger.info("📊 Sistema de métricas en tiempo real detenido")
+        self.logger.info("[STATS] Sistema de métricas en tiempo real detenido")
     
     def _ciclo_actualizacion(self):
         """Ciclo principal de actualización de métricas"""
@@ -64,42 +64,29 @@ class MetricasTiempoReal:
                 time.sleep(self.intervalo_actualizacion * 2)  # Espera más en caso de error
     
     def _obtener_metricas_optimizadas(self) -> dict:
-        """Obtener métricas del sistema Kali Linux de forma optimizada con cache"""
+        """Obtener métricas del sistema de forma optimizada y multiplataforma."""
         ahora = time.time()
         
         # Usar cache si está disponible y no ha expirado
         if (ahora - self._ultimo_cache) < self._duracion_cache and self._cache_metricas:
             return self._cache_metricas.copy()
-        
+
         try:
-            # CPU usando load average nativo de Linux
-            load_avg = getattr(os, 'getloadavg')()[0]  # Usar getattr para evitar warnings de análisis estático
-            cpu_count = os.cpu_count() or 1
-            cpu_percent = min(100, (load_avg / cpu_count) * 100)
+            # Usar psutil para métricas multiplataforma
+            import psutil
             
-            # Memoria desde /proc/meminfo (nativo Linux)
-            with open('/proc/meminfo', 'r') as f:
-                meminfo = f.read()
+            cpu_percent = psutil.cpu_percent(interval=None)
             
-            mem_total = mem_available = 0
-            for line in meminfo.split('\n'):
-                if line.startswith('MemTotal:'):
-                    mem_total = int(line.split()[1]) * 1024  # KB a bytes
-                elif line.startswith('MemAvailable:'):
-                    mem_available = int(line.split()[1]) * 1024  # KB a bytes
+            mem = psutil.virtual_memory()
+            memoria_total_gb = mem.total / (1024**3)
+            memoria_usada_gb = mem.used / (1024**3)
+            memoria_percent = mem.percent
             
-            memoria_total_gb = mem_total / (1024**3)
-            memoria_usada_gb = (mem_total - mem_available) / (1024**3)
-            memoria_percent = (memoria_usada_gb / memoria_total_gb) * 100
-            
-            # Disco desde statvfs (nativo Linux)
-            statvfs_func = getattr(os, 'statvfs')  # Usar getattr para evitar warnings de análisis estático
-            stat = statvfs_func('/')
-            disco_total_gb = (stat.f_blocks * stat.f_frsize) / (1024**3)
-            disco_libre_gb = (stat.f_available * stat.f_frsize) / (1024**3)
-            disco_usado_gb = disco_total_gb - disco_libre_gb
-            disco_percent = (disco_usado_gb / disco_total_gb) * 100
-            
+            disk = psutil.disk_usage('/')
+            disco_total_gb = disk.total / (1024**3)
+            disco_usado_gb = disk.used / (1024**3)
+            disco_percent = disk.percent
+
             metricas_controlador = {}
             estado_componentes = {}
             
@@ -178,11 +165,11 @@ class MetricasTiempoReal:
         }
     
     def _calcular_uptime(self) -> str:
-        """Calcular tiempo de actividad del sistema Kali Linux usando /proc/uptime"""
+        """Calcular tiempo de actividad del sistema de forma multiplataforma."""
         try:
-            # Leer uptime nativo de Linux
-            with open('/proc/uptime', 'r') as f:
-                uptime_seconds = float(f.read().split()[0])
+            import psutil
+            boot_time_timestamp = psutil.boot_time()
+            uptime_seconds = time.time() - boot_time_timestamp
             
             # Convertir a formato legible
             days = int(uptime_seconds // 86400)
@@ -195,5 +182,5 @@ class MetricasTiempoReal:
                 return f"{hours}h {minutes}m"
                 
         except Exception as e:
-            self.logger.error(f"Error calculando uptime desde /proc/uptime: {e}")
+            self.logger.error(f"Error calculando uptime con psutil: {e}")
             return "N/A"

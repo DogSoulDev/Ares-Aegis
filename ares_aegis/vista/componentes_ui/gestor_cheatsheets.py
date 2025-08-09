@@ -25,10 +25,10 @@ class GestorCheatsheets:
             if archivo_indice.exists():
                 with open(archivo_indice, 'r', encoding='utf-8') as f:
                     self.indice = json.load(f)
-                self.logger.info(f"📚 Índice de cheatsheets cargado: {len(self.indice.get('cheatsheets', {}))} disponibles")
+                self.logger.info(f" Índice de cheatsheets cargado: {len(self.indice.get('cheatsheets', {}))} disponibles")
             else:
                 self.indice = {"cheatsheets": {}}
-                self.logger.warning("⚠️ No se encontró índice de cheatsheets")
+                self.logger.warning(" No se encontró índice de cheatsheets")
         except Exception as e:
             self.logger.error(f"Error cargando índice de cheatsheets: {e}")
             self.indice = {"cheatsheets": {}}
@@ -56,7 +56,7 @@ class GestorCheatsheets:
                 self.cheatsheets_cargados[nombre] = contenido
                 return contenido
             else:
-                self.logger.warning(f"⚠️ Archivo cheatsheet no encontrado: {ruta_archivo}")
+                self.logger.warning(f" Archivo cheatsheet no encontrado: {ruta_archivo}")
                 return None
                 
         except Exception as e:

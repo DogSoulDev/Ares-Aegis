@@ -38,7 +38,7 @@ class GeneradorMarkdown:
     def generar_seccion_resumen(datos: Dict) -> List[str]:
         """Generar sección de resumen."""
         return [
-            "## 📊 Resumen Ejecutivo",
+            "## [STATS] Resumen Ejecutivo",
             "",
             f"- **Sistema Operativo:** {datos.get('sistema_operativo', 'No detectado')}",
             f"- **Tiempo de actividad:** {datos.get('uptime', 'No disponible')}",
@@ -53,13 +53,13 @@ class GeneradorMarkdown:
     def generar_seccion_amenazas(datos: Dict) -> List[str]:
         """Generar sección de amenazas."""
         lineas = [
-            "## 🛡️ Estado de Seguridad",
+            "## [SHIELD] Estado de Seguridad",
             ""
         ]
         
         amenazas = datos.get('amenazas_detectadas', [])
         if amenazas:
-            lineas.append(f"**⚠️ {len(amenazas)} amenaza(s) detectada(s):**")
+            lineas.append(f"** {len(amenazas)} amenaza(s) detectada(s):**")
             lineas.append("")
             
             for amenaza in amenazas[:10]:  # Máximo 10 amenazas
@@ -70,7 +70,7 @@ class GeneradorMarkdown:
             if len(amenazas) > 10:
                 lineas.append(f"- ... y {len(amenazas) - 10} amenaza(s) más")
         else:
-            lineas.append("✅ **No se detectaron amenazas inmediatas**")
+            lineas.append("[OK] **No se detectaron amenazas inmediatas**")
         
         lineas.append("")
         return lineas
@@ -79,7 +79,7 @@ class GeneradorMarkdown:
     def generar_seccion_escaneos(datos: Dict) -> List[str]:
         """Generar sección de escaneos."""
         return [
-            "## 🔍 Análisis de Escaneos",
+            "##  Análisis de Escaneos",
             "",
             f"- **Archivos escaneados:** {datos.get('archivos_escaneados', 0):,}",
             f"- **Vulnerabilidades encontradas:** {len(datos.get('vulnerabilidades', []))}",
@@ -91,7 +91,7 @@ class GeneradorMarkdown:
     def generar_seccion_sistema(datos: Dict) -> List[str]:
         """Generar sección de información del sistema."""
         return [
-            "## 💻 Información del Sistema",
+            "##  Información del Sistema",
             "",
             f"- **Interfaces de red:** {', '.join(datos.get('interfaces_red', []))}",
             f"- **Puertos abiertos:** {len(datos.get('puertos_abiertos', []))}",
@@ -103,7 +103,7 @@ class GeneradorMarkdown:
     def generar_seccion_cuarentena(datos: Dict) -> List[str]:
         """Generar sección de cuarentena."""
         return [
-            "## 🔒 Estado de Cuarentena",
+            "##  Estado de Cuarentena",
             "",
             f"- **Archivos en cuarentena:** {datos.get('archivos_cuarentena', 0)}",
             f"- **Espacio utilizado:** {datos.get('espacio_cuarentena', '0 MB')}",
@@ -114,7 +114,7 @@ class GeneradorMarkdown:
     def generar_seccion_metricas(datos: Dict) -> List[str]:
         """Generar sección de métricas."""
         return [
-            "## 📈 Métricas de Rendimiento",
+            "##  Métricas de Rendimiento",
             "",
             "### CPU y Memoria",
             f"- Uso promedio de CPU: {datos.get('cpu_usage', 0):.1f}%",
@@ -130,7 +130,7 @@ class GeneradorMarkdown:
     def generar_seccion_recomendaciones(datos: Dict) -> List[str]:
         """Generar sección de recomendaciones."""
         lineas = [
-            "## 💡 Recomendaciones de Seguridad",
+            "##  Recomendaciones de Seguridad",
             ""
         ]
         
@@ -384,9 +384,9 @@ class VerificadorIntegridad:
                     pass
             
             if not problemas:
-                return "✅ Integridad básica del sistema: OK"
+                return "[OK] Integridad básica del sistema: OK"
             else:
-                return f"⚠️ {len(problemas)} problema(s) de integridad detectado(s)"
+                return f" {len(problemas)} problema(s) de integridad detectado(s)"
                 
         except Exception as e:
-            return f"❌ Error verificando integridad: {str(e)}"
+            return f"[ERROR] Error verificando integridad: {str(e)}"

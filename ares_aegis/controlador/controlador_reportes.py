@@ -218,13 +218,13 @@ class ControladorReportes:
 </head>
 <body>
     <div class="header">
-        <h1>🛡️ Reporte de Seguridad - {tipo_reporte.title()}</h1>
+        <h1>[SHIELD] Reporte de Seguridad - {tipo_reporte.title()}</h1>
         <p><strong>Generado:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
         <p><strong>Sistema:</strong> {datos.get('sistema_operativo', 'Desconocido')}</p>
     </div>
     
     <div class="section">
-        <h2>📊 Resumen del Sistema</h2>
+        <h2>[STATS] Resumen del Sistema</h2>
         <div class="metric"><strong>Uptime:</strong> {datos.get('uptime', 'N/A')}</div>
         <div class="metric"><strong>CPU:</strong> {datos.get('cpu_usage', 0):.1f}%</div>
         <div class="metric"><strong>Memoria:</strong> {datos.get('memoria_usada_gb', 0):.1f}/{datos.get('memoria_total_gb', 0):.1f} GB</div>
@@ -232,14 +232,14 @@ class ControladorReportes:
     </div>
     
     <div class="section">
-        <h2>🛡️ Estado de Seguridad</h2>
+        <h2>[SHIELD] Estado de Seguridad</h2>
         <p><strong>Amenazas detectadas:</strong> <span class="{'warning' if len(datos.get('amenazas_detectadas', [])) > 0 else 'success'}">{len(datos.get('amenazas_detectadas', []))}</span></p>
         <p><strong>Archivos en cuarentena:</strong> {datos.get('archivos_cuarentena', 0)}</p>
         <p><strong>Estado de integridad:</strong> <span class="info">{datos.get('integridad_estado', 'Desconocido')}</span></p>
     </div>
     
     <div class="section">
-        <h2>🌐 Red</h2>
+        <h2> Red</h2>
         <p><strong>Interfaces:</strong> {', '.join(datos.get('interfaces_red', []))}</p>
         <p><strong>Conexiones:</strong> {datos.get('numero_conexiones', 0)}</p>
         <p><strong>Puertos abiertos:</strong> {len(datos.get('puertos_abiertos', []))}</p>

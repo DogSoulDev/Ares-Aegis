@@ -34,89 +34,89 @@ class VistaReportes:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre los Reportes"""
-        info_text = """� SISTEMA DE REPORTES AVANZADOS - INTELIGENCIA ACTIONABLE
+        info_text = """ SISTEMA DE REPORTES AVANZADOS - INTELIGENCIA ACTIONABLE
 
-� FUNCIONALIDADES PRINCIPALES:
+ FUNCIONALIDADES PRINCIPALES:
 • Generación automática de reportes detallados de auditorías y escaneos
 • Análisis estadístico avanzado con métricas de seguridad personalizables
 • Exportación en múltiples formatos profesionales (PDF, HTML, CSV, JSON)
 • Consolidación inteligente de datos de todas las herramientas del sistema
 
-🎯 TIPOS DE REPORTES ESPECIALIZADOS:
+[TARGET] TIPOS DE REPORTES ESPECIALIZADOS:
 • Reportes ejecutivos con resúmenes estratégicos para directivos
 • Reportes técnicos detallados para equipos de ciberseguridad
 • Reportes de cumplimiento para auditorías regulatorias
 • Reportes de tendencias temporales con análisis predictivo
 
-💼 REPORTES EJECUTIVOS ESTRATÉGICOS:
+ REPORTES EJECUTIVOS ESTRATÉGICOS:
 • Resumen ejecutivo con estado general de la seguridad organizacional
 • Métricas clave de riesgo con indicadores de rendimiento (KPIs)
 • Tendencias de amenazas y evolución del panorama de riesgos
 • Recomendaciones estratégicas priorizadas por impacto empresarial
 
-🔧 REPORTES TÉCNICOS ESPECIALIZADOS:
+[TOOL] REPORTES TÉCNICOS ESPECIALIZADOS:
 • Análisis detallado de vulnerabilidades con clasificación CVSS
 • Resultados completos de auditorías PAM y configuraciones de seguridad
 • Logs de monitoreo con correlación de eventos de seguridad
 • Actividad de red con detección de patrones anómalos
 
-📋 FORMATOS DE EXPORTACIÓN DISPONIBLES:
+ FORMATOS DE EXPORTACIÓN DISPONIBLES:
 • HTML: Reportes interactivos con navegación intuitiva y gráficos dinámicos
 • Markdown: Documentación técnica profesional para equipos especializados
 • TXT: Logs estructurados para análisis automatizado y procesamiento
 • JSON: Datos estructurados para integración con sistemas SIEM externos
 
-⚡ CARACTERÍSTICAS AVANZADAS DE ANÁLISIS:
+ CARACTERÍSTICAS AVANZADAS DE ANÁLISIS:
 • Correlación automática de eventos entre diferentes herramientas
 • Análisis de tendencias temporales con predicción de riesgos
 • Comparativas históricas para evaluación de mejoras
 • Scoring automático de riesgo con algoritmos especializados
 
-🎨 GESTIÓN PROFESIONAL DE REPORTES:
+ GESTIÓN PROFESIONAL DE REPORTES:
 • Lista completa de reportes generados con metadatos detallados
 • Previsualización interactiva de contenido antes de exportación
 • Exportación personalizable a ubicaciones específicas del sistema
 • Apertura automática en navegador web para reportes HTML interactivos
 
-� ANÁLISIS ESTADÍSTICO Y MÉTRICAS:
+ ANÁLISIS ESTADÍSTICO Y MÉTRICAS:
 • Evolución temporal detallada de amenazas y vulnerabilidades
 • Estadísticas avanzadas de rendimiento y disponibilidad del sistema
 • Identificación de patrones de comportamiento anómalo con IA
 • Métricas precisas de efectividad de controles de seguridad implementados
 
-⚠️ AUTOMATIZACIÓN INTELIGENTE:
+ AUTOMATIZACIÓN INTELIGENTE:
 • Generación programada automática de reportes según calendario definido
 • Sistema de alertas configurables por email para eventos críticos
 • Archivo inteligente y organizado de reportes históricos por categorías
 • Limpieza automática optimizada de archivos temporales y logs antiguos
 
-📋 CONTENIDO INTEGRAL INCLUIDO:
+ CONTENIDO INTEGRAL INCLUIDO:
 • Resumen ejecutivo profesional con hallazgos críticos priorizados
 • Análisis técnico exhaustivo de vulnerabilidades con contexto detallado
 • Recomendaciones específicas de mitigación con priorización por riesgo
 • Timeline cronológico detallado de eventos e incidentes importantes
 • Métricas precisas de rendimiento del sistema con benchmarks
 
-💡 CASOS DE USO PROFESIONALES:
+ CASOS DE USO PROFESIONALES:
 • Auditorías integrales de cumplimiento regulatorio y normativo
 • Investigaciones forenses avanzadas con trazabilidad completa
 • Documentación detallada de incidentes para análisis post-mortem
 • Reportes estratégicos para dirección técnica y ejecutiva
 • Análisis predictivo de tendencias emergentes de ciberseguridad
 
-🔐 SEGURIDAD Y TRAZABILIDAD AVANZADA:
+[LOCK] SEGURIDAD Y TRAZABILIDAD AVANZADA:
 • Marcas de tiempo criptográficas inmutables con blockchain
 • Hash SHA-256 de integridad para verificación de autenticidad
 • Metadatos completos de generación con información forense
 • Trazabilidad completa de operaciones con auditoría inmutable
 
-🚀 INTELIGENCIA EMPRESARIAL:
+ INTELIGENCIA EMPRESARIAL:
 • Dashboard ejecutivo con métricas en tiempo real
 • Integración con sistemas de gestión de riesgos empresariales
 • Benchmarking automático contra estándares de la industria
 • Alertas proactivas basadas en inteligencia artificial
 
-⚡ OPTIMIZADO PARA KALI LINUX:
+ OPTIMIZADO PARA KALI LINUX:
 • Integración nativa con herramientas forenses especializadas
 • Compatibilidad con frameworks de pentesting profesionales
 • Exportación directa a formatos OSINT y threat hunting
@@ -203,14 +203,14 @@ class VistaReportes:
         
         # Título centrado
         tk.Label(header,
-                text=f"📋 {EmoticonosMitologicos.APOLLO} Crónicas de Batalla - Informes de Seguridad",
+                text=f" {EmoticonosMitologicos.APOLLO} Crónicas de Batalla - Informes de Seguridad",
                 font=('Consolas', 16, 'bold'),
                 fg=self.colores.acento_primario,
                 bg=self.colores.fondo_terciario).grid(row=0, column=0)
         
         # Botón de información
         tk.Button(header,
-                 text="❓ Info",
+                 text=" Info",
                  font=('Consolas', 10),
                  bg=self.colores.acento_secundario,
                  fg='white',
@@ -225,7 +225,7 @@ class VistaReportes:
         self.frame_scroll.grid_columnconfigure(0, weight=1)
         
         gen_frame = tk.LabelFrame(self.frame_scroll,
-                                text=f"⚡ {EmoticonosMitologicos.ZEUS} Generar Nuevo Informe",
+                                text=f" {EmoticonosMitologicos.ZEUS} Generar Nuevo Informe",
                                 bg=self.colores.fondo_secundario,
                                 fg=self.colores.acento_primario,
                                 font=('Consolas', 12, 'bold'),
@@ -239,7 +239,7 @@ class VistaReportes:
         tipos_frame.grid_columnconfigure(0, weight=1)
         
         tk.Label(tipos_frame,
-                text=f"📊 {EmoticonosMitologicos.CRISTAL} Tipo de Informe:",
+                text=f"[STATS] {EmoticonosMitologicos.CRISTAL} Tipo de Informe:",
                 font=('Consolas', 10, 'bold'),
                 fg=self.colores.texto_primario,
                 bg=self.colores.fondo_secundario).grid(row=0, column=0, sticky='w', pady=(0, 5))
@@ -247,11 +247,11 @@ class VistaReportes:
         self.tipo_reporte_var = tk.StringVar(value="general")
         
         tipos_opciones = [
-            ("general", "🔍 Reporte General de Seguridad"),
-            ("escaneo", "⚡ Reporte de Escaneos"),
-            ("amenazas", "🚨 Reporte de Amenazas Detectadas"),
-            ("cuarentena", "🔒 Reporte de Cuarentena"),
-            ("sistema", "🖥️ Reporte del Sistema")
+            ("general", " Reporte General de Seguridad"),
+            ("escaneo", " Reporte de Escaneos"),
+            ("amenazas", " Reporte de Amenazas Detectadas"),
+            ("cuarentena", " Reporte de Cuarentena"),
+            ("sistema", " Reporte del Sistema")
         ]
         
         opciones_frame = tk.Frame(tipos_frame, bg=self.colores.fondo_secundario)
@@ -274,7 +274,7 @@ class VistaReportes:
         formato_frame.grid_columnconfigure(0, weight=1)
         
         tk.Label(formato_frame,
-                text=f"📄 {EmoticonosMitologicos.PERGAMINO} Formato de Exportación:",
+                text=f" {EmoticonosMitologicos.PERGAMINO} Formato de Exportación:",
                 font=('Consolas', 10, 'bold'),
                 fg=self.colores.texto_primario,
                 bg=self.colores.fondo_secundario).grid(row=0, column=0, sticky='w', pady=(0, 5))
@@ -282,8 +282,8 @@ class VistaReportes:
         self.formato_reporte_var = tk.StringVar(value="html")
         
         formatos_opciones = [
-            ("html", "🌐 HTML (Visualización web)"),
-            ("markdown", "📝 Markdown (Formato texto)")
+            ("html", " HTML (Visualización web)"),
+            ("markdown", " Markdown (Formato texto)")
         ]
         
         self.formato_opciones_frame = tk.Frame(formato_frame, bg=self.colores.fondo_secundario)
@@ -304,7 +304,7 @@ class VistaReportes:
         
         # Selección de información para Markdown
         self.info_frame = tk.LabelFrame(gen_frame,
-                                       text=f"📋 {EmoticonosMitologicos.PERGAMINO} Información a Incluir (Markdown)",
+                                       text=f" {EmoticonosMitologicos.PERGAMINO} Información a Incluir (Markdown)",
                                        bg=self.colores.fondo_secundario,
                                        fg=self.colores.acento_secundario,
                                        font=('Consolas', 9, 'bold'))
@@ -319,13 +319,13 @@ class VistaReportes:
         self.incluir_metricas = tk.BooleanVar(value=True)
         
         info_opciones = [
-            (self.incluir_resumen, "📊 Resumen Ejecutivo"),
-            (self.incluir_amenazas, "🚨 Amenazas Detectadas"),
-            (self.incluir_escaneos, "⚡ Historial de Escaneos"),
-            (self.incluir_sistema, "🖥️ Estado del Sistema"),
-            (self.incluir_cuarentena, "🔒 Estado de Cuarentena"),
-            (self.incluir_metricas, "📈 Métricas del Sistema"),
-            (self.incluir_recomendaciones, "💡 Recomendaciones")
+            (self.incluir_resumen, "[STATS] Resumen Ejecutivo"),
+            (self.incluir_amenazas, " Amenazas Detectadas"),
+            (self.incluir_escaneos, " Historial de Escaneos"),
+            (self.incluir_sistema, " Estado del Sistema"),
+            (self.incluir_cuarentena, " Estado de Cuarentena"),
+            (self.incluir_metricas, " Métricas del Sistema"),
+            (self.incluir_recomendaciones, " Recomendaciones")
         ]
         
         for i, (variable, texto) in enumerate(info_opciones):
@@ -342,7 +342,7 @@ class VistaReportes:
         
         # Botón generar
         tk.Button(gen_frame,
-                 text=f"📄 {EmoticonosMitologicos.APOLLO} Generar Informe",
+                 text=f" {EmoticonosMitologicos.APOLLO} Generar Informe",
                  command=self._generar_reporte,
                  bg=self.colores.exito,
                  fg='white',
@@ -360,7 +360,7 @@ class VistaReportes:
     def _crear_lista_reportes(self):
         """Crear lista de reportes existentes"""
         lista_frame = tk.LabelFrame(self.frame_scroll,
-                                  text=f"📋 {EmoticonosMitologicos.PERGAMINO} Informes Existentes",
+                                  text=f" {EmoticonosMitologicos.PERGAMINO} Informes Existentes",
                                   bg=self.colores.fondo_secundario,
                                   fg=self.colores.acento_primario,
                                   font=('Consolas', 12, 'bold'))
@@ -402,7 +402,7 @@ class VistaReportes:
     def _crear_panel_acciones(self):
         """Crear panel de acciones para reportes"""
         acciones_frame = tk.LabelFrame(self.frame_scroll,
-                                     text=f"⚙️ {EmoticonosMitologicos.APOLLO} Acciones",
+                                     text=f" {EmoticonosMitologicos.APOLLO} Acciones",
                                      bg=self.colores.fondo_secundario,
                                      fg=self.colores.acento_primario,
                                      font=('Consolas', 12, 'bold'))
@@ -414,7 +414,7 @@ class VistaReportes:
         
         # Botón abrir reporte
         tk.Button(botones_frame,
-                 text=f"📖 {EmoticonosMitologicos.PERGAMINO} Abrir Informe",
+                 text=f" {EmoticonosMitologicos.PERGAMINO} Abrir Informe",
                  command=self._abrir_reporte,
                  bg=self.colores.acento_primario,
                  fg='white',
@@ -423,7 +423,7 @@ class VistaReportes:
         
         # Botón exportar reporte
         tk.Button(botones_frame,
-                 text=f"💾 {EmoticonosMitologicos.CRISTAL} Exportar Informe",
+                 text=f" {EmoticonosMitologicos.CRISTAL} Exportar Informe",
                  command=self._exportar_reporte,
                  bg=self.colores.advertencia,
                  fg='white',
@@ -432,7 +432,7 @@ class VistaReportes:
         
         # Botón eliminar reporte
         tk.Button(botones_frame,
-                 text=f"🗑️ {EmoticonosMitologicos.FUEGO} Eliminar Informe",
+                 text=f" {EmoticonosMitologicos.FUEGO} Eliminar Informe",
                  command=self._eliminar_reporte,
                  bg=self.colores.peligro,
                  fg='white',
@@ -470,14 +470,14 @@ class VistaReportes:
             if resultado:
                 messagebox.showinfo(
                     "Éxito",
-                    f"📄 Reporte {tipo_reporte.upper()} generado exitosamente en formato {formato_reporte.upper()}!\n"
-                    f"📁 Ubicación: {resultado}"
+                    f" Reporte {tipo_reporte.upper()} generado exitosamente en formato {formato_reporte.upper()}!\n"
+                    f" Ubicación: {resultado}"
                 )
                 self._cargar_reportes_existentes()
             else:
                 messagebox.showerror(
                     "Error",
-                    "❌ Error al generar el reporte. Verifique los logs para más detalles."
+                    "[ERROR] Error al generar el reporte. Verifique los logs para más detalles."
                 )
                 
         except Exception as e:

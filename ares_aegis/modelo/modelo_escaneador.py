@@ -72,7 +72,7 @@ class ResultadoEscaneo:
         self.timestamp = datetime.now()
     
     def __str__(self):
-        estado = "🚨 AMENAZA" if self.amenaza_detectada else "✅ LIMPIO"
+        estado = " AMENAZA" if self.amenaza_detectada else "[OK] LIMPIO"
         return f"{estado} - {self.ruta} ({self.tipo_amenaza})"
     
     def to_dict(self) -> Dict[str, Any]:
@@ -131,7 +131,7 @@ class EscaneadorMalware:
         self._cargar_firmas_deteccion()
         self._configurar_patrones_heuristicos()
         
-        self.logger.info("🛡️ Escaneador de malware inicializado correctamente")
+        self.logger.info("[SHIELD] Escaneador de malware inicializado correctamente")
     
     def _configuracion_por_defecto(self) -> Dict[str, Any]:
         """Configuración por defecto del escaneador."""
@@ -173,10 +173,10 @@ class EscaneadorMalware:
             # Firmas básicas incorporadas
             self._cargar_firmas_incorporadas()
             
-            self.logger.info(f"📚 Cargadas {len(self.firmas_deteccion)} firmas de detección")
+            self.logger.info(f" Cargadas {len(self.firmas_deteccion)} firmas de detección")
             
         except Exception as e:
-            self.logger.error(f"❌ Error cargando firmas: {e}")
+            self.logger.error(f"[ERROR] Error cargando firmas: {e}")
             self._cargar_firmas_incorporadas()
     
     def _cargar_firmas_incorporadas(self):
@@ -232,12 +232,12 @@ class EscaneadorMalware:
             }
         ]
         
-        self.logger.info(f"🧠 Configurados {len(self.patrones_heuristicos)} patrones heurísticos")
+        self.logger.info(f" Configurados {len(self.patrones_heuristicos)} patrones heurísticos")
     
     def conectar_siem(self, siem: SIEM):
         """Conecta el escaneador al sistema SIEM."""
         self.siem = siem
-        self.logger.info("🔗 Escaneador conectado al SIEM")
+        self.logger.info(" Escaneador conectado al SIEM")
     
     def escanear_archivo(self, ruta_archivo: str) -> Optional[ResultadoEscaneo]:
         """
@@ -255,13 +255,13 @@ class EscaneadorMalware:
                 return None
             
             if not validar_permisos_lectura(ruta_archivo):
-                self.logger.warning(f"⚠️ Sin permisos de lectura: {ruta_archivo}")
+                self.logger.warning(f" Sin permisos de lectura: {ruta_archivo}")
                 return None
             
             # Verificar tamaño del archivo
             tamaño_archivo = obtener_tamaño_archivo(ruta_archivo)
             if tamaño_archivo > self.tamaño_maximo_analisis:
-                self.logger.warning(f"⚠️ Archivo demasiado grande para análisis: {ruta_archivo}")
+                self.logger.warning(f" Archivo demasiado grande para análisis: {ruta_archivo}")
                 return ResultadoEscaneo(
                     ruta_archivo, False, TipoAmenaza.UNKNOWN, NivelAmenaza.BAJO,
                     descripcion="Archivo demasiado grande para análisis"
@@ -298,7 +298,7 @@ class EscaneadorMalware:
             return self._guardar_resultado_cache(ruta_archivo, resultado_limpio)
             
         except Exception as e:
-            self.logger.error(f"❌ Error escaneando archivo {ruta_archivo}: {e}")
+            self.logger.error(f"[ERROR] Error escaneando archivo {ruta_archivo}: {e}")
             return None
     
     def escanear_directorio(self, ruta_directorio: str, recursivo: bool = True, 
@@ -314,10 +314,10 @@ class EscaneadorMalware:
         Returns:
             List[ResultadoEscaneo]: Lista de resultados del escaneo
         """
-        self.logger.info(f"🔍 Iniciando escaneo de directorio: {ruta_directorio}")
+        self.logger.info(f" Iniciando escaneo de directorio: {ruta_directorio}")
         
         if not validar_ruta_directorio(ruta_directorio):
-            self.logger.error(f"❌ Directorio inválido o no accesible: {ruta_directorio}")
+            self.logger.error(f"[ERROR] Directorio inválido o no accesible: {ruta_directorio}")
             return []
         
         try:
@@ -328,11 +328,11 @@ class EscaneadorMalware:
             total_archivos = len(archivos)
             resultados = []
             
-            self.logger.info(f"📊 Se van a escanear {total_archivos} archivos")
+            self.logger.info(f"[STATS] Se van a escanear {total_archivos} archivos")
             
             for i, archivo in enumerate(archivos):
                 if self.detener_evento.is_set():
-                    self.logger.info("⏹️ Escaneo detenido por solicitud del usuario")
+                    self.logger.info("⏹ Escaneo detenido por solicitud del usuario")
                     break
                 
                 if archivo.is_file():
@@ -354,12 +354,12 @@ class EscaneadorMalware:
                     callback_progreso(i + 1, total_archivos)
             
             amenazas_encontradas = sum(1 for r in resultados if r.amenaza_detectada)
-            self.logger.info(f"✅ Escaneo completado. {amenazas_encontradas} amenazas detectadas de {len(resultados)} archivos")
+            self.logger.info(f"[OK] Escaneo completado. {amenazas_encontradas} amenazas detectadas de {len(resultados)} archivos")
             
             return resultados
             
         except Exception as e:
-            self.logger.error(f"❌ Error durante escaneo de directorio: {e}")
+            self.logger.error(f"[ERROR] Error durante escaneo de directorio: {e}")
             return []
     
     def _calcular_hash_archivo(self, ruta_archivo: str) -> str:
@@ -371,7 +371,7 @@ class EscaneadorMalware:
                     hash_sha256.update(chunk)
             return hash_sha256.hexdigest()
         except Exception as e:
-            self.logger.error(f"❌ Error calculando hash de {ruta_archivo}: {e}")
+            self.logger.error(f"[ERROR] Error calculando hash de {ruta_archivo}: {e}")
             return ""
     
     def _analizar_por_firmas(self, ruta_archivo: str, hash_archivo: str) -> Optional[ResultadoEscaneo]:
@@ -381,7 +381,7 @@ class EscaneadorMalware:
             if hash_archivo in self.firmas_deteccion:
                 firma = self.firmas_deteccion[hash_archivo]
                 self.estadisticas['amenazas_detectadas'] += 1
-                self.logger.warning(f"🚨 Amenaza detectada por firma: {ruta_archivo}")
+                self.logger.warning(f" Amenaza detectada por firma: {ruta_archivo}")
                 
                 return ResultadoEscaneo(
                     ruta_archivo, True, firma['tipo'], firma['criticidad'],
@@ -393,7 +393,7 @@ class EscaneadorMalware:
             if hash_parcial in self.firmas_deteccion:
                 firma = self.firmas_deteccion[hash_parcial]
                 self.estadisticas['amenazas_detectadas'] += 1
-                self.logger.warning(f"🚨 Amenaza detectada por firma parcial: {ruta_archivo}")
+                self.logger.warning(f" Amenaza detectada por firma parcial: {ruta_archivo}")
                 
                 return ResultadoEscaneo(
                     ruta_archivo, True, firma['tipo'], firma['criticidad'],
@@ -403,7 +403,7 @@ class EscaneadorMalware:
             return None
             
         except Exception as e:
-            self.logger.error(f"❌ Error en análisis por firmas: {e}")
+            self.logger.error(f"[ERROR] Error en análisis por firmas: {e}")
             return None
     
     def _analizar_heuristico(self, ruta_archivo: str, hash_archivo: str) -> Optional[ResultadoEscaneo]:
@@ -434,7 +434,7 @@ class EscaneadorMalware:
                 nivel = min(puntuacion_sospecha, NivelAmenaza.EXTREMO)
                 
                 self.estadisticas['sospechosos_detectados'] += 1
-                self.logger.warning(f"🤔 Archivo sospechoso detectado: {ruta_archivo} (puntuación: {puntuacion_sospecha})")
+                self.logger.warning(f" Archivo sospechoso detectado: {ruta_archivo} (puntuación: {puntuacion_sospecha})")
                 
                 return ResultadoEscaneo(
                     ruta_archivo, True, tipo_predominante, nivel,
@@ -444,7 +444,7 @@ class EscaneadorMalware:
             return None
             
         except Exception as e:
-            self.logger.error(f"❌ Error en análisis heurístico: {e}")
+            self.logger.error(f"[ERROR] Error en análisis heurístico: {e}")
             return None
     
     def _guardar_resultado_cache(self, ruta_archivo: str, resultado: ResultadoEscaneo) -> ResultadoEscaneo:
@@ -462,17 +462,17 @@ class EscaneadorMalware:
     def detener_escaneo(self):
         """Detiene el escaneo en curso."""
         self.detener_evento.set()
-        self.logger.info("⏹️ Solicitud de detención de escaneo enviada")
+        self.logger.info("⏹ Solicitud de detención de escaneo enviada")
     
     def reiniciar_escaneo(self):
         """Reinicia el estado del escaneador."""
         self.detener_evento.clear()
-        self.logger.info("🔄 Escaneador reiniciado")
+        self.logger.info("[REFRESH] Escaneador reiniciado")
     
     def limpiar_cache(self):
         """Limpia el cache de escaneos."""
         self.cache_escaneos.clear()
-        self.logger.info("🧹 Cache de escaneos limpiado")
+        self.logger.info("[CLEAN] Cache de escaneos limpiado")
     
     def obtener_estadisticas(self) -> Dict[str, Any]:
         """Obtiene estadísticas completas del escaneador."""
@@ -494,7 +494,7 @@ class EscaneadorMalware:
         }
         self.firmas_por_tipo[tipo_amenaza].append(hash_archivo)
         
-        self.logger.info(f"➕ Firma personalizada agregada: {hash_archivo} ({tipo_amenaza})")
+        self.logger.info(f" Firma personalizada agregada: {hash_archivo} ({tipo_amenaza})")
     
     def generar_reporte(self, resultados: List[ResultadoEscaneo]) -> Dict[str, Any]:
         """Genera un reporte completo de los resultados de escaneo."""

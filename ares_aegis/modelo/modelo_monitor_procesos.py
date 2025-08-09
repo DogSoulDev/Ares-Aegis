@@ -162,7 +162,7 @@ class MonitorProcesos:
         self.alertas_generadas = 0
         self.ultima_actualizacion = None
         
-        self.logger.info("🔍 Monitor de Procesos inicializado")
+        self.logger.info(" Monitor de Procesos inicializado")
     
     def iniciar_monitoreo(self) -> bool:
         """Iniciar el monitoreo de procesos."""
@@ -179,7 +179,7 @@ class MonitorProcesos:
             )
             self.hilo_monitor.start()
             
-            self.logger.info("🟢 Monitoreo de procesos iniciado")
+            self.logger.info(" Monitoreo de procesos iniciado")
             return True
     
     def detener_monitoreo(self) -> bool:
@@ -192,7 +192,7 @@ class MonitorProcesos:
             if self.hilo_monitor:
                 self.hilo_monitor.join(timeout=2.0)
             
-            self.logger.info("🔴 Monitoreo de procesos detenido")
+            self.logger.info(" Monitoreo de procesos detenido")
             return True
     
     def _bucle_monitoreo(self):
@@ -369,9 +369,9 @@ class MonitorProcesos:
         
         # Log según severidad
         if alerta.nivel_severidad.value >= NivelRiesgoProceso.ALTO.value:
-            self.logger.warning(f"🚨 ALERTA CRÍTICA: {alerta.generar_mensaje_alerta()}")
+            self.logger.warning(f" ALERTA CRÍTICA: {alerta.generar_mensaje_alerta()}")
         else:
-            self.logger.info(f"⚠️ Alerta: {alerta.tipo_alerta} - PID {alerta.proceso.pid}")
+            self.logger.info(f" Alerta: {alerta.tipo_alerta} - PID {alerta.proceso.pid}")
     
     def obtener_estadisticas(self) -> Dict[str, Any]:
         """Obtener estadísticas del monitor."""
@@ -395,18 +395,18 @@ class MonitorProcesos:
                 # En sistemas Unix usar SIGKILL, en Windows usar taskkill /F
                 try:
                     os.kill(pid, 9)  # SIGKILL es 9
-                    self.logger.warning(f"🔥 Proceso {pid} terminado forzosamente")
+                    self.logger.warning(f" Proceso {pid} terminado forzosamente")
                 except (OSError, AttributeError):
                     subprocess.run(['taskkill', '/PID', str(pid), '/F'], check=True)
-                    self.logger.warning(f"🔥 Proceso {pid} terminado forzosamente")
+                    self.logger.warning(f" Proceso {pid} terminado forzosamente")
             else:
                 # En sistemas Unix usar SIGTERM, en Windows usar taskkill normal
                 try:
                     os.kill(pid, 15)  # SIGTERM es 15
-                    self.logger.info(f"✋ Proceso {pid} terminado")
+                    self.logger.info(f" Proceso {pid} terminado")
                 except (OSError, AttributeError):
                     subprocess.run(['taskkill', '/PID', str(pid)], check=True)
-                    self.logger.info(f"✋ Proceso {pid} terminado")
+                    self.logger.info(f" Proceso {pid} terminado")
             return True
         except (OSError, PermissionError, subprocess.CalledProcessError) as e:
             self.logger.error(f"Error terminando proceso {pid}: {e}")
@@ -417,13 +417,13 @@ class MonitorProcesos:
         try:
             try:
                 os.kill(pid, 19)  # SIGSTOP es 19
-                self.logger.info(f"⏸️ Proceso {pid} suspendido")
+                self.logger.info(f"⏸ Proceso {pid} suspendido")
                 return True
             except (OSError, AttributeError):
                 # En Windows usar pssuspend si está disponible
                 try:
                     subprocess.run(['pssuspend', str(pid)], check=True)
-                    self.logger.info(f"⏸️ Proceso {pid} suspendido")
+                    self.logger.info(f"⏸ Proceso {pid} suspendido")
                     return True
                 except (subprocess.CalledProcessError, FileNotFoundError):
                     self.logger.warning("Suspensión de procesos no soportada en esta plataforma")
@@ -437,13 +437,13 @@ class MonitorProcesos:
         try:
             try:
                 os.kill(pid, 18)  # SIGCONT es 18
-                self.logger.info(f"▶️ Proceso {pid} reanudado")
+                self.logger.info(f" Proceso {pid} reanudado")
                 return True
             except (OSError, AttributeError):
                 # En Windows usar pssuspend si está disponible
                 try:
                     subprocess.run(['pssuspend', '-r', str(pid)], check=True)
-                    self.logger.info(f"▶️ Proceso {pid} reanudado")
+                    self.logger.info(f" Proceso {pid} reanudado")
                     return True
                 except (subprocess.CalledProcessError, FileNotFoundError):
                     self.logger.warning("Reanudación de procesos no soportada en esta plataforma")

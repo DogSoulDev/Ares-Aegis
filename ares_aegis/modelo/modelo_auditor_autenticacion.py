@@ -48,7 +48,7 @@ class AuditorPAM:
             'login', 'sshd', 'sudo', 'su', 'passwd'
         ]
         
-        self.logger.info("🔐 El Guardián de las Credenciales Sagradas ha iniciado su vigilancia")
+        self.logger.info("[LOCK] El Guardián de las Credenciales Sagradas ha iniciado su vigilancia")
     
     def auditar_configuracion_completa(self) -> List[Hallazgo]:
         """

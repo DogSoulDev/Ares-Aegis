@@ -686,11 +686,11 @@ class GeneradorReportesFIM:
         Returns:
             str: Reporte en formato Markdown
         """
-        md = "# 🛡️ Reporte de Integridad FIM - Kali Linux\n\n"
+        md = "# [SHIELD] Reporte de Integridad FIM - Kali Linux\n\n"
         md += f"**Generado:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         
         # Resumen estadístico
-        md += "## 📊 Resumen Estadístico\n\n"
+        md += "## [STATS] Resumen Estadístico\n\n"
         md += f"- **Archivos monitoreados:** {estadisticas.get('archivos_monitoreados', 0):,}\n"
         md += f"- **Verificaciones realizadas:** {estadisticas.get('verificaciones_realizadas', 0):,}\n"
         md += f"- **Cambios detectados:** {estadisticas.get('cambios_detectados', 0):,}\n"
@@ -702,7 +702,7 @@ class GeneradorReportesFIM:
                            a.nivel_criticidad.value == 'CRITICO']
         
         if alertas_criticas:
-            md += "## 🚨 Alertas Críticas\n\n"
+            md += "##  Alertas Críticas\n\n"
             for alerta in alertas_criticas[:10]:  # Mostrar solo las primeras 10
                 if hasattr(alerta, 'generar_reporte_markdown'):
                     md += alerta.generar_reporte_markdown()
@@ -711,7 +711,7 @@ class GeneradorReportesFIM:
                     md += f"  **Descripción:** {getattr(alerta, 'descripcion', 'N/A')}\n\n"
         
         # Recomendaciones para Kali Linux
-        md += "## 🔧 Recomendaciones para Kali Linux\n\n"
+        md += "## [TOOL] Recomendaciones para Kali Linux\n\n"
         md += "- Verificar regularmente la integridad de herramientas de pentesting\n"
         md += "- Monitorear cambios en configuraciones de proxy y TOR\n"
         md += "- Validar actualizaciones de bases de datos de exploits\n"
@@ -740,11 +740,11 @@ class GeneradorReportesFIM:
         resumen += f"- Archivos monitoreados: {estadisticas.get('archivos_monitoreados', 0):,}\n"
         
         if alertas_criticas > 0:
-            resumen += f"\n⚠️ **ATENCIÓN:** {alertas_criticas} alertas críticas requieren investigación inmediata.\n"
+            resumen += f"\n **ATENCIÓN:** {alertas_criticas} alertas críticas requieren investigación inmediata.\n"
         elif total_alertas > 0:
-            resumen += f"\n📋 **INFO:** {total_alertas} cambios detectados para revisión.\n"
+            resumen += f"\n **INFO:** {total_alertas} cambios detectados para revisión.\n"
         else:
-            resumen += f"\n✅ **OK:** Sistema sin cambios críticos detectados.\n"
+            resumen += f"\n[OK] **OK:** Sistema sin cambios críticos detectados.\n"
         
         return resumen
 

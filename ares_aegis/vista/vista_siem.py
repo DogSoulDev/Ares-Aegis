@@ -44,77 +44,77 @@ class VistaSIEM:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre el SIEM"""
-        info_text = """🛡️ SISTEMA SIEM - INTELIGENCIA DE AMENAZAS
+        info_text = """[SHIELD] SISTEMA SIEM - INTELIGENCIA DE AMENAZAS
 
-🚨 FUNCIONALIDADES PRINCIPALES:
+ FUNCIONALIDADES PRINCIPALES:
 • Monitoreo integral de eventos de seguridad en tiempo real
 • Análisis avanzado de logs del sistema con correlación inteligente
 • Detección automática de amenazas con algoritmos de aprendizaje
 • Correlación avanzada de eventos sospechosos y patrones de ataque
 
-⚡ MONITOREO AVANZADO Y COBERTURA:
+ MONITOREO AVANZADO Y COBERTURA:
 • Conexiones de red entrantes y salientes con análisis de tráfico
 • Procesos y servicios del sistema con detección de anomalías
 • Intentos de acceso fallidos y patrones de fuerza bruta
 • Cambios críticos en archivos del sistema y configuraciones
 • Uso anómalo de recursos y escalada de privilegios
 
-🎯 DETECCIÓN INTELIGENTE DE AMENAZAS:
+[TARGET] DETECCIÓN INTELIGENTE DE AMENAZAS:
 • Ataques de fuerza bruta contra servicios de autenticación
 • Intentos de escalada de privilegios y movimiento lateral
 • Actividad de red sospechosa y comunicaciones anómalas
 • Modificaciones no autorizadas en archivos críticos del sistema
 • Comportamiento anómalo de procesos y aplicaciones
 
-🔧 HERRAMIENTAS DE ANÁLISIS INTEGRADAS:
+[TOOL] HERRAMIENTAS DE ANÁLISIS INTEGRADAS:
 • netstat: Monitoreo exhaustivo de conexiones de red
 • ps: Análisis detallado de procesos en ejecución
 • last: Historial completo de accesos al sistema
 • journalctl: Análisis avanzado de logs del sistema
 • ss: Estado detallado y métricas de conexiones de red
 
-⚠️ SISTEMA DE ALERTAS MULTINIVEL:
-• 🔴 CRÍTICO: Amenaza inmediata detectada, respuesta urgente requerida
-• 🟡 ADVERTENCIA: Actividad sospechosa que requiere investigación
-• 🟢 NORMAL: Funcionamiento estándar del sistema sin anomalías
-• 🔵 INFORMACIÓN: Eventos del sistema relevantes para auditoría
+ SISTEMA DE ALERTAS MULTINIVEL:
+•  CRÍTICO: Amenaza inmediata detectada, respuesta urgente requerida
+•  ADVERTENCIA: Actividad sospechosa que requiere investigación
+•  NORMAL: Funcionamiento estándar del sistema sin anomalías
+•  INFORMACIÓN: Eventos del sistema relevantes para auditoría
 
-📊 MÉTRICAS AVANZADAS Y ANÁLISIS:
+[STATS] MÉTRICAS AVANZADAS Y ANÁLISIS:
 • Conexiones activas clasificadas por puerto y protocolo
 • Procesos con consumo anómalo de CPU y memoria
 • Estadísticas de intentos de conexión fallidos por origen
 • Eventos de autenticación exitosos y fallidos con detalles
 • Timeline de cambios en archivos críticos del sistema
 
-💡 CORRELACIÓN INTELIGENTE DE EVENTOS:
+ CORRELACIÓN INTELIGENTE DE EVENTOS:
 • Análisis de patrones de comportamiento con machine learning
 • Detección de cadenas de ataque y técnicas MITRE ATT&CK
 • Identificación de IOCs (Indicators of Compromise) automática
 • Timeline correlacionado de eventos relacionados temporalmente
 • Análisis de contexto para reducir falsos positivos
 
-🔐 ANÁLISIS FORENSE INTEGRADO:
+[LOCK] ANÁLISIS FORENSE INTEGRADO:
 • Registro inmutable de eventos para investigación forense
 • Exportación de reportes detallados en múltiples formatos
 • Timeline completo de incidentes de seguridad con evidencia
 • Preservación de evidencia digital para análisis legal
 • Integración con herramientas de respuesta a incidentes
 
-🚀 CARACTERÍSTICAS PROFESIONALES:
+ CARACTERÍSTICAS PROFESIONALES:
 • Dashboard en tiempo real con métricas de seguridad
 • Alertas configurables por tipos de eventos específicos
 • Integración con sistemas de notificación externos
 • Análisis de tendencias y patrones históricos
 • Capacidades de búsqueda avanzada en logs históricos
 
-🔧 OPTIMIZADO PARA KALI LINUX:
+[TOOL] OPTIMIZADO PARA KALI LINUX:
 • Integración nativa con herramientas de ciberseguridad
 • Análisis especializado para entornos de pentesting
 • Compatibilidad con logs específicos de distribuciones Debian
 • Integración con frameworks de seguridad de Kali Linux
 • Optimización para hardware y rendimiento de sistemas Linux
 
-⏱️ MONITOREO CONTINUO:
+⏱ MONITOREO CONTINUO:
 • Supervisión 24/7 sin interrupciones del servicio
 • Procesamiento en tiempo real de miles de eventos por segundo
 • Almacenamiento eficiente de logs con compresión inteligente
@@ -125,38 +125,38 @@ class VistaSIEM:
     def crear_vista(self, area_contenido=None):
         """Crear vista SIEM con interfaz de monitoreo profesional"""
         try:
-            self.logger.info("🔧 Iniciando creación de vista SIEM...")
+            self.logger.info("[TOOL] Iniciando creación de vista SIEM...")
             self._limpiar_contenedor()
-            self.logger.info("✅ Contenedor limpiado")
+            self.logger.info("[OK] Contenedor limpiado")
             
             # Frame principal con padding estandarizado
             self.frame_principal = tk.Frame(self.contenedor_padre, bg=self.colores.fondo_secundario)
             self.frame_principal.pack(fill='both', expand=True, padx=20, pady=10)
-            self.logger.info("✅ Frame principal creado")
+            self.logger.info("[OK] Frame principal creado")
             
             # Configurar grid responsive
             self.frame_principal.grid_rowconfigure(0, weight=0)  # Header fijo
             self.frame_principal.grid_rowconfigure(1, weight=0)  # Panel de control fijo
             self.frame_principal.grid_rowconfigure(2, weight=1)  # Contenido expandible
             self.frame_principal.grid_columnconfigure(0, weight=1)
-            self.logger.info("✅ Grid configurado")
+            self.logger.info("[OK] Grid configurado")
             
             # === HEADER DEL SIEM ===
             self._crear_header_siem()
-            self.logger.info("✅ Header creado")
+            self.logger.info("[OK] Header creado")
             
             # === PANEL DE CONTROL ===
             self._crear_panel_control()
-            self.logger.info("✅ Panel de control creado")
+            self.logger.info("[OK] Panel de control creado")
             
             # === CONTENIDO PRINCIPAL ===
             self._crear_contenido_principal()
-            self.logger.info("✅ Contenido principal creado")
+            self.logger.info("[OK] Contenido principal creado")
             
-            self.logger.info("🎯 Vista SIEM creada exitosamente")
+            self.logger.info("[TARGET] Vista SIEM creada exitosamente")
             
         except Exception as e:
-            self.logger.error(f"❌ Error creando vista SIEM: {e}", exc_info=True)
+            self.logger.error(f"[ERROR] Error creando vista SIEM: {e}", exc_info=True)
             raise
     
     def _crear_header_siem(self):
@@ -191,7 +191,7 @@ class VistaSIEM:
         
         # Botón de información
         tk.Button(header_frame,
-                 text="❓ Info",
+                 text=" Info",
                  font=('Consolas', 10),
                  bg=self.colores.verde_terminal,
                  fg=self.colores.negro_carbono,
@@ -203,7 +203,7 @@ class VistaSIEM:
     def _crear_panel_control(self):
         """Crear panel de control del SIEM"""
         control_frame = tk.LabelFrame(self.frame_principal,
-                                     text="🎛️ Panel de Control SIEM",
+                                     text=" Panel de Control SIEM",
                                      bg=self.colores.fondo_secundario,
                                      fg=self.colores.verde_terminal,
                                      font=('Consolas', 12, 'bold'))
@@ -215,7 +215,7 @@ class VistaSIEM:
         
         # Estado del sistema
         self.estado_label = tk.Label(controles_frame,
-                                   text="🔴 SIEM INACTIVO",
+                                   text=" SIEM INACTIVO",
                                    font=('Consolas', 14, 'bold'),
                                    fg=self.colores.rojo_critico,
                                    bg=self.colores.fondo_secundario)
@@ -226,7 +226,7 @@ class VistaSIEM:
         botones_frame.pack()
         
         self.btn_iniciar_siem = tk.Button(botones_frame,
-                                        text="▶️ INICIAR SIEM",
+                                        text=" INICIAR SIEM",
                                         font=('Consolas', 11, 'bold'),
                                         fg=self.colores.negro_carbono,
                                         bg=self.colores.verde_terminal,
@@ -238,7 +238,7 @@ class VistaSIEM:
         self.btn_iniciar_siem.pack(side='left', padx=5)
         
         self.btn_detener_siem = tk.Button(botones_frame,
-                                        text="⏹️ DETENER SIEM",
+                                        text="⏹ DETENER SIEM",
                                         font=('Consolas', 11, 'bold'),
                                         fg=self.colores.blanco_hueso,
                                         bg=self.colores.rojo_critico,
@@ -251,7 +251,7 @@ class VistaSIEM:
         self.btn_detener_siem.pack(side='left', padx=5)
         
         self.btn_exportar = tk.Button(botones_frame,
-                                    text="💾 EXPORTAR",
+                                    text=" EXPORTAR",
                                     font=('Consolas', 10, 'bold'),
                                     fg=self.colores.negro_carbono,
                                     bg=self.colores.amarillo_medio,
@@ -298,7 +298,7 @@ class VistaSIEM:
     def _crear_metricas_sistema(self, parent):
         """Crear panel de métricas del sistema con información de seguridad"""
         metricas_frame = tk.LabelFrame(parent,
-                                     text="�️ Panel de Seguridad en Tiempo Real",
+                                     text=" Panel de Seguridad en Tiempo Real",
                                      bg=self.colores.fondo_primario,
                                      fg=self.colores.verde_terminal,
                                      font=('Consolas', 11, 'bold'))
@@ -351,7 +351,7 @@ class VistaSIEM:
     def _crear_tabla_eventos(self, parent):
         """Crear tabla de eventos"""
         eventos_frame = tk.LabelFrame(parent,
-                                    text="📋 Eventos de Seguridad",
+                                    text=" Eventos de Seguridad",
                                     bg=self.colores.fondo_primario,
                                     fg=self.colores.verde_terminal,
                                     font=('Consolas', 11, 'bold'))
@@ -389,7 +389,7 @@ class VistaSIEM:
     def _crear_area_detalles(self, parent):
         """Crear área de detalles del evento"""
         detalles_frame = tk.LabelFrame(parent,
-                                     text="🔍 Detalles del Evento",
+                                     text=" Detalles del Evento",
                                      bg=self.colores.fondo_primario,
                                      fg=self.colores.verde_terminal,
                                      font=('Consolas', 11, 'bold'))
@@ -413,7 +413,7 @@ class VistaSIEM:
             
             # Actualizar interfaz - verificar que los widgets estén inicializados
             if self.estado_label:
-                self.estado_label.config(text="🟢 SIEM ACTIVO", fg=self.colores.verde_terminal)
+                self.estado_label.config(text=" SIEM ACTIVO", fg=self.colores.verde_terminal)
             if self.btn_iniciar_siem:
                 self.btn_iniciar_siem.config(state='disabled')
             if self.btn_detener_siem:
@@ -441,7 +441,7 @@ class VistaSIEM:
             
             # Actualizar interfaz - verificar que los widgets estén inicializados
             if self.estado_label:
-                self.estado_label.config(text="🔴 SIEM INACTIVO", fg=self.colores.rojo_critico)
+                self.estado_label.config(text=" SIEM INACTIVO", fg=self.colores.rojo_critico)
             if self.btn_iniciar_siem:
                 self.btn_iniciar_siem.config(state='normal')
             if self.btn_detener_siem:

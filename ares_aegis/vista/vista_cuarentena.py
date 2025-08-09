@@ -35,66 +35,66 @@ class VistaCuarentena:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre la Cuarentena"""
-        info_text = """🛡️ CUARENTENA DE ARCHIVOS - AISLAMIENTO SEGURO
+        info_text = """[SHIELD] CUARENTENA DE ARCHIVOS - AISLAMIENTO SEGURO
 
-🔒 FUNCIONALIDADES PRINCIPALES:
+ FUNCIONALIDADES PRINCIPALES:
 • Aislamiento seguro y completo de archivos sospechosos o maliciosos
 • Gestión integral de archivos en cuarentena con interfaz intuitiva
 • Restauración segura de archivos legítimos incorrectamente detectados
 • Eliminación permanente y segura de amenazas confirmadas
 
-⚡ OPERACIONES DISPONIBLES:
+ OPERACIONES DISPONIBLES:
 • Mover archivos a cuarentena desde cualquier ubicación del sistema
 • Restaurar archivos desde cuarentena a su ubicación original
 • Eliminar archivos permanentemente con borrado seguro
 • Analizar archivos aislados con herramientas especializadas
 
-🎯 GESTIÓN AVANZADA DE CUARENTENA:
+[TARGET] GESTIÓN AVANZADA DE CUARENTENA:
 • Lista detallada de todos los archivos en cuarentena
 • Información exhaustiva de cada archivo (tamaño, fecha, origen)
 • Fecha y hora exacta de cuarentena con trazabilidad completa
 • Razón detallada del aislamiento y nivel de amenaza detectado
 
-🔧 GUÍA DE USO PASO A PASO:
+[TOOL] GUÍA DE USO PASO A PASO:
 1. Los archivos se mueven automáticamente desde el escaneador
 2. Revisa cuidadosamente la lista de archivos en cuarentena
 3. Analiza cada archivo individualmente antes de tomar decisiones
 4. Restaura archivos legítimos o elimina permanentemente las amenazas
 
-⚠️ PRISIÓN DIGITAL DE HADES - MÁXIMA SEGURIDAD:
+ PRISIÓN DIGITAL DE HADES - MÁXIMA SEGURIDAD:
 • Aislamiento total y completo del sistema operativo
 • Sin acceso posible desde aplicaciones externas
 • Backup automático de metadatos originales del archivo
 • Historial detallado de todas las operaciones realizadas
 
-📊 ESTADOS Y CLASIFICACIÓN DE ARCHIVOS:
-• 🔒 EN CUARENTENA: Aislado de forma segura sin posibilidad de ejecución
-• 📅 FECHA: Momento exacto del aislamiento con precisión de segundos
-• 📂 ORIGEN: Ubicación original completa del archivo en el sistema
-• ⚠️ MOTIVO: Razón específica del aislamiento y tipo de amenaza
+[STATS] ESTADOS Y CLASIFICACIÓN DE ARCHIVOS:
+•  EN CUARENTENA: Aislado de forma segura sin posibilidad de ejecución
+•  FECHA: Momento exacto del aislamiento con precisión de segundos
+•  ORIGEN: Ubicación original completa del archivo en el sistema
+•  MOTIVO: Razón específica del aislamiento y tipo de amenaza
 
-💡 RECOMENDACIONES PROFESIONALES DE SEGURIDAD:
+ RECOMENDACIONES PROFESIONALES DE SEGURIDAD:
 • Analiza cuidadosamente cada archivo antes de restaurar
 • Mantén archivos sospechosos aislados hasta verificación completa
 • Elimina permanentemente las amenazas confirmadas por múltiples análisis
 • Revisa periódicamente la cuarentena para gestión del espacio
 • Documenta todas las decisiones de restauración o eliminación
 
-🔐 SEGURIDAD INTEGRAL DEL SISTEMA:
+[LOCK] SEGURIDAD INTEGRAL DEL SISTEMA:
 • Los archivos en cuarentena no pueden ejecutarse bajo ninguna circunstancia
 • Aislamiento completo del sistema operativo y aplicaciones
 • Backup automático de información original para restauración
 • Registro inmutable de todas las operaciones para auditoría
 • Encriptación de archivos en cuarentena para máxima seguridad
 
-🚀 CARACTERÍSTICAS AVANZADAS:
+ CARACTERÍSTICAS AVANZADAS:
 • Análisis automático de archivos en cuarentena
 • Integración con sistemas de inteligencia de amenazas
 • Exportación de reportes de actividad de cuarentena
 • Alertas configurables para archivos críticos
 • Sincronización con bases de datos de malware actualizadas
 
-⚡ OPTIMIZADO PARA KALI LINUX:
+ OPTIMIZADO PARA KALI LINUX:
 • Integración completa con herramientas forenses de Kali
 • Compatibilidad con sistemas de archivos específicos de Linux
 • Análisis especializado con herramientas nativas de ciberseguridad
@@ -183,14 +183,14 @@ class VistaCuarentena:
         
         # Título centrado
         tk.Label(header,
-                text=f"🔒 {EmoticonosMitologicos.HADES} Prisión de Hades - Gestión de Cuarentena",
+                text=f" {EmoticonosMitologicos.HADES} Prisión de Hades - Gestión de Cuarentena",
                 font=('Consolas', 16, 'bold'),
                 fg=self.colores.acento_primario,
                 bg=self.colores.fondo_terciario).grid(row=0, column=0, pady=15)
         
         # Botón de información
         tk.Button(header,
-                 text="❓ Info",
+                 text=" Info",
                  font=('Consolas', 10),
                  bg=self.colores.acento_secundario,
                  fg='white',
@@ -202,7 +202,7 @@ class VistaCuarentena:
     def _crear_panel_control(self):
         """Crear panel de control de cuarentena con grid responsive"""
         control_frame = tk.LabelFrame(self.frame_scroll,
-                                    text=f"⚙️ {EmoticonosMitologicos.HADES} Control de Cuarentena",
+                                    text=f" {EmoticonosMitologicos.HADES} Control de Cuarentena",
                                     bg=self.colores.fondo_secundario,
                                     fg=self.colores.acento_primario,
                                     font=('Consolas', 12, 'bold'),
@@ -219,7 +219,7 @@ class VistaCuarentena:
         # self.tamaño_total_var = tk.StringVar(value="0 MB")
         
         tk.Label(stats_frame,
-                text=f"📊 {EmoticonosMitologicos.CRISTAL} Estadísticas:",
+                text=f"[STATS] {EmoticonosMitologicos.CRISTAL} Estadísticas:",
                 font=('Consolas', 10, 'bold'),
                 fg=self.colores.texto_primario,
                 bg=self.colores.fondo_secundario).pack(anchor='w')
@@ -253,7 +253,7 @@ class VistaCuarentena:
         
         # Botón para agregar archivo manualmente
         tk.Button(control_frame,
-                 text=f"📜 {EmoticonosMitologicos.PERGAMINO} Agregar archivo a cuarentena",
+                 text=f" {EmoticonosMitologicos.PERGAMINO} Agregar archivo a cuarentena",
                  command=self._agregar_archivo_cuarentena,
                  bg=self.colores.acento_primario,
                  fg=self.colores.fondo_primario,
@@ -263,7 +263,7 @@ class VistaCuarentena:
     def _crear_lista_cuarentena(self):
         """Crear lista de archivos en cuarentena"""
         lista_frame = tk.LabelFrame(self.frame_scroll,
-                                  text=f"📋 {EmoticonosMitologicos.PERGAMINO} Archivos en Cuarentena",
+                                  text=f" {EmoticonosMitologicos.PERGAMINO} Archivos en Cuarentena",
                                   bg=self.colores.fondo_secundario,
                                   fg=self.colores.acento_primario,
                                   font=('Consolas', 12, 'bold'))
@@ -304,7 +304,7 @@ class VistaCuarentena:
     def _crear_panel_acciones(self):
         """Crear panel de acciones para archivos en cuarentena"""
         acciones_frame = tk.LabelFrame(self.frame_scroll,
-                                     text=f"⚔️ {EmoticonosMitologicos.ARES} Acciones de Cuarentena",
+                                     text=f" {EmoticonosMitologicos.ARES} Acciones de Cuarentena",
                                      bg=self.colores.fondo_secundario,
                                      fg=self.colores.acento_primario,
                                      font=('Consolas', 12, 'bold'))
@@ -314,7 +314,7 @@ class VistaCuarentena:
         
         # Botones de acción
         tk.Button(acciones_frame,
-                 text=f"🔓 {EmoticonosMitologicos.ATHENA} Restaurar archivo",
+                 text=f" {EmoticonosMitologicos.ATHENA} Restaurar archivo",
                  command=self._restaurar_archivo,
                  bg=self.colores.acento_secundario,
                  fg=self.colores.fondo_primario,
@@ -322,7 +322,7 @@ class VistaCuarentena:
                  cursor='hand2').grid(row=0, column=0, padx=5, pady=10, sticky='ew')
         
         tk.Button(acciones_frame,
-                 text=f"🛡️ Ignorar archivo",
+                 text=f"[SHIELD] Ignorar archivo",
                  command=self._ignorar_archivo,
                  bg=self.colores.naranja_fuego,
                  fg=self.colores.fondo_primario,
@@ -330,7 +330,7 @@ class VistaCuarentena:
                  cursor='hand2').grid(row=0, column=1, padx=5, pady=10, sticky='ew')
         
         tk.Button(acciones_frame,
-                 text=f"🗑️ {EmoticonosMitologicos.HADES} Eliminar permanentemente",
+                 text=f" {EmoticonosMitologicos.HADES} Eliminar permanentemente",
                  command=self._eliminar_archivo_permanente,
                  bg='#d32f2f',
                  fg=self.colores.fondo_primario,
@@ -338,7 +338,7 @@ class VistaCuarentena:
                  cursor='hand2').grid(row=0, column=2, padx=5, pady=10, sticky='ew')
         
         tk.Button(acciones_frame,
-                 text=f"🔍 {EmoticonosMitologicos.CRISTAL} Ver detalles",
+                 text=f" {EmoticonosMitologicos.CRISTAL} Ver detalles",
                  command=self._ver_detalles_archivo,
                  bg=self.colores.acento_terciario,
                  fg=self.colores.fondo_primario,
@@ -465,13 +465,13 @@ class VistaCuarentena:
             nombre_archivo = item['values'][0]
             
             # Confirmar acción de ignorar
-            respuesta = messagebox.askyesno("🛡️ Confirmar Ignorar Archivo", 
+            respuesta = messagebox.askyesno("[SHIELD] Confirmar Ignorar Archivo", 
                                           f"¿Ignorar futuras detecciones del archivo '{nombre_archivo}'?\n\n"
                                           "El archivo será:\n"
                                           "• Restaurado a su ubicación original\n"
                                           "• Agregado a la lista blanca de archivos ignorados\n"
                                           "• No será detectado en futuras auditorías\n\n"
-                                          "⚠️ Solo use esta opción si está seguro de que el archivo es seguro.")
+                                          " Solo use esta opción si está seguro de que el archivo es seguro.")
             
             if respuesta:
                 try:
@@ -483,7 +483,7 @@ class VistaCuarentena:
                             # Agregar a lista blanca (implementar según la arquitectura del sistema)
                             self._agregar_a_lista_blanca(nombre_archivo)
                             
-                            messagebox.showinfo("✅ Archivo Ignorado", 
+                            messagebox.showinfo("[OK] Archivo Ignorado", 
                                               f"Archivo '{nombre_archivo}' restaurado e ignorado exitosamente.\n"
                                               "No será detectado en futuras auditorías.")
                             self._cargar_archivos_cuarentena()
@@ -543,7 +543,7 @@ class VistaCuarentena:
             nombre_archivo = item['values'][0]
             
             # Confirmar eliminación
-            if messagebox.askyesno("⚠️ Confirmar Eliminación", 
+            if messagebox.askyesno(" Confirmar Eliminación", 
                                  f"¿Eliminar PERMANENTEMENTE el archivo '{nombre_archivo}'?\n\n"
                                  "Esta acción NO se puede deshacer."):
                 if hasattr(self.controlador, 'gestor_cuarentena') and self.controlador.gestor_cuarentena:
@@ -592,19 +592,19 @@ class VistaCuarentena:
             
             # Información del archivo
             detalles = f"""
-🔒 DETALLES DEL ARCHIVO EN CUARENTENA
+ DETALLES DEL ARCHIVO EN CUARENTENA
 
-📄 Nombre: {valores[0]}
-📅 Fecha de cuarentena: {valores[1]}
-📊 Tamaño: {valores[2]}
-⚠️ Tipo de amenaza: {valores[3]}
-📂 Ruta original: {valores[4]}
+ Nombre: {valores[0]}
+ Fecha de cuarentena: {valores[1]}
+[STATS] Tamaño: {valores[2]}
+ Tipo de amenaza: {valores[3]}
+ Ruta original: {valores[4]}
 
-═══════════════════════════════════
 
-🛡️ Estado: En cuarentena
-🏛️ Sistema: Ares Aegis - Prisión de Hades
-⚔️ Protección: Activa
+
+[SHIELD] Estado: En cuarentena
+[SYSTEM] Sistema: Ares Aegis - Prisión de Hades
+ Protección: Activa
             """
             
             texto_detalles.insert('1.0', detalles)

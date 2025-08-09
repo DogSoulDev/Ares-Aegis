@@ -29,93 +29,93 @@ class SistemaAyuda:
         # Configuración por defecto
         config_default = {
             "dashboard": {
-                "titulo": "🏛️ Dashboard Principal - Centro de Control",
+                "titulo": "[SYSTEM] Dashboard Principal - Centro de Control",
                 "descripcion": "Panel principal donde puedes ver el estado general de tu sistema",
                 "funciones": [
-                    "📊 Ver métricas del sistema en tiempo real",
-                    "🖥️ Acceder al terminal integrado",
-                    "📈 Monitorear CPU, memoria y disco",
-                    "⚡ Navegar rápidamente a otras funciones"
+                    "[STATS] Ver métricas del sistema en tiempo real",
+                    " Acceder al terminal integrado",
+                    " Monitorear CPU, memoria y disco",
+                    " Navegar rápidamente a otras funciones"
                 ],
                 "tips": [
-                    "💡 Las métricas se actualizan automáticamente cada 5 segundos",
-                    "💡 Usa el terminal integrado para comandos rápidos",
-                    "💡 Los colores indican el estado: Verde=Bueno, Naranja=Cuidado, Rojo=Crítico"
+                    " Las métricas se actualizan automáticamente cada 5 segundos",
+                    " Usa el terminal integrado para comandos rápidos",
+                    " Los colores indican el estado: Verde=Bueno, Naranja=Cuidado, Rojo=Crítico"
                 ]
             },
             "escaner": {
-                "titulo": "🔍 Escáner de Vulnerabilidades",
+                "titulo": " Escáner de Vulnerabilidades",
                 "descripcion": "Herramienta para detectar vulnerabilidades y amenazas en tu sistema",
                 "funciones": [
-                    "🚨 Análisis completo del sistema",
-                    "📁 Análisis de directorios específicos",
-                    "🦠 Detección de malware y archivos sospechosos",
-                    "📋 Generación de informes detallados"
+                    " Análisis completo del sistema",
+                    " Análisis de directorios específicos",
+                    " Detección de malware y archivos sospechosos",
+                    " Generación de informes detallados"
                 ],
                 "tips": [
-                    "💡 Ejecuta análisis regulares para mantener tu sistema seguro",
-                    "💡 El análisis completo puede tardar varios minutos",
-                    "💡 Revisa siempre los hallazgos antes de realizar acciones"
+                    " Ejecuta análisis regulares para mantener tu sistema seguro",
+                    " El análisis completo puede tardar varios minutos",
+                    " Revisa siempre los hallazgos antes de realizar acciones"
                 ]
             },
             "auditoria_pam": {
-                "titulo": "🔐 Auditoría de Autenticación PAM",
+                "titulo": "[LOCK] Auditoría de Autenticación PAM",
                 "descripcion": "Análisis de la configuración de autenticación y seguridad del sistema",
                 "funciones": [
-                    "🔑 Auditoría de configuración PAM",
-                    "🛡️ Auditoría completa de seguridad",
-                    "❌ Cancelar auditoría en progreso",
-                    "📊 Ver resultados clasificados por prioridad"
+                    " Auditoría de configuración PAM",
+                    "[SHIELD] Auditoría completa de seguridad",
+                    "[ERROR] Cancelar auditoría en progreso",
+                    "[STATS] Ver resultados clasificados por prioridad"
                 ],
                 "tips": [
-                    "💡 PAM controla cómo los usuarios se autentican en el sistema",
-                    "💡 Los hallazgos críticos requieren atención inmediata",
-                    "💡 Puedes cancelar una auditoría si es necesario"
+                    " PAM controla cómo los usuarios se autentican en el sistema",
+                    " Los hallazgos críticos requieren atención inmediata",
+                    " Puedes cancelar una auditoría si es necesario"
                 ]
             },
             "monitor_sistema": {
-                "titulo": "📡 Monitor del Sistema",
+                "titulo": " Monitor del Sistema",
                 "descripcion": "Supervisión en tiempo real de procesos, red y actividad del sistema",
                 "funciones": [
-                    "🔱 Monitorización de procesos activos",
-                    "🌐 Análisis de tráfico de red",
-                    "📊 Estadísticas de recursos del sistema",
-                    "⚠️ Alertas de actividad sospechosa"
+                    " Monitorización de procesos activos",
+                    " Análisis de tráfico de red",
+                    "[STATS] Estadísticas de recursos del sistema",
+                    " Alertas de actividad sospechosa"
                 ],
                 "tips": [
-                    "💡 El monitor funciona en tiempo real",
-                    "💡 Los procesos con alto uso de CPU pueden indicar problemas",
-                    "💡 El tráfico de red inusual puede ser señal de compromiso"
+                    " El monitor funciona en tiempo real",
+                    " Los procesos con alto uso de CPU pueden indicar problemas",
+                    " El tráfico de red inusual puede ser señal de compromiso"
                 ]
             },
             "cuarentena": {
-                "titulo": "🏥 Gestión de Cuarentena",
+                "titulo": " Gestión de Cuarentena",
                 "descripcion": "Administra archivos aislados por seguridad",
                 "funciones": [
-                    "🔓 Restaurar archivos seguros",
-                    "🛡️ Ignorar archivos confiables",
-                    "🗑️ Eliminar archivos peligrosos permanentemente",
-                    "🔍 Ver detalles de archivos en cuarentena"
+                    " Restaurar archivos seguros",
+                    "[SHIELD] Ignorar archivos confiables",
+                    " Eliminar archivos peligrosos permanentemente",
+                    " Ver detalles de archivos en cuarentena"
                 ],
                 "tips": [
-                    "💡 Sólo restaura archivos si estás seguro de que son seguros",
-                    "💡 Usar 'Ignorar' añade el archivo a la lista blanca",
-                    "💡 La eliminación permanente NO se puede deshacer"
+                    " Sólo restaura archivos si estás seguro de que son seguros",
+                    " Usar 'Ignorar' añade el archivo a la lista blanca",
+                    " La eliminación permanente NO se puede deshacer"
                 ]
             },
             "reportes": {
-                "titulo": "📊 Sistema de Informes",
+                "titulo": "[STATS] Sistema de Informes",
                 "descripcion": "Genera y visualiza informes de seguridad detallados",
                 "funciones": [
-                    "📈 Generar informes de auditoría",
-                    "📄 Exportar informes en HTML/PDF",
-                    "📅 Visualizar historial de informes",
-                    "🔄 Programar informes automáticos"
+                    " Generar informes de auditoría",
+                    " Exportar informes en HTML/PDF",
+                    " Visualizar historial de informes",
+                    "[REFRESH] Programar informes automáticos"
                 ],
                 "tips": [
-                    "💡 Los informes incluyen recomendaciones específicas",
-                    "💡 Guarda informes importantes para referencia futura",
-                    "💡 Los informes automáticos ayudan al seguimiento continuo"
+                    " Los informes incluyen recomendaciones específicas",
+                    " Guarda informes importantes para referencia futura",
+                    " Los informes automáticos ayudan al seguimiento continuo"
                 ]
             }
         }
@@ -137,7 +137,7 @@ class SistemaAyuda:
         """Crea un botón de ayuda para un dashboard específico"""
         btn_ayuda = tk.Button(
             parent,
-            text="❓ AYUDA",
+            text=" AYUDA",
             command=lambda: self.mostrar_ayuda(dashboard_id),
             bg=self.colores.cyan_brillante,
             fg=self.colores.negro_carbono,
@@ -211,7 +211,7 @@ class SistemaAyuda:
         if 'funciones' in config:
             func_frame = tk.LabelFrame(
                 main_frame,
-                text="🚀 Funciones Principales",
+                text=" Funciones Principales",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.verde_terminal,
                 bg=self.colores.fondo_secundario,
@@ -236,7 +236,7 @@ class SistemaAyuda:
         if 'tips' in config:
             tips_frame = tk.LabelFrame(
                 main_frame,
-                text="💡 Consejos Útiles",
+                text=" Consejos Útiles",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.naranja_fuego,
                 bg=self.colores.fondo_secundario,
@@ -260,7 +260,7 @@ class SistemaAyuda:
         # Botón cerrar
         btn_cerrar = tk.Button(
             main_frame,
-            text="✅ Entendido",
+            text="[OK] Entendido",
             command=ventana_ayuda.destroy,
             bg=self.colores.verde_terminal,
             fg=self.colores.fondo_secundario,

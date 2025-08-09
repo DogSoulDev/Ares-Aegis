@@ -354,13 +354,13 @@ class ControladorMonitorProcesos(ControladorBase):
                     "amenazas": getattr(proceso_amenaza, 'amenazas_detectadas', []),
                     "nivel_riesgo": getattr(proceso_amenaza, 'nivel_riesgo', {}).get('value', 'MEDIO') if hasattr(getattr(proceso_amenaza, 'nivel_riesgo', {}), 'value') else 'MEDIO'
                 }
-                mensaje = f"⚠️ Proceso sospechoso: {nombre} (PID: {pid})"
+                mensaje = f" Proceso sospechoso: {nombre} (PID: {pid})"
             else:
                 # Es un diccionario básico
                 nombre = proceso_amenaza.get('nombre', 'Desconocido')
                 pid = proceso_amenaza.get('pid', 'N/A')
                 datos_evento = proceso_amenaza
-                mensaje = f"⚠️ Amenaza en proceso: {nombre} (PID: {pid})"
+                mensaje = f" Amenaza en proceso: {nombre} (PID: {pid})"
             
             # Registrar la amenaza
             if self.siem:

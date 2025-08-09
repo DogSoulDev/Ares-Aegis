@@ -30,72 +30,72 @@ class VistaEscaneador:
         self.analisis_contenido_var = tk.BooleanVar(value=False)
         
         # Variables de estado de la interfaz
-        self.estado_var = tk.StringVar(value="🛡️ Listo para escanear")
+        self.estado_var = tk.StringVar(value="[SHIELD] Listo para escanear")
         self.progreso_var = tk.DoubleVar(value=0.0)
         self.resultados_text = None  # Se inicializa en _crear_area_resultados
-        self.estado_var = tk.StringVar(value="🛡️ Listo para escanear")
+        self.estado_var = tk.StringVar(value="[SHIELD] Listo para escanear")
         self.resultados_text = None  # Se inicializa en crear_vista
         self.escaneo_activo = False
         self.hilo_escaneo = None
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre el Escaneador"""
-        info_text = """🛡️ ESCANEADOR DE AMENAZAS - DETECCIÓN AVANZADA
+        info_text = """[SHIELD] ESCANEADOR DE AMENAZAS - DETECCIÓN AVANZADA
 
-🔍 FUNCIONALIDADES PRINCIPALES:
+ FUNCIONALIDADES PRINCIPALES:
 • Escaneo exhaustivo de archivos y directorios del sistema
 • Detección avanzada de amenazas y malware conocido
 • Análisis de contenido profundo con múltiples algoritmos
 • Verificación de hashes contra bases de datos de amenazas
 
-⚡ OPCIONES DE ESCANEO DISPONIBLES:
+ OPCIONES DE ESCANEO DISPONIBLES:
 • Escaneo Básico: Verificación rápida con firmas principales
 • Escaneo Profundo: Análisis exhaustivo con heurística avanzada
 • Verificar Hashes: Comparación con bases de datos de malware
 • Análisis de Contenido: Inspección detallada de código y patrones
 
-🎯 TIPOS DE DETECCIÓN:
+[TARGET] TIPOS DE DETECCIÓN:
 • Malware conocido identificado por firmas actualizadas
 • Archivos ejecutables con comportamiento sospechoso
 • Scripts potencialmente peligrosos (Python, Bash, PowerShell)
 • Patrones de comportamiento anómalo y técnicas de evasión
 • Archivos con extensiones dobles o nombres engañosos
 
-🔧 GUÍA DE USO PASO A PASO:
+[TOOL] GUÍA DE USO PASO A PASO:
 1. Selecciona la ruta específica que deseas escanear
 2. Configura las opciones de análisis según tus necesidades
 3. Inicia el proceso con el botón 'Comenzar Análisis'
 4. Supervisa el progreso en tiempo real en la interfaz
 5. Revisa los resultados detallados al finalizar el escaneo
 
-⚠️ RECOMENDACIONES DE SEGURIDAD:
+ RECOMENDACIONES DE SEGURIDAD:
 • Utiliza escaneo profundo para análisis críticos completos
 • Verifica hashes para obtener mayor precisión en la detección
 • Revisa manualmente todos los archivos detectados como sospechosos
 • Mantén actualizadas las firmas de amenazas regularmente
 • Realiza escaneos periódicos en directorios críticos del sistema
 
-📊 INTERPRETACIÓN DE RESULTADOS:
-• 🟢 LIMPIO: Archivo completamente seguro, sin amenazas detectadas
-• 🟡 SOSPECHOSO: Requiere revisión manual adicional por parte del usuario
-• 🔴 AMENAZA: Archivo potencialmente peligroso, aislamiento recomendado
-• ⚫ ERROR: No se pudo analizar el archivo por restricciones o corrupción
+[STATS] INTERPRETACIÓN DE RESULTADOS:
+•  LIMPIO: Archivo completamente seguro, sin amenazas detectadas
+•  SOSPECHOSO: Requiere revisión manual adicional por parte del usuario
+•  AMENAZA: Archivo potencialmente peligroso, aislamiento recomendado
+•  ERROR: No se pudo analizar el archivo por restricciones o corrupción
 
-🚀 CARACTERÍSTICAS AVANZADAS:
+ CARACTERÍSTICAS AVANZADAS:
 • Análisis heurístico para detectar amenazas de día cero
 • Integración con sistemas de cuarentena automática
 • Generación de reportes detallados de cada escaneo
 • Estadísticas de rendimiento y tiempo de procesamiento
 • Compatibilidad con múltiples formatos de archivo
 
-🔐 OPTIMIZADO PARA KALI LINUX:
+[LOCK] OPTIMIZADO PARA KALI LINUX:
 • Integración completa con herramientas nativas de seguridad
 • Compatibilidad con formatos específicos de pentesting
 • Análisis especializado para entornos de auditoría
 • Integración con frameworks de ciberseguridad de Kali
 • Optimización para hardware y software de sistemas Linux
 
-💡 CONSEJOS PROFESIONALES:
+ CONSEJOS PROFESIONALES:
 • Combina diferentes tipos de escaneo para máxima efectividad
 • Programa escaneos automáticos para monitoreo continuo
 • Mantén un log de todos los escaneos para auditoría
@@ -176,14 +176,14 @@ class VistaEscaneador:
         
         # Título centrado
         tk.Label(header,
-                text=f"🔍 {EmoticonosMitologicos.ARES} Escudo de Exploración - Analizador de Amenazas",
+                text=f" {EmoticonosMitologicos.ARES} Escudo de Exploración - Analizador de Amenazas",
                 font=('Consolas', 16, 'bold'),
                 fg=self.colores.acento_primario,
                 bg=self.colores.fondo_terciario).grid(row=0, column=0)
         
         # Botón de información
         tk.Button(header,
-                 text="❓ Info",
+                 text=" Info",
                  font=('Consolas', 10),
                  bg=self.colores.acento_secundario,
                  fg='white',
@@ -198,7 +198,7 @@ class VistaEscaneador:
         self.frame_scroll.grid_columnconfigure(0, weight=1)
         
         control_frame = tk.LabelFrame(self.frame_scroll,
-                                    text=f"🎯 {EmoticonosMitologicos.ESPADA} Control de Análisis",
+                                    text=f"[TARGET] {EmoticonosMitologicos.ESPADA} Control de Análisis",
                                     bg=self.colores.fondo_secundario,
                                     fg=self.colores.acento_primario,
                                     font=('Consolas', 12, 'bold'),
@@ -222,7 +222,7 @@ class VistaEscaneador:
         dir_frame.grid_columnconfigure(1, weight=1)
         
         tk.Label(dir_frame,
-                text=f"📁 {EmoticonosMitologicos.PERGAMINO} Directorio a analizar:",
+                text=f" {EmoticonosMitologicos.PERGAMINO} Directorio a analizar:",
                 font=('Consolas', 10, 'bold'),
                 fg=self.colores.texto_primario,
                 bg=self.colores.fondo_secundario).grid(row=0, column=0, columnspan=3, sticky='w', pady=(0, 8))
@@ -246,7 +246,7 @@ class VistaEscaneador:
                 self.ruta_escaneo_var.set(directory)
         
         tk.Button(dir_frame,
-                 text="📂 Examinar",
+                 text=" Examinar",
                  command=seleccionar_directorio,
                  bg=self.colores.acento_primario,
                  fg=self.colores.fondo_primario,
@@ -262,7 +262,7 @@ class VistaEscaneador:
         options_frame.grid_columnconfigure(0, weight=1)
         
         tk.Label(options_frame,
-                text=f"⚙️ {EmoticonosMitologicos.BALANZA} Opciones de Análisis:",
+                text=f" {EmoticonosMitologicos.BALANZA} Opciones de Análisis:",
                 font=('Consolas', 10, 'bold'),
                 fg=self.colores.texto_primario,
                 bg=self.colores.fondo_secundario).grid(row=0, column=0, sticky='w', pady=(0, 10))
@@ -276,7 +276,7 @@ class VistaEscaneador:
         self.analisis_contenido_var = tk.BooleanVar(value=False)
         
         tk.Checkbutton(check_frame,
-                      text=f"🔬 {EmoticonosMitologicos.ARGOS} Análisis profundo",
+                      text=f" {EmoticonosMitologicos.ARGOS} Análisis profundo",
                       variable=self.escaneo_profundo_var,
                       bg=self.colores.fondo_secundario,
                       fg=self.colores.texto_primario,
@@ -284,7 +284,7 @@ class VistaEscaneador:
                       font=('Consolas', 10)).grid(row=0, column=0, sticky='w', padx=(0, 20), pady=5)
         
         tk.Checkbutton(check_frame,
-                      text=f"🔐 {EmoticonosMitologicos.ESCUDO} Verificar hashes",
+                      text=f"[LOCK] {EmoticonosMitologicos.ESCUDO} Verificar hashes",
                       variable=self.verificar_hashes_var,
                       bg=self.colores.fondo_secundario,
                       fg=self.colores.texto_primario,
@@ -292,7 +292,7 @@ class VistaEscaneador:
                       font=('Consolas', 10)).grid(row=0, column=1, sticky='w', padx=(0, 20), pady=5)
         
         tk.Checkbutton(check_frame,
-                      text=f"📄 {EmoticonosMitologicos.APOLLO} Análisis de contenido",
+                      text=f" {EmoticonosMitologicos.APOLLO} Análisis de contenido",
                       variable=self.analisis_contenido_var,
                       bg=self.colores.fondo_secundario,
                       fg=self.colores.texto_primario,
@@ -307,7 +307,7 @@ class VistaEscaneador:
         
         # Botón iniciar escaneo
         self.boton_iniciar = tk.Button(botones_frame,
-                                     text=f"🚀 {EmoticonosMitologicos.ZEUS} INICIAR ANÁLISIS",
+                                     text=f" {EmoticonosMitologicos.ZEUS} INICIAR ANÁLISIS",
                                      command=self._iniciar_escaneo,
                                      bg=self.colores.exito,
                                      fg='white',
@@ -319,7 +319,7 @@ class VistaEscaneador:
         
         # Botón parar escaneo
         self.boton_parar = tk.Button(botones_frame,
-                                   text=f"🛑 {EmoticonosMitologicos.ESCUDO} PARAR ANÁLISIS",
+                                   text=f" {EmoticonosMitologicos.ESCUDO} PARAR ANÁLISIS",
                                    command=self._parar_escaneo,
                                    bg=self.colores.error,
                                    fg='white',
@@ -333,7 +333,7 @@ class VistaEscaneador:
     def _crear_area_resultados(self):
         """Crear área de resultados con diseño responsive"""
         results_frame = tk.LabelFrame(self.frame_scroll,
-                                    text=f"📊 {EmoticonosMitologicos.APOLLO} Resultados del Análisis",
+                                    text=f"[STATS] {EmoticonosMitologicos.APOLLO} Resultados del Análisis",
                                     bg=self.colores.fondo_secundario,
                                     fg=self.colores.acento_primario,
                                     font=('Consolas', 12, 'bold'),
@@ -356,7 +356,7 @@ class VistaEscaneador:
         progreso_scale.grid(row=0, column=0, sticky='ew', pady=(0, 10))
         
         # Estado del escaneo
-        self.estado_var = tk.StringVar(value=f"🛡️ {EmoticonosMitologicos.ESCUDO} Listo para escanear")
+        self.estado_var = tk.StringVar(value=f"[SHIELD] {EmoticonosMitologicos.ESCUDO} Listo para escanear")
         estado_label = tk.Label(results_frame,
                                textvariable=self.estado_var,
                                font=('Consolas', 11, 'bold'),
@@ -387,7 +387,7 @@ class VistaEscaneador:
         results_scroll.grid(row=0, column=1, sticky='ns')
         
         # Mensaje inicial
-        self._agregar_resultado(f"🛡️ {EmoticonosMitologicos.FORTALEZA} Escudo de exploración listo para defender el reino digital")
+        self._agregar_resultado(f"[SHIELD] {EmoticonosMitologicos.FORTALEZA} Escudo de exploración listo para defender el reino digital")
     
     def _iniciar_escaneo(self):
         """Iniciar proceso de escaneo"""
@@ -401,13 +401,13 @@ class VistaEscaneador:
             # Validar ruta usando funciones disponibles
             try:
                 if not validar_directorio(path):
-                    self.estado_var.set(f"❌ {EmoticonosMitologicos.FALLIDO} Ruta no válida")
-                    messagebox.showerror("Error", f"❌ Directorio no válido:\n{path}")
+                    self.estado_var.set(f"[ERROR] {EmoticonosMitologicos.FALLIDO} Ruta no válida")
+                    messagebox.showerror("Error", f"[ERROR] Directorio no válido:\n{path}")
                     return
                 
                 if not validar_permisos_lectura(path):
-                    self.estado_var.set(f"❌ {EmoticonosMitologicos.FALLIDO} Sin permisos")
-                    messagebox.showerror("Error", f"❌ Sin permisos de lectura:\n{path}")
+                    self.estado_var.set(f"[ERROR] {EmoticonosMitologicos.FALLIDO} Sin permisos")
+                    messagebox.showerror("Error", f"[ERROR] Sin permisos de lectura:\n{path}")
                     return
             except NameError:
                 # Si las funciones de validación no están disponibles, usar validación básica
@@ -421,7 +421,7 @@ class VistaEscaneador:
             self.boton_parar.configure(state='normal')
             
             # Actualizar estado
-            self.estado_var.set(f"🔍 {EmoticonosMitologicos.PROCESANDO} Escaneando...")
+            self.estado_var.set(f" {EmoticonosMitologicos.PROCESANDO} Escaneando...")
             self.progreso_var.set(0)
             
             # Limpiar resultados previos - verificar que el widget esté inicializado
@@ -440,19 +440,19 @@ class VistaEscaneador:
                 try:
                     resultado_controlador = self.controlador.iniciar_escaneo(path, tipo_escaneo)
                     if resultado_controlador:
-                        self._agregar_resultado(f"✅ {EmoticonosMitologicos.ESCUDO} Escaneo del controlador iniciado")
+                        self._agregar_resultado(f"[OK] {EmoticonosMitologicos.ESCUDO} Escaneo del controlador iniciado")
                     else:
-                        self._agregar_resultado(f"⚠️ {EmoticonosMitologicos.ADVERTENCIA} Escaneo del controlador falló, usando modo local")
+                        self._agregar_resultado(f" {EmoticonosMitologicos.ADVERTENCIA} Escaneo del controlador falló, usando modo local")
                 except Exception as e:
                     self.logger.error(f"Error iniciando escaneo del controlador: {e}")
-                    self._agregar_resultado(f"⚠️ {EmoticonosMitologicos.ADVERTENCIA} Error del controlador, usando modo local")
+                    self._agregar_resultado(f" {EmoticonosMitologicos.ADVERTENCIA} Error del controlador, usando modo local")
             
             # Iniciar escaneo local en thread separado
             self.hilo_escaneo = threading.Thread(target=self._ejecutar_escaneo_hilo, args=(path,), daemon=True)
             self.hilo_escaneo.start()
             
         except Exception as e:
-            self.estado_var.set(f"❌ {EmoticonosMitologicos.FALLIDO} Error: {str(e)}")
+            self.estado_var.set(f"[ERROR] {EmoticonosMitologicos.FALLIDO} Error: {str(e)}")
             self.logger.error(f"Error iniciando escaneo: {e}")
             self._finalizar_escaneo()
             self.logger.error(f"Error iniciando escaneo: {e}")
@@ -464,8 +464,8 @@ class VistaEscaneador:
             return
         
         self.escaneo_activo = False
-        self.estado_var.set(f"🛑 {EmoticonosMitologicos.ESCUDO} Deteniendo escaneo...")
-        self._agregar_resultado(f"\n🛑 {EmoticonosMitologicos.ESCUDO} ESCANEO DETENIDO POR EL USUARIO")
+        self.estado_var.set(f" {EmoticonosMitologicos.ESCUDO} Deteniendo escaneo...")
+        self._agregar_resultado(f"\n {EmoticonosMitologicos.ESCUDO} ESCANEO DETENIDO POR EL USUARIO")
         
         # Esperar a que termine el hilo si está activo
         if self.hilo_escaneo and self.hilo_escaneo.is_alive():
@@ -480,32 +480,32 @@ class VistaEscaneador:
         self.escaneo_activo = False
         self.boton_iniciar.configure(state='normal')
         self.boton_parar.configure(state='disabled')
-        self.estado_var.set(f"🛡️ {EmoticonosMitologicos.ESCUDO} Listo para escanear")
+        self.estado_var.set(f"[SHIELD] {EmoticonosMitologicos.ESCUDO} Listo para escanear")
     
     def _ejecutar_escaneo_hilo(self, path):
         """Ejecutar escaneo REAL en thread separado"""
         try:
             tipo_escaneo = "completo" if self.escaneo_profundo_var.get() else "rapido"
-            self._agregar_resultado(f"🚀 {EmoticonosMitologicos.ZEUS} Iniciando escaneo {tipo_escaneo} REAL de: {path}")
+            self._agregar_resultado(f" {EmoticonosMitologicos.ZEUS} Iniciando escaneo {tipo_escaneo} REAL de: {path}")
             
             # Usar el controlador real
             if hasattr(self, 'controlador') and self.controlador:
                 escaneador = self.controlador.obtener_modulo_escaneador()
                 if escaneador:
-                    self._agregar_resultado(f"⚔️ {EmoticonosMitologicos.ARES} Usando escaneador real del sistema")
+                    self._agregar_resultado(f" {EmoticonosMitologicos.ARES} Usando escaneador real del sistema")
                     self._ejecutar_escaneo_real(path, escaneador)
                 else:
-                    self._agregar_resultado(f"⚠️ {EmoticonosMitologicos.ADVERTENCIA} Escaneador no disponible")
+                    self._agregar_resultado(f" {EmoticonosMitologicos.ADVERTENCIA} Escaneador no disponible")
                     self._ejecutar_escaneo_basico(path)
             else:
-                self._agregar_resultado(f"⚠️ {EmoticonosMitologicos.ADVERTENCIA} Controlador no disponible - Escaneo básico")
+                self._agregar_resultado(f" {EmoticonosMitologicos.ADVERTENCIA} Controlador no disponible - Escaneo básico")
                 self._ejecutar_escaneo_basico(path)
                 
             # Finalizar escaneo al terminar
             self.contenedor_padre.after(0, self._finalizar_escaneo)
             
         except Exception as e:
-            self.estado_var.set(f"❌ {EmoticonosMitologicos.FALLIDO} Error: {str(e)}")
+            self.estado_var.set(f"[ERROR] {EmoticonosMitologicos.FALLIDO} Error: {str(e)}")
             self.logger.error(f"Error ejecutando escaneo: {e}")
             self.contenedor_padre.after(0, self._finalizar_escaneo)
     
@@ -524,12 +524,12 @@ class VistaEscaneador:
                     archivos_para_escanear.append(os.path.join(root, file))
             
             total_archivos = len(archivos_para_escanear)
-            self._agregar_resultado(f"📁 {EmoticonosMitologicos.PERGAMINO} Archivos encontrados: {total_archivos}")
+            self._agregar_resultado(f" {EmoticonosMitologicos.PERGAMINO} Archivos encontrados: {total_archivos}")
             
             # Escanear cada archivo usando el escaneador real
             for archivo_path in archivos_para_escanear:
                 if not self.escaneo_activo:
-                    self._agregar_resultado(f"\n🛑 {EmoticonosMitologicos.ESCUDO} Escaneo cancelado")
+                    self._agregar_resultado(f"\n {EmoticonosMitologicos.ESCUDO} Escaneo cancelado")
                     return
                 
                 archivos_escaneados += 1
@@ -542,38 +542,38 @@ class VistaEscaneador:
                     if resultado and resultado.get('amenaza_detectada'):
                         amenazas_encontradas += 1
                         amenaza = resultado.get('tipo_amenaza', 'Desconocida')
-                        self._agregar_resultado(f"🚨 {EmoticonosMitologicos.HYDRA} AMENAZA REAL: {amenaza} en {archivo_path}")
+                        self._agregar_resultado(f" {EmoticonosMitologicos.HYDRA} AMENAZA REAL: {amenaza} en {archivo_path}")
                         
                         # Enviar a cuarentena si está configurado
                         if self.controlador and hasattr(self.controlador, 'gestor_cuarentena'):
                             cuarentena = self.controlador.obtener_modulo_cuarentena()
                             if cuarentena:
                                 cuarentena.cuarentenar_archivo(archivo_path, amenaza)
-                                self._agregar_resultado(f"🔒 {EmoticonosMitologicos.HADES} Archivo enviado a cuarentena")
+                                self._agregar_resultado(f" {EmoticonosMitologicos.HADES} Archivo enviado a cuarentena")
                 
                 except Exception as e:
                     self.logger.warning(f"Error escaneando {archivo_path}: {e}")
                 
                 # Mostrar progreso cada 10 archivos
                 if archivos_escaneados % 10 == 0:
-                    self._agregar_resultado(f"📊 {EmoticonosMitologicos.CRISTAL} Progreso: {archivos_escaneados}/{total_archivos} archivos")
+                    self._agregar_resultado(f"[STATS] {EmoticonosMitologicos.CRISTAL} Progreso: {archivos_escaneados}/{total_archivos} archivos")
                     time.sleep(0.1)  # Breve pausa para UI
             
             # Resultados finales
             if self.escaneo_activo:
-                self._agregar_resultado(f"\n🏆 {EmoticonosMitologicos.COMPLETADO} ESCANEO REAL COMPLETADO")
-                self._agregar_resultado(f"📊 {EmoticonosMitologicos.CRISTAL} Archivos escaneados: {archivos_escaneados}")
-                self._agregar_resultado(f"🛡️ {EmoticonosMitologicos.ESCUDO} Amenazas REALES detectadas: {amenazas_encontradas}")
+                self._agregar_resultado(f"\n {EmoticonosMitologicos.COMPLETADO} ESCANEO REAL COMPLETADO")
+                self._agregar_resultado(f"[STATS] {EmoticonosMitologicos.CRISTAL} Archivos escaneados: {archivos_escaneados}")
+                self._agregar_resultado(f"[SHIELD] {EmoticonosMitologicos.ESCUDO} Amenazas REALES detectadas: {amenazas_encontradas}")
                 
                 # Actualizar métricas del sistema
                 if self.controlador:
                     self.controlador.metricas_sistema['archivos_escaneados'] += archivos_escaneados
                     self.controlador.metricas_sistema['amenazas_detectadas'] += amenazas_encontradas
                 
-                self.contenedor_padre.after(0, lambda: self.estado_var.set(f"✅ {EmoticonosMitologicos.COMPLETADO} Completado - {amenazas_encontradas} amenazas REALES"))
+                self.contenedor_padre.after(0, lambda: self.estado_var.set(f"[OK] {EmoticonosMitologicos.COMPLETADO} Completado - {amenazas_encontradas} amenazas REALES"))
             
         except Exception as e:
-            self.contenedor_padre.after(0, lambda: self.estado_var.set(f"❌ {EmoticonosMitologicos.FALLIDO} Error: {str(e)}"))
+            self.contenedor_padre.after(0, lambda: self.estado_var.set(f"[ERROR] {EmoticonosMitologicos.FALLIDO} Error: {str(e)}"))
             self.logger.error(f"Error ejecutando escaneo real: {e}")
     
     def _escanear_archivo_individual(self, archivo_path):
@@ -653,7 +653,7 @@ class VistaEscaneador:
             archivos_escaneados = 0
             amenazas_encontradas = 0
             
-            self._agregar_resultado(f"🔍 {EmoticonosMitologicos.ARGOS} Iniciando escaneo básico (Python Standard Library)")
+            self._agregar_resultado(f" {EmoticonosMitologicos.ARGOS} Iniciando escaneo básico (Python Standard Library)")
             
             # Recorrer directorio
             for root, dirs, files in os.walk(path):
@@ -672,22 +672,22 @@ class VistaEscaneador:
                     if resultado and resultado.get('amenaza_detectada'):
                         amenazas_encontradas += 1
                         amenaza = resultado.get('tipo_amenaza', 'Sospechoso')
-                        self._agregar_resultado(f"⚠️ {EmoticonosMitologicos.ADVERTENCIA} Archivo sospechoso: {file} - {amenaza}")
+                        self._agregar_resultado(f" {EmoticonosMitologicos.ADVERTENCIA} Archivo sospechoso: {file} - {amenaza}")
                     
                     # Actualizar progreso cada 50 archivos
                     if archivos_escaneados % 50 == 0:
-                        self._agregar_resultado(f"📊 {EmoticonosMitologicos.CRISTAL} Escaneados: {archivos_escaneados} archivos")
+                        self._agregar_resultado(f"[STATS] {EmoticonosMitologicos.CRISTAL} Escaneados: {archivos_escaneados} archivos")
             
             # Resultados finales
             if self.escaneo_activo:
-                self._agregar_resultado(f"\n🏆 {EmoticonosMitologicos.COMPLETADO} ESCANEO BÁSICO COMPLETADO")
-                self._agregar_resultado(f"📊 {EmoticonosMitologicos.CRISTAL} Archivos escaneados: {archivos_escaneados}")
-                self._agregar_resultado(f"⚠️ {EmoticonosMitologicos.ADVERTENCIA} Archivos sospechosos: {amenazas_encontradas}")
+                self._agregar_resultado(f"\n {EmoticonosMitologicos.COMPLETADO} ESCANEO BÁSICO COMPLETADO")
+                self._agregar_resultado(f"[STATS] {EmoticonosMitologicos.CRISTAL} Archivos escaneados: {archivos_escaneados}")
+                self._agregar_resultado(f" {EmoticonosMitologicos.ADVERTENCIA} Archivos sospechosos: {amenazas_encontradas}")
                 
-                self.contenedor_padre.after(0, lambda: self.estado_var.set(f"✅ {EmoticonosMitologicos.COMPLETADO} Completado - {amenazas_encontradas} sospechosos"))
+                self.contenedor_padre.after(0, lambda: self.estado_var.set(f"[OK] {EmoticonosMitologicos.COMPLETADO} Completado - {amenazas_encontradas} sospechosos"))
             
         except Exception as e:
-            self.contenedor_padre.after(0, lambda: self.estado_var.set(f"❌ {EmoticonosMitologicos.FALLIDO} Error: {str(e)}"))
+            self.contenedor_padre.after(0, lambda: self.estado_var.set(f"[ERROR] {EmoticonosMitologicos.FALLIDO} Error: {str(e)}"))
             self.logger.error(f"Error ejecutando escaneo básico: {e}")
     def _ejecutar_escaneo_simulado(self, path):
         """Ejecutar escaneo simulado"""
@@ -701,18 +701,18 @@ class VistaEscaneador:
                 
             total_archivos = sum([len(files) for r, d, files in os.walk(path)])
             
-            self._agregar_resultado(f"📁 {EmoticonosMitologicos.PERGAMINO} Total de archivos encontrados: {total_archivos}")
+            self._agregar_resultado(f" {EmoticonosMitologicos.PERGAMINO} Total de archivos encontrados: {total_archivos}")
             
             for root, dirs, files in os.walk(path):
                 # Verificar si el escaneo fue cancelado
                 if not self.escaneo_activo:
-                    self._agregar_resultado(f"\n🛑 {EmoticonosMitologicos.ESCUDO} Escaneo cancelado por el usuario")
+                    self._agregar_resultado(f"\n {EmoticonosMitologicos.ESCUDO} Escaneo cancelado por el usuario")
                     return
                     
                 for file in files:
                     # Verificar cancelación antes de cada archivo
                     if not self.escaneo_activo:
-                        self._agregar_resultado(f"\n� {EmoticonosMitologicos.ESCUDO} Escaneo cancelado por el usuario")
+                        self._agregar_resultado(f"\n {EmoticonosMitologicos.ESCUDO} Escaneo cancelado por el usuario")
                         return
                         
                     archivos_escaneados += 1
@@ -724,7 +724,7 @@ class VistaEscaneador:
                     # Simular detección ocasional de amenazas
                     if archivos_escaneados % 50 == 0:
                         amenazas_encontradas += 1
-                        self._agregar_resultado(f"🚨 {EmoticonosMitologicos.HYDRA} Amenaza simulada detectada en: {os.path.join(root, file)}")
+                        self._agregar_resultado(f" {EmoticonosMitologicos.HYDRA} Amenaza simulada detectada en: {os.path.join(root, file)}")
                     
                     # Pausar para simular trabajo
                     if archivos_escaneados % 10 == 0:
@@ -732,14 +732,14 @@ class VistaEscaneador:
             
             # Resultados finales solo si el escaneo no fue cancelado
             if self.escaneo_activo:
-                self._agregar_resultado(f"\n🏆 {EmoticonosMitologicos.COMPLETADO} ESCANEO SIMULADO COMPLETADO")
-                self._agregar_resultado(f"📊 {EmoticonosMitologicos.CRISTAL} Archivos escaneados: {archivos_escaneados}")
-                self._agregar_resultado(f"🛡️ {EmoticonosMitologicos.ESCUDO} Amenazas detectadas: {amenazas_encontradas}")
+                self._agregar_resultado(f"\n {EmoticonosMitologicos.COMPLETADO} ESCANEO SIMULADO COMPLETADO")
+                self._agregar_resultado(f"[STATS] {EmoticonosMitologicos.CRISTAL} Archivos escaneados: {archivos_escaneados}")
+                self._agregar_resultado(f"[SHIELD] {EmoticonosMitologicos.ESCUDO} Amenazas detectadas: {amenazas_encontradas}")
                 
-                self.contenedor_padre.after(0, lambda: self.estado_var.set(f"✅ {EmoticonosMitologicos.COMPLETADO} Completado (Simulado) - {amenazas_encontradas} amenazas"))
+                self.contenedor_padre.after(0, lambda: self.estado_var.set(f"[OK] {EmoticonosMitologicos.COMPLETADO} Completado (Simulado) - {amenazas_encontradas} amenazas"))
             
         except Exception as e:
-            self.contenedor_padre.after(0, lambda: self.estado_var.set(f"❌ {EmoticonosMitologicos.FALLIDO} Error: {str(e)}"))
+            self.contenedor_padre.after(0, lambda: self.estado_var.set(f"[ERROR] {EmoticonosMitologicos.FALLIDO} Error: {str(e)}"))
             self.logger.error(f"Error ejecutando escaneo simulado: {e}")
     
     def _agregar_resultado(self, mensaje):

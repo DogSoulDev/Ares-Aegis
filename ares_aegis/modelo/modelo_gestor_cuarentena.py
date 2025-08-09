@@ -90,29 +90,29 @@ class AnalizadorForenseCuarentena:
         
         if nivel_sospecha == 'critico':
             recomendaciones.extend([
-                "🚨 ALTO RIESGO: Mantener en cuarentena permanente",
-                "🔍 Realizar análisis manual inmediato",
-                "🚫 NO restaurar bajo ninguna circunstancia",
-                "📊 Enviar muestra a laboratorio de análisis"
+                " ALTO RIESGO: Mantener en cuarentena permanente",
+                " Realizar análisis manual inmediato",
+                " NO restaurar bajo ninguna circunstancia",
+                "[STATS] Enviar muestra a laboratorio de análisis"
             ])
         elif nivel_sospecha == 'alto':
             recomendaciones.extend([
-                "⚠️ RIESGO ELEVADO: Análisis adicional requerido",
-                "🔒 Mantener aislado hasta confirmación",
-                "🧪 Ejecutar en entorno sandboxed",
-                "👨‍💻 Revisión manual recomendada"
+                " RIESGO ELEVADO: Análisis adicional requerido",
+                " Mantener aislado hasta confirmación",
+                " Ejecutar en entorno sandboxed",
+                "‍ Revisión manual recomendada"
             ])
         elif nivel_sospecha == 'medio':
             recomendaciones.extend([
-                "🔍 Análisis adicional recomendado",
+                " Análisis adicional recomendado",
                 "⏳ Monitoreo extendido sugerido",
-                "🛡️ Verificar con antivirus actualizado"
+                "[SHIELD] Verificar con antivirus actualizado"
             ])
         else:
             recomendaciones.extend([
-                "✅ Archivo aparenta ser seguro",
-                "🔄 Verificación rutinaria completada",
-                "📝 Considerar para restauración"
+                "[OK] Archivo aparenta ser seguro",
+                "[REFRESH] Verificación rutinaria completada",
+                " Considerar para restauración"
             ])
         
         return recomendaciones

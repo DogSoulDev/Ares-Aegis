@@ -64,85 +64,85 @@ class VistaConstructorWordlists:
     
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre el Constructor de Wordlists"""
-        info_text = """� CONSTRUCTOR DE WORDLISTS AVANZADO - ARSENAL DIGITAL
+        info_text = """ CONSTRUCTOR DE WORDLISTS AVANZADO - ARSENAL DIGITAL
 
-�️ FUNCIONALIDADES PRINCIPALES:
+ FUNCIONALIDADES PRINCIPALES:
 • Gestión integral y profesional de wordlists especializadas
 • Edición avanzada de listas existentes con herramientas inteligentes
 • Creación personalizada de diccionarios desde cero con algoritmos
 • Importación masiva desde archivos externos con validación automática
 • Exportación optimizada para herramientas de pentesting especializadas
 
-🎯 HERRAMIENTAS DE CONSTRUCCIÓN INTELIGENTE:
+[TARGET] HERRAMIENTAS DE CONSTRUCCIÓN INTELIGENTE:
 • Generador automático de mutaciones con reglas personalizables
 • Combinador inteligente de múltiples wordlists con deduplicación
 • Filtrado avanzado por longitud, complejidad y patrones específicos
 • Análisis estadístico de efectividad de diccionarios existentes
 
-🔧 PROCESO DE CONSTRUCCIÓN PROFESIONAL:
+[TOOL] PROCESO DE CONSTRUCCIÓN PROFESIONAL:
 1. Selecciona wordlists base de nuestra biblioteca especializada
 2. Aplica mutaciones inteligentes (mayúsculas, números, símbolos)
 3. Combina múltiples listas con algoritmos de optimización
 4. Filtra resultados según criterios específicos del objetivo
 5. Exporta en formatos compatibles con herramientas de hacking ético
 
-📁 GESTIÓN AVANZADA DE ARCHIVOS:
+ GESTIÓN AVANZADA DE ARCHIVOS:
 • Importación masiva: Carga simultánea de múltiples archivos .txt
 • Exportación optimizada: Formatos compatibles con Hydra, John, Hashcat
 • Edición en tiempo real: Modificación instantánea con vista previa
 • Creación desde cero: Generadores automáticos basados en patrones
 
-⚡ ALGORITMOS DE GENERACIÓN ESPECIALIZADOS:
+ ALGORITMOS DE GENERACIÓN ESPECIALIZADOS:
 • Mutaciones linguïsticas: l33t speak, inversiones, sustituciones
 • Generación por patrones: fechas, nombres, combinaciones lógicas
 • Análisis de frecuencia: palabras más comunes según contexto
 • Generación probabilística: basada en estadísticas de contraseñas reales
 
-🎯 CASOS DE USO PROFESIONALES EN CIBERSEGURIDAD:
+[TARGET] CASOS DE USO PROFESIONALES EN CIBERSEGURIDAD:
 • Auditorías de contraseñas con diccionarios especializados por sector
 • Pentesting dirigido con wordlists personalizadas para cada objetivo
 • Investigación forense con diccionarios específicos del sospechoso
 • Red Team Operations con listas de reconocimiento OSINT avanzado
 
-📊 WORDLISTS ESPECIALIZADAS INCLUIDAS:
+[STATS] WORDLISTS ESPECIALIZADAS INCLUIDAS:
 • Contraseñas comunes: Top 500 passwords más utilizadas globalmente
 • Directorios web: Rutas comunes de aplicaciones y frameworks
 • Subdominios: Patrones de naming empresarial y tecnológico
 • Usuarios comunes: Nombres de usuario estándar por plataforma
 • API endpoints: Rutas comunes de servicios web y microservicios
 
-🔍 ANÁLISIS Y OPTIMIZACIÓN INTELIGENTE:
+ ANÁLISIS Y OPTIMIZACIÓN INTELIGENTE:
 • Análisis de efectividad: Estadísticas de éxito por tipo de wordlist
 • Optimización automática: Reordenamiento por probabilidad de éxito
 • Detección de duplicados: Eliminación inteligente con preservación de variantes
 • Análisis de entropía: Medición de complejidad y diversidad de diccionarios
 
-💡 GENERACIÓN BASADA EN INTELIGENCIA:
+ GENERACIÓN BASADA EN INTELIGENCIA:
 • OSINT integration: Generación basada en información recopilada del objetivo
 • Social engineering: Wordlists basadas en información personal conocida
 • Análisis de patrones: Identificación de esquemas de naming organizacionales
 • Machine learning: Predicción de contraseñas basada en comportamientos históricos
 
-🚀 CARACTERÍSTICAS AVANZADAS:
+ CARACTERÍSTICAS AVANZADAS:
 • Multi-threading: Procesamiento paralelo de wordlists masivas
 • Memory optimization: Manejo eficiente de diccionarios de millones de entradas
 • Progress tracking: Seguimiento detallado del progreso de generación
 • Validation engine: Verificación automática de calidad de wordlists
 
-⚠️ CONSIDERACIONES ÉTICAS Y LEGALES:
+ CONSIDERACIONES ÉTICAS Y LEGALES:
 • Uso exclusivo para auditorías autorizadas y hacking ético
 • Documentación obligatoria de pruebas de penetración legítimas
 • Respeto absoluto a términos de servicio y marcos legales
 • Responsabilidad profesional en el uso de herramientas de ciberseguridad
 
-🔐 INTEGRACIÓN CON HERRAMIENTAS PROFESIONALES:
+[LOCK] INTEGRACIÓN CON HERRAMIENTAS PROFESIONALES:
 • Hydra: Formato optimizado para ataques de fuerza bruta en servicios
 • John the Ripper: Wordlists especializadas para cracking de hashes
 • Hashcat: Diccionarios optimizados para GPU cracking avanzado
 • Burp Suite: Listas personalizadas para fuzzing de aplicaciones web
 • Nmap: Wordlists para enumeración de servicios y directorios
 
-⚡ OPTIMIZADO PARA KALI LINUX:
+ OPTIMIZADO PARA KALI LINUX:
 • Integración nativa con distribuciones de pentesting especializadas
 • Compatibilidad completa con herramientas OSINT y reconnaissance
 • Sincronización automática con SecLists y repositorios especializados
@@ -198,7 +198,7 @@ class VistaConstructorWordlists:
         # Título
         titulo = tk.Label(
             header_frame,
-            text="🔧 Constructor de Wordlists Avanzado",
+            text="[TOOL] Constructor de Wordlists Avanzado",
             font=('Consolas', 16, 'bold'),
             bg=self.colores.fondo_secundario,
             fg=self.colores.texto_primario
@@ -208,7 +208,7 @@ class VistaConstructorWordlists:
         # Botón de información
         btn_info = tk.Button(
             header_frame,
-            text="❓ Info",
+            text=" Info",
             font=('Consolas', 10),
             bg=self.colores.acento_secundario,
             fg='white',
@@ -241,7 +241,7 @@ class VistaConstructorWordlists:
         # Título del panel
         titulo_lista = tk.Label(
             left_frame,
-            text="📋 Wordlists Disponibles",
+            text=" Wordlists Disponibles",
             font=('Consolas', 12, 'bold'),
             bg=self.colores.fondo_secundario,
             fg=self.colores.texto_primario
@@ -278,7 +278,7 @@ class VistaConstructorWordlists:
         # Botón crear nueva lista
         btn_nueva = tk.Button(
             botones_frame,
-            text="➕ Nueva Lista",
+            text=" Nueva Lista",
             font=('Consolas', 9),
             bg=self.colores.acento_primario,
             fg='black',
@@ -292,7 +292,7 @@ class VistaConstructorWordlists:
         # Botón importar
         btn_importar = tk.Button(
             botones_frame,
-            text="📁 Importar",
+            text=" Importar",
             font=('Consolas', 9),
             bg=self.colores.acento_secundario,
             fg='white',
@@ -315,7 +315,7 @@ class VistaConstructorWordlists:
         # Título del editor
         titulo_editor = tk.Label(
             right_frame,
-            text="✏️ Editor de Wordlist",
+            text=" Editor de Wordlist",
             font=('Consolas', 12, 'bold'),
             bg=self.colores.fondo_secundario,
             fg=self.colores.texto_primario
@@ -360,7 +360,7 @@ class VistaConstructorWordlists:
         # Botón editar
         self.btn_editar = tk.Button(
             controles_frame,
-            text="✏️ Editar Lista",
+            text=" Editar Lista",
             font=('Consolas', 10),
             bg=self.colores.acento_primario,
             fg='black',
@@ -375,7 +375,7 @@ class VistaConstructorWordlists:
         # Botón guardar
         self.btn_guardar = tk.Button(
             controles_frame,
-            text="💾 Guardar",
+            text=" Guardar",
             font=('Consolas', 10),
             bg=self.colores.acento_secundario,
             fg='white',
@@ -390,7 +390,7 @@ class VistaConstructorWordlists:
         # Botón exportar
         self.btn_exportar = tk.Button(
             controles_frame,
-            text="📤 Exportar",
+            text=" Exportar",
             font=('Consolas', 10),
             bg='#28a745',
             fg='white',
@@ -470,12 +470,12 @@ class VistaConstructorWordlists:
         if self.text_editor.cget('state') == 'disabled':
             # Habilitar edición
             self.text_editor.config(state='normal')
-            self.btn_editar.config(text="🚫 Cancelar", bg='#dc3545')
+            self.btn_editar.config(text=" Cancelar", bg='#dc3545')
             self.btn_guardar.config(state='normal')
         else:
             # Deshabilitar edición
             self.text_editor.config(state='disabled')
-            self.btn_editar.config(text="✏️ Editar Lista", bg=self.colores.acento_primario)
+            self.btn_editar.config(text=" Editar Lista", bg=self.colores.acento_primario)
             self.btn_guardar.config(state='disabled')
             
             # Recargar contenido original

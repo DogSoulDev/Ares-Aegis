@@ -27,26 +27,26 @@ class VistaMonitorProcesos(VistaBase):
         self.sistema_ayuda = SistemaAyuda(colores)
         
     def _get_estado_inicial(self):
-        return "🔴 DETENIDO"
+        return " DETENIDO"
         
     def _get_titulo_ventana(self):
         return "MONITOR DE PROCESOS - SUPERVISIÓN DE ACTIVIDAD"
         
     def _get_descripcion_funcionalidades(self):
-        return """🔱 FUNCIONALIDADES:
+        return """ FUNCIONALIDADES:
 • Monitoreo en tiempo real de procesos
 • Detección de procesos sospechosos
 • Análisis de consumo de recursos por proceso
 • Supervisión de procesos críticos del sistema
 
-⚡ HERRAMIENTAS:
+ HERRAMIENTAS:
 • ps aux: Listado detallado de procesos
 • top: Procesos por consumo de CPU
 • htop: Monitor interactivo de procesos
 • pgrep: Búsqueda de procesos por nombre
 • kill: Terminación de procesos
 
-🎯 MÉTRICAS:
+[TARGET] MÉTRICAS:
 • PID y PPID de procesos
 • Uso de CPU por proceso
 • Consumo de memoria por proceso
@@ -80,7 +80,7 @@ class VistaMonitorProcesos(VistaBase):
         # Título
         titulo_label = ttk.Label(
             header_frame,
-            text="🔱 MONITOR DE PROCESOS - SUPERVISIÓN DE ACTIVIDAD",
+            text=" MONITOR DE PROCESOS - SUPERVISIÓN DE ACTIVIDAD",
             font=("Hack", 14, "bold")
         )
         titulo_label.pack(side=tk.LEFT)
@@ -98,7 +98,7 @@ class VistaMonitorProcesos(VistaBase):
         
     def _crear_area_resultados_general(self):
         """Crear área de resultados general para mensajes"""
-        resultados_frame = ttk.LabelFrame(self.frame_principal, text="📋 Registro de Actividad", padding=5)
+        resultados_frame = ttk.LabelFrame(self.frame_principal, text=" Registro de Actividad", padding=5)
         resultados_frame.pack(fill="x", pady=(0, 10))
         
         self.resultados_text = tk.Text(
@@ -119,7 +119,7 @@ class VistaMonitorProcesos(VistaBase):
         
     def _crear_panel_control_procesos(self):
         """Crear panel de control específico para procesos"""
-        control_frame = ttk.LabelFrame(self.frame_principal, text="🎮 Control de Monitoreo de Procesos", padding=10)
+        control_frame = ttk.LabelFrame(self.frame_principal, text=" Control de Monitoreo de Procesos", padding=10)
         control_frame.pack(fill="x", pady=(0, 10))
         
         # Botones de control
@@ -129,7 +129,7 @@ class VistaMonitorProcesos(VistaBase):
         # Botón iniciar/detener monitoreo
         self.btn_toggle_procesos = ttk.Button(
             botones_frame,
-            text="🟢 INICIAR MONITOREO",
+            text=" INICIAR MONITOREO",
             command=self._toggle_monitoreo_procesos,
             width=20
         )
@@ -138,7 +138,7 @@ class VistaMonitorProcesos(VistaBase):
         # Botón listar procesos
         ttk.Button(
             botones_frame,
-            text="📋 LISTAR PROCESOS",
+            text=" LISTAR PROCESOS",
             command=self._listar_procesos,
             width=20
         ).pack(side=tk.LEFT, padx=5)
@@ -146,7 +146,7 @@ class VistaMonitorProcesos(VistaBase):
         # Botón procesos sospechosos
         ttk.Button(
             botones_frame,
-            text="🚨 PROCESOS SOSPECHOSOS",
+            text=" PROCESOS SOSPECHOSOS",
             command=self._detectar_procesos_sospechosos,
             width=20
         ).pack(side=tk.LEFT, padx=5)
@@ -154,14 +154,14 @@ class VistaMonitorProcesos(VistaBase):
         # Botón limpiar
         ttk.Button(
             botones_frame,
-            text="🧹 LIMPIAR",
+            text="[CLEAN] LIMPIAR",
             command=self._limpiar_resultados,
             width=15
         ).pack(side=tk.RIGHT)
         
     def _crear_area_resultados_procesos(self):
         """Crear área de resultados específica para procesos"""
-        resultados_frame = ttk.LabelFrame(self.frame_principal, text="📊 Resultados del Monitoreo de Procesos", padding=10)
+        resultados_frame = ttk.LabelFrame(self.frame_principal, text="[STATS] Resultados del Monitoreo de Procesos", padding=10)
         resultados_frame.pack(fill="both", expand=True, pady=(0, 10))
         
         # Crear notebook para diferentes vistas
@@ -180,7 +180,7 @@ class VistaMonitorProcesos(VistaBase):
     def _crear_tab_procesos_generales(self):
         """Crear tab para procesos generales"""
         frame_generales = ttk.Frame(self.notebook_procesos)
-        self.notebook_procesos.add(frame_generales, text="🔄 Procesos Activos")
+        self.notebook_procesos.add(frame_generales, text="[REFRESH] Procesos Activos")
         
         # Crear text widget con scroll
         text_frame = ttk.Frame(frame_generales)
@@ -203,7 +203,7 @@ class VistaMonitorProcesos(VistaBase):
     def _crear_tab_procesos_sospechosos(self):
         """Crear tab para procesos sospechosos"""
         frame_sospechosos = ttk.Frame(self.notebook_procesos)
-        self.notebook_procesos.add(frame_sospechosos, text="🚨 Procesos Sospechosos")
+        self.notebook_procesos.add(frame_sospechosos, text=" Procesos Sospechosos")
         
         # Crear treeview para procesos sospechosos
         columns = ("PID", "Proceso", "CPU%", "MEM%", "Comando", "Razón")
@@ -226,7 +226,7 @@ class VistaMonitorProcesos(VistaBase):
     def _crear_tab_estadisticas_procesos(self):
         """Crear tab para estadísticas de procesos"""
         frame_stats = ttk.Frame(self.notebook_procesos)
-        self.notebook_procesos.add(frame_stats, text="📈 Estadísticas")
+        self.notebook_procesos.add(frame_stats, text=" Estadísticas")
         
         self.text_stats_procesos = tk.Text(
             frame_stats,
@@ -239,7 +239,7 @@ class VistaMonitorProcesos(VistaBase):
         
     def _crear_panel_estadisticas_procesos(self):
         """Crear panel de estadísticas en tiempo real"""
-        stats_frame = ttk.LabelFrame(self.frame_principal, text="📊 Estadísticas en Tiempo Real", padding=10)
+        stats_frame = ttk.LabelFrame(self.frame_principal, text="[STATS] Estadísticas en Tiempo Real", padding=10)
         stats_frame.pack(fill="x")
         
         # Variables para estadísticas
@@ -265,31 +265,31 @@ class VistaMonitorProcesos(VistaBase):
         """Iniciar monitoreo de procesos"""
         try:
             self.monitoreo_procesos_activo = True
-            self.btn_toggle_procesos.config(text="🔴 DETENER MONITOREO")
-            self.estado_label.config(text="🟢 MONITOREO ACTIVO")
+            self.btn_toggle_procesos.config(text=" DETENER MONITOREO")
+            self.estado_label.config(text=" MONITOREO ACTIVO")
             
             # Iniciar hilo de monitoreo
             self.hilo_monitoreo_procesos = threading.Thread(target=self._ciclo_monitoreo_procesos, daemon=True)
             self.hilo_monitoreo_procesos.start()
             
-            self._agregar_resultado("🟢 Monitoreo de procesos iniciado...")
+            self._agregar_resultado(" Monitoreo de procesos iniciado...")
             
             # Notificar al controlador
             if hasattr(self.controlador, 'controlador_monitor_procesos'):
                 try:
                     self.controlador.controlador_monitor_procesos.iniciar_monitoreo()
                 except Exception as e:
-                    self._agregar_resultado(f"⚠️ Error en controlador: {e}")
+                    self._agregar_resultado(f" Error en controlador: {e}")
                     
         except Exception as e:
-            self._agregar_resultado(f"❌ Error iniciando monitoreo: {e}")
+            self._agregar_resultado(f"[ERROR] Error iniciando monitoreo: {e}")
             
     def _detener_monitoreo_procesos(self):
         """Detener monitoreo de procesos"""
         self.monitoreo_procesos_activo = False
-        self.btn_toggle_procesos.config(text="🟢 INICIAR MONITOREO")
-        self.estado_label.config(text="🔴 DETENIDO")
-        self._agregar_resultado("🔴 Monitoreo de procesos detenido.")
+        self.btn_toggle_procesos.config(text=" INICIAR MONITOREO")
+        self.estado_label.config(text=" DETENIDO")
+        self._agregar_resultado(" Monitoreo de procesos detenido.")
         
     def _ciclo_monitoreo_procesos(self):
         """Ciclo principal del monitoreo de procesos"""
@@ -298,7 +298,7 @@ class VistaMonitorProcesos(VistaBase):
                 self._actualizar_procesos()
                 time.sleep(5)  # Actualizar cada 5 segundos
             except Exception as e:
-                self._agregar_resultado(f"❌ Error en ciclo de monitoreo: {e}")
+                self._agregar_resultado(f"[ERROR] Error en ciclo de monitoreo: {e}")
                 break
                 
     def _actualizar_procesos(self):
@@ -344,7 +344,7 @@ class VistaMonitorProcesos(VistaBase):
         except subprocess.TimeoutExpired:
             self._agregar_resultado("⏰ Timeout ejecutando ps aux")
         except Exception as e:
-            self._agregar_resultado(f"❌ Error actualizando procesos: {e}")
+            self._agregar_resultado(f"[ERROR] Error actualizando procesos: {e}")
             
     def _actualizar_estadisticas_procesos(self, total, activos, zombie, cpu_promedio):
         """Actualizar estadísticas mostradas"""
@@ -356,26 +356,26 @@ class VistaMonitorProcesos(VistaBase):
     def _listar_procesos(self):
         """Listar todos los procesos del sistema"""
         try:
-            self._agregar_resultado("📋 Listando procesos del sistema...")
+            self._agregar_resultado(" Listando procesos del sistema...")
             
             resultado = subprocess.run(['ps', 'aux'], capture_output=True, text=True, timeout=10)
             
             if resultado.returncode == 0:
                 self.text_procesos_generales.delete('1.0', tk.END)
                 self.text_procesos_generales.insert('1.0', resultado.stdout)
-                self._agregar_resultado("✅ Lista de procesos actualizada")
+                self._agregar_resultado("[OK] Lista de procesos actualizada")
             else:
-                self._agregar_resultado(f"❌ Error ejecutando ps aux: {resultado.stderr}")
+                self._agregar_resultado(f"[ERROR] Error ejecutando ps aux: {resultado.stderr}")
                 
         except subprocess.TimeoutExpired:
             self._agregar_resultado("⏰ Timeout ejecutando ps aux")
         except Exception as e:
-            self._agregar_resultado(f"❌ Error listando procesos: {e}")
+            self._agregar_resultado(f"[ERROR] Error listando procesos: {e}")
             
     def _detectar_procesos_sospechosos(self):
         """Detectar procesos potencialmente sospechosos"""
         try:
-            self._agregar_resultado("🚨 Analizando procesos sospechosos...")
+            self._agregar_resultado(" Analizando procesos sospechosos...")
             
             # Limpiar tree de sospechosos
             for item in self.tree_sospechosos.get_children():
@@ -418,10 +418,10 @@ class VistaMonitorProcesos(VistaBase):
                             except (ValueError, IndexError):
                                 continue
                 
-                self._agregar_resultado(f"🚨 Análisis completado: {sospechosos_encontrados} procesos sospechosos encontrados")
+                self._agregar_resultado(f" Análisis completado: {sospechosos_encontrados} procesos sospechosos encontrados")
                 
         except Exception as e:
-            self._agregar_resultado(f"❌ Error detectando procesos sospechosos: {e}")
+            self._agregar_resultado(f"[ERROR] Error detectando procesos sospechosos: {e}")
             
     def _analizar_procesos_sospechosos(self, procesos):
         """Analizar procesos para detectar actividad sospechosa"""

@@ -65,7 +65,7 @@ def limpiar_recursos_aplicacion():
     
     try:
         if logger_global:
-            logger_global.info("🧹 Iniciando limpieza de recursos de la aplicación...")
+            logger_global.info("[CLEAN] Iniciando limpieza de recursos de la aplicación...")
         
         # Finalizar interfaz si está activa
         if interfaz_global:
@@ -82,7 +82,7 @@ def limpiar_recursos_aplicacion():
                     except tk.TclError:
                         pass  # Ventana ya destruida
                 if logger_global:
-                    logger_global.info("✅ Interfaz finalizada correctamente")
+                    logger_global.info("[OK] Interfaz finalizada correctamente")
             except Exception as e:
                 if logger_global:
                     logger_global.debug(f"Advertencia finalizando interfaz: {e}")
@@ -95,7 +95,7 @@ def limpiar_recursos_aplicacion():
             hilos_daemon = [h for h in hilos_activos if h.daemon and h != threading.current_thread()]
             
             if hilos_daemon and logger_global:
-                logger_global.info(f"🔄 Finalizando {len(hilos_daemon)} hilos daemon...")
+                logger_global.info(f"[REFRESH] Finalizando {len(hilos_daemon)} hilos daemon...")
                 
             for hilo in hilos_daemon:
                 try:
@@ -108,7 +108,7 @@ def limpiar_recursos_aplicacion():
                 logger_global.error(f"Error limpiando hilos: {e}")
         
         if logger_global:
-            logger_global.info("🏛️ Limpieza de recursos completada")
+            logger_global.info("[SYSTEM] Limpieza de recursos completada")
             
     except Exception as e:
         if logger_global:
@@ -123,9 +123,9 @@ def manejador_senal_cierre(signum, frame):
     
     try:
         if logger_global:
-            logger_global.info(f"📡 Señal {signum} recibida, iniciando cierre seguro...")
+            logger_global.info(f" Señal {signum} recibida, iniciando cierre seguro...")
         else:
-            print(f"📡 Señal {signum} recibida, cerrando aplicación...")
+            print(f" Señal {signum} recibida, cerrando aplicación...")
         
         limpiar_recursos_aplicacion()
         sys.exit(0)
@@ -176,7 +176,7 @@ def solicitar_permisos_root():
         root.withdraw()
         
         respuesta = messagebox.askyesno(
-            "🛡️ Ares Aegis - Permisos Requeridos",
+            "[SHIELD] Ares Aegis - Permisos Requeridos",
             "Ares Aegis requiere permisos de administrador para:\n\n"
             "[ACCESS] Acceder a archivos del sistema\n"
             "[MONITOR] Monitorear procesos y servicios\n"
@@ -261,7 +261,7 @@ def mostrar_banner_inicio():
     Muestra banner de inicio en la consola.
     """
     print("\033[96m" + "="*70)
-    print("🛡️  ARES AEGIS - EL ESCUDO DEL DIOS DE LA GUERRA �️")
+    print("[SHIELD]  ARES AEGIS - EL ESCUDO DEL DIOS DE LA GUERRA ")
     print("="*70 + "\033[0m")
     print()
 
@@ -281,8 +281,8 @@ def main():
             
             # Mostrar advertencia final
             respuesta = messagebox.askyesno(
-                "⚠️ Funcionalidad Limitada",
-                "🚨 ADVERTENCIA: Ares Aegis funcionará con capacidades limitadas.\n\n"
+                " Funcionalidad Limitada",
+                " ADVERTENCIA: Ares Aegis funcionará con capacidades limitadas.\n\n"
                 "Sin permisos de root, las siguientes funciones NO estarán disponibles:\n"
                 "• Escaneo profundo de vulnerabilidades\n"
                 "• Monitoreo de archivos del sistema\n"
@@ -293,7 +293,7 @@ def main():
             )
             
             if not respuesta:
-                print("\033[91m🛑 Ejecución cancelada por el usuario\033[0m")
+                print("\033[91m Ejecución cancelada por el usuario\033[0m")
                 sys.exit(0)
         
         # Configurar logging
@@ -304,7 +304,7 @@ def main():
         configurar_manejadores_senal()
         
         logger.info("=" * 60)
-        logger.info("🚀 Iniciando Ares Aegis v4.0 - Cybersecurity Suite")
+        logger.info(" Iniciando Ares Aegis v4.0 - Cybersecurity Suite")
         logger.info("=" * 60)
         
         # Verificar entorno Kali Linux
@@ -313,12 +313,12 @@ def main():
         # Mostrar información de permisos actuales
         if verificar_permisos_root():
             logger.info("[ADMIN] Ejecutándose con permisos de administrador")
-            print("\033[92m✅ Permisos de administrador activos - Funcionalidad completa\033[0m")
+            print("\033[92m[OK] Permisos de administrador activos - Funcionalidad completa\033[0m")
         else:
             logger.warning("[WARNING] Ejecutándose sin permisos de administrador")
-            print("\033[93m⚠️ Funcionalidad limitada - Algunas características no disponibles\033[0m")
+            print("\033[93m Funcionalidad limitada - Algunas características no disponibles\033[0m")
         
-        logger.info("🎯 Cargando interfaz Escudo Divino de Ciberseguridad 4.0...")
+        logger.info("[TARGET] Cargando interfaz Escudo Divino de Ciberseguridad 4.0...")
         
         try:
             # Usar la interfaz principal (Escudo Divino de Ciberseguridad 4.0)
@@ -351,7 +351,7 @@ def main():
             
         except Exception as e:
             logger.error(f"Error cargando interfaz Escudo Divino: {e}")
-            logger.info("🔄 No se pudo cargar la interfaz principal...")
+            logger.info("[REFRESH] No se pudo cargar la interfaz principal...")
             
             # Mostrar error y terminar
             root = tk.Tk()
@@ -363,14 +363,14 @@ def main():
             return False
         
     except KeyboardInterrupt:
-        print("\n⏹️ Aplicación interrumpida por el usuario")
+        print("\n⏹ Aplicación interrumpida por el usuario")
         if logger_global:
             logger_global.info("Aplicación interrumpida por el usuario")
         limpiar_recursos_aplicacion()
         return True
         
     except Exception as e:
-        print(f"❌ Error crítico: {e}")
+        print(f"[ERROR] Error crítico: {e}")
         if logger_global:
             logger_global.error(f"Error crítico en main: {e}", exc_info=True)
         try:

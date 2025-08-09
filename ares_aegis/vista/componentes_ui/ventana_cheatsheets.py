@@ -29,7 +29,7 @@ class VentanaCheatsheets:
         
         # Crear ventana optimizada para Kali Linux
         self.ventana = tk.Toplevel(self.parent)
-        self.ventana.title(f"📚 {self.titulo} - Ares Aegis Kali Linux")
+        self.ventana.title(f" {self.titulo} - Ares Aegis Kali Linux")
         self.ventana.geometry("1200x800")
         self.ventana.configure(bg=self.colores.fondo_primario)
         
@@ -70,7 +70,7 @@ class VentanaCheatsheets:
         title_frame.pack(expand=True, fill='both')
         
         tk.Label(title_frame,
-                text=f"📚 {self.titulo}",
+                text=f" {self.titulo}",
                 font=('Consolas', 18, 'bold'),
                 fg=self.colores.acento_primario,
                 bg=self.colores.fondo_secundario).pack(anchor='center', expand=True)
@@ -124,7 +124,7 @@ class VentanaCheatsheets:
         tab_frame = tk.Frame(self.notebook, bg=self.colores.fondo_primario)
         
         # Título de la categoría en la pestaña
-        titulo_tab = categoria.get('titulo', cat_key).replace('🔍 ', '').replace('🛡️ ', '').replace('⚔️ ', '')
+        titulo_tab = categoria.get('titulo', cat_key).replace(' ', '').replace('[SHIELD] ', '').replace(' ', '')
         self.notebook.add(tab_frame, text=f" {titulo_tab} ")
         
         # Contenido scrollable
@@ -181,7 +181,7 @@ class VentanaCheatsheets:
         
         # Nombre de la herramienta
         tk.Label(herr_frame,
-                text=f"🔧 {nombre.upper()}",
+                text=f"[TOOL] {nombre.upper()}",
                 font=('Consolas', 12, 'bold'),
                 fg=self.colores.acento_secundario,
                 bg=self.colores.fondo_secundario).pack(anchor='w', padx=15, pady=(10, 5))
@@ -211,7 +211,7 @@ class VentanaCheatsheets:
         desc = comando.get('descripcion', '')
         if desc:
             desc_label = tk.Label(cmd_frame,
-                                text=f"💡 {desc}",
+                                text=f" {desc}",
                                 font=('Consolas', 10, 'bold'),
                                 fg=self.colores.acento_terciario,
                                 bg=self.colores.fondo_primario)
@@ -224,7 +224,7 @@ class VentanaCheatsheets:
             cmd_bg.pack(fill='x', padx=12, pady=5)
             
             cmd_label = tk.Label(cmd_bg,
-                               text=f"┌──(kali㉿kali)-[~]\n└─$ {cmd_text}",  # Prompt auténtico Kali Linux
+                               text=f"(kalikali)-[~]\n$ {cmd_text}",  # Prompt auténtico Kali Linux
                                font=('Consolas', 11, 'bold'),
                                fg=self.colores.exito,
                                bg=self.colores.fondo_terciario,
@@ -235,7 +235,7 @@ class VentanaCheatsheets:
         ejemplo = comando.get('ejemplo', '')
         if ejemplo and ejemplo != cmd_text:
             tk.Label(cmd_frame,
-                    text=f"📋 Ejemplo: {ejemplo}",
+                    text=f" Ejemplo: {ejemplo}",
                     font=('Consolas', 9),
                     fg=self.colores.info,
                     bg=self.colores.fondo_primario).pack(anchor='w', padx=12, pady=(0, 10))
@@ -279,14 +279,14 @@ class VentanaCheatsheets:
         
         # Información de ayuda específica para Kali Linux
         tk.Label(footer,
-                text="� Kali Linux • Ctrl+C para copiar • Rueda del mouse para scroll",
+                text=" Kali Linux • Ctrl+C para copiar • Rueda del mouse para scroll",
                 font=('Consolas', 9),
                 fg=self.colores.texto_terciario,
                 bg=self.colores.fondo_secundario).pack(side='left', padx=20, pady=20)
         
         # Botón cerrar mejorado
         btn_cerrar = tk.Button(footer,
-                              text="✕ Cerrar",
+                              text=" Cerrar",
                               font=('Consolas', 10, 'bold'),
                               bg=self.colores.error,
                               fg=self.colores.texto_primario,

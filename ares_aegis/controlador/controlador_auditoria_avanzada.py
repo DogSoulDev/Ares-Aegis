@@ -93,7 +93,7 @@ class ControladorAuditoriaAvanzada:
             'archivos_cuarentena_total': 0
         }
         
-        self.logger.info("🛡️ Controlador de Auditoría Avanzada inicializado para Kali Linux")
+        self.logger.info("[SHIELD] Controlador de Auditoría Avanzada inicializado para Kali Linux")
     
     def ejecutar_auditoria_completa(self, incluir_pam: bool = True, 
                                    incluir_sistema: bool = True,
@@ -110,10 +110,10 @@ class ControladorAuditoriaAvanzada:
             ResultadoEscaneo con todos los hallazgos integrados
         """
         if self.auditoria_activa:
-            self.logger.warning("⚠️ Auditoría ya en progreso, cancelando nueva solicitud")
+            self.logger.warning(" Auditoría ya en progreso, cancelando nueva solicitud")
             return self._crear_resultado_error("Auditoría en progreso")
         
-        self.logger.info("🔥 INICIANDO AUDITORÍA AVANZADA DE SEGURIDAD")
+        self.logger.info(" INICIANDO AUDITORÍA AVANZADA DE SEGURIDAD")
         self.auditoria_activa = True
         fecha_inicio = datetime.now()
         
@@ -124,24 +124,24 @@ class ControladorAuditoriaAvanzada:
             
             # 1. Auditoría de Autenticación PAM
             if incluir_pam:
-                self.logger.info("🔐 Ejecutando auditoría de autenticación PAM...")
+                self.logger.info("[LOCK] Ejecutando auditoría de autenticación PAM...")
                 hallazgos_pam = self.auditor_pam.auditar_configuracion_completa()
                 todos_hallazgos.extend(hallazgos_pam)
-                self.logger.info(f"✅ PAM: {len(hallazgos_pam)} hallazgos de autenticación detectados")
+                self.logger.info(f"[OK] PAM: {len(hallazgos_pam)} hallazgos de autenticación detectados")
             
             # 2. Auditoría de Vulnerabilidades del Sistema
             if incluir_sistema:
-                self.logger.info("🔍 Ejecutando análisis de vulnerabilidades del sistema...")
+                self.logger.info(" Ejecutando análisis de vulnerabilidades del sistema...")
                 hallazgos_sistema = self.escaneador_sistema.auditar_permisos_criticos()
                 todos_hallazgos.extend(hallazgos_sistema)
-                self.logger.info(f"✅ Sistema: {len(hallazgos_sistema)} vulnerabilidades detectadas")
+                self.logger.info(f"[OK] Sistema: {len(hallazgos_sistema)} vulnerabilidades detectadas")
             
             # 3. Verificación de Servicios Expuestos
             if incluir_servicios:
-                self.logger.info("🚪 Verificando servicios expuestos...")
+                self.logger.info(" Verificando servicios expuestos...")
                 hallazgos_servicios = self.escaneador_sistema.verificar_servicios_expuestos()
                 todos_hallazgos.extend(hallazgos_servicios)
-                self.logger.info(f"✅ Servicios: {len(hallazgos_servicios)} servicios riesgosos detectados")
+                self.logger.info(f"[OK] Servicios: {len(hallazgos_servicios)} servicios riesgosos detectados")
             
             # 4. Procesamiento de acciones automáticas
             acciones_ejecutadas = self._procesar_acciones_automaticas(todos_hallazgos)
@@ -158,12 +158,12 @@ class ControladorAuditoriaAvanzada:
             self._actualizar_estadisticas(resultado)
             
             self.ultima_auditoria = datetime.now()
-            self.logger.info("🎯 AUDITORÍA AVANZADA COMPLETADA EXITOSAMENTE")
+            self.logger.info("[TARGET] AUDITORÍA AVANZADA COMPLETADA EXITOSAMENTE")
             
             return resultado
             
         except Exception as e:
-            self.logger.error(f"❌ Error en auditoría avanzada: {e}")
+            self.logger.error(f"[ERROR] Error en auditoría avanzada: {e}")
             return self._crear_resultado_error(f"Error ejecutando auditoría: {e}")
             
         finally:
@@ -204,7 +204,7 @@ class ControladorAuditoriaAvanzada:
                     if self._intentar_correccion_permisos(hallazgo):
                         acciones['permisos_corregidos'] += 1
             
-            self.logger.info(f"🔧 Acciones automáticas ejecutadas: {acciones}")
+            self.logger.info(f"[TOOL] Acciones automáticas ejecutadas: {acciones}")
             
         except Exception as e:
             self.logger.error(f"Error procesando acciones automáticas: {e}")
@@ -241,7 +241,7 @@ class ControladorAuditoriaAvanzada:
                 resultado = self.utilidades.ejecutar_comando_sistema(comando)
                 
                 if resultado.get('exitcode') == 0:
-                    self.logger.info(f"✅ Permisos corregidos automáticamente: {hallazgo.ruta_afectada}")
+                    self.logger.info(f"[OK] Permisos corregidos automáticamente: {hallazgo.ruta_afectada}")
                     return True
                     
         except Exception as e:
@@ -251,7 +251,7 @@ class ControladorAuditoriaAvanzada:
     def _enviar_notificacion_critica(self, hallazgo: Hallazgo):
         """Envía notificación para hallazgos críticos."""
         try:
-            mensaje = f"🚨 HALLAZGO CRÍTICO: {hallazgo.detalle_especifico}"
+            mensaje = f" HALLAZGO CRÍTICO: {hallazgo.detalle_especifico}"
             # Aquí se podría integrar con sistemas de notificación externos
             self.logger.critical(mensaje)
         except Exception as e:
@@ -322,26 +322,26 @@ class ControladorAuditoriaAvanzada:
         total_informativos = len(clasificacion.get(PrioridadHallazgo.INFORMATIVA, []))
         
         resumen = f"""
-🛡️ RESUMEN EJECUTIVO - AUDITORÍA AVANZADA DE SEGURIDAD
+[SHIELD] RESUMEN EJECUTIVO - AUDITORÍA AVANZADA DE SEGURIDAD
 =====================================================
 
-📊 ESTADO GENERAL:
+[STATS] ESTADO GENERAL:
 - Hallazgos Críticos: {total_criticos}
 - Hallazgos Altos: {total_altos}  
 - Hallazgos Medios: {total_medios}
 - Hallazgos Bajos: {total_bajos}
 - Hallazgos Informativos: {total_informativos}
 
-🔧 ACCIONES AUTOMÁTICAS EJECUTADAS:
+[TOOL] ACCIONES AUTOMÁTICAS EJECUTADAS:
 - Archivos en cuarentena: {acciones['archivos_cuarentena']}
 - Permisos corregidos: {acciones['permisos_corregidos']}
 - Notificaciones enviadas: {acciones['notificaciones_enviadas']}
 
-⚡ NIVEL DE RIESGO GENERAL: {'CRÍTICO' if total_criticos > 0 else 'ALTO' if total_altos > 0 else 'MEDIO'}
+ NIVEL DE RIESGO GENERAL: {'CRÍTICO' if total_criticos > 0 else 'ALTO' if total_altos > 0 else 'MEDIO'}
 """
         
         if total_criticos > 0:
-            resumen += "\n🚨 ATENCIÓN INMEDIATA REQUERIDA: Se detectaron vulnerabilidades críticas"
+            resumen += "\n ATENCIÓN INMEDIATA REQUERIDA: Se detectaron vulnerabilidades críticas"
         
         return resumen
     
@@ -354,21 +354,21 @@ class ControladorAuditoriaAvanzada:
         altos = [h for h in hallazgos if h.prioridad == PrioridadHallazgo.ALTA]
         
         if criticos:
-            recomendaciones.append("🚨 INMEDIATO: Revisar y corregir todos los hallazgos críticos")
+            recomendaciones.append(" INMEDIATO: Revisar y corregir todos los hallazgos críticos")
             for hallazgo in criticos[:3]:  # Mostrar top 3 críticos
                 recomendaciones.append(f"   - {hallazgo.recomendacion}")
         
         if altos:
-            recomendaciones.append("⚠️  URGENTE: Atender hallazgos de alta prioridad")
+            recomendaciones.append("  URGENTE: Atender hallazgos de alta prioridad")
             for hallazgo in altos[:2]:  # Mostrar top 2 altos
                 recomendaciones.append(f"   - {hallazgo.recomendacion}")
         
         # Recomendaciones generales
         recomendaciones.extend([
-            "🔐 Revisar configuración PAM regularmente",
-            "🔍 Programar auditorías automáticas cada 24 horas",
-            "📝 Mantener logs de auditoría actualizados",
-            "🛡️ Considerar implementar monitoreo en tiempo real"
+            "[LOCK] Revisar configuración PAM regularmente",
+            " Programar auditorías automáticas cada 24 horas",
+            " Mantener logs de auditoría actualizados",
+            "[SHIELD] Considerar implementar monitoreo en tiempo real"
         ])
         
         return recomendaciones
@@ -389,9 +389,9 @@ class ControladorAuditoriaAvanzada:
                 formato="html"
             )
             if ruta_reporte:
-                self.logger.info(f"📊 Reporte generado: {ruta_reporte}")
+                self.logger.info(f"[STATS] Reporte generado: {ruta_reporte}")
             else:
-                self.logger.warning("⚠️ Error generando reporte")
+                self.logger.warning(" Error generando reporte")
             
         except Exception as e:
             self.logger.error(f"Error generando reporte: {e}")
@@ -432,12 +432,12 @@ class ControladorAuditoriaAvanzada:
     
     def auditar_solo_pam(self) -> List[Hallazgo]:
         """Ejecuta únicamente auditoría PAM."""
-        self.logger.info("🔐 Ejecutando auditoría PAM exclusiva...")
+        self.logger.info("[LOCK] Ejecutando auditoría PAM exclusiva...")
         return self.auditor_pam.auditar_configuracion_completa()
     
     def auditar_solo_sistema(self) -> List[Hallazgo]:
         """Ejecuta únicamente auditoría de sistema."""
-        self.logger.info("🔍 Ejecutando auditoría de sistema exclusiva...")
+        self.logger.info(" Ejecutando auditoría de sistema exclusiva...")
         hallazgos = []
         hallazgos.extend(self.escaneador_sistema.auditar_permisos_criticos())
         hallazgos.extend(self.escaneador_sistema.verificar_servicios_expuestos())
@@ -454,7 +454,7 @@ class ControladorAuditoriaAvanzada:
             self.logger.warning("No hay auditoría activa para cancelar")
             return False
             
-        self.logger.info("🚫 Cancelando auditoría en progreso...")
+        self.logger.info(" Cancelando auditoría en progreso...")
         self.auditoria_activa = False
         
         # El thread se detendrá en la próxima verificación de self.auditoria_activa
@@ -462,7 +462,7 @@ class ControladorAuditoriaAvanzada:
             self.logger.info("Esperando que termine el hilo de auditoría...")
             # No usamos join() para evitar bloquear la UI
             
-        self.logger.info("✅ Auditoría cancelada exitosamente")
+        self.logger.info("[OK] Auditoría cancelada exitosamente")
         return True
     
     def esta_auditoria_activa(self) -> bool:

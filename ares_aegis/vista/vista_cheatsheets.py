@@ -76,15 +76,15 @@ class VistaCheatsheets:
         
     def mostrar_informacion(self):
         """Mostrar información de ayuda sobre las CheatSheets"""
-        info_text = """� CHEATSHEETS DE CIBERSEGURIDAD - ARSENAL DE CONOCIMIENTO
+        info_text = """ CHEATSHEETS DE CIBERSEGURIDAD - ARSENAL DE CONOCIMIENTO
 
-🎯 FUNCIONALIDADES PRINCIPALES:
+[TARGET] FUNCIONALIDADES PRINCIPALES:
 • Biblioteca completa de referencias técnicas especializadas
 • Comandos profesionales y técnicas avanzadas de pentesting
 • Referencias rápidas para auditorías de seguridad complejas
 • Guías detalladas paso a paso para profesionales y estudiantes
 
-⚡ CATEGORÍAS ESPECIALIZADAS DISPONIBLES:
+ CATEGORÍAS ESPECIALIZADAS DISPONIBLES:
 • Reconnaissance: Recopilación de información y fingerprinting avanzado
 • Exploitation: Técnicas de explotación con payloads especializados
 • Post-Exploitation: Mantenimiento de acceso y movimiento lateral
@@ -92,7 +92,7 @@ class VistaCheatsheets:
 • Web Application Security: Pruebas exhaustivas de aplicaciones web
 • Digital Forensics: Análisis forense y recuperación de evidencias
 
-🛠️ HERRAMIENTAS PROFESIONALES INCLUIDAS:
+ HERRAMIENTAS PROFESIONALES INCLUIDAS:
 • Nmap: Escaneo de puertos, detección de servicios y fingerprinting de SO
 • Metasploit Framework: Suite completa de explotación con payloads avanzados
 • Burp Suite Professional: Análisis integral de aplicaciones web
@@ -100,78 +100,78 @@ class VistaCheatsheets:
 • John the Ripper: Cracking avanzado de hashes con reglas personalizadas
 • Hashcat: Recuperación de contraseñas con aceleración GPU
 
-🔧 FUNCIONES AVANZADAS DE NAVEGACIÓN:
+[TOOL] FUNCIONES AVANZADAS DE NAVEGACIÓN:
 • Búsqueda inteligente por comando, técnica o vulnerabilidad específica
 • Filtrado avanzado por categoría, herramienta y nivel de complejidad
 • Sistema de favoritos para acceso instantáneo a técnicas frecuentes
 • Exportación profesional de cheatsheets en múltiples formatos
 • Creación colaborativa de cheatsheets personalizadas para equipos
 
-⚠️ RECURSOS PARA PROFESIONALES EN CIBERSEGURIDAD:
+ RECURSOS PARA PROFESIONALES EN CIBERSEGURIDAD:
 • Comandos explicados con contexto técnico y casos de uso reales
 • Ejemplos prácticos con escenarios de red team y blue team
 • Contextualización profesional de cuándo aplicar cada técnica
 • Referencias directas a documentación oficial y CVEs relacionados
 • Tips especializados y trucos de penetration testers experimentados
 
-📊 CONTENIDO ESTRUCTURADO PROFESIONALMENTE:
+[STATS] CONTENIDO ESTRUCTURADO PROFESIONALMENTE:
 • Sintaxis completa de comandos con todos los parámetros disponibles
 • Parámetros críticos más utilizados en auditorías reales
 • Ejemplos de uso en entornos empresariales complejos
 • Casos de estudio de penetration testing en diferentes sectores
 • Troubleshooting especializado para problemas técnicos comunes
 
-💡 CASOS DE USO PROFESIONALES:
+ CASOS DE USO PROFESIONALES:
 • Preparación intensiva para certificaciones avanzadas (CEH, OSCP, CISSP)
 • Consulta rápida durante ejercicios Red Team en vivo
 • Aprendizaje acelerado de herramientas especializadas de Kali Linux
 • Referencia técnica durante auditorías de cumplimiento regulatorio
 • Entrenamiento continuo y actualización de conocimientos técnicos
 
-🔐 METODOLOGÍAS INTEGRADAS DE CIBERSEGURIDAD:
+[LOCK] METODOLOGÍAS INTEGRADAS DE CIBERSEGURIDAD:
 • OWASP Testing Guide: Metodología completa para aplicaciones web
 • NIST Cybersecurity Framework: Estándares de seguridad empresarial
 • PTES (Penetration Testing Execution Standard): Metodología de pentesting
 • OSSTMM (Open Source Security Testing): Testing de seguridad sistemático
 • Cyber Kill Chain: Metodología de análisis de amenazas avanzadas
 
-� CARACTERÍSTICAS TÉCNICAS AVANZADAS:
+ CARACTERÍSTICAS TÉCNICAS AVANZADAS:
 • Integración con bases de datos de vulnerabilidades (CVE, ExploitDB)
 • Actualizaciones automáticas de técnicas y exploits emergentes
 • Correlación automática entre herramientas y técnicas MITRE ATT&CK
 • Mapeo directo con frameworks de threat hunting especializados
 
-📋 COMPLIANCE Y FRAMEWORKS REGULATORIOS:
+ COMPLIANCE Y FRAMEWORKS REGULATORIOS:
 • ISO 27001: Controles de seguridad y gestión de riesgos
 • SOC 2: Auditorías de controles de sistemas de información
 • PCI DSS: Seguridad en procesamiento de datos de tarjetas
 • GDPR: Protección de datos personales y privacidad
 
-🎯 ESPECIALIZACIÓN POR SECTORES:
+[TARGET] ESPECIALIZACIÓN POR SECTORES:
 • Sector Financiero: Técnicas específicas para banca y fintech
 • Sector Salud: Cumplimiento HIPAA y protección de datos médicos
 • Sector Energético: Seguridad de sistemas SCADA e ICS/OT
 • Sector Gubernamental: Estándares de seguridad nacional y clasificada
 
-⚡ INTEGRACIÓN CON HERRAMIENTAS DE KALI LINUX:
+ INTEGRACIÓN CON HERRAMIENTAS DE KALI LINUX:
 • Comandos optimizados para distribuciones de pentesting
 • Integración nativa con herramientas pre-instaladas en Kali
 • Scripts automatizados para reconocimiento y explotación
 • Workflows completos desde reconnaissance hasta post-exploitation
 
-🔒 CONSIDERACIONES ÉTICAS Y LEGALES:
+ CONSIDERACIONES ÉTICAS Y LEGALES:
 • Uso exclusivo para auditorías autorizadas y hacking ético
 • Cumplimiento estricto de marcos legales internacionales
 • Documentación obligatoria de todas las actividades de testing
 • Responsabilidad profesional en el uso de técnicas avanzadas
 
-📖 RECURSOS DE APRENDIZAJE CONTINUO:
+ RECURSOS DE APRENDIZAJE CONTINUO:
 • Enlaces a laboratorios prácticos y plataformas de training
 • Actualizaciones semanales con nuevas técnicas y exploits
 • Comunidad de práctica para intercambio de conocimientos
 • Certificaciones profesionales y rutas de carrera especializadas
 
-💻 OPTIMIZACIÓN PARA ENTORNOS PROFESIONALES:
+ OPTIMIZACIÓN PARA ENTORNOS PROFESIONALES:
 • Compatibilidad con entornos corporativos y SOCs especializados
 • Integración con herramientas SIEM y plataformas de threat intelligence
 • Exportación a formatos compatibles con documentación de auditoría
@@ -225,7 +225,7 @@ class VistaCheatsheets:
         titulo_frame.pack(side='left', padx=30, pady=20)
         
         tk.Label(titulo_frame,
-                text="📚 GESTOR DE CHEATSHEETS",
+                text=" GESTOR DE CHEATSHEETS",
                 font=('Consolas', 20, 'bold'),
                 fg=self.colores.verde_terminal,
                 bg=self.colores.negro_carbono).pack(anchor='w')
@@ -242,7 +242,7 @@ class VistaCheatsheets:
         
         # Botón nuevo cheatsheet
         btn_nuevo = tk.Button(botones_frame,
-                            text="➕ NUEVO",
+                            text=" NUEVO",
                             font=('Consolas', 10, 'bold'),
                             fg=self.colores.negro_carbono,
                             bg=self.colores.verde_terminal,
@@ -255,7 +255,7 @@ class VistaCheatsheets:
         
         # Botón importar
         btn_importar = tk.Button(botones_frame,
-                               text="📁 IMPORTAR",
+                               text=" IMPORTAR",
                                font=('Consolas', 10, 'bold'),
                                fg=self.colores.blanco_hueso,
                                bg=self.colores.cyan_brillante,
@@ -268,7 +268,7 @@ class VistaCheatsheets:
         
         # Botón exportar
         btn_exportar = tk.Button(botones_frame,
-                               text="💾 EXPORTAR",
+                               text=" EXPORTAR",
                                font=('Consolas', 10, 'bold'),
                                fg=self.colores.negro_carbono,
                                bg=self.colores.amarillo_medio,
@@ -281,7 +281,7 @@ class VistaCheatsheets:
         
         # Botón de información
         btn_info = tk.Button(botones_frame,
-                           text="❓ Info",
+                           text=" Info",
                            font=('Consolas', 10, 'bold'),
                            fg='white',
                            bg=self.colores.cyan_brillante,
@@ -295,7 +295,7 @@ class VistaCheatsheets:
     def _crear_panel_lista(self, parent):
         """Crear panel izquierdo con lista de cheatsheets"""
         lista_frame = tk.LabelFrame(parent,
-                                  text="🗂️ CHEATSHEETS DISPONIBLES",
+                                  text=" CHEATSHEETS DISPONIBLES",
                                   bg=self.colores.fondo_secundario,
                                   fg=self.colores.verde_terminal,
                                   font=('Consolas', 12, 'bold'),
@@ -309,7 +309,7 @@ class VistaCheatsheets:
         
         # Búsqueda
         tk.Label(filtros_frame,
-                text="🔍 Buscar:",
+                text=" Buscar:",
                 font=('Consolas', 10, 'bold'),
                 fg=self.colores.cyan_brillante,
                 bg=self.colores.fondo_secundario).pack(anchor='w')
@@ -328,7 +328,7 @@ class VistaCheatsheets:
         
         # Categorías
         tk.Label(filtros_frame,
-                text="📑 Categoría:",
+                text=" Categoría:",
                 font=('Consolas', 10, 'bold'),
                 fg=self.colores.cyan_brillante,
                 bg=self.colores.fondo_secundario).pack(anchor='w')
@@ -351,9 +351,9 @@ class VistaCheatsheets:
         self.tree_cheatsheets = ttk.Treeview(tree_frame, columns=columns, show='headings', height=15)
         
         # Configurar columnas
-        self.tree_cheatsheets.heading("nombre", text="📋 Nombre")
-        self.tree_cheatsheets.heading("categoria", text="📂 Categoría") 
-        self.tree_cheatsheets.heading("nivel", text="⚡ Nivel")
+        self.tree_cheatsheets.heading("nombre", text=" Nombre")
+        self.tree_cheatsheets.heading("categoria", text=" Categoría") 
+        self.tree_cheatsheets.heading("nivel", text=" Nivel")
         
         self.tree_cheatsheets.column("nombre", width=200, minwidth=150)
         self.tree_cheatsheets.column("categoria", width=120, minwidth=100)
@@ -385,7 +385,7 @@ class VistaCheatsheets:
         botones_container.grid(row=0, column=0, columnspan=3, sticky="ew", padx=5, pady=5)
         
         btn_editar = tk.Button(botones_container,
-                             text="✏️ EDITAR",
+                             text=" EDITAR",
                              font=('Consolas', 9, 'bold'),
                              fg=self.colores.negro_carbono,
                              bg=self.colores.cyan_brillante,
@@ -397,7 +397,7 @@ class VistaCheatsheets:
         btn_editar.pack(side='left', padx=(0, 8), pady=2, fill='x', expand=True)
         
         btn_eliminar = tk.Button(botones_container,
-                               text="🗑️ ELIMINAR",
+                               text=" ELIMINAR",
                                font=('Consolas', 9, 'bold'),
                                fg=self.colores.blanco_hueso,
                                bg=self.colores.rojo_critico,
@@ -409,7 +409,7 @@ class VistaCheatsheets:
         btn_eliminar.pack(side='left', padx=(4, 8), pady=2, fill='x', expand=True)
         
         btn_duplicar = tk.Button(botones_container,
-                               text="📄 DUPLICAR",
+                               text=" DUPLICAR",
                                font=('Consolas', 9, 'bold'),
                                fg=self.colores.negro_carbono,
                                bg=self.colores.amarillo_medio,
@@ -423,7 +423,7 @@ class VistaCheatsheets:
     def _crear_panel_contenido(self, parent):
         """Crear panel derecho con contenido del cheatsheet"""
         contenido_frame = tk.LabelFrame(parent,
-                                      text="📖 CONTENIDO DEL CHEATSHEET",
+                                      text=" CONTENIDO DEL CHEATSHEET",
                                       bg=self.colores.fondo_secundario,
                                       fg=self.colores.verde_terminal,
                                       font=('Consolas', 12, 'bold'),
@@ -494,7 +494,7 @@ class VistaCheatsheets:
         botones_acciones.grid(row=0, column=0, columnspan=3, sticky="ew", padx=5)
         
         btn_copiar = tk.Button(botones_acciones,
-                             text="📋 COPIAR TODO",
+                             text=" COPIAR TODO",
                              font=('Consolas', 10, 'bold'),
                              fg=self.colores.negro_carbono,
                              bg=self.colores.verde_terminal,
@@ -506,7 +506,7 @@ class VistaCheatsheets:
         btn_copiar.pack(side='left', padx=(0, 10), pady=5, fill='x', expand=True)
         
         btn_guardar = tk.Button(botones_acciones,
-                              text="💾 GUARDAR CAMBIOS",
+                              text=" GUARDAR CAMBIOS",
                               font=('Consolas', 10, 'bold'),
                               fg=self.colores.blanco_hueso,
                               bg=self.colores.cyan_brillante,
@@ -518,7 +518,7 @@ class VistaCheatsheets:
         btn_guardar.pack(side='left', padx=(5, 10), pady=5, fill='x', expand=True)
         
         btn_recargar = tk.Button(botones_acciones,
-                               text="🔄 RECARGAR",
+                               text="[REFRESH] RECARGAR",
                                font=('Consolas', 10, 'bold'),
                                fg=self.colores.negro_carbono,
                                bg=self.colores.amarillo_medio,
@@ -630,7 +630,7 @@ class VistaCheatsheets:
                 nombre = archivo.stem
                 self.cheatsheets_data[nombre] = {
                     "archivo": archivo.name,
-                    "titulo": f"📚 {nombre.replace('_', ' ').title()}",
+                    "titulo": f" {nombre.replace('_', ' ').title()}",
                     "descripcion": f"Cheatsheet de {nombre}",
                     "categoria": "general",
                     "nivel": "intermedio",
@@ -647,9 +647,9 @@ class VistaCheatsheets:
         if hasattr(self, 'text_contenido') and self.text_contenido:
             self.text_contenido.config(state='normal')
             self.text_contenido.delete('1.0', tk.END)
-            mensaje = """📚 NO HAY CHEATSHEETS DISPONIBLES
+            mensaje = """ NO HAY CHEATSHEETS DISPONIBLES
 
-🔍 SOLUCIONES POSIBLES:
+ SOLUCIONES POSIBLES:
 
 1. Verificar que los archivos estén en:
    {ruta}
@@ -670,7 +670,7 @@ class VistaCheatsheets:
 
 4. Contactar al administrador para restaurar los archivos
 
-💡 NOTA: Los cheatsheets son esenciales para el funcionamiento
+ NOTA: Los cheatsheets son esenciales para el funcionamiento
 completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatsheets)
             
             self.text_contenido.insert('1.0', mensaje)
@@ -776,7 +776,7 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
                 if self.text_contenido:
                     self.text_contenido.configure(state='normal')
                     self.text_contenido.delete(1.0, tk.END)
-                    self.text_contenido.insert(1.0, f"⚠️ Archivo no encontrado: {archivo}")
+                    self.text_contenido.insert(1.0, f" Archivo no encontrado: {archivo}")
                     self.text_contenido.configure(state='disabled')
                 else:
                     self.logger.warning("text_contenido no inicializado, omitiendo mensaje de error")
@@ -786,7 +786,7 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
             if self.text_contenido:
                 self.text_contenido.configure(state='normal')
                 self.text_contenido.delete(1.0, tk.END)
-                self.text_contenido.insert(1.0, f"❌ Error cargando contenido:\n{str(e)}")
+                self.text_contenido.insert(1.0, f"[ERROR] Error cargando contenido:\n{str(e)}")
                 self.text_contenido.configure(state='disabled')
             else:
                 self.logger.warning("text_contenido no inicializado, omitiendo mensaje de error")
@@ -798,32 +798,32 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
         # Metadatos
         if 'metadatos' in contenido:
             meta = contenido['metadatos']
-            texto += f"📋 {meta.get('descripcion', 'CheatSheet')}\n"
-            texto += f"👤 Autor: {meta.get('autor', 'Desconocido')}\n"
-            texto += f"📅 Versión: {meta.get('version', '1.0.0')}\n"
-            texto += f"📆 Actualizado: {meta.get('fecha_actualizacion', 'N/A')}\n"
+            texto += f" {meta.get('descripcion', 'CheatSheet')}\n"
+            texto += f" Autor: {meta.get('autor', 'Desconocido')}\n"
+            texto += f" Versión: {meta.get('version', '1.0.0')}\n"
+            texto += f" Actualizado: {meta.get('fecha_actualizacion', 'N/A')}\n"
             texto += "="*80 + "\n\n"
         
         # Categorías y herramientas
         if 'categorias' in contenido:
             for cat_nombre, categoria in contenido['categorias'].items():
-                texto += f"🏷️ {categoria.get('titulo', cat_nombre.upper())}\n"
-                texto += f"📝 {categoria.get('descripcion', '')}\n"
+                texto += f" {categoria.get('titulo', cat_nombre.upper())}\n"
+                texto += f" {categoria.get('descripcion', '')}\n"
                 texto += "-"*60 + "\n\n"
                 
                 # Herramientas en la categoría
                 if 'herramientas' in categoria:
                     for herr_nombre, herramienta in categoria['herramientas'].items():
-                        texto += f"🔧 {herr_nombre.upper()}\n"
+                        texto += f"[TOOL] {herr_nombre.upper()}\n"
                         texto += f"   {herramienta.get('descripcion', '')}\n\n"
                         
                         # Comandos
                         if 'comandos' in herramienta:
                             for cmd in herramienta['comandos']:
-                                texto += f"   💾 {cmd.get('comando', '')}\n"
-                                texto += f"      📋 {cmd.get('descripcion', '')}\n"
+                                texto += f"    {cmd.get('comando', '')}\n"
+                                texto += f"       {cmd.get('descripcion', '')}\n"
                                 if 'ejemplo' in cmd:
-                                    texto += f"      💡 Ejemplo: {cmd['ejemplo']}\n"
+                                    texto += f"       Ejemplo: {cmd['ejemplo']}\n"
                                 texto += "\n"
                         
                         texto += "\n"
@@ -845,15 +845,15 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
             line_start = f"{i+1}.0"
             line_end = f"{i+1}.end"
             
-            if line.startswith("🏷️"):
+            if line.startswith(""):
                 self.text_contenido.tag_add("categoria", line_start, line_end)
-            elif line.startswith("🔧"):
+            elif line.startswith("[TOOL]"):
                 self.text_contenido.tag_add("herramienta", line_start, line_end)
-            elif line.strip().startswith("💾"):
+            elif line.strip().startswith(""):
                 self.text_contenido.tag_add("comando", line_start, line_end)
-            elif line.strip().startswith("📋"):
+            elif line.strip().startswith(""):
                 self.text_contenido.tag_add("descripcion", line_start, line_end)
-            elif line.strip().startswith("💡"):
+            elif line.strip().startswith(""):
                 self.text_contenido.tag_add("ejemplo", line_start, line_end)
     
     def _copiar_contenido(self):
@@ -866,7 +866,7 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
             contenido = self.text_contenido.get(1.0, tk.END)
             self.text_contenido.clipboard_clear()
             self.text_contenido.clipboard_append(contenido)
-            messagebox.showinfo("Copiado", "📋 Contenido copiado al portapapeles")
+            messagebox.showinfo("Copiado", " Contenido copiado al portapapeles")
             
         except Exception as e:
             self.logger.error(f"Error copiando contenido: {e}")
@@ -875,43 +875,43 @@ completo de Ares Aegis en entornos educativos.""".format(ruta=self.ruta_cheatshe
     def _nuevo_cheatsheet(self):
         """Crear nuevo cheatsheet"""
         # TODO: Implementar editor de cheatsheet
-        messagebox.showinfo("Próximamente", "🚧 Función en desarrollo")
+        messagebox.showinfo("Próximamente", " Función en desarrollo")
     
     def _importar_cheatsheet(self):
         """Importar cheatsheet desde archivo"""
         # TODO: Implementar importación
-        messagebox.showinfo("Próximamente", "🚧 Función en desarrollo")
+        messagebox.showinfo("Próximamente", " Función en desarrollo")
     
     def _exportar_cheatsheet(self):
         """Exportar cheatsheet actual"""
         # TODO: Implementar exportación
-        messagebox.showinfo("Próximamente", "🚧 Función en desarrollo")
+        messagebox.showinfo("Próximamente", " Función en desarrollo")
     
     def _editar_cheatsheet(self, event=None):
         """Editar cheatsheet seleccionado"""
         # TODO: Implementar editor
-        messagebox.showinfo("Próximamente", "🚧 Función en desarrollo")
+        messagebox.showinfo("Próximamente", " Función en desarrollo")
     
     def _eliminar_cheatsheet(self):
         """Eliminar cheatsheet seleccionado"""
         # TODO: Implementar eliminación
-        messagebox.showinfo("Próximamente", "🚧 Función en desarrollo")
+        messagebox.showinfo("Próximamente", " Función en desarrollo")
     
     def _duplicar_cheatsheet(self):
         """Duplicar cheatsheet seleccionado"""
         # TODO: Implementar duplicación
-        messagebox.showinfo("Próximamente", "🚧 Función en desarrollo")
+        messagebox.showinfo("Próximamente", " Función en desarrollo")
     
     def _guardar_cambios(self):
         """Guardar cambios en el cheatsheet actual"""
         # TODO: Implementar guardado
-        messagebox.showinfo("Próximamente", "🚧 Función en desarrollo")
+        messagebox.showinfo("Próximamente", " Función en desarrollo")
     
     def _recargar_cheatsheet(self):
         """Recargar cheatsheet actual"""
         if self.cheatsheet_actual:
             self._cargar_contenido_cheatsheet(self.cheatsheet_actual)
-            messagebox.showinfo("Recargado", "🔄 CheatSheet recargado")
+            messagebox.showinfo("Recargado", "[REFRESH] CheatSheet recargado")
     
     def _limpiar_contenedor(self):
         """Limpiar el contenedor padre de forma segura"""
