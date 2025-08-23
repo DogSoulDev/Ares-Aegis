@@ -14,7 +14,8 @@
 </div>
 
 ---
-
+REPO DE TESTEO Y DESARROLLO, PRUEBAS Y EJEMPLOS PARA LUEGO CREAR OTROS REPOS.
+DE ARES AEGIS , NACE => ARESITOS https://github.com/DogSoulDev/Aresitos
 ## 📖 ¿Qué es Ares Aegis?
 
 **Ares Aegis** es una suite de ciberseguridad completa y avanzada diseñada específicamente para **Kali Linux**. Es el guardián digital definitivo que protege tu sistema con tecnología de vanguardia, análisis inteligente y respuesta automática ante amenazas.
